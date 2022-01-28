@@ -9,5 +9,6 @@
 </head>
 <body>
 	잘 뜨나?g
+    <jsp:forward page="WEB-INF/views/common/header.jsp" />
 </body>
 </html>
