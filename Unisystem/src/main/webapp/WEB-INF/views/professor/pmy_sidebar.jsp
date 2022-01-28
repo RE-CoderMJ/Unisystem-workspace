@@ -24,7 +24,7 @@
 	color: rgb(15, 43, 80);
 	font-size: 18px;
 	margin-top:15px;
-	margin-left:7px;
+	margin-left:10px;
 }
 
 .hr_style {
@@ -53,7 +53,7 @@
 
 .sidebar b {
 	font-size: 15px;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 
 a:hover {
