@@ -9,16 +9,18 @@
 <style>
 	.outer{ 
 		width:1500px;
+		margin:auto;
 	}
 	.footer{ 
 		width:100%;
-		height:150px;
+		height:120px;
 		background: rgb(44, 62, 80);
+		font-size:14px;
 		
 	}
 	.footer>div{
 		color:lightgray;			
-		padding:50px 50px;
+		padding:35px 50px;
 		margin:0px;
 	}
 	.footer div{
@@ -34,11 +36,11 @@
 	<div class="outer">
 
 		<div class="footer">
-			<div style="display:block; width:1100px;">
+			<div style="display:block; width:1200px;">
 					01234   서울특별시  유니구  유니동  /  대표전화 (ARS) 1588-5252 <br>
 					Copyright (c)  2000-2022  UniSystem.  All Rights Reserved.
 			</div>
-			<div id="headphone" style="padding-top:56px;">
+			<div id="headphone" style="padding-top:42px;">
 				<i class="fas fa-phone-volume fa-2x"></i>
 			</div>
 			<div style="padding-left:12px">
