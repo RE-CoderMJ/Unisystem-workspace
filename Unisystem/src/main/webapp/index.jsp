@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	잘 뜨나?g
+
 </body>
 </html>
