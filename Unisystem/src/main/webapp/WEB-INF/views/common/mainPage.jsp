@@ -7,13 +7,17 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 </head>
-<body>
+
+<body>	
+
 	<jsp:include page="header.jsp" />
+	
 	
 	<!-- sidebar 확인용 (확인 후 삭제 예정) -->
 	<jsp:include page="../student/smy_sidebar.jsp" />
-	 
 	
+
 	<jsp:include page="footer.jsp" />
+		
 </body>
 </html>
