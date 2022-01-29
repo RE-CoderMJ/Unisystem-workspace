@@ -42,7 +42,7 @@
         width: 100px;
     }
     #header-up-right{
-        margin-left: 760px;
+        margin-left: 950px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
@@ -68,7 +68,7 @@
     }
     #header-down-right{
         display: inline-block;
-        margin-left: 195px;
+        margin-left: 300px;
     }
     #header-down-right a{
         color: black;

@@ -19,7 +19,7 @@
 	}
 	.footer>div{
 		color:lightgray;			
-		padding:43px 50px;
+		padding:43px 75px;
 	}
 	.footer div{
 		float:left;
