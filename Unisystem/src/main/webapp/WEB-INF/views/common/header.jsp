@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
     #header{
-        width: 1500px;
+        width: 1300px;
         margin: auto;
     }
     #header-up{
@@ -42,7 +42,7 @@
         width: 100px;
     }
     #header-up-right{
-        margin-left: 950px;
+        margin-left: 760px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
@@ -68,7 +68,7 @@
     }
     #header-down-right{
         display: inline-block;
-        margin-left: 300px;
+        margin-left: 195px;
     }
     #header-down-right a{
         color: black;
