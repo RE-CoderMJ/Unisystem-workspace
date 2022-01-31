@@ -8,19 +8,18 @@
 <title>UNI SYSTEM</title>
 </head>
 <style>
-body {
+
+/*pwd찾기(pwdfind)*/
+
+.back-color {
 	width: 1500px;
-	height: 900;
+	height: 1300px;
 	background-color: rgb(235, 242, 252);
-	background-size: 1500px 900px;
+	background-size: 1500px 1300px;
 }
 
-.logo img {
-	padding-bottom: 30px;
-	width: 300px;
-	position: relative;
-	left: 240px;
-	top: 60px
+.logo {
+	height: 150px;
 }
 
 /*로그인 영역*/
@@ -30,7 +29,7 @@ body {
 
 .login-box {
 	width: 465px;
-	height: 530px;
+	height: 480px;
 	background-color: #fff;
 	border-bottom: 3px solid #dfe6ef;
 	margin-top: 50px;
@@ -68,33 +67,46 @@ body {
 	font-weight: 500;
 }
 
+#log-input {
+	text-align: center;
+}
+
+#log-input td {
+	text-align: center;
+	font-size: 19px;
+	font-weight: 600;
+	padding-bottom: 12px;
+}
+
 #log-input input {
 	height: 35px;
 	width: 220px;
 	margin-bottom: 15px;
 	border: none;
 	border-bottom: solid 1px lightgray;
+	margin-left: 30px;
+	width: 230px;
+	font-size: 14px;
+	margin-top:30px;
 }
 
+#log-input label{
+	position:relative;
+	top:16px;
+}
 #log-input button {
-	display: inline-block;
-	width: 110px;
-	height: 110px;
+	width: 200px;
+	height: 50px;
 	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: #094a9a;
-	font-size: 20px;
+	border-radius: 10px;
+	background-color: rgb(44, 62, 80);
+	font-size: 18px;
 	font-weight: 400;
 	color: #fff;
-	line-height: 92px;
 	text-align: center;
 	text-decoration: none;
-	float: right;
+	margin-top: 50px;
 	position: relative;
-	left: -20px;
-	top: -60px;
 	border: none;
 	cursor: pointer;
 }
@@ -104,10 +116,11 @@ input:focus {
 }
 
 .login-title2 {
-	font-size: 40px;
-	margin-top: 20px;
-	font-weight: 600;
-	color: black;
+	font-size: 35px;
+	margin-top: 10px;
+	font-weight: 900;
+	color: rgb(41, 128, 185);
+	margin-bottom: 40px;
 }
 
 ul {
@@ -179,44 +192,41 @@ li {
 .search-title a:hover {
 	text-decoration: underline;
 }
+
 </style>
 <body>
 	<div class="back-color">
 		<!--가로 로고 자리 -->
 		<div class="logo">
-			<img src="resources/images/LOGO_WIDTH.png" alt="">
+			<img src="" alt="">
 		</div>
 
 		<div class="login-area">
 			<div class="login-box">
 
-				<div>
-					<div class="login-title">LOGIN</div>
-					<div id="text" style="font-size: 16px;">
-						UNI&nbsp;<b>PORTAL&nbsp;SYSTEM</b>에 <br> 오신 것을 환영합니다
-					</div>
-				</div>
+				 <div class="login-title2">비밀번호 찾기</div>
+
+                    <form id="log-input" action="" method="post">
+                            <table>
+
+                                <tr>
+                                    <td> <label for="">이메일</label></td>
+                                    <th> <input type="text" name="" placeholder="이메일을 입력하세요" >  </th>
+                                </tr>
+
+                                <tr>
+                                    <td><label for="">연락처</label></td>
+                                    <th><input type="text" name="" placeholder="연락처를 입력하세요 ( - 포함)" > </th>
+                                </tr>
+
+
+                            </table>   
+                    <button type="submit">비밀번호 재설정</button>  
+                    </form>
+
+
 				<br>
-				<br>
-				<form id="log-input">
 
-					<input type="text" name="" placeholder="  아이디"> <input
-						type="password" name="" placeholder=" 비밀번호">
-
-					<button onclick="">로그인</button>
-				</form>
-
-				<br>
-				<div class="login-title2">이용방법</div>
-
-				<!--이용방법 설명이 나와있는 게시글 번호 링크쓰기-->
-				<ul>
-					<li>포털시스템 비밀번호 변경 안내</li>
-					<li>포털 이용 안내</li>
-					<li>학내 무선랜 와이파이 이용안내</li>
-					<li>전자결재 이용안내</li>
-					<li>비밀번호 찾기 이용방법</li>
-				</ul>
 			</div>
 		</div>
 		<!-- login area 끝 -->
@@ -231,7 +241,8 @@ li {
 			</div>
 
 
-
+			<!-- 아이디찾기 비밀번호 찾기 시작!-->
+			
 			<table id="svs-table">
 				<tbody style="border: 1px solid white;">
 
@@ -258,7 +269,6 @@ li {
 
 				</tbody>
 			</table>
-
 
 		</div>
 
