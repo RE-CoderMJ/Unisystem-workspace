@@ -8,29 +8,26 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
 	.outer{ 
-		width:1500px;
-		margin:auto;
+		background: rgb(44, 62, 80);
 	}
 	.footer{ 
-		width:100%;
-		height:120px;
-		background: rgb(44, 62, 80);
+		margin:auto;
+		width:1500px;
+		height:100px;
 		font-size:14px;
 	}
-	.footer>div{
-		color:lightgray;			
-		padding:43px 75px;
-	}
 	.footer div{
+		color:lightgray;			
 		float:left;
 		height:100px;
+		padding-top:30px;
 	}
 	.footer_left{
 		width:78%;
 		display:block;
 	}
 	.footer_right{
-		padding:0px;
+		margin-left:165px;
 	}
 	#phoneIcon{
 		padding:8px 12px;

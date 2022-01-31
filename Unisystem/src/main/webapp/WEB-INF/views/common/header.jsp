@@ -24,51 +24,68 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
-    #header{
-        width: 1500px;
-        margin: auto;
+    body{
+        background-color: rgb(235,242,252);
     }
     #header-up{
         background-color: rgb(21, 62, 115);
-        height: 35px; 
+        height: 43px;
     }
-    #header-up #homepage{
-        margin-left: 80px;
+	#header-up-line{
+    	width:1500px;
+    	height:43px;
+    	margin: auto;
+    }
+    #homepage{
         background-color: rgb(14, 43, 80);
         color: white;
-        padding: 5px 10px;
-        height: 35px;
+        height: 43px;
         display: block;
         width: 100px;
+        font-weight: 400;
+        font-size: 17px;
+        text-decoration: none;
+        text-align: center;
+        line-height: 43px;
     }
     #header-up-right{
-        margin-left: 950px;
+        margin-left: 1065px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
-        vertical-align: middle;
+        line-height: 43px;
         display: inline-block;
-        margin-top: 3px;
     }
     #header-up-right #logout{
         background-color: rgb(14, 43, 80);
         color: white;
-        padding: 5px 10px;
-        height: 35px;
+        height: 43px;
+        width: 100px;
         display: block;
         float: right;
         margin-left: 20px;
+        line-height: 43px;
+        text-align: center;
+        font-weight: 500;
+        text-decoration: none;
     }
     #header-down{
-        margin: 10px 0;
+        height: 120px;
+        background-color: white;
+    }
+    #header-down-line{
+    	width:1500px;
+    	height:120px;
+    	margin: auto;
     }
     #header-down img{
-        width: 300px;
-        margin-left: 70px;
+        width: 320px;
+        
     }
     #header-down-right{
         display: inline-block;
-        margin-left: 300px;
+        margin-left: 470px;
+        margin-top: 35px;
     }
     #header-down-right a{
         color: black;
@@ -108,30 +125,34 @@
 </style>
 </head>
 <body>
-    <div id="header">
+    <header id="header">
 
         <div id="header-up">
-            <div style="float: left;"><a href="" id="homepage">HOMEPAGE</a></div>
-            <div id="header-up-right" style="float: left;">
-                <i class="fas fa-user"></i>
-                <span>홍길동(학생)님 환영합니다.</span>
-                <a href="" id="logout">로그아웃 →</a>
+        	<div id="header-up-line">
+	            <div style="float: left;"><a href="" id="homepage">HOMEPAGE</a></div>
+	            <div id="header-up-right" style="float: left;">
+	                <i class="fas fa-user"></i>
+	                <span>홍길동(학생)님 환영합니다.</span>
+	                <a href="" id="logout">로그아웃 →</a>
+	            </div>
             </div>
         </div>
 
         <div id="header-down">
-            <img src="resources/images/LOGO_WIDTH.png">
-            <div id="header-down-right">
-                <a href="">웹메일</a>
-                <a href="">마이페이지</a>
-                <a href="">공지사항</a>
-                <a href="">커뮤니티</a>
-                <div id="search-area">
-                    <input type="text" name="search" id="search">
-                    <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>
-                </div>
+        	<div id="header-down-line">
+	            <img src="resources/images/LOGO_WIDTH.png">
+	            <div id="header-down-right">
+	                <a href="">웹메일</a>
+	                <a href="">마이페이지</a>
+	                <a href="">공지사항</a>
+	                <a href="">커뮤니티</a>
+	                <div id="search-area">
+	                    <input type="text" name="search" id="search">
+	                    <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>
+	                </div>
+	            </div>
             </div>
         </div>
-    </div>
+    </header>
 </body>
 </html>
