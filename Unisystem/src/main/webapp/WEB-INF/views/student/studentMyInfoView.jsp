@@ -8,10 +8,19 @@
 <title>UNI SYSTEM</title>
 <style>
 	div{box-sizing:border-box;}
-	.middle{
+	#outer{
+		height : auto;
+ 		min-height: 100%;
+		padding-bottom: 140px;
+	}
+	#wrapper{
 		margin:auto;
 		width:1500px;
-		height:auto;
+	}
+	footer{
+	  height: 140px;
+	  position : relative;
+	  transform : translateY(-100%);
 	}
 	#sidebar{
 		width:20%;
@@ -24,7 +33,7 @@
 		margin-bottom:50px;
 		background-color:white;
 	}
-	.middle>div{float:left;}
+	#wrapper>div{float:left;}
 	.pageName{padding:7px;}
 	.pageName>p{
 		margin:0px;
@@ -84,12 +93,13 @@
 
 		
 		
+	<div id="outer">
 	<jsp:include page="../common/header.jsp" />
 	
 		
-		<div class="middle">
-			<div id="sidebar"><jsp:include page="smy_sidebar.jsp" /></div>
-			
+		<div id="wrapper">
+			<div id="sidebar"><jsp:include page="smySidebar.jsp" /></div>
+	
 				<div id="content">
 					<div class="btnTopBox">
 						<div class="pageName"><p style="color:gray">마이페이지>학적>&nbsp;</p><p style="font-size:19px; font-weight:600;">내 정보조회</p></div>
@@ -189,7 +199,7 @@
 		
 	</div>
 	
-	
+	</div>
 	<jsp:include page="../common/footer.jsp" />
 	
 </body>

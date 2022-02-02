@@ -11,4 +11,9 @@ public class ProfessorController {
 		return "professor/professorMyInfoView";
 	}
 	
+	@RequestMapping("stlist.pr")
+	public String selectMyStudentList() {
+		return "professor/professorMyStudentListView";
+	}
+	
 }

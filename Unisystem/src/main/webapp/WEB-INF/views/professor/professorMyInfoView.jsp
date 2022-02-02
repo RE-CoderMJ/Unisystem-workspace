@@ -13,6 +13,8 @@
 		width:1500px;
 		height:auto;
 	}
+	.middle::after{display:block;content:"";clear:both;}
+	
 	#sidebar{
 		width:20%;
 		height:1100px;
@@ -24,7 +26,9 @@
 		margin-bottom:50px;
 		background-color:white;
 	}
+
 	.middle>div{float:left;}
+
 	.pageName{padding:7px;}
 	.pageName>p{
 		margin:0px;
@@ -79,6 +83,8 @@
 		line-height:40px;
 	}
 	#sidebar{height:750px;}
+
+	
 </style>
 </head>
 <body style="background-color:#ebf2fc">
@@ -89,7 +95,7 @@
 	
 		
 		<div class="middle">
-			<div id="sidebar"><jsp:include page="pmy_sidebar.jsp" /></div>
+			<div id="sidebar"><jsp:include page="pmySidebar.jsp" /></div>
 			
 				<div id="content">
 					<div class="btnTopBox">
@@ -179,8 +185,6 @@
 			
 		
 	</div>
-	
-	
 	<jsp:include page="../common/footer.jsp" />
 	
 </body>
