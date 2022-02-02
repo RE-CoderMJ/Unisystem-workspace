@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,9 @@
 		width:1500px;
 		height:100px;
 		font-size:14px;
+		overflow: hidden;
+		background: rgb(44, 62, 80);	
+
 	}
 	.footer div{
 		color:lightgray;			
@@ -23,8 +27,7 @@
 		padding-top:30px;
 	}
 	.footer_left{
-		width:78%;
-		display:block;
+		width:75%;
 	}
 	.footer_right{
 		margin-left:165px;
@@ -35,10 +38,6 @@
 </style>
 </head>
 <body>
-
-
-	<div class="outer">
-
 
 		<div class="footer">
 			<div class="footer_left">
@@ -55,9 +54,7 @@
 				</label>
 			</div>
 		</div>
-		
-		
-	</div>
+
 
 </body>
 </html>
