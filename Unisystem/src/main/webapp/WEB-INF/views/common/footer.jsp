@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +8,24 @@
 <title>UNI SYSTEM</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
-	.outer{ 
-		width:1500px;
-		margin:auto;
+	html {
+	    position: relative;
+	    min-height: auto;
+	    margin: 0;
+	}
+	body {
+	    min-height: 100%;
 	}
 	.footer{ 
-		width:100%;
-		height:120px;
-		background: rgb(44, 62, 80);
+		margin:auto;
+		width:1500px;
+		height:140px;
 		font-size:14px;
+		overflow: hidden;
+	 	/* position: absolute; */
+		/* bottom:0; */
+		background: rgb(44, 62, 80);	
+
 	}
 	.footer>div{
 		color:lightgray;			
@@ -23,14 +33,13 @@
 	}
 	.footer div{
 		float:left;
-		height:100px;
+		height:100%;
 	}
 	.footer_left{
-		width:78%;
-		display:block;
+		width:75%;
 	}
 	.footer_right{
-		padding:0px;
+		width:25%;
 	}
 	#phoneIcon{
 		padding:8px 12px;
@@ -38,10 +47,6 @@
 </style>
 </head>
 <body>
-
-
-	<div class="outer">
-
 
 		<div class="footer">
 			<div class="footer_left">
@@ -58,9 +63,7 @@
 				</label>
 			</div>
 		</div>
-		
-		
-	</div>
+
 
 </body>
 </html>

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
 	@RequestMapping("list.st")
-	public String selectStudentList() {
-		return "student/studentListView";
+	public String selectStudentInfo() {
+		return "student/studentMyInfoView";
 	}
 	
 }
