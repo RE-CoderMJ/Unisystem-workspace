@@ -28,7 +28,6 @@
    		<p>컨텐츠영역</p>
    </div>
    
-   
    <jsp:include page="footer.jsp" />
 
 </body>

@@ -7,12 +7,10 @@
 <title>UNI SYSTEM</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
-	body{
-	  padding:0;
-	  margin:0;
-	  background-color: rgb(235,242,252);
-	}
-   .outer{ 
+   body{
+   	  background-color: rgb(235,242,252);
+   }
+   footer{ 
       background: rgb(44, 62, 80);
    }
    .footer{ 
@@ -42,8 +40,7 @@
 <body>
 
 
-   <div class="outer">
-
+   <footer>
 
       <div class="footer">
          <div class="footer_left">
@@ -60,9 +57,8 @@
             </label>
          </div>
       </div>
-      
-      
-   </div>
+           
+   </footer>
 
 </body>
 </html>
