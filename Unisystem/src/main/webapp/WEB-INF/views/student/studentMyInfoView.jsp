@@ -88,7 +88,7 @@
 	
 		
 		<div class="middle">
-			<div id="sidebar"><jsp:include page="smy_sidebar.jsp" /></div>
+			<div id="sidebar"><jsp:include page="smySidebar.jsp" /></div>
 			
 				<div id="content">
 					<div class="btnTopBox">
@@ -189,7 +189,7 @@
 		
 	</div>
 	
-	
+	<br clear="both">
 	<jsp:include page="../common/footer.jsp" />
 	
 </body>

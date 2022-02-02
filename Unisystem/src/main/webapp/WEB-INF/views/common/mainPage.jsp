@@ -10,10 +10,11 @@
 	#content{
 		width: 1500px;
 		background-color:white;
-		height:570px;
+		height:1000px;
 		margin: auto;
 		margin-top:50px;
 		margin-bottom:50px;
+		border:solid black 1px;
 	}
 </style>
 </head>
@@ -23,9 +24,10 @@
    <jsp:include page="header.jsp" />
    
    <div id="content">
-   		
+   		<p>컨텐츠영역</p>
    </div>
    
+   <br clear="both">
    <jsp:include page="footer.jsp" />
 
 </body>
