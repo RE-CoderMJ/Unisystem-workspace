@@ -16,6 +16,7 @@
 		margin-bottom:50px;
 		border:solid black 1px;
 	}
+	#content::after{display:block;content:"";clear:both;}
 </style>
 </head>
 
@@ -27,7 +28,7 @@
    		<p>컨텐츠영역</p>
    </div>
    
-   <br clear="both">
+   
    <jsp:include page="footer.jsp" />
 
 </body>

@@ -13,6 +13,7 @@
 		width:1500px;
 		height:auto;
 	}
+	.middle::after{display:block;content:"";clear:both;}
 	#sidebar{
 		width:20%;
 		height:1100px;
@@ -184,12 +185,10 @@
 						</table>
 
 					</div>
-				</div>
-			
+				</div>			
 		
 	</div>
 	
-	<br clear="both">
 	<jsp:include page="../common/footer.jsp" />
 	
 </body>
