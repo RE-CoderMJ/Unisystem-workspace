@@ -138,7 +138,7 @@
         <div id="header-down">
         	<div id="header-down-line">
 	            <img src="resources/images/LOGO_WIDTH.png">
-	            <div id="header-down-right">
+	            <nav id="header-down-right">
 	                <a href="">웹메일</a>
 	                <a href="">마이페이지</a>
 	                <a href="">공지사항</a>
@@ -147,7 +147,7 @@
 	                    <input type="text" name="search" id="search">
 	                    <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>
 	                </div>
-	            </div>
+	            </nav>
             </div>
         </div>
     </header>
