@@ -7,21 +7,10 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 </head>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <link rel="stylesheet" href="reset.css"> 
+   <link rel="stylesheet" href="style.css">
 <style>
 
-.flex {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto
-}
 .page_title {
 	color: rgb(15, 43, 80);
 	font-size: 40px;
@@ -30,29 +19,30 @@
 	margin-bottom: 10px;
 	margin-left: 66px;
 }
+
 .updel{
 	height: 24px;
     margin-right: 125px;
     font-size: 15px;
     position: relative;
-    top: 45px;
+    top: -51px;
     left: 20px;
 }
+
+p{
+margin-left: 66px;
+}
+
 .updel a{
 	text-decoration: none;
 	color: black;
+	font-weight:300px;
 	float: right;
-}
-
-@media (max-width:991.98px) {
-    .padding {
-        padding: 10px;
-    }
 }
 
 .bo_content {
 	margin-top: 51px;
-	width: 1100px;
+	width: 1000px;
 	float: left;
 	background-color: white;
 	margin-left: 150px;
@@ -63,464 +53,135 @@
 }
 
 
-@media (max-width:767.98px) {
-    .padding {
-        padding: 10px;
-    }
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
 }
 
-.padding {
-    padding: 50px;
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
 }
 
-.card {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    -ms-box-shadow: none
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.pl-3,
-.px-3 {
-    padding-left: 50px;
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+  background: #f9f9f9;
 }
 
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid #d2d2dc;
-    border-radius: 0
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
 }
 
-.pr-3,
-.px-3 {
-    padding-right: 10px; !important
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
 }
 
-.card .card-body {
-    padding: 10px 10px;
+/* Add a "checked" mark when clicked on */
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
 }
 
-.card-body {
-    flex: 1 1 auto;
-    padding: 10px;
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
 }
 
-.card .card-title {
-    color: #000000;
-    margin-bottom: 10px;
-    text-transform: capitalize;
-    font-size: 20px;
-    font-weight: 500;
+.close:hover {
+  background-color: #f44336;
+  color: white;
 }
 
-.add-items {
-    margin-bottom: 10px;
-    overflow: hidden
+/* Style the header */
+.header {
+  background-color: rgb(21,62,115);
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
 }
 
-.d-flex {
-    display: flex 
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-.add-items input[type="text"] {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    width: 100%;
-    background: transparent
+/* Style the input */
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
 }
 
-.form-control {
-    border: 1px solid #f3f3f3;
-    font-weight: 400;
-    font-size: 20px;
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
 }
 
-.form-control {
-    display: block;
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 20px;
-    line-height: 1;
-    color: #495057;
-    background-color: #ffffff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
-}
-
-.add-items .btn {
-    margin-left: 10px;
-}
-
-.btn {
-    font-size: 20px;
-    line-height: 1;
-    font-weight: 400;
-    padding: 10px 10px;
-    border-radius: 40px;
-}
-
-.list-wrapper {
-    height: 100%;
-    max-height: 100%
-}
-
-.add-items {
-    margin-bottom: 10px;
-    overflow: hidden
-}
-
-.add-items input[type="text"] {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    width: 100%;
-    background: transparent
-}
-
-.add-items .btn,
-.add-items .fc button,
-.fc .add-items button,
-.add-items .ajax-upload-dragdrop .ajax-file-upload,
-.ajax-upload-dragdrop .add-items .ajax-file-upload,
-.add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
-.swal2-modal .swal2-buttonswrapper .add-items .swal2-styled,
-.add-items .wizard>.actions a,
-.wizard>.actions .add-items a {
-    margin-left: 10px;
-}
-
-.rtl .add-items .btn,
-.rtl .add-items .fc button,
-.fc .rtl .add-items button,
-.rtl .add-items .ajax-upload-dragdrop .ajax-file-upload,
-.ajax-upload-dragdrop .rtl .add-items .ajax-file-upload,
-.rtl .add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
-.swal2-modal .swal2-buttonswrapper .rtl .add-items .swal2-styled,
-.rtl .add-items .wizard>.actions a,
-.wizard>.actions .rtl .add-items a {
-    margin-left: auto;
-    margin-right: 10px;
-}
-
-.list-wrapper {
-    height: 100%;
-    max-height: 100%
-}
-
-.list-wrapper ul {
-    padding: 0;
-    text-align: left;
-    list-style: none;
-    margin-bottom: 0
-}
-
-.list-wrapper ul li {
-    font-size: 20px;
-    padding: 10px 0;
-    border-bottom: 1px solid #f3f3f3
-}
-
-.list-wrapper ul li:first-child {
-    border-bottom: none
-}
-
-.list-wrapper ul li .form-check {
-    max-width: 90%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.list-wrapper ul li .form-check label:hover {
-    cursor: pointer
-}
-
-.list-wrapper input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.list-wrapper .remove {
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-    width: 10px;
-    height:10px;
-    line-height: 20px;
-    text-align: center
-}
-
-.list-wrapper .completed {
-    text-decoration: line-through;
-    text-decoration-color: #3da5f4
-}
-
-.list-wrapper ul li .form-check {
-    max-width: 90%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.list-wrapper ul li .form-check,
-.list-wrapper ul li .form-check .form-check-label,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
-.email-wrapper .mail-list-container .mail-list .content .sender-name,
-.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
-.settings-panel .chat-list .list .info p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
-    white-space: nowrap
-}
-
-.form-check {
-    position: relative;
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-left: 0
-}
-
-.list-wrapper ul li .form-check,
-.list-wrapper ul li .form-check .form-check-label,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
-.email-wrapper .mail-list-container .mail-list .content .sender-name,
-.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
-.settings-panel .chat-list .list .info p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
-    white-space: nowrap
-}
-
-.form-check .form-check-label {
-    min-height: 18px;
-    display: block;
-    margin-left: 10px;
-    font-size: 20px;
-    line-height: 1.5
-}
-
-.form-check-label {
-    margin-bottom: 0
-}
-
-.list-wrapper input[type="checkbox"] {
-    margin-right: 15px
-}
-
-.form-check .form-check-label input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-left: 0;
-    margin-top: 0;
-    z-index: 1;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0)
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-    box-sizing: border-box;
-    padding: 0
-}
-
-.list-wrapper ul li .form-check,
-.list-wrapper ul li .form-check .form-check-label,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
-.email-wrapper .mail-list-container .mail-list .content .sender-name,
-.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
-.settings-panel .chat-list .list .info p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
-    white-space: nowrap
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:before {
-    content: "";
-    width: 18px;
-    height: 18px;
-    border-radius: 2px;
-    border: solid #405189;
-    border-width: 2px;
-    -webkit-transition: all;
-    -moz-transition: all;
-    -ms-transition: all;
-    -o-transition: all;
-    transition: all;
-    transition-duration: 0s;
-    -webkit-transition-duration: 250ms;
-    transition-duration: 250ms
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:before,
-.form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-    position: absolute;
-    top: 0;
-    left: 0
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-    -webkit-transition: all;
-    -moz-transition: all;
-    -ms-transition: all;
-    -o-transition: all;
-    transition: all;
-    transition-duration: 0s;
-    -webkit-transition-duration: 10px;
-    transition-duration: 10px;
-    font-family: Material Design Icons;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    -o-transform: scale(0);
-    transform: scale(0);
-    content: '\F12C';
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:before,
-.form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-    position: absolute;
-    top: 0;
-    left: 0
-}
-
-.form-check .form-check-label input[type="checkbox"]:checked+.input-helper:before {
-    background: #405189;
-    border-width: 0
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:before {
-    content: "";
-    width: 18px;
-    height: 18px;
-    border-radius: 2px;
-    border: solid #405189;
-    border-width: 2px;
-    -webkit-transition: all;
-    -moz-transition: all;
-    -ms-transition: all;
-    -o-transition: all;
-    transition: all;
-    transition-duration: 0s;
-    -webkit-transition-duration: 250ms;
-    transition-duration: 250ms
-}
-
-.form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-    font-family: FontAwesome;
-    content: "\f095";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    color: #fff
-}
-
-.text-primary,
-.list-wrapper .completed .remove {
-    color: #405189 !important
-}
-
-.list-wrapper .remove {
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-    width: 1.25rem;
-    height: 1.25rem;
-    line-height: 20px;
-    text-align: center
-}
-
-.ml-auto,
-.list-wrapper .remove,
-.mx-auto {
-    margin-left: auto !important
-}
-
-.mdi-close-circle-outline:before {
-    content: "\F15A"
-}
-
-.list-wrapper ul li {
-    font-size: 20px;
-    padding: .4rem 0;
-    border-bottom: 1px solid #f3f3f3
-}
-
-.mdi:before {
-    font-family: FontAwesome;
-    content: "\f00d";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    font-size: 20px;
-    color: #405189
-}
-
-.list-wrapper ul {
-    padding: 0;
-    text-align: left;
-    list-style: none;
-    margin-bottom: 0
-}
-
-.flex-column-reverse {
-    flex-direction: column-reverse !important
-}
-
-.d-flex,
-.loader-demo-box,
-.distribution-chart-legend .distribution-chart,
-.distribution-chart-legend .distribution-chart .item,
-.list-wrapper ul li,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user,
-.email-wrapper .mail-list-container .mail-list .details,
-.email-wrapper .message-body .attachments-sections ul li .thumb,
-.email-wrapper .message-body .attachments-sections ul li .details .buttons,
-.lightGallery .image-tile .demo-gallery-poster,
-.swal2-modal,
-.navbar .navbar-menu-wrapper .navbar-nav,
-.navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile,
-.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown .dropdown-item {
-    display: flex !important
-}
-
-.bo_content p{
-	margin-left:66px;
+.addBtn:hover {
+  background-color: #bbb;
 }
 </style>
 <body>
 
-	<div id="outer">
+	<div id="todoOuter">
 
-
+		<div>
 		<!-- header.jsp 영역 -->
 		<jsp:include page="../common/header.jsp" />
-
+		</div>
 		<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
 
-
-		<div style="background-color: rgb(235, 242, 252); width: 1500px;">
-		
-		
+		<br clear="both">
 			<div class="sidewrap">
 				<jsp:include page="../student/smySidebar.jsp" />
 			</div>
@@ -536,121 +197,94 @@ input[type="checkbox"] {
 			<a href="">캘린더</a>
 			</div>
 			
-			
-			<div id="todoWrap"   >
-			<div class="page-content page-container" id="page-content" style="width:1000px;">
-				<div class="padding" style="width:1000px;">
-					<div class="row container d-flex justify-content-center">
-						<div class="col-md-12">
-							<div class="card px-3">
-								<div class="card-body">
-									<h4 class="card-title">Todo list</h4>
-									<div class="add-items d-flex">
-										<input type="text" class="form-control todo-list-input"
-											placeholder="What do you need to do today?">
-										<button
-											class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
-									</div>
-									<div class="list-wrapper">
-										<ul class="d-flex flex-column-reverse todo-list">
-											<li>
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox"> For what reason
-														would it be advisable. <i class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-											<li class="completed">
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox" checked=""> For
-														what reason would it be advisable for me to think. <i
-														class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-											<li>
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox"> it be advisable
-														for me to think about business content? <i
-														class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-											<li>
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox"> Print Statements
-														all <i class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-											<li class="completed">
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox" checked=""> Call
-														Rampbo <i class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-											<li>
-												<div class="form-check">
-													<label class="form-check-label"> <input
-														class="checkbox" type="checkbox"> Print bills <i
-														class="input-helper"></i></label>
-												</div> <i class="remove mdi mdi-close-circle-outline"></i>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+			<div style="width:860px; margin:auto;">
+			<div id="todoWrap">
+				   
+				<div id="myDIV" class="header">
+				  <h2 style="margin:5px; margin-bottom:15px;"">My To Do List</h2>
+				  <input type="text" id="myInput" placeholder="To Do 리스트 내용">
+				  <span onclick="newElement()" class="addBtn">할 일 추가</span>
 				</div>
+				
+				<ul id="myUL">
+				  <li>오늘 할일을 입력하세요</li>
+				  <li class="checked">완료한 항목</li>
+				</ul>
+
+    		</div>
+    	</div>
+ 
+	<script>
+	// Create a "close" button and append it to each list item
+	var myNodelist = document.getElementsByTagName("LI");
+	var i;
+	for (i = 0; i < myNodelist.length; i++) {
+	  var span = document.createElement("SPAN");
+	  var txt = document.createTextNode("\u00D7");
+	  span.className = "close";
+	  span.appendChild(txt);
+	  myNodelist[i].appendChild(span);
+	}
+
+	// Click on a close button to hide the current list item
+	var close = document.getElementsByClassName("close");
+	var i;
+	for (i = 0; i < close.length; i++) {
+	  close[i].onclick = function() {
+	    var div = this.parentElement;
+	    div.style.display = "none";
+	  }
+	}
+
+	// Add a "checked" symbol when clicking on a list item
+	var list = document.querySelector('ul');
+	list.addEventListener('click', function(ev) {
+	  if (ev.target.tagName === 'LI') {
+	    ev.target.classList.toggle('checked');
+	  }
+	}, false);
+
+	// Create a new list item when clicking on the "Add" button
+	function newElement() {
+	  var li = document.createElement("li");
+	  var inputValue = document.getElementById("myInput").value;
+	  var t = document.createTextNode(inputValue);
+	  li.appendChild(t);
+	  if (inputValue === '') {
+	    alert("You must write something!");
+	  } else {
+	    document.getElementById("myUL").appendChild(li);
+	  }
+	  document.getElementById("myInput").value = "";
+
+	  var span = document.createElement("SPAN");
+	  var txt = document.createTextNode("\u00D7");
+	  span.className = "close";
+	  span.appendChild(txt);
+	  li.appendChild(span);
+
+	  for (i = 0; i < close.length; i++) {
+	    close[i].onclick = function() {
+	      var div = this.parentElement;
+	      div.style.display = "none";
+	    }
+	  }
+	}
+	</script>	
+		
 			</div>
-		</div>
-		</div>
-		</div>
-			<br clear="both">
+		
+			
 
 	<!-- footer.jsp-->
 	<jsp:include page="../common/footer.jsp" />
 	
+	 
+     		
 	</div>
 	<script>
-(function($) {
-	'use strict';
-	$(function() {
-	var todoListItem = $('.todo-list');
-	var todoListInput = $('.todo-list-input');
-	$('.todo-list-add-btn').on("click", function(event) {
-	event.preventDefault();
+	
 
-	var item = $(this).prevAll('.todo-list-input').val();
-
-	if (item) {
-	todoListItem.append("<li>
-	    <div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox' />" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i>
-	</li>");
-	todoListInput.val("");
-	}
-
-	});
-
-	todoListItem.on('change', '.checkbox', function() {
-	if ($(this).attr('checked')) {
-	$(this).removeAttr('checked');
-	} else {
-	$(this).attr('checked', 'checked');
-	}
-
-	$(this).closest("li").toggleClass('completed');
-
-	});
-
-	todoListItem.on('click', '.remove', function() {
-	$(this).parent().remove();
-	});
-
-	});
-	})(jQuery);
 </script>
 
 </body>
