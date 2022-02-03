@@ -159,6 +159,38 @@ li {
 	text-decoration: none;
 	cursor: pointer;
 }
+.modal-title{
+	margin: auto;
+    font-size: 30px;
+    font-weight: 600;
+    margin-right: -10px;
+}
+.modal-body{margin:auto;}
+.modalText{
+	width: 383px;
+    resize: none;
+    height: 400px;
+}
+#sendModal{
+	margin:auto;
+}
+.moBtn{
+	background-color: rgb(15, 43, 80);
+	color: white;
+	height: 40px;
+	width: 80px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
+	border:none;
+}
+#close{
+	position: relative;
+    top: 10px;
+    right: 20px;
+}
 </style>
 <body>
 

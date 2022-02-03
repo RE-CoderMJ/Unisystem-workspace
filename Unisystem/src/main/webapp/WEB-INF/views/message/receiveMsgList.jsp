@@ -344,6 +344,34 @@ li {
 	    </div>
 	  </div>
 	</div>
+	
+	<!-- msg 모달 영역  -->
+
+	<div class="modal" id="msgModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content" style="border-radius: 80px;">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">메시지 보내기</h4>
+	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	      	<p><b>받는이:</b> 곰돌이(201901234) </p>
+	      	<textarea class="modalText"></textarea>
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
+	
 	</div>
 
 </body>
