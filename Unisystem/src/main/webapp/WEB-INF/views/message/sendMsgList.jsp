@@ -212,11 +212,11 @@ li {
 			<!-- title -->
 
 
-			<div class="page_title">보낸 메시지</div>
+			<div class="page_title">받은 메시지</div>
 			
 			<hr width="1000px;">
 
-			<div class="head_count msg_division">보낸 메시지 목록</div>
+			<div class="head_count msg_division">받은 메시지 목록</div>
 
 			<br>
 
@@ -238,7 +238,7 @@ li {
 				<tr>
 					<th width="20px"></th>
 					<th width="70px">번호</th>
-					<th width="100px">받는사람</th>
+					<th width="100px">보낸사람</th>
 					<th width="200px">내용</th>
 					<th width="100px">상태</th>
 				</tr>
@@ -317,7 +317,7 @@ li {
 
 	</div>
 
-	
+
 	<!-- msg 모달 영역  -->
 
 	<div class="modal" id="msgModal">
@@ -344,7 +344,7 @@ li {
 	    </div>
 	  </div>
 	</div>
-	</div>
+	 
 
 </body>
 </html>

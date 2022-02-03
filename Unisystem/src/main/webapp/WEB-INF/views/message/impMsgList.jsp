@@ -138,7 +138,7 @@ li {
 	float: right;
     margin-right: 100px;
 }
- 
+
 .b_write {
 	border: none;
 	float: right;
@@ -158,38 +158,6 @@ li {
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
-}
-.modal-title{
-	margin: auto;
-    font-size: 30px;
-    font-weight: 600;
-    margin-right: -10px;
-}
-.modal-body{margin:auto;}
-.modalText{
-	width: 383px;
-    resize: none;
-    height: 400px;
-}
-#sendModal{
-	margin:auto;
-}
-.moBtn{
-	background-color: rgb(15, 43, 80);
-	color: white;
-	height: 40px;
-	width: 80px;
-	border-radius: 3px;
-	font-size: 14px;
-	cursor: pointer;
-	position: relative;
-	right: 0px;
-	border:none;
-}
-#close{
-	position: relative;
-    top: 10px;
-    right: 20px;
 }
 </style>
 <body>
@@ -212,18 +180,18 @@ li {
 			<!-- title -->
 
 
-			<div class="page_title">보낸 메시지</div>
+			<div class="page_title">메세지 보관함</div>
 			
 			<hr width="1000px;">
 
-			<div class="head_count msg_division">보낸 메시지 목록</div>
+			<div class="head_count msg_division">보관중인 메시지</div>
 
 			<br>
 
 			<div class="btn-search">
 			<div class="btn-area">
-				<a class="btn btn-sm btn-danger" href="">선택삭제</a> 
-				<a class="btn btn-sm" href="" data-toggle="modal" data-target="#msgModal" style="background-color:rgb(44, 62, 80); color:white;">쪽지보내기</a>
+				<a class="btn btn-sm btn-warning" href="" style="color:white; margin-right:10px;">보관해제</a> 
+				<a class="btn btn-sm btn-danger" href="">삭제</a>
 			</div>
 		 
 			
@@ -238,7 +206,7 @@ li {
 				<tr>
 					<th width="20px"></th>
 					<th width="70px">번호</th>
-					<th width="100px">받는사람</th>
+					<th width="100px">보낸사람</th>
 					<th width="200px">내용</th>
 					<th width="100px">상태</th>
 				</tr>
@@ -317,33 +285,6 @@ li {
 
 	</div>
 
-	
-	<!-- msg 모달 영역  -->
-
-	<div class="modal" id="msgModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content" style="border-radius: 80px;">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">메시지 보내기</h4>
-	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      	<p><b>받는이:</b> 곰돌이(201901234) </p>
-	      	<textarea class="modalText"></textarea>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
 	</div>
 
 </body>
