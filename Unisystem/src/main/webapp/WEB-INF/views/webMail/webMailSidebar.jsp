@@ -131,6 +131,7 @@
 </style>
 </head>
 <body>
+
 	<nav id="webMail-sidebar">
             <div id="btn-wrapper">
                 <button id="writeMail">메일쓰기</button>
@@ -170,5 +171,6 @@
                 <span>주소록</span>
             </div>
         </nav>
+
 </body>
 </html>
