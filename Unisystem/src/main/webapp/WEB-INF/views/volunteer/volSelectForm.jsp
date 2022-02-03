@@ -88,7 +88,7 @@
 .ctg-area {
 	font-size: 16px;
 	display: inline-block;
-	margin-top: -30px;
+	margin-top: 13px;
 }
 
 .bo_content {
@@ -100,13 +100,22 @@
 	border: none;
 	float: right;
 	margin-right: 120px;
-    margin-top: 10px;
+    margin-top: -30px;
+    background-color: rgb(15, 43, 80);
+	color: white;
+	height: 35px;
+	width: 90px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
 }
 .board-content textarea{
 	resize: none;
     width: 850px;
     margin: auto;
-    height: 500px;
+    height: 650px;
     margin-left: 126px;
     margin-top:20px;
 }
@@ -126,6 +135,19 @@
 .bcheckbox{
 	margin-left: 126px;
 	margin-top: 10px;
+}
+.updel{
+	height: 24px;
+    margin-right: 125px;
+    font-size: 15px;
+}
+.updel a{
+	text-decoration: none;
+	color: black;
+	float: right;
+}
+.bdel{
+	margin-right:10px;
 }
 </style>
 
@@ -149,7 +171,11 @@
 			
 			<!-- title -->
 			<div class="page_title">대외활동 글작성</div>
-			 
+			
+			<!-- 글 작성자만 수정할 수 있도록 (관리자)-->
+				<div class="updel">
+					<a href="">수정</a> <a class="bdel" href="">삭제</a>
+				</div>
 			<form id="boardInsert" action="" method="post">
 			
 				<!--제목,날짜,조회수 등록영역-->
@@ -175,7 +201,7 @@
 		<input id="bfile" type="file"><br>
 	</form>
 		<!--관리자에게만 보여지도록 조건처리-->
-		<button class="b_write btn btn-secondary">등록하기</button>
+		<button class="b_write">등록하기</button>
 	</div>
 
 	<br clear="both">

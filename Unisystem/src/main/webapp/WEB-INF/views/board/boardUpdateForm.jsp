@@ -88,25 +88,32 @@
 .ctg-area {
 	font-size: 16px;
 	display: inline-block;
-	margin-top: -30px;
 }
 
 .bo_content {
 	position: relative;
 	top: 0px;
 }
-
 .b_write {
 	border: none;
 	float: right;
 	margin-right: 120px;
-    margin-top: 10px;
+    margin-top: -30px;
+    background-color: rgb(15, 43, 80);
+	color: white;
+	height: 35px;
+	width: 90px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
 }
 .board-content textarea{
 	resize: none;
     width: 850px;
     margin: auto;
-    height: 500px;
+    height: 650px;
     margin-left: 126px;
     margin-top:20px;
 }
@@ -115,15 +122,11 @@
 	display:inline-block;
 	float: right;
     position: relative;
-    left: 490px;
+    left: 372px;
+    top: -27px;
 }
 
 #bfile{
-	margin-left: 126px;
-	margin-top: 10px;
-}
-
-.bcheckbox{
 	margin-left: 126px;
 	margin-top: 10px;
 }
@@ -148,17 +151,25 @@
 		<div class="bo_content">
 			
 			<!-- title -->
-			<div class="page_title">대외활동 글작성</div>
+			<div class="page_title">커뮤니티 수정하기</div>
 			 
 			<form id="boardInsert" action="" method="post">
-			
-				<!--제목,날짜,조회수 등록영역-->
 				<div class="grayWrap">
 					<input type="text" placeholder="제목을 입력하세요"/><br>
 
 						<div class="ctg-area">
 							<span>날짜</span> 2021.01.21 
-							<span>작성자</span> 관리자
+							<span>작성자</span> 김말똥 
+							<span>카테고리</span>
+						</div>
+						<!--제목,날짜,조회수 등록영역-->
+						<div class="search_wrap">
+							<select name="condition" class="custom-select">
+								<option class="ctg" value="4">카테고리</option>
+								<option class="ctg" value="5">자유</option>
+								<option class="ctg" value="6">취업</option>
+								<option class="ctg" value="7">정보</option>
+							</select>
 							
 							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 1024</div>
 						</div>
@@ -171,15 +182,14 @@
 			<textarea></textarea>
 		</div>
 
-		<!-- 첨부파일 영역 -->
-		<input id="bfile" type="file"><br>
+		<input id="bfile" type="file">
 	</form>
-		<!--관리자에게만 보여지도록 조건처리-->
-		<button class="b_write btn btn-secondary">등록하기</button>
+		<!--로그인한 회원에게만 보여지도록 조건처리-->
+		<button class="b_write">등록하기</button>
 	</div>
 
 	<br clear="both">
-
+	
 	<!-- footer.jsp-->
 	<jsp:include page="../common/footer.jsp" />
  </div>
