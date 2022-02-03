@@ -8,7 +8,7 @@
 <title>UNI SYSTEM</title>
 <style>
     div{
-        border:  black 1px solid;
+        border:  black 1px soli;
         box-sizing: border-box;
     }
     /*사이드바 전체영역 스타일*/
@@ -142,8 +142,75 @@
         margin-top: 30px;
         margin-left: 420px;
         margin-bottom: 50px;
+        padding-top: 23px;
     }
     section::after{display:block;content:"";clear:both;}
+    #mailboxes-header{
+        margin-left: 39px;
+        width: 1300px;
+    }
+    #inbox{
+        color: rgb(15, 43, 80);
+        font-size: 20px;
+        font-weight: 900;
+        width: 110px;
+        margin-bottom: 10px;
+    }
+    #tools{
+        margin-top: 35px;
+        margin-bottom: 10px;
+        width: 1300px;
+        height: 30px;
+    }
+    #tools-left{
+        float: left;
+        width: 280px;
+        height: 30px;
+    }
+    #tools-left>button{
+        background-color: white;
+        border: gray 1px solid;
+        border-radius: 3px;
+        font-size: 13px;
+        color: rgb(36, 36, 36);
+        margin-right: 1px;
+        height: 25px;
+    }
+    #tools-right{
+        margin-left: 300px;
+        width: 400px;
+        height: 30px;
+    }
+    #search-option{
+        height: 25px;
+        width: 80px;
+    }
+    #tools-right>input{
+        height: 25px;
+        width: 200px;
+        padding-right: 20px;
+        margin-right: 20px;
+        border: rgb(26, 86, 162) 3px solid;
+    }
+    #tools-right>button{
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        margin-left: -35px;
+        margin-bottom: -30px;
+        border: none;
+    }
+    #list{
+        width: 1200px;
+        margin-left: 30px;
+        border-top:darkgray 2px solid;
+    }
+    .check-area{
+        width: 2px;
+    }
+    .important{
+        width:1px;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
@@ -190,39 +257,58 @@
         </div>
     </nav>
 	<section>
-        <header>
-            <div>받은 메일함</div>
-            <div>
-                <div>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
+        <header id="mailboxes-header">
+            <div id="inbox">받은 메일함</div>
+            <div id="tools">
+                <div id="tools-left">
+                    <input type="checkbox" class="checkbox">
+                    <button style="margin-left: 10px;">읽음</button>
+                    <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                    <button style="margin-left: -5px;">스팸등록</button>
+                    <button>답장</button>
+                    <button style="margin-left: -4px;">전달</button>
                 </div>
-                <div>
+                <div id="tools-right" align="right">
+                    <select name="" id="search-option">
+                        <option value="">전체</option>
+                        <option value="">제목+내용</option>
+                        <option value="">보낸사람</option>
+                    </select>
                     <input type="search" name="" id="">
+                    <button><i class="fas fa-search"></i></button>
                 </div>
             </div>
         </header>
         <article>
-            <table class="table table-hover">
+            <table class="table table-hover" id="list">
                 <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                  </tr>
+                    <tr>
+                        <td class="check-area"><input type="checkbox" class="checkbox"></td>
+                        <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
+                        <td class="read-status"><i class="far fa-envelope"></i></td>
+                        <td  class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
+                        <td>김땡땡 교수님</td>
+                        <td>이번 기말고사에 관한 답변입니다.</td>
+                        <td>2022-01-18 16:29</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="checkbox"></td>
+                        <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
+                        <td class="read-status"><i class="far fa-envelope"></i></td>
+                        <td  class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
+                        <td>김땡땡 교수님</td>
+                        <td>이번 기말고사에 관한 답변입니다.</td>
+                        <td>2022-01-18 16:29</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="checkbox"></td>
+                        <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
+                        <td class="read-status"><i class="far fa-envelope-open"></i></td>
+                        <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
+                        <td>김땡땡 교수님</td>
+                        <td>이번 기말고사에 관한 답변입니다.</td>
+                        <td>2022-01-18 16:29</td>
+                    </tr>
                 </tbody>
               </table>
             </div>

@@ -8,6 +8,6 @@ public class WebMailController {
 
 	@RequestMapping("webMail")
 	public String selectReceivedMails(){
-		return "webMail/webMailView";
+		return "webMail/inbox";
 	}
 }
