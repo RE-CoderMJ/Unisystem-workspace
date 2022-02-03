@@ -211,6 +211,7 @@ li {
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
+					<th>첨부</th>
 					<th>조회</th>
 				</tr>
 
@@ -221,6 +222,7 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 
@@ -231,6 +233,18 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
+					<td>1004</td>
+				</tr>
+				
+				<tr>
+					<td>1</td>
+					<td></td>
+					<td>자유</td>
+					<td>제목입니다</td>
+					<td>김민수</td>
+					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 
@@ -241,34 +255,40 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 			</table>
