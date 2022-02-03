@@ -17,32 +17,18 @@
 		height:830px;
 		margin-bottom:170px;
 		/*--------*/
-		
 	}
+	/*#wrap::after{display:block;content:"";clear:both;}*/
 	#sidebar{
 		width:20%;
 		height:700px;
 	}
 	#content{
-		width:70%;
+		width:80%;
 		height:780px;
 		margin-top:50px;
 		margin-bottom:50px;
 		background-color:white;
-		postion:relative;
-	}
-	.nameBox{
-		margin-left:20px;
-	}
-	.nameBox>button{
-	 	width:45px; 
-	 	height:45px;
-	 	border:1px solid lightgray;
-	}
-	.nameBox>input{
-		padding-left:10px;
-		height:45px;
-	 	border:1px solid lightgray;
 	}
 	.pageName{padding:7px;}
 	.pageName>p{
@@ -53,6 +39,22 @@
 		width:100%;
 		height:50px;
 		position:relative;
+	}
+	.nameBox{
+		margin-left:20px;
+		margin-bottom:10px;
+	}
+	.nameBox>button{
+	 	width:45px; 
+	 	height:45px;
+	 	border:1px solid lightgray;
+   		border-radius:0px 8px 8px 0px;
+	}
+	.nameBox>input{
+		padding-left:10px;
+		height:45px;
+	 	border:1px solid lightgray;
+   		border-radius:8px 0px 0px 8px;
 	}
 	.nameBox>label{
 		padding:20px;
@@ -75,8 +77,8 @@
 		text-align:center;
 		padding:0;
 		padding-left:10px;
-		height:20px;
-		line-height:20px;
+		height:18px;
+		line-height:18px;
 	}
 	.sort{
 		position:absolute;
@@ -118,7 +120,7 @@
 								<input type="text" placeholder="이름"><button type="button"><i class="fas fa-search"></i></button>
 							</div>
 							<div class="studBox">
-							<table class="table table-hover" align="center" style="width:1000px;">
+							<table class="table table-hover" align="center" style="width:1150px;">
 								<tbody>
 									<tr>
 										<th>학번</th>

@@ -16,4 +16,9 @@ public class ProfessorController {
 		return "professor/professorMyStudentListView";
 	}
 	
+	@RequestMapping("app.pr")
+	public String createClass() {
+		return "professor/professorCreateClassForm";
+	}
+	
 }
