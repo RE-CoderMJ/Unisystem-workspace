@@ -61,7 +61,7 @@
 }
 
 .search_wrap {
-	margin-left: 620px;
+	margin-left: 660px;
 	margin-top: 10px;
 	margin-bottom: 15px
 }
@@ -274,8 +274,12 @@ li {
 			</table>
 
 			<!--관리자에게만 보여지도록 조건처리-->
-			<button class="b_write btn-sm btn-secondary">글쓰기</button>
-
+			
+			<button class="b_write btn-sm btn-danger">선택삭제</button>
+			<button class="b_write btn-sm btn-dark" style="position:relative; right:-85px;">글쓰기</button>
+			
+			<!-- 버튼 부분 여기까지   -->
+			
 
 
 			<!-- paging bar 영역-->
