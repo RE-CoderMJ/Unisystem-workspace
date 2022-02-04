@@ -121,7 +121,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="lectureDetailNotice.stu">[기말시험 대체 과제물]</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
