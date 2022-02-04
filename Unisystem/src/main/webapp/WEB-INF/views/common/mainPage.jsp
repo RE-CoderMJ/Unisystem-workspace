@@ -26,6 +26,7 @@
    
    <div id="content">
    		<p>컨텐츠영역</p>
+   		<a href="lectureMain.stu">강의게시판</a>
    </div>
    
    <jsp:include page="footer.jsp" />
