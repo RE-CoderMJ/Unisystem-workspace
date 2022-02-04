@@ -24,4 +24,10 @@ public class LectureController {
 		return "lecture/lectureStuNoticeDetailView";
 	}
 	
+	/* 학생 - 강의평가 리스트를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureEvaluation.stu")
+	public String selectLectureEvaluation() {
+		return "lecture/lectureStuEvaluation";
+	}
+	
 }

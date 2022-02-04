@@ -7,9 +7,6 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <style>
-    /* footer css */
-    #wrap::after{display:block;content:"";clear:both;}
-
     /* 강의페이지 상단 남색부분 css*/
     #classHeader_info_left, #classHeader_info_middle, #classHeader_info_right{float: left;}
     #classHeader_info_left_pro div{float: left; margin-top: 10px;}
@@ -79,7 +76,7 @@
         margin-top: 20px;
         margin-left: 15px;
     }
-    #notice{cursor: pointer;}
+    #notice, #evaluation{cursor: pointer;}
     #evaluation i{
         width: 70px;
         height: 70px;
@@ -189,6 +186,9 @@
     #classPlan_content table tr:first-child{background-color: #e0e0e0;}
     #classPlan_content table th, #classPlan_content table td{padding: 7px 0px;}
     #classPlan_content div:nth-child(3){margin-top: 30px;}
+
+    /* footer css */
+    #wrap::after{display:block;content:"";clear:both;}
 </style>
 </head>
 <body>
@@ -243,11 +243,11 @@
                     <div>강의 개요</div>
                     <div style="border-bottom: 2px solid lightgray;"></div>
                     <div>
-                        <div id="notice" style="float: left;" onclick="">
+                        <div id="notice" style="float: left;" onclick="location.href='lectureNotice.stu'">
                             <i class="fas fa-microphone"></i>
-                            <div style="font-size: 13px; font-weight: 400; margin-left: 25px; margin-top: 3px;" onclick="location.href='lectureNotice.stu'">공지사항</div>
+                            <div style="font-size: 13px; font-weight: 400; margin-left: 25px; margin-top: 3px;">공지사항</div>
                         </div>
-                        <div id="evaluation" style="margin-left: 110px;" onclick="">
+                        <div id="evaluation" style="margin-left: 110px;" onclick="location.href='lectureEvaluation.stu'">
                             <i class="fas fa-check"></i>
                             <div style="font-size: 13px; font-weight: 400; margin-left: 25px; margin-top: 3px;">강의평가</div>
                         </div>

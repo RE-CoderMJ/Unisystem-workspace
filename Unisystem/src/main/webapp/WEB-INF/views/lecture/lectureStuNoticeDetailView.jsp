@@ -67,9 +67,9 @@
         position: absolute;
         clear: right;
         float: right;
-        width: 1130px;
+        width: 200px;
         height: 40px;
-        right: -81%;
+        left: 1090px;
         bottom: 0px;
     }
     #two_btn button{

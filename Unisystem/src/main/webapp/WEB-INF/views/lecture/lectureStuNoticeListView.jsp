@@ -65,27 +65,21 @@
     text-decoration: none;
     border: 1px solid #ddd;
     }
-
     .pagination a.active {
     background-color: #153E73;
     color: white;
     border: 1px solid #153E73;
     }
-
     .pagination a:hover:not(.active) {background-color: #ddd;}
-
     .pagination a:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     }
-
     .pagination a:last-child {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     }
     
-    /* footer css */
-    #wrap::after{display:block;content:"";clear:both;}
 </style>
 </head>
 <body>
