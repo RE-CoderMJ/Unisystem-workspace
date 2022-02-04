@@ -6,8 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-</head>
-
 <style>
 /*학생 마이페이지 왼쪽 메뉴바 작업*/
 .wrap_sidebar {
@@ -61,6 +59,8 @@ a:hover {
 	font-weight:bolder;
 }
 </style>
+</head>
+
 
 <body>
 

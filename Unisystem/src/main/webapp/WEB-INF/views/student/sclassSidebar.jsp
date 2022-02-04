@@ -16,15 +16,16 @@
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;
+	padding-bottom:100px;
 }
 
 .total_menu {
 	margin: 10px;
 	font-weight: 900;
 	color: rgb(15, 43, 80);
-	font-size: 18px;
+	font-size: 20px;
 	margin-top:15px;
-	margin-left:10px;
+	margin-left:15px;
 }
 
 .hr_style{
@@ -36,13 +37,14 @@
 .side_title {
 	margin-top: 38px;
 	margin-bottom: 4px;
+	margin-left: 10px;
 }
 
 .classpage_title {
 	margin-top: 10px;
 	margin-bottom: 4px;
+	margin-left: 10px;
 }
-
 .sidebar a {
 	text-decoration: none;
 	color: black;
@@ -69,38 +71,38 @@ a:hover {
 
 		<!-- 왼쪽 메뉴바-->
 		<div class="sidebar">
-			<div class="total_menu"><b>강의실 홈</b></div>
+			<div class="total_menu">강의실 홈</div>
 
 			<hr class="hr_style">
 
 			<div class="classpage_title">
 				 <b>강의정보</b> 
 			</div>
-			<div>
-				<a href="">- 강의 계획표</a>
+			<div style="margin-left: 3px;">
+				<a href="lecturePlan.stu">- 강의 계획표</a>
 			</div>
 
 
 			<div class="side_title">
 				 <b>성적/출석관리</b> 
 			</div>
-			<div>
-				<a href="">- 온라인 출석부</a>
+			<div style="margin-left: 3px;">
+				<a href="lectureAtt.stu">- 온라인 출석부</a>
 			</div>
-			<div>
+			<div style="margin-left: 3px;">
 				<a href="">- 성적 조회</a>
 			</div>
 
 			<div class="side_title">
 				 <b>자료실</b> 
 			</div>
-			<div>
+			<div style="margin-left: 3px;">
 				<a href="">- 수업자료실</a>
 			</div>
-			<div>
+			<div style="margin-left: 3px;">
 				<a href="">- 영상자료실</a>
 			</div>
-			<div>
+			<div style="margin-left: 3px;">
 				<a href="">- 과제 업로드</a>
 			</div>
 

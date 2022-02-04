@@ -24,9 +24,6 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
-    body{
-        background-color: rgb(235,242,252);
-    }
     #header-up{
         background-color: rgb(21, 62, 115);
         height: 43px;
@@ -141,7 +138,7 @@
         <div id="header-down">
         	<div id="header-down-line">
 	            <img src="resources/images/LOGO_WIDTH.png">
-	            <div id="header-down-right">
+	            <nav id="header-down-right">
 	                <a href="">웹메일</a>
 	                <a href="">마이페이지</a>
 	                <a href="">공지사항</a>
@@ -150,7 +147,7 @@
 	                    <input type="text" name="search" id="search">
 	                    <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>
 	                </div>
-	            </div>
+	            </nav>
             </div>
         </div>
     </header>
