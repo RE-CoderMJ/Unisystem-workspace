@@ -87,7 +87,7 @@ a:hover {
 				 <b>성적/출석관리</b> 
 			</div>
 			<div style="margin-left: 3px;">
-				<a href="">- 온라인 출석부</a>
+				<a href="lectureAtt.stu">- 온라인 출석부</a>
 			</div>
 			<div style="margin-left: 3px;">
 				<a href="">- 성적 조회</a>

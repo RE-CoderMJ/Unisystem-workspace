@@ -36,4 +36,10 @@ public class LectureController {
 		return "lecture/lectureStuPlan";
 	}
 	
+	/* 학생 - 온라인출석부를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAtt.stu")
+	public String selectLectureAtt() {
+		return "lecture/lectureAttendance";
+	}
+	
 }
