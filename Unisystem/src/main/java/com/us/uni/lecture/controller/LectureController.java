@@ -30,4 +30,10 @@ public class LectureController {
 		return "lecture/lectureStuEvaluation";
 	}
 	
+	/* 학생 - 강의계획표를 띄워주는 컨트롤러 */
+	@RequestMapping("lecturePlan.stu")
+	public String selectLecturePlan() {
+		return "lecture/lectureStuPlan";
+	}
+	
 }

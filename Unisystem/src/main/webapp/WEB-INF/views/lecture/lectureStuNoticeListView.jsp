@@ -12,7 +12,6 @@
         width: 1500px;
         margin: auto;
     }
-    
     /* page header 영역 */
     #content_header{
         margin-top: 30px;
@@ -20,7 +19,6 @@
         font-size: 24px;
         font-weight: 900;
     }
-    
     /*공지사항 영역*/
     #noticeBox{
         margin-left: 30px;

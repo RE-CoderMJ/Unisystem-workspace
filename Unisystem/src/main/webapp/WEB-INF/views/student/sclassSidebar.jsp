@@ -79,7 +79,7 @@ a:hover {
 				 <b>강의정보</b> 
 			</div>
 			<div style="margin-left: 3px;">
-				<a href="">- 강의 계획표</a>
+				<a href="lecturePlan.stu">- 강의 계획표</a>
 			</div>
 
 
