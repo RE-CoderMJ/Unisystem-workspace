@@ -147,6 +147,19 @@ li {
 	text-decoration: none;
 	cursor: pointer;
 }
+
+container{
+    margin-top: 50px;
+}
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
+}
+.page-item.active .page-link {
+    color: #fff !important;
+    background: rgb(21, 62, 115)!important;
+}
 </style>
 <body>
 
@@ -159,7 +172,7 @@ li {
 		  학생이 로그인하면 smySidebar -->
 
 		<!-- 관리자 전용 사이드바로 변경하기 / 임시로 해놓음 -->
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin-bottom:50px;">
 		<div class="sidewrap">
 			<jsp:include page="../professor/pmySidebar.jsp" />
 		</div>
@@ -310,32 +323,35 @@ li {
 
 
 			<!-- paging bar 영역-->
-			<div id="pagingArea">
+<			<div id="pagingArea"> 
 
-				<ul class="pagination">
-					<li class="page-item ltgt"><a href="">&lt;</a></li>
-					<li class="page-item"><a href="">1</a></li>
-					<li class="page-item"><a href="">2</a></li>
-					<li class="page-item"><a href="">3</a></li>
-					<li class="page-item"><a href="">4</a></li>
-					<li class="page-item"><a href="">5</a></li>
-					<li class="page-item ltgt"><a href="">&gt;</a></li>
-				</ul>
-			</div>
+ 				<ul class="pagination"> 
+ 					<li class="page-item ltgt"><a href="">&lt;</a></li> 
+					<li class="page-item"><a href="">1</a></li> 
+					<li class="page-item"><a href="">2</a></li> 
+ 					<li class="page-item"><a href="">3</a></li> 
+ 					<li class="page-item"><a href="">4</a></li> 
+ 					<li class="page-item"><a href="">5</a></li> 
+ 					<li class="page-item ltgt"><a href="">&gt;</a></li> 
+ 				</ul> 
+		</div> 
+	</div>
 
-		</div>
+		
 		<!-- side바 div영역 끝 -->
 
 		<br clear="both">
-
+		 </div>
+		 
+		 
 		<script>
 
     </script>
-
+	
 		<!-- footer.jsp-->
 		<jsp:include page="../common/footer.jsp" />
 
-	</div>
+	
 
 	</div>
 

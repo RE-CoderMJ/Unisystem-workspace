@@ -170,7 +170,7 @@ li {
 		<!-- title -->
 
 
-		<div class="page_title">대외활동</div>
+		<div class="page_title">대외활동 관리페이지</div>
 
 		<div class="head_count">
 			총 <b style="color: rgb(231, 76, 60);">XXX</b> 건
@@ -207,6 +207,7 @@ li {
 
 
 			<tr>
+				<th></th>
 				<th width="100px">번호</th>
 				<th>제목</th>
 				<th>작성자</th>
@@ -215,6 +216,7 @@ li {
 			</tr>
 
 			<tr>
+				<td><input type="checkbox"></td>
 				<td>1</td>
 				<td>제목입니다</td>
 				<td>김민수</td>
@@ -223,6 +225,7 @@ li {
 			</tr>
 			
 			<tr>
+				<td><input type="checkbox"></td>
 				<td>1</td>
 				<td>제목입니다</td>
 				<td>김민수</td>
@@ -231,6 +234,7 @@ li {
 			</tr>
 			
 			<tr>
+				<td><input type="checkbox"></td>
 				<td>1</td>
 				<td>제목입니다</td>
 				<td>김민수</td>
@@ -239,6 +243,7 @@ li {
 			</tr>
 			
 			<tr>
+				<td><input type="checkbox"></td>
 				<td>1</td>
 				<td>제목입니다</td>
 				<td>김민수</td>
@@ -247,6 +252,7 @@ li {
 			</tr>
 			
 			<tr>
+				<td><input type="checkbox"></td>
 				<td>1</td>
 				<td>제목입니다</td>
 				<td>김민수</td>
@@ -255,7 +261,11 @@ li {
 			</tr>
 
 		</table>
- 
+
+
+		<!--로그인한 회원에게만 보여지도록 조건처리-->
+		<button class="b_write btn-sm btn-secondary">글쓰기</button>
+		<button class="b_delete btn-sm btn-danger">선택삭제</button>
 
 		<!-- paging bar 영역-->
 		<div id="pagingArea">
