@@ -6,9 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LectureController {
 	
-	/* 강의홈을 띄워주는 컨트롤러 */
-	@RequestMapping("main.stu")
+	/* 학생 - 강의홈을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureMain.stu")
 	public String selectLectureInfo() {
-		return "lecture/lectureMainPage";
+		return "lecture/lectureStuMainPage";
 	}
+	
+	/* 학생 - 공지사항 리스트를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureNotice.stu")
+	public String selectLectureNoticeInfo() {
+		return "lecture/lectureStuNoticeListView";
+	}
+	
 }

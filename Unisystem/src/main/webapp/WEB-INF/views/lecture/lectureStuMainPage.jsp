@@ -52,10 +52,10 @@
         margin: auto;
     }
     #outline, #attendance{
-        margin-top: 30px;
-        margin-left: 30px;
+        margin-top: 15px;
+        margin-left: 15px;
         background-color: white;
-        width: 1290px;
+        width: 1305px;
         height: 200px;
         border: 1px solid #e0e0e0;
         padding-top: 15px;
@@ -79,6 +79,7 @@
         margin-top: 20px;
         margin-left: 15px;
     }
+    #notice{cursor: pointer;}
     #evaluation i{
         width: 70px;
         height: 70px;
@@ -94,10 +95,10 @@
     #attendance{
         height: 200px; 
         padding: 0;
-        margin-top: 20px;
-        margin-left: 30px;
+        margin-top: 15px;
+        margin-left: 15px;
         background-color: white;
-        width: 1290px;
+        width: 1305px;
         height: 200px;
         border: 1px solid #e0e0e0;
     }
@@ -159,10 +160,10 @@
     #classPlan{
         height: 200px; 
         padding: 0;
-        margin-top: 20px;
-        margin-left: 30px;
+        margin-top: 15px;
+        margin-left: 15px;
         background-color: white;
-        width: 1290px;
+        width: 1305px;
         height: auto;
         border: 1px solid #e0e0e0
     }
@@ -232,6 +233,7 @@
         <div id="wrap">
 
             <div style="float: left;">
+                <!-- sidebar 영역 -->
                 <jsp:include page="../student/sclassSidebar.jsp" />
             </div>
 
@@ -243,7 +245,7 @@
                     <div>
                         <div id="notice" style="float: left;" onclick="">
                             <i class="fas fa-microphone"></i>
-                            <div style="font-size: 13px; font-weight: 400; margin-left: 25px; margin-top: 3px;">공지사항</div>
+                            <div style="font-size: 13px; font-weight: 400; margin-left: 25px; margin-top: 3px;" onclick="location.href='lectureNotice.stu'">공지사항</div>
                         </div>
                         <div id="evaluation" style="margin-left: 110px;" onclick="">
                             <i class="fas fa-check"></i>
