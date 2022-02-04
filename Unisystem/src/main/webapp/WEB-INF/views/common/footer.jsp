@@ -11,7 +11,8 @@
 	    height:100%;
 	}
 	body{
-	    min-height: 100%;
+	   min-height: 100%;
+       background-color: rgb(235,242,252);
 	}
 	#footer_outer{
 		width:100%;
