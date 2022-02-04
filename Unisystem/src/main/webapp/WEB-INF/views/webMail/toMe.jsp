@@ -18,9 +18,9 @@
         <jsp:include page="webMailSidebar.jsp" />
         <section>
             <header id="mail-boxes-header">
-                <div id="mailbox-name">받은 메일함</div>
+                <div id="mailbox-name">내게 쓴 메일함</div>
                 <div id="mail-count">
-                	| <span id="unread-count">6</span><span> / 65</span>
+                	| <span id="unread-count">3</span><span> / 65</span>
                 </div>
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
@@ -28,8 +28,6 @@
                         <input type="checkbox" class="checkbox">
                         <button style="margin-left: 10px;">읽음</button>
                         <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button style="margin-left: -5px;">스팸등록</button>
-                        <button>답장</button>
                         <button style="margin-left: -4px;">전달</button>
                     </div>
                     <div id="tools-right" align="right">

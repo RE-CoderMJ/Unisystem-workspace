@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 <link href="resources/css/webMail/mailboxes.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
 <body>
 	
@@ -18,19 +18,17 @@
         <jsp:include page="webMailSidebar.jsp" />
         <section>
             <header id="mail-boxes-header">
-                <div id="mailbox-name">받은 메일함</div>
+                <div id="mailbox-name">보낸 메일함</div>
                 <div id="mail-count">
-                	| <span id="unread-count">6</span><span> / 65</span>
+                	| <span> &nbsp;65</span>
                 </div>
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
                         <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 10px;">읽음</button>
-                        <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button style="margin-left: -5px;">스팸등록</button>
-                        <button>답장</button>
-                        <button style="margin-left: -4px;">전달</button>
+                        <button style="margin-left: 10px;"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                        <button>전달</button>
+                        <button style="margin-left: -4px;">다시보내기</button>
                     </div>
                     <div id="tools-right" align="right">
                         <select name="" id="search-option">

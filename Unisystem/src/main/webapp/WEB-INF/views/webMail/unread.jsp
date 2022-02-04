@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 <link href="resources/css/webMail/mailboxes.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
 <body>
 	
@@ -18,9 +18,9 @@
         <jsp:include page="webMailSidebar.jsp" />
         <section>
             <header id="mail-boxes-header">
-                <div id="mailbox-name">받은 메일함</div>
+                <div id="mailbox-name">안읽은 메일함</div>
                 <div id="mail-count">
-                	| <span id="unread-count">6</span><span> / 65</span>
+                	| <span id="unread-count"> &nbsp; 6</span>
                 </div>
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
@@ -67,10 +67,10 @@
                         <tr>
                             <td class="check-area"><input type="checkbox" class="checkbox"></td>
                             <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope-open"></i></i></td>
+                            <td class="read-status"><i class="far fa-envelope"></i></td>
                             <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from">김땡땡 교수님</td>
-                            <td class="title">이번 기말고사에 관한 답변입니다.</td>
+                            <td class="from unread">김땡땡 교수님</td>
+                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
                             <td class="date">2022-01-18 16:29</td>
                         </tr>
                     </tbody>

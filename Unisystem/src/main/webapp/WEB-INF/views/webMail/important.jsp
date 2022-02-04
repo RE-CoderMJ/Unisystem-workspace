@@ -18,7 +18,7 @@
         <jsp:include page="webMailSidebar.jsp" />
         <section>
             <header id="mail-boxes-header">
-                <div id="mailbox-name">받은 메일함</div>
+                <div id="mailbox-name"><i class="fa fa-star fa-xs" aria-hidden="true"></i> &nbsp; 중요 메일함</div>
                 <div id="mail-count">
                 	| <span id="unread-count">6</span><span> / 65</span>
                 </div>
