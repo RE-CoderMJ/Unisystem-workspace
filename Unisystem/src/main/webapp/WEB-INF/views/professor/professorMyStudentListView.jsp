@@ -14,8 +14,7 @@
 		width:1500px;
 		
 		/*--------*/
-		height:830px;
-		margin-bottom:170px;
+		height:922px;
 		/*--------*/
 	}
 	/*#wrap::after{display:block;content:"";clear:both;}*/

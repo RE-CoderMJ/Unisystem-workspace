@@ -11,9 +11,8 @@
 	.middle{
 		margin:auto;
 		width:1500px;
-		height:auto;
+		height:922px;
 	}
-	.middle::after{display:block;content:"";clear:both;}
 	
 	#sidebar{
 		width:20%;
@@ -95,7 +94,7 @@
 	
 		
 		<div class="middle">
-			<div id="sidebar"><jsp:include page="pmySidebar.jsp" /></div>
+			<div id="sidebar" style="padding-top:50px;"><jsp:include page="pmySidebar.jsp" /></div>
 			
 				<div id="content">
 					<div class="btnTopBox">

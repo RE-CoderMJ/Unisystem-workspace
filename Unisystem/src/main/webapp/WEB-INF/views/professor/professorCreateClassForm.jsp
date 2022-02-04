@@ -13,17 +13,15 @@
 		
 		/*--------*/
 		height:830px;
-		margin-bottom:170px;
 		/*--------*/
 	}
-	#wrap::after{display:block;content:"";clear:both;}
 	#sidebar{
 		width:20%;
 		height:700px;
 	}
 	#content{
 		width:80%;
-		height:2000px;
+		height:1780px;
 		margin-top:50px;
 		margin-bottom:50px;
 		background-color:white;
