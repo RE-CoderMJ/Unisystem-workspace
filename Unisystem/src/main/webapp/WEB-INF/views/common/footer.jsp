@@ -28,22 +28,22 @@
 	.footer{
 		margin:auto;
 		padding-top:200px;
-	    width: 1500px;
+	    width:1500px;
+	    height:100px;
+	    font-size:14px;
 	    padding: 15px 0;
-	}
-	.footer>div{
-		color:lightgray;			
-		padding:30px 50px;
 	}
 	.footer div{
 		float:left;
+		color:lightgray;			
 		height:100%;
+		padding-top:36px;
 	}
 	.footer_left{
-		width:75%;
+		width:78%;
 	}
 	.footer_right{
-		width:25%;
+		 margin-left:165px;
 	}
 	#phoneIcon{
 		padding:8px 12px;
