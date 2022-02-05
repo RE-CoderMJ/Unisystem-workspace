@@ -10,10 +10,7 @@
 	#wrap{
 		margin:auto;
 		width:1500px;
-		
-		/*--------*/
 		height:830px;
-		/*--------*/
 	}
 	#sidebar{
 		width:20%;
@@ -21,7 +18,7 @@
 	}
 	#content{
 		width:80%;
-		height:1780px;
+		height:auto;
 		margin-top:50px;
 		margin-bottom:50px;
 		background-color:white;
@@ -173,7 +170,7 @@
 	    width:300px;
 	    height:90px;
 	    margin:auto;
-	    border-radius:10px;
+	    border-radius:7px;
 	}
 	.submitBtn>p{
 		color:white;
@@ -189,6 +186,20 @@
 	.form .table.table-bordered td{
 		text-align:left;
 		line-height:30px;
+	}
+	
+	/*페이징바*/
+	.container{
+	    margin-top: 50px;
+	}
+	.page-link{
+	    color:rgb(33, 33, 33)!important;
+	    border: none!important;
+	    border-radius: 200px!important;
+	}
+	.page-item.active .page-link {
+	    color: #fff !important;
+	    background: rgb(21, 62, 115)!important;
 	}
 </style>
 </head>
@@ -276,15 +287,17 @@
 						</tbody>
 					</table>
 					
-					<div class="pagebar" align="center">
-							<button type="button" class="btn btn-light">&lt;</button>
-							<button type="button" class="btn btn-light"></button>
-							<button type="button" class="btn btn-basic"></button>
-							<button type="button" class="btn btn-light"></button>
-							<button type="button" class="btn btn-light"></button>
-							<button type="button" class="btn btn-light"></button>
-							<button type="button" class="btn btn-light">&gt;</button>
-						</div>
+					<div class="container">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">5</a></li>
+                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                    </ul>
+                 </div>
 						
 				</div> <!-- appList -->
 			</div> <!-- searchList -->
@@ -318,11 +331,11 @@
 								</tr>
 								<tr>
 									<th colspan="2">개요(한글)</th>
-									<td colspan="4">공학입문 설계 교과목의 목표는 공학문제를 설계문제로 정의하고 이를 해결하는 설계과정을 계획하고 문제의 해를 도출할 수 있는 문제해결 능력을 제공하는 데 있다. 또한 팀웍과 다양한 공학문제 해결 도구에 익숙하도록 하는데 교과목의 목표가 있다. 공학문제 해결 과정을 이해하고, 이에 대한 최선의 해를 도출하기 위한 체계적인 문제해결방법의 원리 및 이론을 공부한다. 설계문제의 정식화를 공부하며 정식화된 설계문제를 체계적으로 해결하기 위한 방법을 공부한다.</td>
+									<td colspan="4"><!-- 공학입문 설계 교과목의 목표는 공학문제를 설계문제로 정의하고 이를 해결하는 설계과정을 계획하고 문제의 해를 도출할 수 있는 문제해결 능력을 제공하는 데 있다. 또한 팀웍과 다양한 공학문제 해결 도구에 익숙하도록 하는데 교과목의 목표가 있다. 공학문제 해결 과정을 이해하고, 이에 대한 최선의 해를 도출하기 위한 체계적인 문제해결방법의 원리 및 이론을 공부한다. 설계문제의 정식화를 공부하며 정식화된 설계문제를 체계적으로 해결하기 위한 방법을 공부한다. --></td>
 								</tr>
 								<tr>
 									<th colspan="2">개요(영문)</th>
-									<td colspan="4">To provide students with the use of problem-solving skills for solving realistic engineering problems using problem-based learning techniques, including definition of problem, creative problem solving, design of experiments, and optimization. To familiarize students with experience working as a member of an engineering work team, with experience using several modern tools and techniques to solve engineering problems. This course will help you develop the skills necessary to solve the real engineering problems facing engineers today. You will learn underlying principles an master techniques to solve engineering problems.</td>
+									<td colspan="4"><!-- To provide students with the use of problem-solving skills for solving realistic engineering problems using problem-based learning techniques, including definition of problem, creative problem solving, design of experiments, and optimization. To familiarize students with experience working as a member of an engineering work team, with experience using several modern tools and techniques to solve engineering problems. This course will help you develop the skills necessary to solve the real engineering problems facing engineers today. You will learn underlying principles an master techniques to solve engineering problems. --></td>
 								</tr>
 								<tr>
 									<th colspan="2">수업목표</th>
