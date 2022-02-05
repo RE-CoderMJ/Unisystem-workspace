@@ -3,6 +3,10 @@ package com.us.uni.professor.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * @author Dayn
+ *
+ */
 @Controller
 public class ProfessorController {
 	
@@ -19,6 +23,15 @@ public class ProfessorController {
 	@RequestMapping("app.pr")
 	public String createClass() {
 		return "professor/professorCreateClassForm";
+	}
+	
+	
+	/**
+	 * admin : 학생의 담당교수 조회/변경 페이지
+	 */
+	@RequestMapping("join.ad")
+	public String selectJoinList() {
+		return "professor/adminJoinListView";
 	}
 	
 }

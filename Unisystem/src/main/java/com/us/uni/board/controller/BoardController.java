@@ -8,10 +8,10 @@ import com.us.uni.board.model.service.BoardService;
 @Controller
 public class BoardController {
 	
-	@Autowired
-	private BoardService bService;
+	//@Autowired
+	//private BoardService bService;
 
-	//°Ô½Ã±Û ¸®½ºÆ® Á¶È¸
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¸
 //	@RequestMapping("listbo")
 	
 	
