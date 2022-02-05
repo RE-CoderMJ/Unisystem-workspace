@@ -2,108 +2,110 @@ package com.us.uni.board.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.us.uni.board.model.vo.Board;
 import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.PageInfo;
 
-
+@Service
 public interface BoardService {
 		
-		//Ä¿¹Â´ÏÆ¼ °Ô½ÃÆÇ
+		//ì»¤ë®¤ë‹ˆí‹° ê²Œì‹œíŒ
 	
-		// 1. °Ô½ÃÆÇ(Ä¿¹Â´ÏÆ¼) ¸®½ºÆ® ÆäÀÌÁö ¼­ºñ½º (ÆäÀÌÂ¡)
+		// 1. ê²Œì‹œíŒ(ì»¤ë®¤ë‹ˆí‹°) ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ ì„œë¹„ìŠ¤ (í˜ì´ì§•)
 		int selectListCount();
 		ArrayList<Board> selectList(PageInfo pi);
 		
-		// 2. °Ô½Ã±Û(Ä¿¹Â´ÏÆ¼) ÀÛ¼ºÇÏ±â ¼­ºñ½º
+		// 2. ê²Œì‹œê¸€(ì»¤ë®¤ë‹ˆí‹°) ì‘ì„±í•˜ê¸° ì„œë¹„ìŠ¤
 		int insertBoard(Board b);
 		
-		// 3. °Ô½Ã±Û(Ä¿¹Â´ÏÆ¼) »ó¼¼Á¶È¸¿ë ¼­ºñ½º
+		// 3. ê²Œì‹œê¸€(ì»¤ë®¤ë‹ˆí‹°) ìƒì„¸ì¡°íšŒìš© ì„œë¹„ìŠ¤
 		int increaseCount(int boardNo);
 		Board selectBoard(int boardNo);
 		
-		// 4. °Ô½Ã±Û(Ä¿¹Â´ÏÆ¼) »èÁ¦¿ë ¼­ºñ½º
+		// 4. ê²Œì‹œê¸€(ì»¤ë®¤ë‹ˆí‹°) ì‚­ì œìš© ì„œë¹„ìŠ¤
 		int deleteBoard(int boardNo);
 		
-		// 5. °Ô½Ã±Û(Ä¿¹Â´ÏÆ¼) ¼öÁ¤¿ë ¼­ºñ½º
+		// 5. ê²Œì‹œê¸€(ì»¤ë®¤ë‹ˆí‹°) ìˆ˜ì •ìš© ì„œë¹„ìŠ¤
 		int updateBoard(Board b);
 		
-		// 6. ´ñ±Û(Ä¿¹Â´ÏÆ¼) ¸®½ºÆ® Á¶È¸¿ë ¼­ºñ½º (ajax)
+		// 6. ëŒ“ê¸€(ì»¤ë®¤ë‹ˆí‹°) ë¦¬ìŠ¤íŠ¸ ì¡°íšŒìš© ì„œë¹„ìŠ¤ (ajax)
 		ArrayList<Reply> selectReplyList(int boardNo);
 		
-		// 7. ´ñ±Û(Ä¿¹Â´ÏÆ¼) ÀÛ¼º¿ë ¼­ºñ½º (ajax)
+		// 7. ëŒ“ê¸€(ì»¤ë®¤ë‹ˆí‹°) ì‘ì„±ìš© ì„œë¹„ìŠ¤ (ajax)
 		int insertReply(Reply r);
 		
-		// °øÁö»çÇ× °Ô½ÃÆÇ
+		// ê³µì§€ì‚¬í•­ ê²Œì‹œíŒ
 		
-		// 1. °øÁö ¸®½ºÆ® ÆäÀÌÁö ¼­ºñ½º (ÆäÀÌÂ¡)
+		// 1. ê³µì§€ ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ ì„œë¹„ìŠ¤ (í˜ì´ì§•)
 		int selectnListCount();
 		ArrayList<Board> selectnList(PageInfo pi);
 		
-		// 2. °øÁö ÀÛ¼ºÇÏ±â ¼­ºñ½º
+		// 2. ê³µì§€ ì‘ì„±í•˜ê¸° ì„œë¹„ìŠ¤
 		int insertnBoard(Board b);
 		
-		// 3. °øÁö»ó¼¼Á¶È¸¿ë ¼­ºñ½º
+		// 3. ê³µì§€ìƒì„¸ì¡°íšŒìš© ì„œë¹„ìŠ¤
 		int increasenCount(int boardNo);
 		Board selectnBoard(int boardNo);
 		
-		// 4. °øÁö »èÁ¦¿ë ¼­ºñ½º
+		// 4. ê³µì§€ ì‚­ì œìš© ì„œë¹„ìŠ¤
 		int deletenBoard(int boardNo);
 		
-		// 5. °øÁö ¼öÁ¤ ¼­ºñ½º
+		// 5. ê³µì§€ ìˆ˜ì • ì„œë¹„ìŠ¤
 		int updatenBoard(Board b);
 		
-		// 6. °øÁö ¸®½ºÆ® Á¶È¸¿ë ¼­ºñ½º (ajax)
+		// 6. ê³µì§€ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒìš© ì„œë¹„ìŠ¤ (ajax)
 		ArrayList<Reply> selectnReplyList(int boardNo);
 		
-		// ´ë¿ÜÈ°µ¿ °Ô½ÃÆÇ
+		// ëŒ€ì™¸í™œë™ ê²Œì‹œíŒ
 		
-		// 1. ´ë¿ÜÈ°µ¿ ¸®½ºÆ® ÆäÀÌÁö ¼­ºñ½º (ÆäÀÌÂ¡)
+		// 1. ëŒ€ì™¸í™œë™ ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ ì„œë¹„ìŠ¤ (í˜ì´ì§•)
 		int selectcListCount();
 		ArrayList<Board> selectcList(PageInfo pi);
 				
-		// 2. ´ë¿ÜÈ°µ¿ ÀÛ¼ºÇÏ±â ¼­ºñ½º
+		// 2. ëŒ€ì™¸í™œë™ ì‘ì„±í•˜ê¸° ì„œë¹„ìŠ¤
 		int insertcBoard(Board b);
 				
-		// 3. ´ë¿ÜÈ°µ¿ »ó¼¼Á¶È¸¿ë ¼­ºñ½º
+		// 3. ëŒ€ì™¸í™œë™ ìƒì„¸ì¡°íšŒìš© ì„œë¹„ìŠ¤
 		int increasecCount(int boardNo);
 		Board selectcBoard(int boardNo);
 				
-		// 4. ´ë¿ÜÈ°µ¿ »èÁ¦¿ë ¼­ºñ½º
+		// 4. ëŒ€ì™¸í™œë™ ì‚­ì œìš© ì„œë¹„ìŠ¤
 		int deletecBoard(int boardNo);
 				
-		// 5. ´ë¿ÜÈ°µ¿ ¼öÁ¤¿ë ¼­ºñ½º
+		// 5. ëŒ€ì™¸í™œë™ ìˆ˜ì •ìš© ì„œë¹„ìŠ¤
 		int updatecBoard(Board b);
 				
-		// 6. ´ë¿ÜÈ°µ¿ ¸®½ºÆ® Á¶È¸¿ë ¼­ºñ½º (ajax)
+		// 6. ëŒ€ì™¸í™œë™ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒìš© ì„œë¹„ìŠ¤ (ajax)
 		ArrayList<Reply> selectcReplyList(int boardNo);
 				
-		// 7. ´ë¿ÜÈ°µ¿ ÀÛ¼º¿ë ¼­ºñ½º (ajax)
+		// 7. ëŒ€ì™¸í™œë™ ì‘ì„±ìš© ì„œë¹„ìŠ¤ (ajax)
 		int insertcReply(Reply r);
 		
-		// µ¿¾Æ¸® °Ô½ÃÆÇ
+		// ë™ì•„ë¦¬ ê²Œì‹œíŒ
 		
-		// 1. µ¿¾Æ¸® ¸®½ºÆ® ÆäÀÌÁö ¼­ºñ½º (ÆäÀÌÂ¡)
+		// 1. ë™ì•„ë¦¬ ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ ì„œë¹„ìŠ¤ (í˜ì´ì§•)
 		int selectvListCount();
 		ArrayList<Board> selectvList(PageInfo pi);
 						
-		// 2. µ¿¾Æ¸® ÀÛ¼ºÇÏ±â ¼­ºñ½º
+		// 2. ë™ì•„ë¦¬ ì‘ì„±í•˜ê¸° ì„œë¹„ìŠ¤
 		int insertvBoard(Board b);
 						
-		// 3. µ¿¾Æ¸® »ó¼¼Á¶È¸¿ë ¼­ºñ½º
+		// 3. ë™ì•„ë¦¬ ìƒì„¸ì¡°íšŒìš© ì„œë¹„ìŠ¤
 		int increasevCount(int boardNo);
 		Board selectvBoard(int boardNo);
 						
-		// 4. µ¿¾Æ¸® »èÁ¦¿ë ¼­ºñ½º
+		// 4. ë™ì•„ë¦¬ ì‚­ì œìš© ì„œë¹„ìŠ¤
 		int deletevBoard(int boardNo);
 						
-		// 5. µ¿¾Æ¸® ¼öÁ¤¿ë ¼­ºñ½º
+		// 5. ë™ì•„ë¦¬ ìˆ˜ì •ìš© ì„œë¹„ìŠ¤
 		int updatevBoard(Board b);
 						
-		// 6. µ¿¾Æ¸® ¸®½ºÆ® Á¶È¸¿ë ¼­ºñ½º (ajax)
+		// 6. ë™ì•„ë¦¬ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒìš© ì„œë¹„ìŠ¤ (ajax)
 		ArrayList<Reply> selectvReplyList(int boardNo);
 						
-		// 7. µ¿¾Æ¸® ÀÛ¼º¿ë ¼­ºñ½º (ajax)
+		// 7. ë™ì•„ë¦¬ ì‘ì„±ìš© ì„œë¹„ìŠ¤ (ajax)
 		int insertvReply(Reply r);		
 		
 }
