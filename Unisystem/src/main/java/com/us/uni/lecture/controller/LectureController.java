@@ -42,4 +42,34 @@ public class LectureController {
 		return "lecture/lectureAttendance";
 	}
 	
+	/* 학생 - 수업자료실을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureMat.stu")
+	public String selectLectureMaterial() {
+		return "lecture/lectureMaterialListView";
+	}
+	
+	/* 학생 - 수업자료실 상세보기를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureMatDetail.stu")
+	public String selectLectureMaterialDetail() {
+		return "lecture/lectureMaterialDetailView";
+	}
+	
+	/* 학생 - 영상자료실을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureVideoMat.stu")
+	public String selectLectureVideoMaterial() {
+		return "lecture/lectureVideoMaterialListView";
+	}
+	
+	/* 학생 - 영상자료실 상세보기를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureVideoMatDetail.stu")
+	public String selectLectureVideoMaterialDetail() {
+		return "lecture/lectureVideoMaterialDetailView";
+	}
+	
+	/* 학생 - 과제업로드를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomework.stu")
+	public String selectLectureHomework() {
+		return "lecture/lectureHomeworkListView";
+	}
+	
 }

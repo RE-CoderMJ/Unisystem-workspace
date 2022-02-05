@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,7 @@
 <title>UNI SYSTEM</title>
 <style>
     #wrap{
-        height: 900px;
+        height: 730px;
         width: 1500px;
         margin: auto;
     }
@@ -19,35 +19,36 @@
         font-size: 24px;
         font-weight: 900;
     }
-    /*공지사항 영역*/
-    #noticeBox{
+    #content_header>span{font-size: 17px; color: lightgrey;}
+    /* content 영역*/
+    #contentBox{
         margin-left: 30px;
         margin-top: 30px;
         width: 1290px;
-        height: 700px;
+        height: 540px;
         background-color: white;
     }
-    #noticeBox table{
+    #contentBox table{
         margin-left: 30px; margin-top: 5px;
         width: 1230px;
         text-align: center;
     }
-    #noticeBox table thead th:first-child{width: 60px;}
-    #noticeBox table thead th:nth-child(2){width: 800px;}
-    #noticeBox table thead th:nth-child(3){width: 80px;}
-    #noticeBox table thead th:nth-child(4){width: 100px;}
-    #noticeBox table thead th:nth-child(5){width: 60px;}
-    #noticeBox table thead th, #noticeBox table tbody td{padding: 3px 0;}
-    #noticeBox table thead tr th{border-top: 2px solid lightgray; background-color: #eeeeee;}
-    #noticeBox table tbody tr td{border-top: 1px solid lightgray;}
-    #noticeBox table tbody tr:last-child{border-bottom: 2px solid lightgray;}
-    #noticeBox table tbody tr td a{color: black;}
-    #noticeCount{
+    #contentBox table thead th:first-child{width: 60px;}
+    #contentBox table thead th:nth-child(2){width: 800px;}
+    #contentBox table thead th:nth-child(3){width: 80px;}
+    #contentBox table thead th:nth-child(4){width: 100px;}
+    #contentBox table thead th:nth-child(5){width: 60px;}
+    #contentBox table thead th, #contentBox table tbody td{padding: 3px 0;}
+    #contentBox table thead tr th{border-top: 2px solid lightgray; background-color: #eeeeee;}
+    #contentBox table tbody tr td{border-top: 1px solid lightgray;}
+    #contentBox table tbody tr:last-child{border-bottom: 2px solid lightgray;}
+    #contentBox table tbody tr td a{color: black;}
+    #contentCount{
         margin-left: 30px;
         padding-top: 30px;
         font-weight: 500;
     }
-    #noticeCount>span{color: #F39C12;}
+    #contentCount>span{color: #F39C12;}
     
     /* 페이징바 css */
     .pagination {
@@ -76,8 +77,7 @@
     .pagination a:last-child {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    }
-    
+    }    
 </style>
 </head>
 <body>
@@ -93,11 +93,10 @@
 
         <div id="wrap_content" style="float: left;">
 
-            <article id="content_header">공지사항</article>
+            <article id="content_header"><span>자료실 > </span>영상자료실</article>
 
-            <div id="noticeBox">
-
-                <div id="noticeCount">총 <span>33</span>개의 글</div>
+            <div id="contentBox">
+                <div id="contentCount">총 <span>33</span>개의 글</div>
                 
                 <table>
                     <thead>
@@ -113,7 +112,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="lectureDetailNotice.stu">[기말시험 대체 과제물]</a>
+                                <a href="lectureVideoMatDetail.stu">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -123,7 +122,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -133,7 +132,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -143,7 +142,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -153,7 +152,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -163,7 +162,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -173,7 +172,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -183,7 +182,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -193,7 +192,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -203,57 +202,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">[기말시험 대체 과제물]</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">[기말시험 대체 과제물]</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">[기말시험 대체 과제물]</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">[기말시험 대체 과제물]</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="">X주차 영상자료</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
@@ -273,12 +222,8 @@
                     <a href="#">6</a>
                     <a href="#">&raquo;</a>
                   </div>
-                  
-
             </div>
-        
         </div>
-
     </div>
 
     <!-- footer.jsp-->
