@@ -11,7 +11,7 @@ public class BoardController {
 	@Autowired
 	private BoardService bService;
 
-	//°Ô½Ã±Û ¸®½ºÆ® Á¶È¸
+	//ê²Œì‹œê¸€ ë¦¬ìŠ¤íŠ¸
 //	@RequestMapping("listbo")
 	
 	
