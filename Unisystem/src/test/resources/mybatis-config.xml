@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.us.uni.user.model.vo.User" alias="User" />
+		<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.us.uni.board.model.vo.Reply" alias="Reply" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/user-mapper.xml" />
+	</mappers>
+	<!-- 유의사항 : 미리등록해두려면 해당 mapper파일이 진짜 존재하고 있는 상태여야됨(뿐만아니라 namespace까지도 지정되어있어야됨) -->
+
+</configuration>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.us.uni.board.model.vo.Board;
 import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.PageInfo;
-
+/*
 @Service
 public interface BoardService {
 		
@@ -109,3 +109,4 @@ public interface BoardService {
 		int insertvReply(Reply r);		
 		
 }
+*/

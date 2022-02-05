@@ -208,10 +208,7 @@ li {
 				<br>
 				<form action="login.me" id="log-input" method="post">
 
-					<input type="text" name="userNo" id="userNo" placeholder="  아이디"> 
-					<input type="password" name="userPwd" id="userPwd" placeholder=" 비밀번호">
-
-					<button type="submit">로그인</button>
+					로그인에 실패하였습니다 
 					
 				</form>
 

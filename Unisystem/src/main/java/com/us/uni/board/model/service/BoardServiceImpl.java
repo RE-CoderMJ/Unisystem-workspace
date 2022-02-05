@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.us.uni.board.model.vo.Board;
 import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.PageInfo;
-
+/*
 public class BoardServiceImpl implements BoardService{
 
 	@Override
@@ -221,3 +221,4 @@ public class BoardServiceImpl implements BoardService{
 
 
 }
+*/
