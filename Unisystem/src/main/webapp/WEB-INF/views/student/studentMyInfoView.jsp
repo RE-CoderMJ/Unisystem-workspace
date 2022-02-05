@@ -8,21 +8,11 @@
 <title>UNI SYSTEM</title>
 <style>
 	div{box-sizing:border-box;}
-	#outer{
-		height : auto;
- 		min-height: 100%;
-		padding-bottom: 140px;
-	}
-	#wrapper{
+
+	#wrap{
 		margin:auto;
 		width:1500px;
 	}
-	footer{
-	  height: 140px;
-	  position : relative;
-	  transform : translateY(-100%);
-	}
-	.middle::after{display:block;content:"";clear:both;}
 	#sidebar{
 		width:20%;
 		height:1100px;
@@ -94,10 +84,9 @@
 
 		
 		
-	<div id="outer">
 	<jsp:include page="../common/header.jsp" />
 	
-		<div id="wrapper">
+		<div id="wrap">
 			<div id="sidebar"><jsp:include page="smySidebar.jsp" /></div>
 	
 
@@ -199,7 +188,6 @@
 		
 	</div>
 	
-	</div>
 	<jsp:include page="../common/footer.jsp" />
 	
 </body>
