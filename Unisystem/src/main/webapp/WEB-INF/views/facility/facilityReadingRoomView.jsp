@@ -101,7 +101,10 @@
 		text-align:center;
   		line-height:90px;	
 	}
-	
+	.lineBox{
+	    margin-left: -9px;
+	    width: 480px;
+	}
 </style>
 </head>
 <body>
@@ -147,32 +150,7 @@
 									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-							
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-									<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
 								</label>
 								<label class="btn btn-primary">
 									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
@@ -195,8 +173,107 @@
 								<label class="btn btn-primary">
 									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
 								</label>
-									<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
+								
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<hr class="lineBox">	
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
+								</label>
+
+								<label class="btn btn-primary">
+									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
 								</label>
 								<label class="btn btn-primary">
 									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
@@ -221,81 +298,6 @@
 								</label>
 								
 								
-								<hr>
-								
-								
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-									<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-									<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> 56
-								</label>
 							</div>
 						</div>
 					</div>

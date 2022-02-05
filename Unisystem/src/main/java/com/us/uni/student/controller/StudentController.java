@@ -16,4 +16,9 @@ public class StudentController {
 		return "facility/facilityReadingRoomView";
 	}
 	
+	@RequestMapping("rsvdStudy")
+	public String studyRoom() {
+		return "facility/facilityStudyRoomView";
+	}
+	
 }
