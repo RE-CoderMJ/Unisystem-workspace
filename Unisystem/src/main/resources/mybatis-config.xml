@@ -7,11 +7,11 @@
 		</settings>
 		
 		<typeAliases>
-			<typeAlias type="com.us.uni.user.model.vo.Member" alias="Member" />
+			<typeAlias type="com.us.uni.users.model.vo.Users" alias="Users" />
 		</typeAliases>
 		
 		<mappers>
-			<mapper resource="/mappers/member-mapper.xml" />
+			<mapper resource="/mappers/users-mapper.xml" />
 		</mappers>
 		
 </configuration>

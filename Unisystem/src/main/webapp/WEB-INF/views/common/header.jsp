@@ -130,7 +130,7 @@
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
 	                <span>홍길동(학생)님 환영합니다.</span>
-	                <a href="" id="logout">로그아웃 →</a>
+	                <a href="logout.me" id="logout">로그아웃 →</a>
 	            </div>
             </div>
         </div>

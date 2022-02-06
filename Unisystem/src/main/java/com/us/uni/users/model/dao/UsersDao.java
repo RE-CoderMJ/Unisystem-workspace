@@ -1,14 +1,14 @@
-package com.us.uni.user.model.dao;
+package com.us.uni.users.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.us.uni.user.model.vo.Member;
+import com.us.uni.users.model.vo.Users;
 
 @Repository
-public class MemberDao {
+public class UsersDao {
 	
-	public Member loginUser(SqlSessionTemplate sqlSession, Member m) {
+	public Users loginUser(SqlSessionTemplate sqlSession, Users m) {
 		return sqlSession.selectOne("memberMapper.loginUser",m);
 	}
 
