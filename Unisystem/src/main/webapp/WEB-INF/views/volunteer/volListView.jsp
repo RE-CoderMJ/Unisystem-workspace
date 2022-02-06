@@ -42,13 +42,11 @@
 	height: 25px;
 	border-radius: 3px;
 }
-
 .search_wrap {
 	margin-left: 654px;
     margin-top: 10px;
     margin-bottom: 15px
 }
-
 .search_wrap .btn {
     background-color: rgb(15, 43, 80);
     color: white;
@@ -127,10 +125,14 @@ li {
 }
 
 .b_write {
-	 
 	border: none;
     float: right;
-    margin-right: 98px
+    margin-right: 98px;
+}
+.b_delete{
+	border: none;
+    float: right;
+    margin-right:10px;
 }
 
 .ltgt {
@@ -182,9 +184,9 @@ li {
 			<form id="searchForm" action="" method="get">
 				<div class="select">
 					<select name="condition" class="custom-select">
-						<option class=" " value="4">검색</option>
-						<option class=" " value="5">제목</option>
-						<option class=" " value="6">내용</option>
+						<option class=" " value="">검색</option>
+						<option class=" " value="">제목</option>
+						<option class=" " value="">내용</option>
 					</select>
 				</div>
 
@@ -194,7 +196,7 @@ li {
 				<button class="btn" type="submit">검색</button>
 			</form>
 		</div>
-
+ 
 		<br clear="both"> <br>
 		<br>
 
@@ -219,7 +221,31 @@ li {
 				<td>2019.03.23</td>
 				<td>1004</td>
 			</tr>
-
+			
+			<tr>
+				<td>1</td>
+				<td>제목입니다</td>
+				<td>김민수</td>
+				<td>2019.03.23</td>
+				<td>1004</td>
+			</tr>
+			
+			<tr>
+				<td>1</td>
+				<td>제목입니다</td>
+				<td>김민수</td>
+				<td>2019.03.23</td>
+				<td>1004</td>
+			</tr>
+			
+			<tr>
+				<td>1</td>
+				<td>제목입니다</td>
+				<td>김민수</td>
+				<td>2019.03.23</td>
+				<td>1004</td>
+			</tr>
+			
 			<tr>
 				<td>1</td>
 				<td>제목입니다</td>
@@ -228,27 +254,8 @@ li {
 				<td>1004</td>
 			</tr>
 
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
 		</table>
-
-
-		<!--로그인한 회원에게만 보여지도록 조건처리-->
-		<button class="b_write btn-sm btn-secondary">글쓰기</button>
-
+ 
 
 		<!-- paging bar 영역-->
 		<div id="pagingArea">

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="memberMapper">
+
+			<resultMap id="memberResult" type="Member">
+				<result column="user_no" property="userNo" />
+				<result column="password" property="userPwd" />
+				<result column="kor_name" property="korName" />
+				<result column="eng_name" property="engName" />
+				<result column="birthday" property="birthday" />
+				<result column="gender" property="gender" />
+				<result column="email" property="email" />
+				<result column="phone" property="phone" />
+				<result column="address" property="address" />
+				<result column="nation" property="nation" />
+				<result column="webmail" property="webMail" />
+				<result column="user_div" property="userDiv" />
+				<result column="profile_img" property="profileImg" />
+			</resultMap>
+			
+			
+<!-- 필드명 일치시키기 -->
+
+<select id="loginUser" resultMap="memberResult">
+		<!-- 암호화 전 -->
+		select
+		       user_no
+		     , password
+		     , kor_name
+		     , eng_name
+		     , birthday
+		     , gender
+		     , email
+		     , phone
+		     , address
+		     , nation
+		     , WEBMAIL
+		     , user_div
+		     , profile_img
+		  from member
+		  where
+		   user_no = #{userNo}
+		   and password = #{userPwd}
+</select>
+
+
+</mapper>

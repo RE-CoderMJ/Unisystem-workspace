@@ -61,7 +61,7 @@
 }
 
 .search_wrap {
-	margin-left: 620px;
+	margin-left: 660px;
 	margin-top: 10px;
 	margin-bottom: 15px
 }
@@ -211,6 +211,7 @@ li {
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
+					<th>첨부</th>
 					<th>조회</th>
 				</tr>
 
@@ -221,6 +222,7 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 
@@ -231,6 +233,18 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
+					<td>1004</td>
+				</tr>
+				
+				<tr>
+					<td>1</td>
+					<td></td>
+					<td>자유</td>
+					<td>제목입니다</td>
+					<td>김민수</td>
+					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 
@@ -241,41 +255,51 @@ li {
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
-				<tr>
+				
+					<tr>
 					<td>1</td>
 					<td></td>
 					<td>자유</td>
 					<td>제목입니다</td>
 					<td>김민수</td>
 					<td>2019.03.23</td>
+					<td></td>
 					<td>1004</td>
 				</tr>
 			</table>
 
 			<!--관리자에게만 보여지도록 조건처리-->
-			<button class="b_write btn-sm btn-secondary">글쓰기</button>
-
+			
+			<button class="b_write btn-sm btn-danger">선택삭제</button>
+			<button class="b_write btn-sm btn-dark" style="position:relative; right:-85px;">글쓰기</button>
+			
+			<!-- 버튼 부분 여기까지   -->
+			
 
 
 			<!-- paging bar 영역-->

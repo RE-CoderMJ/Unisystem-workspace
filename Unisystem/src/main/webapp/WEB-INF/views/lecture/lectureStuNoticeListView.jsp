@@ -12,7 +12,6 @@
         width: 1500px;
         margin: auto;
     }
-    
     /* page header 영역 */
     #content_header{
         margin-top: 30px;
@@ -20,7 +19,6 @@
         font-size: 24px;
         font-weight: 900;
     }
-    
     /*공지사항 영역*/
     #noticeBox{
         margin-left: 30px;
@@ -56,7 +54,7 @@
         display: inline-block;
         width:fit-content;
         margin:auto;
-        margin-top: 30px;
+        margin-top: 50px;
     }
     .pagination a {
     color: black;
@@ -65,27 +63,21 @@
     text-decoration: none;
     border: 1px solid #ddd;
     }
-
     .pagination a.active {
     background-color: #153E73;
     color: white;
     border: 1px solid #153E73;
     }
-
     .pagination a:hover:not(.active) {background-color: #ddd;}
-
     .pagination a:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     }
-
     .pagination a:last-child {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     }
     
-    /* footer css */
-    #wrap::after{display:block;content:"";clear:both;}
 </style>
 </head>
 <body>
@@ -121,7 +113,7 @@
                         <tr>
                             <td>33</td>
                             <td>
-                                <a href="">[기말시험 대체 과제물]</a>
+                                <a href="lectureDetailNotice.stu">[기말시험 대체 과제물]</a>
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
                             <td>김말똥</td>
