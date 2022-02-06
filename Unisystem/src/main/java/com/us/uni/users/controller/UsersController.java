@@ -1,4 +1,4 @@
-package com.us.uni.user.controller;
+package com.us.uni.users.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,24 +8,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.us.uni.user.model.service.MemberService;
-import com.us.uni.user.model.vo.Member;
+import com.us.uni.users.model.service.UsersService;
+import com.us.uni.users.model.vo.Users;
 
 
 @Controller
-public class MemberController {
+public class UsersController {
 	
 	@Autowired
-	private MemberService uService;
+	private UsersService uService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
 	@RequestMapping("login.me")
-	public ModelAndView loginUser(Member m, HttpSession session, ModelAndView mv){
+	public ModelAndView loginUser(Users m, HttpSession session, ModelAndView mv){
 	
-		Member loginUser = uService.loginUser(m);
+		Users loginUser = uService.loginUser(m);
 		
 		if(loginUser == null) { 
 			// 로그인 실패 
@@ -42,7 +42,14 @@ public class MemberController {
 		}
 		
 		return mv;
-		
 	}
+	
+	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 	
 }

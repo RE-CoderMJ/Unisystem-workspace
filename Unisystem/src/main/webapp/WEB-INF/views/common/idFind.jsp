@@ -201,7 +201,7 @@ li {
 
 				<div class="login-title2">아이디 찾기</div>
 
-				<form id="log-input" action="" method="post">
+				<form id="log-input" action="findid" method="post">
 					<table>
 
 						<tr>
@@ -222,7 +222,9 @@ li {
 						</tr>
 
 					</table>
+					
 					<button type="submit">아이디 조회</button>
+					
 				</form>
 
 				<br>

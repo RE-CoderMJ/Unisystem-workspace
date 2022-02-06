@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="memberMapper">
+<mapper namespace="usersMapper">
 
-			<resultMap id="memberResult" type="Member">
+			<resultMap id="usersResult" type="Users">
 				<result column="user_no" property="userNo" />
 				<result column="password" property="userPwd" />
 				<result column="kor_name" property="korName" />
@@ -22,7 +22,7 @@
 			
 <!-- 필드명 일치시키기 -->
 
-<select id="loginUser" resultMap="memberResult">
+<select id="loginUser" resultMap="usersResult">
 		<!-- 암호화 전 -->
 		select
 		       user_no
@@ -38,7 +38,7 @@
 		     , WEBMAIL
 		     , user_div
 		     , profile_img
-		  from member
+		  from users
 		  where
 		   user_no = #{userNo}
 		   and password = #{userPwd}

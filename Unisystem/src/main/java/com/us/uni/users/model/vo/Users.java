@@ -1,7 +1,7 @@
-package com.us.uni.user.model.vo;
+package com.us.uni.users.model.vo;
 
 
-public class Member {
+public class Users {
 	 private int userNo;
 	 private String userPwd;
 	 private String korName;
@@ -16,9 +16,9 @@ public class Member {
 	 private int userDiv;
 	 private String profileImg;
 	 
-	 public Member() {}
+	 public Users() {}
 
-	public Member(int userNo, String userPwd, String korName, String engName, String birthday, String gender,
+	public Users(int userNo, String userPwd, String korName, String engName, String birthday, String gender,
 			String email, String phone, String address, String nation, String webMail, int userDiv, String profileImg) {
 		super();
 		this.userNo = userNo;
