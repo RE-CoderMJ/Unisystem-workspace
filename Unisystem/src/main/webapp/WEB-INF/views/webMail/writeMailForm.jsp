@@ -71,17 +71,7 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<script>
-		$(document).ready(function() {
-			$('#summernote').summernote({
-				placeholder: 'Hello Bootstrap 4',
-				tabsize: 2,
-				height: 100
-			});
-		});
-	</script>
-
-	<!--
+	
 	<script>
 		$(document).ready(function(){
 			$("#summernote").summernote({
@@ -94,6 +84,5 @@
 			});
 		});
 	</script>
-	-->
 </body>
 </html>
