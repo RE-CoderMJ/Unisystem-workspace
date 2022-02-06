@@ -190,6 +190,13 @@ li {
 
 </style>
 <body>
+<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
 	<div class="back-color">
 		<!--가로 로고 자리 -->
 		<div class="logo">
@@ -206,19 +213,19 @@ li {
 
 						<tr>
 							<td><label for="">이름</label></td>
-							<th><input type="text" name="" placeholder="이름을 입력하세요">
+							<th><input type="text" name="korName" id="korName" placeholder="이름을 입력하세요">
 							</th>
 						</tr>
 
 						<tr>
 							<td><label for="">연락처</label></td>
-							<th><input type="text" name="" placeholder="연락처를 입력하세요">
+							<th><input type="text" name="phone" id="phone" placeholder="연락처를 입력하세요 (- 포함)">
 							</th>
 						</tr>
 
 						<tr>
 							<td><label for="">생년월일</label></td>
-							<th><input type="text" name="" placeholder="앞 6자리 숫자만 입력"></th>
+							<th><input type="text" name="birthday" id="birthday" placeholder="yyyy-mm-dd 형식으로 입력하세요."></th>
 						</tr>
 
 					</table>

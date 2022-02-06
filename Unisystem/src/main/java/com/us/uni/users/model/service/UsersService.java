@@ -6,6 +6,6 @@ public interface UsersService {
 	
 		// 로그인 서비스 (select)
 	Users loginUser(Users m);
-
+	Users findId(Users m);
 
 }
