@@ -55,4 +55,9 @@ public class WebMailController {
 	public String selectMailsWithAttach(){
 		return "webMail/attach";
 	}
+	
+	@RequestMapping("webMail.writeForm")
+	public String writeMailForm(){
+		return "webMail/writeMailForm";
+	}
 }

@@ -79,7 +79,7 @@
 </style>
 </head>
 <body>
-	
+	<jsp:include page="../common/links.jsp"/>
 	<jsp:include page="../common/header.jsp" />
 
     <div id="wrapper">

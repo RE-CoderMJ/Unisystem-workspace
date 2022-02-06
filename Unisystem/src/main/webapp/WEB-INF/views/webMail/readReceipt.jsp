@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 </head>
 <body>
-	
+	<jsp:include page="../common/links.jsp"/>
 	<jsp:include page="../common/header.jsp" />
 
     <div id="wrapper">
