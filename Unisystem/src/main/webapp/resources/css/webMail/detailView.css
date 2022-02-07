@@ -1,0 +1,57 @@
+@charset "UTF-8";
+#tools>button{
+    background-color: white;
+    border: gray 1px solid;
+    border-radius: 3px;
+    font-size: 13px;
+    color: rgb(36, 36, 36);
+    margin-right: 1px;
+    height: 25px;
+}
+.detail-lines{
+	border: darkgray solid 1px;
+	width : 1150px;
+	margin-left:0px;
+}
+.fa-arrow-right{
+	color: RGB(26,86,162);
+}
+#title-area{
+	margin-left:15px;
+	margin-bottom:10px;
+	font-weight:800;
+}
+#info-area{
+	margin-left:35px;
+	font-size:12px;
+}
+#info-area>span{
+	font-weight:600;
+	margin-right:10px;
+}
+#contents{
+	width:1150px;
+	min-height:300px;
+	height:auto;
+	margin-left:48px;
+	padding: 30px 30px 30px 30px;
+	vertical-align: middle;
+}
+#att-area{
+	width : 1150px;
+	margin-left : 50px;
+	margin-bottom: 100px;
+}
+#att-title{
+	font-weight:800;
+	margin-right:10px;
+	margin-left: 15px;
+	float:left;
+}
+#att-list>div{
+	margin-left: 100px;
+	width:200px;
+}
+#att-list{
+	height:auto;
+}

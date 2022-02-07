@@ -1,0 +1,135 @@
+@charset "UTF-8";
+.modal-backdrop{
+	 background-color: rgba(0,0,0,.0001) !important;
+}
+   .modalMsg-area{
+   	margin-top: 20px;
+   	margin-bottom : 30px;
+   }
+   .modalMsg-head{
+   	font-weight: 700;
+   	font-size : 14px;
+   }
+#deleteCompletedClosebtn{
+    background-color: rgb(26, 86, 162);
+    width: 260px;
+    color: white;
+    font-weight: bolder;
+}
+
+/*스팸등록 모달창*/
+#title{
+    font-weight: bolder;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+#descr{
+	font-size:13px;
+	margin-bottom:15px;
+}
+/* 라디오 인풋 영역 */
+#select-area{
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+#select-area label{
+	font-size: 14px;
+}
+/* 버튼영역 */
+#spambtn-area>*{
+    width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#emptySpambtn-area>*{
+    width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#emptyTrashbtn-area>*{
+    width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#deleteSpambtn-area>*{
+    width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#deleteTrashbtn-area>*{
+    width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#deleteContact-area>*{
+	width: 48%;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#addContact-btnArea>*{
+	width: 120px;
+    font-weight: bolder;
+    margin-left:5px;
+}
+#addContact-btnArea{
+	margin-left:25px;
+	margin-bottom:20px;
+}
+#editContact-btnArea>*{
+	width: 120px;
+    font-weight: bolder;
+    margin-left:5px;
+}
+#editContact-btnArea{
+	margin-left:25px;
+	margin-bottom:20px;
+}
+#spam-btn, #spam-confirm-btn, #trash-confirm-btn, 
+#spam-delete-confirm-btn, #trash-delete-confirm-btn,
+#contact-delete-confirm-btn, #addContact-btn,
+#editContact-btn{
+    color: white;
+    background-color: rgb(26, 86, 162);
+}
+#spam-close, #spam-closebtn, #trash-closebtn, 
+#spam-delete-closebtn, #trash-delete-closebtn,
+#contact-delete-closebtn, #addContactClose-btn,
+#editContactClose-btn{
+    border: 1px solid gray;
+    color: gray;
+    margin-bottom: 10px;
+    float:left;
+}
+#spamCompletedClosebtn{
+    background-color: rgb(26, 86, 162);
+    width: 260px;
+    color: white;
+    font-weight: bolder;
+}
+
+/*주소록 모달창*/
+.modal .modal-footer{
+    justify-content: center;
+}
+.modal .modal-header{
+    border-bottom: 0;
+}
+.md-box p{
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+    margin-bottom:10px;
+    margin-left:20px;
+}
+.md-box input{
+    font-size: 22px;
+    padding: 5px 0;
+    border: 1px solid gray;
+    border-radius:3px;
+    width: 230px;
+    margin-bottom: 20px;
+    margin-left:20px;
+}
+.md-box .btn-box button{
+    background-color: rgb(26, 86, 162);
+}
