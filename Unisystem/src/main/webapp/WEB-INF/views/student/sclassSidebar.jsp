@@ -90,7 +90,7 @@ a:hover {
 				<a href="lectureAtt.stu">- 온라인 출석부</a>
 			</div>
 			<div style="margin-left: 3px;">
-				<a href="">- 성적 조회</a>
+				<a href="lectureGrade.stu">- 성적 조회</a>
 			</div>
 
 			<div class="side_title">

@@ -72,4 +72,10 @@ public class LectureController {
 		return "lecture/lectureHomeworkListView";
 	}
 	
+	/* 학생 - 강의 성적을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureGrade.stu")
+	public String selectLectureGrade() {
+		return "lecture/lectureStuGrade";
+	}
+	
 }
