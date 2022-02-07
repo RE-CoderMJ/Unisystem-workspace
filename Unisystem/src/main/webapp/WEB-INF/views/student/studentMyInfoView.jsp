@@ -19,12 +19,11 @@
 	}
 	#content{
 		width:80%;
-		height:1050px;
+		height:1040px;
 		margin-top:50px;
 		margin-bottom:50px;
 		background-color:white;
 	}
-	#wrapper>div{float:left;}
 	.pageName{padding:7px;}
 	.pageName>p{
 		margin:0px;
@@ -87,104 +86,102 @@
 	<jsp:include page="../common/header.jsp" />
 	
 		<div id="wrap">
-			<div id="sidebar"><jsp:include page="smySidebar.jsp" /></div>
-	
-
-				<div id="content">
-					<div class="btnTopBox">
-						<div class="pageName"><p style="color:gray">마이페이지>학적>&nbsp;</p><p style="font-size:19px; font-weight:600;">내 정보조회</p></div>
-						<div class="btnBox">
-							<button type="button" class="btn btn-sm btn-outline-secondary">비밀번호 변경</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary">개인정보수정</button>
-						</div>
-						
-						
+			<div id="sidebar" style="float:left;"><jsp:include page="smySidebar.jsp" /></div>
+			<div id="content" style="float:left;">
+				<div class="btnTopBox">
+					<div class="pageName"><p style="color:gray">마이페이지>학적>&nbsp;</p><p style="font-size:19px; font-weight:600;">내 정보조회</p></div>
+					<div class="btnBox">
+						<button type="button" class="btn btn-sm btn-outline-secondary">비밀번호 변경</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary">개인정보수정</button>
 					</div>
-					<div class="profileBox">
-						<div class="imgBox">
-							<!-- <img src=""> -->
-							<div>프로필사진</div>
-						</div>
-						<div class="modifyBox">
-							<table class="pfBox table table-bordered" style="margin-top:20px">
-								<tbody>
-									<tr>
-										<th width="300">성명</th>
-										<td>김길동</td>
-										<td>KIM GILDONG</td>
-									</tr>
-								</tbody>
-							</table>
-							<table class="table table-bordered">
-								<tbody>
-									<tr>
-										<th width="300">전화번호</th>
-										<td>010-1234-5678</td>
-									</tr>
-									<tr>
-										<th>이메일</th>
-										<td>hong@email.com</td>
-									</tr>
-									<tr>
-										<th>웹메일</th>
-										<td>201112345@unisystem.com</td>
-									</tr>
-									<tr>
-										<th>주소</th>
-										<td>서울 양천구 목동</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+					
+					
+				</div>
+				<div class="profileBox">
+					<div class="imgBox">
+						<!-- <img src=""> -->
+						<div>프로필사진</div>
 					</div>
-					<div class="infoBox">
-						<table class="table table-bordered" style="width:1134px;">
+					<div class="modifyBox">
+						<table class="pfBox table table-bordered" style="margin-top:20px">
 							<tbody>
 								<tr>
-									<th>학번</th>
-									<td>201112345</td>
-									<th>성명</th>
+									<th width="300">성명</th>
 									<td>김길동</td>
-									<th>생년월일</th>
-									<td>1996-01-12</td>
-									<th>성별</th>
-									<td>남성</td>
-								</tr>
-								<tr>
-									<th>대학</th>
-									<td>자연과학대학</td>
-									<th>학과</th>
-									<td>물리학과</td>
-									<th>전공</th>
-									<td>물리학</td>
-									<th>복수전공</th>
-									<td></td>
-								</tr>
-								<tr>
-									<th>학년</th>
-									<td>2</td>
-									<th>국적</th>
-									<td>대한민국</td>
-									<th>입학일자</th>
-									<td>2011-02-06</td>
-									<th>졸업일자</th>
-									<td></td>
-								</tr>
-								<tr>
-									<th>입학구분</th>
-									<td>신입</td>
-									<th>학적변동</th>
-									<td>재학</td>
-									<th>담당교수</th>
-									<td>홍말동</td>
-									<th>이수학점</th>
-									<td>58</td>
+									<td>KIM GILDONG</td>
 								</tr>
 							</tbody>
 						</table>
-
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th width="300">전화번호</th>
+									<td>010-1234-5678</td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td>hong@email.com</td>
+								</tr>
+								<tr>
+									<th>웹메일</th>
+									<td>201112345@unisystem.com</td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td>서울 양천구 목동</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-				</div>			
+				</div>
+				<div class="infoBox">
+					<table class="table table-bordered" style="width:1134px;">
+						<tbody>
+							<tr>
+								<th>학번</th>
+								<td>201112345</td>
+								<th>성명</th>
+								<td>김길동</td>
+								<th>생년월일</th>
+								<td>1996-01-12</td>
+								<th>성별</th>
+								<td>남성</td>
+							</tr>
+							<tr>
+								<th>대학</th>
+								<td>자연과학대학</td>
+								<th>학과</th>
+								<td>물리학과</td>
+								<th>전공</th>
+								<td>물리학</td>
+								<th>복수전공</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>학년</th>
+								<td>2</td>
+								<th>국적</th>
+								<td>대한민국</td>
+								<th>입학일자</th>
+								<td>2011-02-06</td>
+								<th>졸업일자</th>
+								<td></td>
+							</tr>
+							<tr>
+								<th>입학구분</th>
+								<td>신입</td>
+								<th>학적변동</th>
+								<td>재학</td>
+								<th>담당교수</th>
+								<td>홍말동</td>
+								<th>이수학점</th>
+								<td>58</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>			
 		
 	</div>
 	
