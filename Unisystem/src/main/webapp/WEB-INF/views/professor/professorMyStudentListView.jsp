@@ -12,12 +12,8 @@
 	#wrap{
 		margin:auto;
 		width:1500px;
-		
-		/*--------*/
 		height:922px;
-		/*--------*/
 	}
-	/*#wrap::after{display:block;content:"";clear:both;}*/
 	#sidebar{
 		width:20%;
 		height:700px;
@@ -104,7 +100,7 @@
 	
 		
 	<div id="wrap">
-		<div id="sidebar" style="margin-top:50px; float:left;"><jsp:include page="pmySidebar.jsp" /></div>
+		<div id="sidebar" style="float:left;"><jsp:include page="pmySidebar.jsp" /></div>
 		<div id="content" style="float:left;">
 					<div class="TopBox">
 						<div class="pageName"><p style="color:gray">마이페이지>담당 학생 관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">담당 학생 조회</p></div>
