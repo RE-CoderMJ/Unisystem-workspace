@@ -25,4 +25,9 @@ public class StudentController {
 	public String enrollForm() {
 		return "student/studentEnrollForm";
 	}
+	
+	@RequestMapping("student.ad")
+	public String selectStudentList() {
+		return "student/adminStudentListView";
+	}
 }

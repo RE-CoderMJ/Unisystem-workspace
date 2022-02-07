@@ -86,7 +86,7 @@ a:hover {
 
 
 			<div class="side_title">
-				 <b>담당 학생 관리</b> 
+				 <b>담당 교수 관리</b> 
 			</div>
 			<div>
 				<a href="">- 담당 교수 변경</a>

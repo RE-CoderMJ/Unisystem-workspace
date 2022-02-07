@@ -40,5 +40,12 @@ public class ProfessorController {
 	}
 	
 	
+	/**
+	 * admin : 교수 목록 조회 페이지
+	 */
+	@RequestMapping("professor.ad")
+	public String selectProfessorList() {
+		return "professor/adminProfessorListView";
+	}
 	
 }
