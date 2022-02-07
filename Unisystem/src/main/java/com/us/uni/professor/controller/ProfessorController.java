@@ -25,6 +25,11 @@ public class ProfessorController {
 		return "professor/professorCreateClassForm";
 	}
 	
+	@RequestMapping("enrollForm.pr")
+	public String professorEnrollForm() {
+		return "professor/professorEnrollForm";
+	}
+	
 	
 	/**
 	 * admin : 학생의 담당교수 조회/변경 페이지
@@ -33,5 +38,7 @@ public class ProfessorController {
 	public String selectJoinList() {
 		return "professor/adminJoinListView";
 	}
+	
+	
 	
 }

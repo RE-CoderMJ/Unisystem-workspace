@@ -7,31 +7,35 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <style>
-	div{box-sizing:border-box;}
-	.middle{
+		div{box-sizing:border-box;}
+	#wrap{
 		margin:auto;
 		width:1500px;
-		height:922px;
 	}
-	
+	#wrap>div{
+		float:left;
+	}
 	#sidebar{
 		width:20%;
 		height:1100px;
 	}
 	#content{
 		width:80%;
-		height:700px;
+		height:1050px;
 		margin-top:50px;
 		margin-bottom:50px;
 		background-color:white;
+		border:1px solid lightgray;
 	}
-
-	.middle>div{float:left;}
-
-	.pageName{padding:7px;}
+	.pageName{
+		padding:7px;
+		height:50px;
+		}
+	
 	.pageName>p{
 		margin:0px;
 		float:left;
+		line-height:30px;
 	}
 	.btnTopBox{
 		width:100%;
@@ -93,8 +97,8 @@
 	<jsp:include page="../common/header.jsp" />
 	
 		
-		<div class="middle">
-			<div id="sidebar" style="padding-top:50px;"><jsp:include page="pmySidebar.jsp" /></div>
+		<div id="wrap">
+			<div id="sidebar"><jsp:include page="pmySidebar.jsp" /></div>
 			
 				<div id="content">
 					<div class="btnTopBox">

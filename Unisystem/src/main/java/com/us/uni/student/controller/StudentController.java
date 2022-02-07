@@ -20,5 +20,9 @@ public class StudentController {
 	public String studyRoom() {
 		return "facility/facilityStudyRoomView";
 	}
-	
+
+	@RequestMapping("enrollForm.st")
+	public String enrollForm() {
+		return "student/studentEnrollForm";
+	}
 }
