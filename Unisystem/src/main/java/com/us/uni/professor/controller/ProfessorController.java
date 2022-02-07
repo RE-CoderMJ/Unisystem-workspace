@@ -48,4 +48,8 @@ public class ProfessorController {
 		return "professor/adminProfessorListView";
 	}
 	
+	@RequestMapping("clist.ad")
+	public String requestClassList() {
+		return "professor/adminRequestClassListView";
+	}
 }

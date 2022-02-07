@@ -11,7 +11,7 @@
 <style>
 /*교수 마이페이지 왼쪽 메뉴바 작업*/
 .wrap_sidebar {
-	width: 180px;
+	width: 200px;
 	height: auto;
 	background-color: white;
 	border-top: 1px solid lightgray;

@@ -79,7 +79,6 @@
 		width:16px;
 		height:16px;
 	}
-	
 	/*페이징*/
 	.pagebar{
 		width:100%;
@@ -108,10 +107,11 @@
 	    background: rgb(21, 62, 115)!important;
 	}
 	.nameTag{
-		font-size:20px;
+		line-height:70px;
+		font-size:25px;
 		font-weight:700;
 		color:white;
-		margin-right:420px;
+		margin-right:350px;
 	}
 	*:focus {
     outline: none;
@@ -126,7 +126,6 @@
 	.btnBox{
 		width:100%;
 		height:30px;
-		margin-left:20px;
 		position:relative;
 		margin:10px;
 	}
@@ -136,14 +135,13 @@
 		float:left;
 	}
 	.switchBox>div{
-		padding-left:30px;
 		width:200px;
 		height:30px;
 		float:left;
 	}
 	.btnDiv{
 		position:absolute;
-		right:9px;
+		right:10px;
 	}
 </style>
 </head>
@@ -155,34 +153,24 @@
 		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>
 		<div id="content" style="float:left;">
 			<div class="topBox">
-				<div class="pageName"><p style="color:gray">마이페이지>기본정보>&nbsp;</p><p style="font-size:19px; font-weight:600;">교수 관리</p></div>
+				<div class="pageName"><p style="color:gray">마이페이지>강의>&nbsp;</p><p style="font-size:19px; font-weight:600;">강의 신청내역</p></div>
 			</div>
 			
 			
 			<div class="searchList">
 				<div class="searchBox">
-					<span class="nameTag">교수 목록</span>
-					<input type="text" name="univ" list="univList" placeholder="대학별 조회">
-					<datalist id="univList">
-						<option>자연과학대학</option>
-						<option>예술대학</option>
-					</datalist>
-					<input type="text" name="department" list="departList" placeholder="학부별 조회">
-					<datalist id="departList">
-						<option>물리학과</option>
-						<option>전자공학</option>
-					</datalist>
-					<input type="text" placeholder="이름으로 조회">
-					<button type="submit">검색</button>
+					<span class="nameTag">강의 개설 신청 현황</span>
 				</div>
 				
-
+				
+			</div>	
 
 
 					<div class="appList">
+
 				<div class="btnBox">
 					<div class="btnDiv">
-						<button class="btn btn-sm btn-outline-secondary">새로 등록</button>
+						<button class="btn btn-sm btn-outline-secondary">강의 생성</button>
 						<button class="btn btn-sm btn-outline-secondary">삭제</button>
 					</div>
 				</div>
@@ -190,105 +178,105 @@
 						<thead>
 							<tr>
 								<th width="30"><input type="checkbox"></th>
-								<th width="150">교번</th>
-								<th width="220">이름</th>
-								<th width="220">소속</th>
-								<th width="220">학부</th>
-								<th width="220">전공</th>
-								<th width="220">직급</th>
+								<th width="100">순번</th>
+								<th width="220">신청번호</th>
+								<th width="150">신청일자</th>
+								<th width="400">강의명</th>
+								<th width="100">교수자</th>
+								<th width="250">상태</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<!-- 시작 -->
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>20191234</td>
-								<td>김말동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>조교수</td>
+								<td>1</td>
+								<td>2012-12345</td>
+								<td>2012-02-10</td>
+								<td>미생물 유전체</td>
+								<td>홍길동</td>
+								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
 							<!-- 끝 -->
 						</tbody>
