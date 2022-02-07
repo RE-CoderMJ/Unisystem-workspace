@@ -11,6 +11,7 @@
 </head>
 <body>
 	<jsp:include page="../common/links.jsp"/>
+    <jsp:include page="modals.jsp" />
 	<jsp:include page="../common/header.jsp" />
 
     <div id="wrapper">
@@ -27,8 +28,8 @@
                     <div id="tools-left">
                         <input type="checkbox" class="checkbox">
                         <button style="margin-left: 10px;">읽음</button>
-                        <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button style="margin-left: -5px;">스팸등록</button>
+                        <button data-toggle="modal" data-target="#deleteCompleted"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                        <button data-toggle="modal" data-target="#spamConfirmModal" style="margin-left: -5px;">스팸등록</button>
                         <button>답장</button>
                         <button style="margin-left: -4px;">전달</button>
                     </div>
@@ -93,6 +94,13 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(document).ready(function(){
+			let $len = $("section").height();
+			$("#webMail-sidebar").css('height', $len + 22);
+		})
+	</script>
 	
 </body>
 </html>

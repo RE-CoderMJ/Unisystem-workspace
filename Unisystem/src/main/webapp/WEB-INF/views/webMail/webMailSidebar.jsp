@@ -11,7 +11,7 @@
     #webMail-sidebar{
         background-color: white;
         width: 190px;
-        height: 1000px;
+        min-height:700px;
         float: left;
     }
     .sidebar-lines{
@@ -105,6 +105,23 @@
         color: gray;
         cursor: pointer;
     }
+    #emptySpam{
+    	width:20px;
+    	margin-left:55px;
+    }
+    #spam-icon{
+    	margin-left:0px!important;
+    	margin-right:0px;
+    }
+    #emptyTrash{
+    	width:20px;
+    	margin-left:55px;
+    }
+    #trash-icon{
+    	margin-left:26px!important;
+    	margin-right:0px;
+    }
+   
     
     /*주소록*/
     #contact{
@@ -131,6 +148,7 @@
 </style>
 </head>
 <body>
+	<jsp:include page="modals.jsp" />
 	<nav id="webMail-sidebar">
             <div id="btn-wrapper">
                 <button id="writeMail">메일쓰기</button>
@@ -154,14 +172,18 @@
                 <div>보낸메일함<button>수신확인</button></div>
                 <div>임시보관함</div>
                 <div>
-                    스팸메일함
+                   	 스팸메일함
                     <span>10</span>
-                    <i class="fa fa-trash fa-sm" aria-hidden="true" style="margin-left: 55px;"></i>
+                    <a type="button" id="emptySpam" data-dismiss="modal" data-toggle="modal" href="#emptySpamAskModal">
+                    	<i class="fa fa-trash fa-sm" id="spam-icon" aria-hidden="true" style="margin-left: 55px;"></i>
+                    </a>
                 </div>
                 <div>
-                    휴지통
+                   	 휴지통
                     <span>32</span>
-                    <i class="fa fa-trash fa-sm" aria-hidden="true" style="margin-left: 80px;"></i>
+                    <a type="button" id="emptyTrash" data-dismiss="modal" data-toggle="modal" href="#emptyTrashAskModal">
+                    	<i class="fa fa-trash fa-sm" id="trash-icon" aria-hidden="true" style="margin-left: 55px;"></i>
+                    </a>
                 </div>
             </div>
             <hr class="sidebar-lines">

@@ -5,16 +5,18 @@ div{
 }
 #wrapper{
     width: 1500px;
-    height: 1100px;
+    height: auto;
     margin: auto;
     margin-top: 30px;
+    margin-bottom:50px;
 }
 
 /*내용 영역 스타일*/
 section{
     background-color: white;
     width: 1280px;
-    height: 1000px;
+    height: auto;
+    min-height:700px;
     margin-bottom: 50px;
     margin-left: 20px;
     display: block;
@@ -162,6 +164,7 @@ section::after{display:block;content:"";clear:both;}
 /*페이징바*/
 .container{
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 .page-link{
     color:RGB(26,86,162)!important;

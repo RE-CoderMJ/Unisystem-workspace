@@ -123,5 +123,13 @@
 
 	<jsp:include page="../common/footer.jsp" />
 	
+	<script>
+		$(document).ready(function(){
+			let $len = $("section").height();
+			console.log($len);
+			$("#webMail-sidebar").css('height', $len + 22);
+		})
+	</script>
+	
 </body>
 </html>
