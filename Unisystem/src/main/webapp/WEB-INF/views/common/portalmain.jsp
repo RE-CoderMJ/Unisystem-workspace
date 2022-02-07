@@ -23,8 +23,10 @@
 	padding: 20px;
 	align-items: center;
 	display: grid;
+	font-size:15px;
 }
-
+.container1 h4{font-weight:700;font-size:20px;}
+.container2 h4{font-weight:700;font-size:20px;}
 .container2 {
 	display: grid;
 	grid-gap: 10px;
@@ -48,6 +50,7 @@
 	padding: 20px;
 	align-items: center;
 	display: grid;
+	font-size:15px;
 }
 
 .class {
@@ -142,13 +145,22 @@ text-decoration:none;
 	<div class="container1">
 	
 		<!-- 수강중인 과목 -->
-		<div class="class">class</div>
+		<div class="class">
+		<h4>수강중인 과목</h4>
+		어쩌구 저쩌구
+		</div>
 		
 		<!-- 메일 -->
-		<div class="mail">mail</div>
+		<div class="mail">
+		<h4>웹메일</h4>
+		
+		</div>
 		
 		<!-- 시설예약 -->
-		<div class="room">room</div>
+		<div class="room">
+		<h4>시설예약</h4>
+		
+		</div>
 	</div>
 
 	<div class="container2">
@@ -167,22 +179,40 @@ text-decoration:none;
 		</div>
 		
 		<!-- 바로가기 -->
-		<div class="baro">baro</div>
+		<div class="baro">
+		<h4>바로가기 서비스</h4>
+		
+		</div>
 		
 		<!-- 나의일정 -->
-		<div class="calendar">calendar</div>
+		<div class="calendar">
+		<h4>나의 일정</h4>
+		
+		</div>
 		
 		<!-- 날씨 -->
-		<div class="weather">weather</div>
+		<div class="weather">
+		<h4>WEATHER</h4>
+		
+		</div>
 		
 		<!-- 공지사항 -->
-		<div class="notice">notice</div>
+		<div class="notice">
+		<h4>공지사항</h4>
+		
+		</div>
 		
 		<!-- 미세먼지 -->
-		<div class="dust">dust</div>
+		<div class="dust">
+		<h4>미세먼지</h4>
+		
+		</div>
 		
 		<!-- 학사일정 -->
-		<div class="unischedule">unischedule</div>
+		<div class="unischedule">
+		<h4>학사일정</h4>
+		
+		</div>
 		
 		<!-- 관련사이트 -->
 		<div class="resite">resite</div>
