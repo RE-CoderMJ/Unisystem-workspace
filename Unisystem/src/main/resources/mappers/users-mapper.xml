@@ -20,10 +20,9 @@
 			</resultMap>
 			
 			
-<!-- 필드명 일치시키기 -->
-
+<!-- 로그인 -->
 <select id="loginUser" resultMap="usersResult">
-		<!-- 암호화 전 -->
+		<!-- 암호화 완료 -->
 		select
 		       user_no
 		     , password
@@ -41,7 +40,20 @@
 		  from users
 		  where
 		   user_no = #{userNo}
-		   and password = #{userPwd}
+</select>
+
+<!-- 아이디찾기 -->
+<select id="findId" resultMap="usersResult">
+		 select
+		        user_no
+		       ,kor_name
+		       ,phone
+		       ,birthday
+		  from users
+		  where
+		   kor_name = #{korName}
+		   and phone= #{phone}
+		   and birthday = #{birthday}
 </select>
 
 

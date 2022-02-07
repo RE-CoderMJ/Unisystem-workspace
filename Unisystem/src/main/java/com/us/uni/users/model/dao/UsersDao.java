@@ -9,7 +9,16 @@ import com.us.uni.users.model.vo.Users;
 public class UsersDao {
 	
 	public Users loginUser(SqlSessionTemplate sqlSession, Users m) {
-		return sqlSession.selectOne("memberMapper.loginUser",m);
+		return sqlSession.selectOne("usersMapper.loginUser",m);
+	}
+	
+	public Users findId(SqlSessionTemplate sqlSession, Users m) {
+		
+		Users uu = sqlSession.selectOne("usersMapper.findId", m);
+		
+		System.out.println(uu);
+
+		return sqlSession.selectOne("usersMapper.findId", m);
 	}
 
 }

@@ -24,4 +24,12 @@ public class UsersServiceImpl implements UsersService{
 		return loginUser;
 	}
 
+	@Override
+	public Users findId(Users m) {
+		Users findId = uDao.findId(sqlSession,m);
+		
+		return findId;
+		
+	}
+
 }
