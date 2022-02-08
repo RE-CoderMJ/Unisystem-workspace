@@ -77,7 +77,7 @@ a:hover {
 				<b>학적</b>
 			</div>
 			<div>
-				<a href="">- 내 정보조회</a>
+				<a href="list.st">- 내 정보조회</a>
 			</div>
 
 
@@ -130,10 +130,10 @@ a:hover {
 				<b>시설물 예약</b>
 			</div>
 			<div>
-				<a href="">- 열람실 예약</a>
+				<a href="rsvdReading">- 열람실 예약</a>
 			</div>
 			<div>
-				<a href="">- 스터디실 예약</a>
+				<a href="rsvdStudy">- 스터디실 예약</a>
 			</div>
 
 			<div class="side_title">

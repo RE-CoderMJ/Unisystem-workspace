@@ -13,11 +13,11 @@
 		height:830px;
 	}
 	#sidebar{
-		width:20%;
+		width:230px;
 		height:700px;
 	}
 	#content{
-		width:80%;
+		width:1270px;
 		height:auto;
 		margin-top:50px;
 		margin-bottom:50px;
@@ -204,7 +204,7 @@
 </style>
 </head>
 <body>
-
+	<jsp:include page="../common/links.jsp" />
 	<jsp:include page="../common/header.jsp" />
 	
 		

@@ -6,14 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-<style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<script> $( function() { $( ".datepicker" ).datepicker(); } ); </script>
+<style>	
 	div{box-sizing:border-box;}
 	#wrap{
 		margin:auto;
 		width:1500px;
-	}
-	#wrap>div{
-		float:left;
 	}
 	#sidebar{
 		width:230px;
@@ -63,7 +67,6 @@
 	}
 	.timetableBox>div{
 		margin-top:50px;
-		float:left;
 		margin-bottom:30px;
 	}
 	.inputBox{
@@ -79,12 +82,12 @@
 		background:rgb(235, 235, 235);
 		text-align:center;
 	}
-	#rswdInfo th, td{
-		padding:8px 12px!important; 
-		font-size:18px;
+	.table td{
+		text-align:center;
 	}
 	.timetable{
 		width:650px;
+	    padding-left:15px;
 	}
 	.blueLabel{
 		width:340px;
@@ -128,26 +131,60 @@
 	*:focus {
     outline: none;
 	}
+	.timetableBox{
+		width:650px;
+		height:auto;
+		float:left;
+	}
+	#box{
+		width:1060px;
+		height:auto;
+		margin:auto;
+	}
+	.logTop{
+		margin-top:23px;
+		width:510px;
+		height:70px;
+		padding:15px 15px 15px 0px;
+		position:relative;
+	}
+	.logList{
+		width:100%;
+		height:840px;
+		overflow:auto;
+		overflow-x:hidden;
+		margin-bottom:30px;
+	}
+	.datepicker{
+		width:180px;
+		height:40px;
+		margin-bottom:20px;
+		border:1px solid lightgray;
+	}
+	#reset{
+		position:absolute;
+		right:-79px;
+	}
+	.log{
+		width:590px;
+		height:auto;
+		float:left;
+		margin:12px;
+	}
 </style>
 </head>
 <body>
-	<jsp:include page="../common/links.jsp"/>
 	<jsp:include page="../common/header.jsp" />
 		
 	<div id="wrap">
-		<div id="sidebar"><jsp:include page="../student/smySidebar.jsp" /></div>
-		<div id="content">
+		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>
+		<div id="content" style="float:left;">
 			<div class="pageName"><p style="color:gray">마이페이지>시설물 예약>&nbsp;</p><p style="font-size:19px; font-weight:600;">스터디룸 예약</p></div>
 			<div class="topBar">
 				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
 			</div>
 			
-			<div class="timetableBox">
-				<div class="inputBox">
-					<div class="blueLabel"></div>	
-					<div id="map">
-						<img src="resources/images/studyRoom.png">
-					</div>
+	<!-- modal
 				<form>
 					<div id="rsvdInfo">			
 						<div class="blueLabel"></div>	
@@ -181,8 +218,7 @@
 							<tr>
 								<th rowspan="2">사용시간</th>
 								<td>
-										<select name="tno" class="select">
-											<!-- 실시간으로 예약 가능한 시간을 select해와야 함-->
+								
 										</select>
 								</td>
 							</tr>
@@ -202,6 +238,10 @@
 					</div>
 				</form>
 				</div>
+				
+	-->
+				
+			<div class="timetableBox">
 				<div class="timetable">
 					<table class="table table-bordered">
 						<thead>
@@ -337,8 +377,194 @@
 					</table>
 				</div>
 			</div>
-		</div>
-	</div>
+				
+				<div class="log">
+					<div class="logTop">
+						<input type="text" class="datepicker" placeholder="시작날짜">
+						<input type="text" class="datepicker" placeholder="마지막날짜">
+						
+						<button id="reset" class="btn btn-outline-secondary">전체 퇴실</button>
+					</div>
+						
+						
+						<div class="logList">
+							<table class="table">
+								<thead>
+									<tr>
+										<th width="30">No.</th>
+										<th width="100">사용인원</th>
+										<th width="100">사용일자</th>
+										<th width="100">사용공간</th>
+										<th width="100">사용시간</th>
+										<th width="100">사용자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									
+									<!--  -->
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>2022.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>2022.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>3</td>
+										<td>22.02.08</td>
+										<td>9:00</td>
+										<td>2시간</td>
+										<td>김길동</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				
+			
+		</div> <!-- content -->
+	</div> <!-- wrap -->
 	<jsp:include page="../common/footer.jsp" />
 	
 

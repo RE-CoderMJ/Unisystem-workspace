@@ -213,7 +213,7 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-	
+<jsp:include page="../common/links.jsp" />
 		
 	<div id="wrap">
 		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>

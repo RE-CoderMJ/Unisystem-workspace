@@ -16,11 +16,11 @@
 		float:left;
 	}
 	#sidebar{
-		width:20%;
+		width:230px;
 		height:1100px;
 	}
 	#content{
-		width:80%;
+		width:1270px;
 		height:1050px;
 		margin-top:50px;
 		margin-bottom:50px;
@@ -93,7 +93,7 @@
 <body style="background-color:#ebf2fc">
 
 		
-		
+	<jsp:include page="../common/links.jsp" />
 	<jsp:include page="../common/header.jsp" />
 	
 		
