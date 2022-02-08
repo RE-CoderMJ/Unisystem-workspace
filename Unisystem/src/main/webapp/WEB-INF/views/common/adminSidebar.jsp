@@ -16,7 +16,7 @@
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom: 30px;
-	float:left;
+	margin-top:50px;
 }
 
 .total_menu {
@@ -78,65 +78,51 @@ a:hover {
 				 <b>기본정보</b> 
 			</div>
 			<div>
-				<a href="">- 내 정보조회</a>
+				<a href="">- 학생 관리</a>
+			</div>
+			<div>
+				<a href="">- 교수 관리</a>
 			</div>
 
 
 			<div class="side_title">
-				 <b>담당 학생 관리</b> 
+				 <b>담당 교수 관리</b> 
 			</div>
 			<div>
-				<a href="">- 담당 학생 조회</a>
+				<a href="">- 담당 교수 변경</a>
 			</div>
-			<div>
-				<a href="">- 학적변동 신청내역</a>
-			</div>
+			
 
 			<div class="side_title">
 				 <b>강의</b> 
 			</div>
 			<div>
-				<a href="">- 강의시간표 조회</a>
-			</div>
-			<div>
-				<a href="">- 진행강의 조회</a>
-			</div>
-			<div>
-				<a href="">- 강의 관리</a>
+				<a href="">- 강의 신청내역</a>
 			</div>
 
             <div class="side_title">
-				 <b>상담</b> 
+				 <b>시설물 관리</b> 
 			</div>
 			<div>
-				<a href="">- 상담관리</a>
+				<a href="">- 열람실 관리</a>
+			</div>
+			<div>
+				<a href="">- 스터디룸 관리</a>
 			</div>
 
 			<div class="side_title">
-				 <b>My 캘린더</b> 
+				 <b>공지사항</b> 
 			</div>
 			<div>
-				<a href="">- 나의 일정</a>
+				<a href="">- 공지사항 관리</a>
 			</div>
-			<div>
-				<a href="">- TO-DO LIST</a>
-			</div>
-	  
+		
 
 			<div class="side_title">
-				 <b>쪽지</b> 
+				 <b>학사일정</b> 
 			</div>
 			<div>
-				<a href="">- 받은 메시지</a>
-			</div>
-			<div>
-				<a href="">- 보낸 메시지</a>
-			</div>
-			<div>
-				<a href="">- 중요 메시지</a>
-			</div>
-			<div>
-				<a href="">- 스팸 보관함</a>
+				<a href="">- 학사일정 관리</a>
 			</div>
 
 		</div>

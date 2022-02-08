@@ -60,4 +60,14 @@ public class WebMailController {
 	public String writeMailForm(){
 		return "webMail/writeMailForm";
 	}
+	
+	@RequestMapping("webMail.detailView")
+	public String selectMail(){
+		return "webMail/detailView";
+	}
+	
+	@RequestMapping("webMail.contact")
+	public String selectContacts(){
+		return "webMail/contact";
+	}
 }

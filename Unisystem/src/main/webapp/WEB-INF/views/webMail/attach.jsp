@@ -8,75 +8,7 @@
 <title>UNI SYSTEM</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 <link href="resources/css/webMail/mailboxes.css" rel="stylesheet">
-<style>
-    #mails{
-        width: 1180px;
-        height: auto;
-        min-height: 100px;
-        margin-left: 90px;
-        margin-top: 30px;
-    }
-    #mails::after{display:block;content:"";clear:both;}
-    .mail{
-        width: 340px;
-        height: 150px;
-        border: 1px gray solid;
-        float: left;
-        margin-right: 50px;
-        margin-bottom: 50px;
-    }
-    .mail>div{
-        float:left;
-    }
-
-    .checkbox-att{
-        display: block;
-        width: 15px;
-        height: 15px;
-        margin-left: 10px;
-        margin-top:10px;
-        float:left
-    }
-    .important-att{
-        width: 20px;
-        height: 20px;
-        margin-left: 10px;
-        margin-top : 4px;
-    }
-    .read-status-att{
-        width: 20px;
-        height: 20px;
-        margin-left: 5px;
-        margin-top : 4px;
-    }
-    .from-att{
-        width: 60px;
-        margin-left: 20px;
-        margin-top : 6px;
-    }
-    .date-att{
-        width: 120px;
-        margin-left: 50px;
-        margin-top : 4px;
-        font-size: 15px;
-    }
-    .title-att{
-        width: 200px;
-        margin-left: 10px;
-        margin-top : 4px;
-        font-size: 15px;
-    }
-    .line-att{
-        border: solid darkgray 1px;
-        width: 320px;
-        margin-top: 65px;
-        margin-bottom: -15px;
-    }
-    .mail a{
-        font-size: 15px;
-        margin-left: 10px;
-    }
-</style>
+<link href="resources/css/webMail/attach.css" rel="stylesheet">
 </head>
 <body>
 	<jsp:include page="../common/links.jsp"/>
@@ -222,6 +154,14 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(document).ready(function(){
+			let $len = $("section").height();
+			console.log($len);
+			$("#webMail-sidebar").css('height', $len + 22);
+		})
+	</script>
 	
 </body>
 </html>

@@ -18,10 +18,10 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <style>
     #mail-info{
-    	border: solid 1px black;
         width: 1170px;
         margin: auto;
         margin-top: 40px;
+        margin-bottom:50px;
     }
     #mail-info>span{
         font-weight: 900;
@@ -36,6 +36,32 @@
     #write-cc, #write-title{
         margin-left: 50px;
     }
+	#contents-area{
+		margin-top:30px;
+		margin-left:80px;
+	}
+	#file{
+		width:200px;
+		margin-left: 80px;
+		margin-top:30px;
+	}
+	#send-btn, #draft-btn{
+		background: white;
+		height: 30px;
+		border: solid darkgray 1px;
+		border-radius:2px;
+		margin-right : 5px;
+		margin-top : 10px;
+	}
+	.fa-arrow-right{
+		color: RGB(26,86,162);
+	}
+	.footer_right{
+		 margin-left:160px!important;
+	}
+	.footer_right label{
+		 font-weight:normal!important;
+	}
 </style>
 </head>
 <body>
@@ -49,8 +75,9 @@
         	<form method="post">
 	            <header id="mail-boxes-header">
 	                <div id="mailbox-name">메일 쓰기</div>
-	                <button><i class="fas fa-arrow-right"></i>보내기</button>
-	                <button>임시저장</button>
+	                <br><br>
+	                <button id="send-btn" type="submit"><i class="fas fa-arrow-right"></i>&nbsp;보내기</button>
+	                <button id="draft-btn">임시저장</button>
 	            </header>
 	            <article>
 	               <div id="mail-info">
@@ -62,7 +89,10 @@
 	                    <br><br>
 	                    <span>제목</span>
 	                    <input id="write-title" type="text">
-	                    <textarea id="summernote" name="editordata"></textarea>
+	                    <div id="contents-area">
+	                    	<textarea id="summernote" name="editordata" style="margin-left:100px"></textarea>
+	                    </div>
+	                 	<input type="file" multiple id="file">
 	               </div>
 	            </article>
             </form>
@@ -71,29 +101,37 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<script>
-		$(document).ready(function() {
-			$('#summernote').summernote({
-				placeholder: 'Hello Bootstrap 4',
-				tabsize: 2,
-				height: 100
-			});
-		});
-	</script>
-
-	<!--
+	
 	<script>
 		$(document).ready(function(){
 			$("#summernote").summernote({
-				height: 300,
+				width: 1060,
+				height: 500,
 				minHeight: null,
 				maxHeight: null,
 				focus: true,
 				lang: "ko-KR",
-				placeholder : '최대 자까지 쓸 수 있습니다.'
+				placeholder : '최대 자까지 쓸 수 있습니다.',
+				toolbar: [
+					    // [groupName, [list of button]]
+					    ['fontname', ['fontname']],
+					    ['fontsize', ['fontsize']],
+					    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+					    ['color', ['forecolor','color']],
+					    ['table', ['table']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['height', ['height']],
+				],
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 			});
+			
+			let $len = $("section").height();
+			console.log($len);
+			$("#webMail-sidebar").css('height', $len + 22);
 		});
+		
 	</script>
-	-->
+	
 </body>
 </html>

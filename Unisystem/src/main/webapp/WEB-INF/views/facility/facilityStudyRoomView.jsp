@@ -127,7 +127,7 @@
 	}
 	*:focus {
     outline: none;
-}
+	}
 </style>
 </head>
 <body>
