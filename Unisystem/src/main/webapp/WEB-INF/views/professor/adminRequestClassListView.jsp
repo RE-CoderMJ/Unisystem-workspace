@@ -146,8 +146,8 @@
 </style>
 </head>
 <body>
+<jsp:include page="../common/links.jsp" />
 <jsp:include page="../common/header.jsp" />
-	
 		
 	<div id="wrap">
 		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>

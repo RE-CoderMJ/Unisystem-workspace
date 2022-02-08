@@ -79,10 +79,10 @@ a:hover {
 				 <b>기본정보</b> 
 			</div>
 			<div>
-				<a href="">- 학생 관리</a>
+				<a href="student.ad">- 학생 관리</a>
 			</div>
 			<div>
-				<a href="">- 교수 관리</a>
+				<a href="professor.ad">- 교수 관리</a>
 			</div>
 
 
@@ -90,7 +90,7 @@ a:hover {
 				 <b>담당 교수 관리</b> 
 			</div>
 			<div>
-				<a href="">- 담당 교수 변경</a>
+				<a href="join.ad">- 담당 교수 변경</a>
 			</div>
 			
 			<div class="side_title">
@@ -104,17 +104,17 @@ a:hover {
 				 <b>강의</b> 
 			</div>
 			<div>
-				<a href="">- 강의 신청내역</a>
+				<a href="clist.ad">- 강의 신청내역</a>
 			</div>
 
             <div class="side_title">
 				 <b>시설물 관리</b> 
 			</div>
 			<div>
-				<a href="">- 열람실 관리</a>
+				<a href="rsvdReading.ad">- 열람실 관리</a>
 			</div>
 			<div>
-				<a href="">- 스터디룸 관리</a>
+				<a href="rsvdStudy.ad">- 스터디룸 관리</a>
 			</div>
 
 			<div class="side_title">
