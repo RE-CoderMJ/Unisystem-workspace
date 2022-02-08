@@ -78,7 +78,7 @@ a:hover {
 				 <b>기본정보</b> 
 			</div>
 			<div>
-				<a href="">- 내 정보조회</a>
+				<a href="list.pr">- 내 정보조회</a>
 			</div>
 
 
@@ -86,7 +86,7 @@ a:hover {
 				 <b>담당 학생 관리</b> 
 			</div>
 			<div>
-				<a href="">- 담당 학생 조회</a>
+				<a href="stlist.pr">- 담당 학생 조회</a>
 			</div>
 			<div>
 				<a href="">- 학적변동 신청내역</a>
@@ -102,7 +102,7 @@ a:hover {
 				<a href="">- 진행강의 조회</a>
 			</div>
 			<div>
-				<a href="">- 강의 관리</a>
+				<a href="app.pr">- 강의 관리</a>
 			</div>
 
             <div class="side_title">

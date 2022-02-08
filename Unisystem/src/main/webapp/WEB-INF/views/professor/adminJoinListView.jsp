@@ -135,10 +135,10 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-	
+<jsp:include page="../common/links.jsp" />
 		
 	<div id="wrap">
-		<div id="sidebar" style="float:left;"><jsp:include page="pmySidebar.jsp" /></div>
+		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>
 		<div id="content" style="float:left;">
 			<div class="topBox">
 				<div class="pageName"><p style="color:gray">마이페이지>담당교수 관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">담당교수 지정</p></div>
