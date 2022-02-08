@@ -72,7 +72,7 @@
 <body>
 	<!-- header 영역 -->
     <jsp:include page="../common/header.jsp" />
-    
+    <jsp:include page="../common/links.jsp"/>
     <div id="wrap">
     
     	<div style="float: left;">
