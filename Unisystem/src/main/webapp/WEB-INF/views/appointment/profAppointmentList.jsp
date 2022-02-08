@@ -102,7 +102,7 @@
                       <li class="page-item"><a class="page-link" href="#">5</a></li>
                       <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
                     </ul>
-                  </div>
+                </div>
 			</article>
 		</section>
 	</div>

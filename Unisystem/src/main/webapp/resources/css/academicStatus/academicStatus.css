@@ -1,0 +1,146 @@
+@charset "UTF-8";
+div{
+    box-sizing: border-box;
+}
+#wrapper{
+    width: 1500px;
+    height: auto;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom:50px;
+}
+	
+/*내용 영역 스타일*/
+section{
+    background-color: white;
+    width: 1270px;
+    height: auto;
+    min-height:700px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+    display: block;
+    float: right;
+    padding-top: 23px;
+}
+section::after{display:block;content:"";clear:both;}
+
+/*제목 스타일*/
+#pageName{
+   color: rgb(15, 43, 80);
+   font-size: 22px;
+   font-weight: 900;
+   width: auto;
+   margin-top: 12px;
+   margin-bottom: 10px;
+   float:left;
+}
+#academic-header{
+    margin-left: 50px;
+    margin-bottom:50px;
+}
+.pageName{padding:3px;}
+.pageName>p{
+	margin:0px;
+	float:left;
+}
+.titles{
+	color: rgb(15, 43, 80);
+   	font-size: 22px;
+   	font-weight: 900;
+   	width: auto;
+   	margin-top: 12px;
+   	margin-bottom: 20px;
+   	float:left;
+}
+
+/*테이블 스타일*/
+.table.table-bordered{
+	width:93%;
+}
+.table th{
+	background-color: rgb(235, 235, 235);
+	text-align:center;
+}
+.table.table-bordered th,
+.table.table-bordered td{
+	border:1px solid #b8bbbe;
+	padding:0;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	width:140px;
+}
+#contents{
+	margin-left:50px;
+	margin-bottom:50px;
+}
+
+/*상세사유 스타일*/
+#reason-area{
+	resize:none; 
+	width:100%; 
+	height:100%; 
+	margin-bottom:0;
+	padding-left:10px;
+}
+#apply-btn{
+	color:white;
+	font-weight:700;
+	background:rgb(26, 86, 162);
+	border-radius:3px;
+	border:none;
+	width:70px;
+	height:30px;
+}
+
+#progress{
+	margin-bottom:80px;
+}
+#progress>div{
+	float:left;
+	text-align:center;
+	margin-right:20px;
+}
+section::after{display:block;content:"";clear:both;}
+.name{
+	width:150px;
+	border: solid 2px rgb(26, 86, 162);
+	height: 40px;
+	line-height:38px;
+	font-weight:900;
+	font-size:22px;
+}
+.fa-angle-double-right{
+	color:darkgray;
+	margin-top:6px;
+}
+#delete-btn{
+	border: gray 1px solid;
+	border-radius:3px;
+	background:white;
+}
+#notice{
+	 color:red; 
+	 font-weight:600; 
+	 height:40px; 
+	 width:250px; 
+	 float:left; 
+	 font-size:13px; 
+	 margin-right:830px; 
+	 margin-bottom:-10px;
+}
+
+/*페이징바*/
+.container{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.page-link{
+    color:RGB(26,86,162)!important;
+    border: none!important;
+    border-radius: 200px!important;
+}
+.page-item.active .page-link {
+    color: #fff !important;
+    background: RGB(26,86,162)!important;
+}

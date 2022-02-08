@@ -13,10 +13,11 @@
 .wrap_sidebar {
 	width: 200px;
 	height: auto;
+	min-height: 750px;
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom: 30px;
-	margin-top:50px;
+	float:left;
 }
 
 .total_menu {
@@ -70,7 +71,7 @@ a:hover {
 
 		<!-- 왼쪽 메뉴바-->
 		<div class="sidebar">
-			<div class="total_menu">마이페이지</div>
+			<div class="total_menu">관리자 페이지</div>
 
 			<hr class="hr_style">
 
@@ -92,6 +93,12 @@ a:hover {
 				<a href="">- 담당 교수 변경</a>
 			</div>
 			
+			<div class="side_title">
+				 <b>학적변동</b> 
+			</div>
+			<div>
+				<a href="">- 학적변동 신청내역</a>
+			</div>
 
 			<div class="side_title">
 				 <b>강의</b> 
