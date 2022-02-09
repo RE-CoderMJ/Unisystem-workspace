@@ -54,6 +54,7 @@
         border: none;
         color: white;
         padding: 3px 10px;
+        margin-left: 1060px;
     }
     /* 페이징바 css */
     .pagination {

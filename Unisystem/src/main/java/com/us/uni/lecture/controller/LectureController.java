@@ -6,6 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LectureController {
 	
+	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("studentClassList.me")
+	public String selectStudentClassList() {
+		return "student/studentClassList";
+	}
+	
+	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("professorClassList.me")
+	public String selectProfessorClassList() {
+		return "professor/professorClassList";
+	}
+	
 	/* 학생 - 강의홈을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMain.stu")
 	public String selectLectureMainPage() {
@@ -36,16 +48,40 @@ public class LectureController {
 		return "lecture/lectureEvaluation";
 	}
 	
+	/* 교수 - 강의평가 점수창을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureEvaluationResult.stu")
+	public String selectLectureEvaluationResult() {
+		return "lecture/lectureEvaluationResult";
+	}
+	
+	/* 교수 - 강의평가 서술형 상세보기창을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureEvaluationDetailResult.stu")
+	public String selectLectureEvaluationDetailResult() {
+		return "lecture/lectureEvaluationDetailResult";
+	}
+	
 	/* 강의계획표를 띄워주는 컨트롤러 */
 	@RequestMapping("lecturePlan.stu")
 	public String selectLecturePlan() {
 		return "lecture/lecturePlan";
 	}
 	
-	/* 온라인출석부를 띄워주는 컨트롤러 */
+	/* 학생 - 온라인출석부를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAtt.stu")
 	public String selectLectureAtt() {
 		return "lecture/lectureAttendance";
+	}
+	
+	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAttControl.stu")
+	public String selectLectureAttControl() {
+		return "lecture/lectureAttendanceControl";
+	}
+	
+	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAttDetailControl.stu")
+	public String selectLectureAttDetailControl() {
+		return "lecture/lectureAttendanceDetailControl";
 	}
 	
 	/* 수업자료실을 띄워주는 컨트롤러 */
