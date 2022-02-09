@@ -224,12 +224,13 @@ li {
 
                             </table>  
                              
-                   		 <button id="sendMail" type="submit">인증번호 발송</button>  
+                   		 <button id="sendMail" data-toggle="modal" data-target="#sendCheckMail" type="submit">인증번호 발송</button>  
                     </form>
+
 
 <script>
 $(function(){
-		$("#log-input").click(function(){
+		$("#sendMail").click(function(){
 			$.ajax({
 				url : "/pwdFind",
 				type : "POST",

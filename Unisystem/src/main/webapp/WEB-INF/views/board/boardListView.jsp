@@ -22,7 +22,7 @@
     padding-bottom: 50px;
 }
 
-.page_title {
+.page_title { 
 	color: rgb(15, 43, 80);
 	font-size: 40px;
 	font-weight: 800;
@@ -267,8 +267,8 @@ li {
 
 			<ul class="pagination">
 				<li class="page-item ltgt"><a href="">&lt;</a></li>
-				<li class="page-item"><a href="">1</a></li>
-				<li class="page-item"><a href="">2</a></li>
+				<li class="page-item"><a href="list.bo">1</a></li>
+				<li class="page-item"><a href="list.bo?cpage=">2</a></li>
 				<li class="page-item"><a href="">3</a></li>
 				<li class="page-item"><a href="">4</a></li>
 				<li class="page-item"><a href="">5</a></li>

@@ -58,13 +58,16 @@ public class UsersServiceImpl implements UsersService{
 		PrintWriter out = response.getWriter();
 		// 가입된 아이디가 없으면
 		if(m.getUserNo() != us.getUserNo()) {
-			out.print("등록되지 않은 아이디입니다.");
-			out.close();
+			
+			out.println("<script>alert('가입된 아이디가 아닙니다.'); location.href='../uni';</script>");
+			out.flush();
+			
 		}
 		// 가입된 이메일이 아니면
 		else if(!m.getEmail().equals(us.getEmail())) {
-			out.print("등록되지 않은 이메일입니다.");
-			out.close();
+			out.println("<script>alert('등록되지 않은 이메일입니다.'); location.href='../uni';</script>");
+			//out.print("등록되지 않은 이메일입니다.");
+			out.flush();
 		}else {
 			// 임시 비밀번호 생성
 			String userPwd = "";
@@ -74,23 +77,17 @@ public class UsersServiceImpl implements UsersService{
 			
 			m.setUserPwd(userPwd);
 			
-			// System.out.println(m); 
-			
 			// 비밀번호 변경  //error
 		
 			uDao.updatePwd(sqlSession,m);
 			
 			
-			//System.out.println(uDao.updatePwd(sqlSession,m));
-			//System.out.println(m.getEmail());
-			
-			//uDao.idCheck(sqlSession,m.getUserNo());
 			// 비밀번호 변경 메일 발송
 			sendEmail(m, m.getEmail());
-
-			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
-			out.close();
-		 
+			out.println("<script>alert('이메일로 임시 비밀번호를 발송하였습니다.'); location.href='../uni';</script>");
+			//out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+			//out.close();
+			out.flush();
 			}
 		}
  

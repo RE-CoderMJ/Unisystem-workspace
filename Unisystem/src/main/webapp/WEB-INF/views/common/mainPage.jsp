@@ -13,7 +13,7 @@
 
 <body>	
 
-   <jsp:include page="userLogin.jsp" />
+   <jsp:include page="pwdFind.jsp" />
    
 </body>
 </html>

@@ -103,53 +103,11 @@ public class UsersController {
 		return mv; 
 	}
 	
-	/*비밀번호 찾기 
-	@RequestMapping("findpwd")
-	public ModelAndView findpwd(Users m, HttpSession session, ModelAndView mv) {
-		
-		Users findpwd = uService.findpwd(m);
-	
-		if(findpwd.getUserNo()==(m.getUserNo()) && findpwd.getEmail().equals(m.getEmail()) && findpwd.getPhone().equals(m.getPhone())) {
-			
-			session.setAttribute("loginUser", findpwd);
-			mv.addObject("alertMsg", "비밀번호 재설정화면으로 이동합니다.");
-			mv.setViewName("common/resetPwd");
-			
-		} else {
-			mv.addObject("alertMsg", "일치하는 회원정보가 없습니다.");
-			mv.setViewName("common/findpwd");
-		}
-		
-		return mv; 
-	}*/
-	
-	/*
-	//비밀번호 재설정 
-	@RequestMapping("resetpwd")
-	public String resetPwd(Users m, HttpSession session , Model model) {
-		
-		int result = uService.resetPwd(m);
-	
-		
-		if(result>0) {
-			session.setAttribute("loginUser", uService.loginUser(m));
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다!");
-			
-			return "common/userLogin";
-			
-		} else {
-			
-			model.addAttribute("errorMsg","비밀번호 변경 실패");
-			
-			return "common/errorPage";
-		}
-		
-	}*/
-	
+		 
 		/* 비밀번호 찾기 form */
-		@RequestMapping(value = "pwdForm")
-		public String find_pw_form() throws Exception{
-			return "/common/pwdFind";
+		@GetMapping("pwdForm")
+		public ModelAndView findPwForm() {
+			return new ModelAndView ("common/pwdFind");
 		}
 		
 		
