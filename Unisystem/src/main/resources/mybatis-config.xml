@@ -8,10 +8,12 @@
 		
 		<typeAliases>
 			<typeAlias type="com.us.uni.users.model.vo.Users" alias="Users" />
+			<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
 		</typeAliases>
 		
 		<mappers>
 			<mapper resource="/mappers/users-mapper.xml" />
+			<mapper resource="/mappers/board-mapper.xml" />
 		</mappers>
 		
 </configuration>

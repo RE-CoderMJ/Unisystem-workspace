@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="boardMapper">
+
+	<resultMap id="boardResult" type="Board">
+		<result column="board_no" property="boardNo" />
+		<result column="user_no" property="userNo" />
+		<result column="user_division" property="userDivision" />
+		<result column="board_title" property="boardTitle" />
+		<result column="board_content" property="boardContent" />
+		<result column="bcount" property="boCount" />
+		<result column="create_date" property="createDate" />
+		<result column="notice_yn" property="noticeYN" />
+		<result column="delete_yn" property="deleteYN" />
+		<result column="bo_category" property="boCategory" />
+		<result column="sub_category" property="subCategory" />
+	</resultMap>
+	
+  <select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category = 4
+	</select>
+	
+	<select id="selectList" parameterType="Board" resultMap="boardResult">
+		select
+           	   board_no
+		     , sub_category
+		     , board_title
+		     , user_no
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , bCount
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category = 4
+	</select>
+	
+</mapper>
