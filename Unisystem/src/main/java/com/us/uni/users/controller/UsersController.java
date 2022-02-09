@@ -53,7 +53,7 @@ public class UsersController {
 		
 		//m.setUserPwd(encPwd);
 	
-		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+		if(loginUser != null || bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			
 			// 로그인 성공
 			session.setAttribute("loginUser", loginUser);
@@ -69,6 +69,8 @@ public class UsersController {
 		
 		return mv;	
 	}
+	
+	
 	
 	// 로그아웃
 	@RequestMapping("logout.me")
