@@ -29,7 +29,7 @@
 
 .login-box {
 	width: 465px;
-	height: 480px;
+	height: 530px;
 	background-color: #fff;
 	border-bottom: 3px solid #dfe6ef;
 	margin-top: 50px;
@@ -195,6 +195,12 @@ li {
 
 </style>
 <body>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+	</c:if>
+	
 	<div class="back-color">
 		<!--가로 로고 자리 -->
 		<div class="logo">
@@ -206,27 +212,41 @@ li {
 
 				 <div class="login-title2">비밀번호 찾기</div>
 
-                    <form id="log-input" action="" method="post">
+                    <form id="log-input" action="pwdFind" method="post">
                             <table>
-
+								<tr>
+								<td><label for="userNo">아이디</label></td>
+								<th><input type="text" name="userNo" id="userNo" placeholder="아이디를 입력하세요"/></th>
                                 <tr>
-                                    <td> <label for="">이메일</label></td>
-                                    <th> <input type="text" name="" placeholder="이메일을 입력하세요" >  </th>
+                                    <td> <label for="email">이메일</label></td>
+                                    <th> <input type="text" name="email" id="email" placeholder="이메일을 입력하세요" >  </th>
                                 </tr>
 
-                                <tr>
-                                    <td><label for="">연락처</label></td>
-                                    <th><input type="text" name="" placeholder="연락처를 입력하세요 ( - 포함)" > </th>
-                                </tr>
-
-
-                            </table>   
-                    <button type="submit">비밀번호 재설정</button>  
+                            </table>  
+                             
+                   		 <button id="sendMail" type="submit">인증번호 발송</button>  
                     </form>
 
+<script>
+$(function(){
+		$("#log-input").click(function(){
+			$.ajax({
+				url : "/pwdFind",
+				type : "POST",
+				data : {
+					userNo : $("#userNo").val(),
+					email : $("#email").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			})
+		});
+	})
+</script>
 
 				<br>
-
+				
 			</div>
 		</div>
 		<!-- login area 끝 -->
@@ -249,15 +269,14 @@ li {
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon1.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span> 아이디 찾기 <br></span></a>
+					<th class="search-title"><a href="findid"><span> 아이디 찾기 <br></span></a>
 						아이디를 잊어버리셨나요?</th>
-
 
 					<tr></tr>
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon2.png" alt="아이콘"></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span>비밀번호 찾기 <br></span></a>
+					<th class="search-title"><a href="findpwd"><span>비밀번호 찾기 <br></span></a>
 						비밀번호를 잊어버리셨나요?</th>
 
 					<tr></tr>
@@ -271,10 +290,6 @@ li {
 			</table>
 
 		</div>
-
-
-	</div>
-	</div>
 
 
 	</div>
