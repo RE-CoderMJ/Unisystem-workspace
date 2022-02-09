@@ -25,12 +25,12 @@
         margin-left: 30px;
         margin-top: 30px;
         width: 1290px;
-        height: 1200px;
+        height: 1110px;
         background-color: white;
         padding-top: 30px;
     }
     #contentBox_border{
-        height: 640px;     
+        height: 1000px;     
         border: 1px solid lightgrey;
         margin-left: 30px;
         width: 1230px;
@@ -59,7 +59,9 @@
         vertical-align: middle;
     }
     #contentBox_file i{font-size: 50px;}
-    #contentBox_content{margin-top: 30px;}
+    #contentBox_content{
+        margin-top: 30px;
+    }
     #contentCount>span{color: #F39C12;}
 
     /* 하단 button 영역 */
@@ -69,7 +71,7 @@
         float: right;
         width: 200px;
         height: 40px;
-        left: 1090px;
+        left: 1150px;
         bottom: 0px;
     }
     #two_btn button{
@@ -112,20 +114,29 @@
         border-radius: 5px;
         color: white;
     }
+    #del_up_botton>button:first-child{
+        padding:  3px 17px;
+        background-color: lightgray;
+        border: none;
+        color: black;
+    }
 
-	/*페이징바*/
-	.container{
-	    margin-top: 50px;
-	}
-	.page-link{
-	    color:RGB(26,86,162)!important;
-	    border: none!important;
-	    border-radius: 200px!important;
-	}
-	.page-item.active .page-link {
-	    color: #fff !important;
-	    background: RGB(26,86,162)!important;
-	}
+    #feedback_header{
+        margin-top: 250px;
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 5px;
+    }
+    #feedback_content{
+        border: 1px solid lightgray;
+        padding: 10px;
+    }
+    #homework_score_title{
+        font-size: 20px;
+        margin-top: 70px;
+        font-weight: 900;
+    }
+    #homework_score>span{color: red; margin-left: 15px;}
 </style>
 </head>
 <body>
@@ -170,24 +181,22 @@
                         </div>
                     </div>
 
+                    
+                    <div id="feedback_header">과제피드백</div>
+                    <div id="feedback_content">
+                        <div>어느 부분을 잘 작성했고 어느 부분을 조금 보충해야할 듯 합니다. 전반적으로 잘하셨습니다.</div>
+                    </div>
+                    
+                    <div style="margin-top: 50px;">
+                        <span id="homework_score_title">과제 점수</span>
+                        <span id="homework_scorestyle" style="font-size: 20px;"><span style="margin-left: 10px; color: red;">80 </span>/ 100</span>
+                    </div>
+
                     <div id="two_btn">
                         <button type="button">목록</button>
-                        <button type="button">▲TOP</button>
                     </div>
-   
                 </div>
-                <form action=""> 
-                    <div id="contentBox_border_bottom">
-                        <div id="contentBox_border_bottom_header">과제 제출</div>
-                        <div>
-                            <div style="margin-bottom: 10px;"><input type="file"></div>
-                            <div>
-                                <textarea name="" id="" rows="7" style="resize: none; width: 100%;"></textarea>
-                                <button type="submit">제출</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+
                 
 
 

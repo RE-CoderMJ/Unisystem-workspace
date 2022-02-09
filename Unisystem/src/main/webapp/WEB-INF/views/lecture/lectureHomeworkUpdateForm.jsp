@@ -188,7 +188,7 @@
                         <div>
                             <div style="margin-bottom: 10px; border: 1px solid lightgray; width: 600px; padding: 10px;"><input type="file"></div>
                             <div>
-                                <textarea name="" id="" cols="155" rows="7" style="resize: none;">20131111 김영숙 8주차 과제입니다.</textarea>                               
+                                <textarea name="" id=""  rows="7" style="resize: none; width: 100%;">20131111 김영숙 8주차 과제입니다.</textarea>                               
                             </div>
                             <div id="del_up_botton">
                                 <button type="button">삭제</button>

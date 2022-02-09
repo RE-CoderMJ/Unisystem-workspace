@@ -84,4 +84,10 @@ public class LectureController {
 		return "lecture/lectureHomeworkUpdateForm";
 	}
 	
+	/* 과제업로드 결과페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkResult.stu")
+	public String selectLectureHomeworkResult() {
+		return "lecture/lectureHomeworkResult";
+	}
+	
 }
