@@ -88,8 +88,12 @@
     <div id="wrap">
         
         <div style="float: left;">
-            <!-- sidebar 영역 -->
+			<!-- sidebar 영역 -->
+            <!-- 로그인한 계정이 학생일 경우 -->
             <jsp:include page="../student/sclassSidebar.jsp" />
+            
+            <!-- 로그인한 계정이 교수일 경우 -->
+            <!--<jsp:include page="../professor/pclassSidebar.jsp" />-->
         </div>
 
         <div id="wrap_content" style="float: left;">

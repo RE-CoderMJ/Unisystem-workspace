@@ -48,7 +48,13 @@
         font-weight: 500;
     }
     #noticeCount>span{color: #F39C12;}
-    
+    #noticeCount>button{
+        border-radius: 5px;
+        background-color: rgb(21, 62, 115);
+        border: none;
+        color: white;
+        padding: 3px 10px;
+    }
     /* 페이징바 css */
     .pagination {
         display: inline-block;
@@ -88,8 +94,13 @@
     <div id="wrap">
         
         <div style="float: left;">
+        
             <!-- sidebar 영역 -->
+            <!-- 로그인한 계정이 학생일 경우 -->
             <jsp:include page="../student/sclassSidebar.jsp" />
+            
+            <!-- 로그인한 계정이 교수일 경우 -->
+            <!--<jsp:include page="../professor/pclassSidebar.jsp" />-->
         </div>
 
         <div id="wrap_content" style="float: left;">
@@ -98,10 +109,12 @@
 
             <div id="noticeBox">
 
-                <div id="noticeCount">총 <span>33</span>개의 글</div>
+                <div id="noticeCount">
+                    총 <span>33</span>개의 글
+                    <button><i class="fa-solid fa-pen"></i>글쓰기</button>
+                </div>
                 
                 <table>
-                    <thead>
                         <tr>
                             <th>번호</th>
                             <th>제목</th>
