@@ -36,7 +36,7 @@ public class Users {
 		this.profileImg = profileImg;
 	}
 
-	public int getUserNo() {
+	public  int getUserNo() {
 		return userNo;
 	}
 
