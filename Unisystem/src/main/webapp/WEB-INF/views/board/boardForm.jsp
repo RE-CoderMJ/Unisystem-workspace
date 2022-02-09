@@ -134,7 +134,7 @@
 
 <body>
 
-
+	<jsp:include page="../common/links.jsp"/>
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
 
