@@ -9,11 +9,14 @@
 		<typeAliases>
 			<typeAlias type="com.us.uni.users.model.vo.Users" alias="Users" />
 			<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
+			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />
+			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />
 		</typeAliases>
 		
 		<mappers>
 			<mapper resource="/mappers/users-mapper.xml" />
 			<mapper resource="/mappers/board-mapper.xml" />
+			<mapper resource="/mappers/lecture-mapper.xml" />
 		</mappers>
 		
 </configuration>
