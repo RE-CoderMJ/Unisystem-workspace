@@ -11,6 +11,7 @@
 .wrap_sidebar {
 	width: 200px;
 	height: auto;
+	min-height:700px;
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;
@@ -22,7 +23,7 @@
 	color: rgb(15, 43, 80);
 	font-size:18px;
 	margin-top:15px;
-	margin-left:10px;
+	margin-left:15px;
 }
 
 .hr_style{
@@ -32,8 +33,10 @@
 }
 
 .side_title {
-	margin-top: 38px;
 	margin-bottom: 4px;
+	margin-left: 10px; 
+	cursor:pointer;
+	height:30px;
 }
 
 .mypage_title {
@@ -47,6 +50,13 @@
 	margin: 10px;
 	line-height: 20px;
 	font-size: 14px;
+	display:block;
+	margin-left:30px;
+	height: 20px;
+}
+
+p{
+	display:none;
 }
 
 .sidebar b{
@@ -63,7 +73,8 @@ a:hover {
 
 
 <body>
-
+	<jsp:include page="../common/links.jsp"/>
+	
 	<!-- 학생 마이페이지 메뉴바  -->
 	<div class="wrap_sidebar">
 
@@ -73,96 +84,94 @@ a:hover {
 
 			<hr class="hr_style">
 
-			<div class="mypage_title">
+			<div class="side_title">
 				<b>학적</b>
 			</div>
-			<div>
+			<p>
 				<a href="list.st">- 내 정보조회</a>
-			</div>
-
+			</p>
 
 			<div class="side_title">
 				<b>수업</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 수강 시간표</a>
-			</div>
-			<div>
 				<a href="">- 내가 수강중인 강의</a>
-			</div>
+			</p>
 
 			<div class="side_title">
 				<b>학적변동</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 휴/복학 신청</a>
-			</div>
-
+			</p>
 
 			<div class="side_title">
 				<b>상담</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 상담신청</a>
-			</div>
-
+			</p>
+			
 			<div class="side_title">
 				<b>성적조회</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 전체 성적 조회</a>
-			</div>
-			<div>
 				<a href="">- 금학기 성적 조회</a>
-			</div>
-
+			</p>
+			
 			<div class="side_title">
 				<b>My 캘린더</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 나의 일정</a>
-			</div>
-			<div>
 				<a href="">- TO-DO LIST</a>
-			</div>
-
+			</p>
 			<div class="side_title">
 				<b>시설물 예약</b>
 			</div>
-			<div>
+			<p>
 				<a href="rsvdReading">- 열람실 예약</a>
-			</div>
-			<div>
 				<a href="rsvdStudy">- 스터디실 예약</a>
-			</div>
-
+			</p>
+			
 			<div class="side_title">
 				<b>증명서</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 증명서 발급</a>
-			</div>
-			<div>
 				<a href="">- 증명서 보관함</a>
-			</div>
-
+			</p>
+			
 			<div class="side_title">
 				<b>쪽지</b>
 			</div>
-			<div>
+			<p>
 				<a href="">- 받은 메시지</a>
-			</div>
-			<div>
 				<a href="">- 보낸 메시지</a>
-			</div>
-			<div>
 				<a href="">- 중요 메시지</a>
-			</div>
-			<div>
 				<a href="">- 스팸 보관함</a>
-			</div>
-
+			</p>
 		</div>
 	</div>
+	
+	<script>
+		$(function(){
+			$(".side_title").click(function(){
+				
+				const $p = $(this).next();
+				
+				if($p.css("display") == "none"){
+					
+					$(this).siblings("p").slideUp();
+					
+					$p.slideDown();
+				}else{
+					$p.slideUp();
+				}
+			})
+		})
+	</script>
 </body>
 </html>
