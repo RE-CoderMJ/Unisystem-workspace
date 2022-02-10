@@ -68,7 +68,7 @@ body {
 	font-weight: 500;
 }
 
-#log-input input {
+#log-input #log-form{
 	height: 35px;
 	width: 220px;
 	margin-bottom: 15px;
@@ -94,7 +94,7 @@ body {
 	float: right;
 	position: relative;
 	left: -20px;
-	top: -60px;
+	top: -112px;
 	border: none;
 	cursor: pointer;
 }
@@ -179,6 +179,11 @@ li {
 .search-title a:hover {
 	text-decoration: underline;
 }
+#radioSt{
+width:none;
+height:none;
+
+}
 </style>
 <body>
 	<c:if test="${ not empty alertMsg }">
@@ -197,7 +202,7 @@ li {
 
 		<div class="login-area">
 			<div class="login-box">
-
+			
 				<div>
 					<div class="login-title">LOGIN</div>
 					<div id="text" style="font-size: 16px;">
@@ -206,12 +211,18 @@ li {
 				</div>
 				<br>
 				<br>
+				
 				<form action="login.me" id="log-input" method="post">
-
-					<input type="text" name="userNo" id="userNo" placeholder="  아이디"> 
-					<input type="password" name="userPwd" id="userPwd" placeholder=" 비밀번호">
-
-					<button type="submit">로그인</button>
+				
+				<div style="font-size:14px; margin-bottom:10px; margin-top:-25px;">
+			<input id="radioSt" style="" name="regState" type="radio" value="1">학생 
+			<input id="radioSt" style="" name="regState" type="radio" value="2">교수
+				</div>
+				
+					<input id="log-form" type="text" name="userNo" id="userNo" placeholder="  아이디"> 	<br>
+					<input id="log-form" type="password" name="userPwd" id="userPwd" placeholder=" 비밀번호">
+					<br>
+					<button id="log-input" type="submit">로그인</button>
 					
 				</form>
 
@@ -225,6 +236,7 @@ li {
 					<li>학내 무선랜 와이파이 이용안내</li>
 					<li>전자결재 이용안내</li>
 					<li>비밀번호 찾기 이용방법</li>
+					<li><a href="lectureMain.stu">강의</a></li>
 				</ul>
 			</div>
 		</div>

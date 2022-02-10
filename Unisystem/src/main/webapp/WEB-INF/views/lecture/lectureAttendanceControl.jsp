@@ -51,6 +51,7 @@
         width: 1210px;
         margin: auto;
         text-align: center;
+        margin-top: 17px;
     }
     #stu_info th{background-color: #eeeeee; width: 200px;}
     #stu_info th, #stu_info td{padding: 5px 0;}
@@ -70,7 +71,7 @@
     #attendance_table tr:last-child{border-bottom: 2px solid lightgray;}
     #attendance_table th:first-child{width: 30px;}
     #attendance_table th:nth-child(3){width: 140px;}
-    #attendance_table th:nth-child(4){width: 60px;}
+    #attendance_table th:nth-child(4){width: 90px;}
     #attendance_table th, #attendance_table td{padding: 2px 0;}
     
     /*페이징바*/
@@ -97,14 +98,14 @@
         
         <div style="float: left;">
 			<!-- sidebar 영역 -->
-            <!-- 로그인한 계정이 학생일 경우 -->
-            <jsp:include page="../student/sclassSidebar.jsp" />
-            
+            <!-- 로그인한 계정이 교수일 경우 -->
+            <jsp:include page="../professor/pclassSidebar.jsp" />
+
         </div>
 
         <div id="wrap_content" style="float: left;">
 
-            <article id="content_header"><span>성적/출석관리 > </span>온라인 출석부</article>
+            <article id="content_header"><span>성적/출석관리 > </span>출결 관리</article>
 
             <div id="contentBox">
                 
@@ -114,16 +115,12 @@
                 <div>
                     <table id="stu_info">
                         <tr>
-                            <th>학번</th>
-                            <td>20131111</td>
+                            <th>강의명</th>
+                            <td>IT미디어와미래역량</td>
                         </tr>
                         <tr>
-                            <th>이름</th>
-                            <td>홍길동</td>
-                        </tr>
-                        <tr>
-                            <th>휴대전화</th>
-                            <td>01012345678</td>
+                            <th>수강인원</th>
+                            <td>74명</td>
                         </tr>
                     </table>
                 </div>
@@ -142,61 +139,61 @@
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>강의 첫날</td>
                             <td>2022.01.01</td>
-                            <td>○</td>
+                            <td><a href="">바로가기</a></td>
                         </tr>
 
                     </table>

@@ -1,14 +1,5 @@
 package com.us.uni.board.model.vo;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@NoArgsConstructor
-@Setter 
-@Getter
-@ToString
 public class Board {
 	 private int boardNo;
 	 private int userNo;
@@ -21,4 +12,120 @@ public class Board {
 	 private String deleteYN;
 	 private int boCategory;
 	 private int subCategory;
+	 
+	public Board() {}
+	
+	public Board(int boardNo, int userNo, int userDivision, String boardTitle, String boardContent, int boCount,
+			String createDate, String noticeYN, String deleteYN, int boCategory, int subCategory) {
+		super();
+		this.boardNo = boardNo;
+		this.userNo = userNo;
+		this.userDivision = userDivision;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boCount = boCount;
+		this.createDate = createDate;
+		this.noticeYN = noticeYN;
+		this.deleteYN = deleteYN;
+		this.boCategory = boCategory;
+		this.subCategory = subCategory;
+	}
+
+	public int getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	public int getUserDivision() {
+		return userDivision;
+	}
+
+	public void setUserDivision(int userDivision) {
+		this.userDivision = userDivision;
+	}
+
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
+	}
+
+	public String getBoardContent() {
+		return boardContent;
+	}
+
+	public void setBoardContent(String boardContent) {
+		this.boardContent = boardContent;
+	}
+
+	public int getBoCount() {
+		return boCount;
+	}
+
+	public void setBoCount(int boCount) {
+		this.boCount = boCount;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getNoticeYN() {
+		return noticeYN;
+	}
+
+	public void setNoticeYN(String noticeYN) {
+		this.noticeYN = noticeYN;
+	}
+
+	public String getDeleteYN() {
+		return deleteYN;
+	}
+
+	public void setDeleteYN(String deleteYN) {
+		this.deleteYN = deleteYN;
+	}
+
+	public int getBoCategory() {
+		return boCategory;
+	}
+
+	public void setBoCategory(int boCategory) {
+		this.boCategory = boCategory;
+	}
+
+	public int getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(int subCategory) {
+		this.subCategory = subCategory;
+	}
+
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", userNo=" + userNo + ", userDivision=" + userDivision + ", boardTitle="
+				+ boardTitle + ", boardContent=" + boardContent + ", boCount=" + boCount + ", createDate=" + createDate
+				+ ", noticeYN=" + noticeYN + ", deleteYN=" + deleteYN + ", boCategory=" + boCategory + ", subCategory="
+				+ subCategory + "]";
+	}
+	
+	
 }

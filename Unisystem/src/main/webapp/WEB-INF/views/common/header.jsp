@@ -142,7 +142,7 @@ link rel="preconnect" href="https://fonts.googleapis.com">
 	                <a href="">웹메일</a>
 	                <a href="">마이페이지</a>
 	                <a href="">공지사항</a>
-	                <a href="">커뮤니티</a>
+	                <a href="list.bo">커뮤니티</a>
 	                <div id="search-area">
 	                    <input type="text" name="search" id="search">
 	                    <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>

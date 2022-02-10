@@ -56,5 +56,32 @@
 		   and birthday = #{birthday}
 </select>
 
+<!-- 비밀번호 찾기 -->
+<select id="findpwd" resultMap="usersResult">
+		 select
+		        user_no
+		       ,email
+		  from users
+		  where
+		   user_no = #{userNo}
+		  
+</select>
+
+<update id="resetPwd">
+		update 
+			users 
+			set 
+		password = #{userPwd} 
+		where user_no = #{userNo}
+</update>
+
+<select id="idCheck" resultMap="usersResult">
+		 select
+		      user_no
+		  from users
+		  where
+		   user_no = #{userNo}
+</select>
+
 
 </mapper>

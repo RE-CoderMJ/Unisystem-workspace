@@ -16,15 +16,16 @@
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;
+	padding-bottom:100px;
 }
 
 .total_menu {
 	margin: 10px;
 	font-weight: 900;
 	color: rgb(15, 43, 80);
-	font-size: 18px;
+	font-size: 20px;
 	margin-top:15px;
-	margin-left:10px;
+	margin-left:15px;
 }
 
 .hr_style{
@@ -41,6 +42,7 @@
 .classpage_title {
 	margin-top: 10px;
 	margin-bottom: 4px;
+	margin-left: 10px;
 }
 
 .sidebar a {

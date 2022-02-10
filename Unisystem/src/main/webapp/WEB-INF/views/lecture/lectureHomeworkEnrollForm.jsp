@@ -8,11 +8,10 @@
 <title>UNI SYSTEM</title>
 <style>
     #wrap{
-    height: 900px;
+    height: 1350px;
     width: 1500px;
     margin: auto;
     }
-    
     /* page header 영역 */
     #content_header{
         margin-top: 30px;
@@ -26,7 +25,7 @@
         margin-left: 30px;
         margin-top: 30px;
         width: 1290px;
-        height: 700px;
+        height: 1200px;
         background-color: white;
         padding-top: 30px;
     }
@@ -52,13 +51,16 @@
         }
     #pro_name>div:first-child{font-size: 18px; font-weight: 900;}
     #pro_name>div:first-child span{font-size: 15px; font-weight: 600;}
+    #contentBox_file{
+        border: 2px solid lightgrey;
+        height: 60px;
+        width: 400px;
+        padding: 5px 20px;
+        vertical-align: middle;
+    }
+    #contentBox_file i{font-size: 50px;}
     #contentBox_content{margin-top: 30px;}
     #contentCount>span{color: #F39C12;}
-    #contentBox_video{
-        background-color: lightgray;
-        width: 600px;
-        height: 280px;
-    }
 
     /* 하단 button 영역 */
     #two_btn{
@@ -78,6 +80,52 @@
     }
     #two_btn button:focus{outline: none;}
     #two_btn button:first-child{margin-right: 5px;}
+
+    /* 과제 제출 영역*/
+    #contentBox_border_bottom{
+        margin-top: 10px;
+        height: 420px;     
+        border: 1px solid lightgrey;
+        margin-left: 30px;
+        width: 1230px;
+        padding: 20px;
+    }
+    #contentBox_border_bottom_header{
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 20px;
+    }
+    #contentBox_border_bottom>div:nth-child(2){
+        border: 1px solid lightgray;
+        padding: 10px;
+    }
+    #contentBox_border_bottom textarea{
+        border: 1px solid lightgray;
+        padding: 10px 5px;
+    }
+    #contentBox_border_bottom textarea:focus{outline: none;}
+    #contentBox_border_bottom button{
+        margin-left: 1093px;
+        margin-top: 5px;
+        padding: 3px 15px;
+        background-color: rgb(21, 62, 115);
+        border-radius: 5px;
+        color: white;
+    }
+
+	/*페이징바*/
+	.container{
+	    margin-top: 50px;
+	}
+	.page-link{
+	    color:RGB(26,86,162)!important;
+	    border: none!important;
+	    border-radius: 200px!important;
+	}
+	.page-item.active .page-link {
+	    color: #fff !important;
+	    background: RGB(26,86,162)!important;
+	}
 </style>
 </head>
 <body>
@@ -94,13 +142,13 @@
 
         <div id="wrap_content" style="float: left;">
             
-            <article id="content_header"><span>자료실 > </span>영상자료실</article>
+            <article id="content_header"><span>자료실 > </span>과제업로드</article>
 
             <div id="contentBox">
 
                 <div id="contentBox_border">
                     <div id="contentBox_header">
-                        X주차 영상자료
+                        8주차 과제
                         <span><i class="fas fa-paperclip"></i></span>
                     </div>
 
@@ -113,11 +161,12 @@
                     </div>
 
                     <div>
-                        <div id="contentBox_video">
-                            
+                        <div id="contentBox_file">
+                            <i class="far fa-folder" style="float: left;"></i>
+                            <div style="float: left; margin-top: 12px; margin-left: 10px;">8주차 과제.docx</div>
                         </div>
                         <div id="contentBox_content">
-                            다음 수업 전까지 반드시 위에 영상을 시청해오시기 바랍니다.
+                            상단에 과제 다운로드 후 2022.01.01 12:00시까지 제출하시길 바랍니다.
                         </div>
                     </div>
 
@@ -125,8 +174,22 @@
                         <button type="button">목록</button>
                         <button type="button">▲TOP</button>
                     </div>
-                    
+   
                 </div>
+                <form action=""> 
+                    <div id="contentBox_border_bottom">
+                        <div id="contentBox_border_bottom_header">과제 제출</div>
+                        <div>
+                            <div style="margin-bottom: 10px;"><input type="file"></div>
+                            <div>
+                                <textarea name="" id="" rows="7" style="resize: none; width: 100%;"></textarea>
+                                <button type="submit">제출</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+
 
             </div>
 

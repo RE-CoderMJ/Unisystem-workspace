@@ -118,6 +118,7 @@
         height: 170px;
         margin-right: 30px;
     }
+    #attendance_title_left>p{margin-right: 370px;}
     #attendance_title_left>div{
         font-size: 14px;
         font-weight: 500;
@@ -126,34 +127,23 @@
         font-size: 17px;
         font-weight: 500;
     }
-    #attend>div:first-child, #absence>div:first-child, #lateness>div:first-child{
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-color: #E74C3C;
-        font-size: 32px;
-        color: white;
-        padding-left: 16px;
-        padding-top: 12px;
-        margin-top: 20px;
-        margin-left: 60px;
+    #progress{
+        margin-top: 65px;
+        border: 1px solid lightgray;
+        width: 400px;
+        height: 38px;
+        margin-left: 75px;
     }
-    #attend>div:last-child, #absence>div:last-child, #lateness>div:last-child{
-        font-size: 13px; 
-        font-weight: 400; 
-        margin-left: 84px; 
-        margin-top: 3px;
-        margin-right: 20px;
+    #progress>div{
+        background-color: rgb(21, 62, 115);
+        width: 190px;
+        height: 31px;
+        margin: 2px;
+
     }
-    #attend, #absence, #lateness{float: left;}
-    #attend{margin-left: 40px;}
-    #absence, #lateness{margin-left: 30px;}
-    #absence>div:first-child, #lateness>div:first-child{padding-left: 26px;}
-    #attend>div:first-child{background-color: #153e73;}
-    #absence>div:first-child{background-color: #C0392B;}
-    #lateness>div:first-child{background-color: #16A085;}
     #attendance_title_right>div{margin-top: 25px;}
     #attendance_title_right>div:focus{border-bottom: black;}
+
     #classPlan{
         height: 200px; 
         padding: 0;
@@ -171,6 +161,15 @@
         padding-top: 10px;
         font-size: 19px;
         font-weight: 900;
+    }
+    #classPlan_title>button{
+        border: none;
+        margin-left: 20px;
+        border-radius: 5px;
+        background-color: rgb(21, 62, 115);
+        color: white;
+        font-size: 15px;
+        padding: 3px 10px;
     }
     #classPlan>div:nth-child(2){
         margin: 30px 0;
@@ -235,7 +234,7 @@
 
             <div style="float: left;">
                 <!-- sidebar 영역 -->
-                <jsp:include page="../student/sclassSidebar.jsp" />
+                <jsp:include page="../professor/pclassSidebar.jsp" />
             </div>
 
             <div id="wrap_content" style="float: left;">
@@ -260,30 +259,25 @@
                     <div id="attendance_title">
 
                         <div id="attendance_title_left">
-                            <p>출석 현황</p>
-                            <div id="attend" onclick="">
-                                <div>32</div>
-                                <div>출석</div>
+                            <p>강의 진행률</p>
+                            <div id="progress" onclick="">
+                                <div>
+                                    <span>46%</span>
+                                </div>
                             </div>
-        
-                            <div id="absence" onclick="">
-                                <div>0</div>
-                                <div>결석</div>
-                            </div>
-        
-                            <div id="lateness" onclick="">
-                                <div>0</div>
-                                <div>지각</div>
-                            </div>
+                            <div id="zero" style="float: left; font-size: 12px; margin-left: 75px;">0%</div>
+                            <div id="half" style="float: left; font-size: 12px; margin-left: 175px;">50%</div>
+                            <div id="hundred" style="float: left; font-size: 12px; margin-left: 160px;">100%</div>
 
                         </div>
 
                         <div></div>
 
                         <div id="attendance_title_right">
-                            과제 현황
+                            과제 제출 현황
                             <div onclick="">
                                 - IT미디어와 미래역량 기말과제1 (2013.03.12까지 필히 제출)
+                                <div>[32명 / 74명]</div>
                             </div>
                         </div>
                     </div>
@@ -293,7 +287,7 @@
 
                 <div id="classPlan">
 
-                    <div id="classPlan_title">강의계획표</div>
+                    <div id="classPlan_title">강의계획표<button type="button">수정</button></div>
 
                     <div id="classPlan_content">
                         <div>교과목개요</div>

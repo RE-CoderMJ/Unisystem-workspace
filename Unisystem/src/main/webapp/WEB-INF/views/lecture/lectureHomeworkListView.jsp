@@ -42,39 +42,25 @@
     #possible_box table td, #impossible_box table td{border-top: 1px solid lightgray;}
     #possible_box table tr:last-child, #impossible_box table tr:last-child{border-bottom: 2px solid lightgray;}
     
-    /* 페이징바 css */
-    .pagination {
-        display: inline-block;
-        width:fit-content;
-        margin:auto;
-        margin-top: 50px;
-    }
-    .pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    }
-    .pagination a.active {
-    background-color: #153E73;
-    color: white;
-    border: 1px solid #153E73;
-    }
-    .pagination a:hover:not(.active) {background-color: #ddd;}
-    .pagination a:first-child {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    }
-    .pagination a:last-child {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    }  
+	/*페이징바*/
+	.container{
+	    margin-top: 50px;
+	}
+	.page-link{
+	    color:RGB(26,86,162)!important;
+	    border: none!important;
+	    border-radius: 200px!important;
+	}
+	.page-item.active .page-link {
+	    color: #fff !important;
+	    background: RGB(26,86,162)!important;
+	}
 </style>
 </head>
 <body>
     <!-- header 영역 -->
     <jsp:include page="../common/header.jsp" />
+    <jsp:include page="../common/links.jsp"/>
     
     <div id="wrap">
 
@@ -175,16 +161,18 @@
                         </tr>
                     </table>
 
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#">1</a>
-                        <a class="active" href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">&raquo;</a>
-                      </div>
+                    <div class="container">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                        </ul>
+                    </div>
+                    
                 </div>
 
 
