@@ -14,13 +14,14 @@
 		height:830px;
 	}
 	#sidebar{
-		width:20%;
+		width:230px;
 		height:700px;
+		margin-top:30px;
 	}
 	#content{
-		width:80%;
+		width:1270px;
 		height:auto;
-		margin-top:50px;
+		margin-top:30px;
 		margin-bottom:50px;
 		background-color:white;
 	}
@@ -35,7 +36,7 @@
 	}
 	.searchBox{
 		margin:20px;
-		width:1160px;
+		width:1230px;
 		height:70px;
 		line-height:35px;
 		padding-left:40px;
@@ -111,7 +112,7 @@
 		font-size:20px;
 		font-weight:700;
 		color:white;
-		margin-right:350px;
+		margin-right:430px;
 	}
 	*:focus {
     outline: none;
@@ -228,13 +229,19 @@
 					<span class="nameTag">학생 목록</span>
 					<input type="text" name="univ" list="univList" placeholder="대학별 조회">
 					<datalist id="univList">
-						<option>자연과학대학</option>
+						<option>문과대학</option>
+						<option>공과대학</option>
+						<option>경영대학</option>
+						<option>사범대학</option>
+						<option>의과대학</option>
 						<option>예술대학</option>
+						<option>자연과학대학</option>
 					</datalist>
 					<input type="text" name="department" list="departList" placeholder="학부별 조회">
 					<datalist id="departList">
-						<option>물리학과</option>
-						<option>전자공학</option>
+						<c:forEach var="de" items="${depart}">
+							<option>${de.studDepartment}</option>
+						</c:forEach>
 					</datalist>
 					<input type="text" placeholder="이름으로 조회">
 					<button type="submit">검색</button>
@@ -272,110 +279,69 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<!-- 시작 -->
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>201912345</td>
-								<td>김길동</td>
-								<td>경영대학</td>
-								<td>경영학과</td>
-								<td>경영</td>
-								<td>재학</td>
-							</tr>
-							<!-- 끝 -->
+						
+							<c:forEach var="std" items="${ list }">
+								<tr>
+									<td><input type="checkbox"></td>
+									<td>${ std.studNo }</td>
+									<td>${ std.studKorName }</td>
+									<td>${ std.studUniv }</td>
+									<td>${ std.studDepartment }</td>
+									<td>${ std.studMajor }</td>
+									<td>
+										<c:choose>
+											<c:when test="${ std.studStatus == 1}">
+												재학
+											</c:when>
+											<c:when test="${ std.studStatus == 2}">
+												휴학
+											</c:when>
+											<c:when test="${ std.studStatus == 3}">
+												졸업
+											</c:when>
+											<c:otherwise>
+												자퇴
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					
+					
 					<div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                    
+		                   <c:choose>
+		    				<c:when test="${ pi.currentPage eq 1 }">            
+			                    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="student.ad?cpage=${pi.currentPage-1}">&lt;</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    
+                    	<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                   		  <c:choose>
+                    		<c:when test="${ pi.currentPage == p }">
+                    			<li class="page-item active"><a class="page-link" href="student.ad?cpage=${p}">${p}</a></li>
+                    		</c:when>		    			
+		                    <c:otherwise>
+		                   		<li class="page-item"><a class="page-link" href="student.ad?cpage=${p}">${p}</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    	</c:forEach>
+                    
+                    		<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link" href="student.ad?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+						</c:otherwise>						
+						</c:choose>	
+                 
                     </ul>
                  </div>
 						
@@ -393,6 +359,8 @@
 					check.click(function(){
 						$(".switchBox p").toggle();
 					});
+				
 			</script>
+			
 </body>
 </html>
