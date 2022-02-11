@@ -46,6 +46,7 @@
 		 and bo_category = 4
 	</select>
 	
+	<!-- community 검색 기능 -->
 	 <select id="selectSearchCount" resultType="_int">
 		select 
 		  count(*)
@@ -89,6 +90,54 @@
 		    </otherwise>
 		    </choose>
 		   	 like '%' || #{keyword} || '%'
+	</select>
+	
+	
+	<!-- community 카테고리별 조회 -->
+	
+	<select id="selectKeywordListCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 4
+		<if test="bokeyword == 5">
+		   and sub_category=5
+		  </if>
+		  <if test="bokeyword == 6">
+		  and sub_category=6
+		  </if>
+		  <if test="bokeyword == 7">
+ 			and sub_category=7
+		  </if>
+		  
+	</select>
+	
+	<select id="selectKeyword" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 4
+		  <choose>
+		 	<when test="bokeyword == 5">
+		   and sub_category=5
+		   </when>
+		 	<when test="bokeyword == 6">
+		     and sub_category=6
+		   </when>
+		   	<otherwise>
+		   and sub_category=7
+		    </otherwise>
+		    </choose>
+		   	 
 	</select>
 	
 	

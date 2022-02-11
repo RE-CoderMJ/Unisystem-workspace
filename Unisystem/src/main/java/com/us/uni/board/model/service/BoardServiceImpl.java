@@ -49,4 +49,20 @@ public class BoardServiceImpl implements BoardService{
 		return list;
 	}
 
+	@Override
+	public int selectKeywordListCount(int bokeyword) {
+		
+		int keyCount = bDao.selectKeywordListCount(sqlSession, bokeyword);
+		
+		return keyCount;
+	}
+
+	@Override
+	public ArrayList<Board> selectKeyword(PageInfo pi, int bokeyword) {
+		
+		return bDao.selectKeyword(sqlSession,pi,bokeyword);
+				
+	
+	}
+
 }

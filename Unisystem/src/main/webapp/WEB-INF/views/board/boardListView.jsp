@@ -205,24 +205,14 @@ li {
 			</script>
 		</c:if>
 			
-
+		<form action="keyword.bo" method="get">
 			<div class="ctg-area">
 				<input type="hidden" name="cpage" value="1"/>
 				<button class="bkeyword" name="bokeyword" value="5">자유</button>
 				<button class="bkeyword" name="bokeyword" value="6">취업</button>
 				<button class="bkeyword" name="bokeyword" value="7">정보공유</button>
 			</div>
-
-		<script>
-		
-        	$(function(){
-        		$(".bkeyword").click(function(){
-        			location.href = 'search.bo?bokeyword=' + $(this).val();
-        		})
-        	})
-        	
-        </script>
-
+		</form>
 
 			<br clear="both"> <br> <br>
 
