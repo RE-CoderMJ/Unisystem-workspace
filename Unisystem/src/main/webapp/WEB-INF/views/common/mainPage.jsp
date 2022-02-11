@@ -13,7 +13,9 @@
 
 <body>	
 
-   <jsp:include page="../common/userLogin.jsp" />
+
+   <jsp:include page="userLogin.jsp" />
+
    
 </body>
 </html>

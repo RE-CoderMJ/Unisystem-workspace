@@ -15,16 +15,22 @@ public class UsersDao {
 	private SqlSessionTemplate sqlSession;
 	
 	public Users loginUser(SqlSessionTemplate sqlSession, Users m) {
-		return sqlSession.selectOne("usersMapper.loginUser",m);
+		
+		int div = m.getUserDiv();
+		
+		if(div == 2) { 
+			return sqlSession.selectOne("usersMapper.profloginUser",m);
+		} else {
+			return sqlSession.selectOne("usersMapper.stuloginUser",m);
+		}
 	}
+	
 	
 	public Users findId(SqlSessionTemplate sqlSession, Users m) {
 		
 		Users uu = sqlSession.selectOne("usersMapper.findId", m);
-		
-		//System.out.println(uu);
-
 		return sqlSession.selectOne("usersMapper.findId", m);
+		
 	}
 	
 	public Users findpwd(SqlSessionTemplate sqlSession, Users userNo) {
