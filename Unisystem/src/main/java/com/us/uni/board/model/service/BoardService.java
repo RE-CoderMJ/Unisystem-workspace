@@ -1,6 +1,7 @@
 package com.us.uni.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -13,5 +14,8 @@ public interface BoardService {
 	// 1. 게시판 리스트 페이지 서비스 (페이징)
 		int selectListCount();
 		ArrayList<Board> selectList(PageInfo pi);
+		
+		int selectSearchCount(HashMap<String, String> map);
+		ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi);
 
 }
