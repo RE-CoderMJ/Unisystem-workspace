@@ -11,13 +11,5 @@ import com.us.uni.lecture.model.vo.HomeworkP;
 @Repository
 public class ClassboardDao {
 	
-	public int selectHomeworkListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount");
-	}
-	
-	/*
-	public ArrayList<HomeworkP> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
-		return 
-	}
-	*/
+
 }

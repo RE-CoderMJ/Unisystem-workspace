@@ -12,8 +12,19 @@
 	</select>
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
-	<select id="" resultMap="">
-	
+	<select id="selectHomeworkpList" resultMap="">
+		select 
+		       homeworkp_no
+		     , class_no
+		     , homeworkp_name
+		     , kor_name
+		     , homeworkp_enddatetime
+		  from homeworkp
+		  join class using(class_no)
+		  join professor using(prof_no)
+		  join users on (prof_no = user_no)
+		 where homeworkp_category = 'I'
+		   and status = 'Y'	
 	</select>
 
 </mapper>

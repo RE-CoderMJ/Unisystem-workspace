@@ -7,7 +7,5 @@ import com.us.uni.lecture.model.vo.HomeworkP;
 
 public interface ClassboardService {
 	
-	// 과제업로드 - 게시판 리스트 페이징
-	int selectHomeworkListCount();
-	ArrayList<HomeworkP> selectHomeworkpList(PageInfo pi);
+	
 }
