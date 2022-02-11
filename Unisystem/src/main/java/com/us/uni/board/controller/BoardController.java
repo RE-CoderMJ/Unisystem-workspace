@@ -1,6 +1,7 @@
 package com.us.uni.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,15 +29,42 @@ public class BoardController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Board> list = bService.selectList(pi);
 		
-		/*
-		mv.addObject("pi", pi);
-		mv.addObject("list", list);
-		mv.setViewName("board/boardListView");
-		*/
+		//System.out.println(list);
+		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
 		  .setViewName("board/boardListView");
 		
 		return mv;
 	}
-}
+	
+	@RequestMapping("search.bo")
+	public ModelAndView searchList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
+			
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+			
+		int searchCount = bService.selectSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectSearchList(map, pi);
+			
+			mv.addObject("pi", pi)
+			  .addObject("list", list)
+			  .addObject("condition", condition)
+			  .addObject("keyword", keyword)
+			  .setViewName("board/boardListView");
+			
+			return mv;
+		}
+	}
+	
+	
+
+	
+	
+	
+	
+

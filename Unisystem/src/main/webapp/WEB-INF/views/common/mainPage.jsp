@@ -13,7 +13,7 @@
 
 <body>	
 
-   <jsp:include page="pwdFind.jsp" />
+   <jsp:include page="../board/boardListView.jsp" />
    
 </body>
 </html>

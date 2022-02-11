@@ -8,28 +8,28 @@
 <title>UNI SYSTEM</title>
 </head>
 <style>
- 
-.sidewrap{
-	float:left;
+.sidewrap {
+	float: left;
 }
 
-.bo_content{
-	margin-top: 51px;
-    width: 1100px;
-    float: left;
-    background-color: white;
-    margin-left: 150px;
-    padding-bottom: 50px;
+.bo_content {
+	width: 1270px;
+	float: left;
+	background-color: white;
+	margin-left: 30px;
+	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
 	color: rgb(15, 43, 80);
-	font-size: 40px;
-	font-weight: 800;
-	margin-top: 50px;
-	margin-bottom: 10px;
-	margin-left: 100px;
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 37px;
+    margin-bottom: 10px;
+    margin-left: 53px;
 }
+
 
 #searchForm>* {
 	float: left;
@@ -42,31 +42,33 @@
 	height: 25px;
 	border-radius: 3px;
 }
-.search_wrap {
-	margin-left: 654px;
-    margin-top: 10px;
-    margin-bottom: 15px
-}
+
 .search_wrap .btn {
-    background-color: rgb(15, 43, 80);
-    color: white;
-    height: 40px;
-    width: 60px;
-    border-radius: 3px;
-    font-size: 14px;    
-    cursor: pointer;
-    position: relative;
-    right:  0px;
+	background-color: rgb(15, 43, 80);
+	color: white;
+	height: 40px;
+	width: 60px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
 }
 
 .search_wrap input {
 	height: 40px;
-    border: 1px solid lightgray;
-    margin-left: 0px;
+	border: 1px solid lightgray;
+	margin-left: 0px;
+}
+
+.search_wrap {
+	margin-left: 728px;
+	margin-top: 10px;
+	margin-bottom: 15px
 }
 
 .head_count {
-	margin-left: 100px;
+	margin-left: 55px;
 }
 
 .bo_content table {
@@ -101,16 +103,18 @@ li {
 	color: rgb(231, 76, 60);
 	font-weight: 700;
 }
-.bo_content{
-	position:relative;
-	top:0px;
+
+.bo_content {
+	position: relative;
+	top: 0px;
 }
+
 .ctg-area {
 	margin-top: 10px;
-    margin-bottom: 20px;
-    float: left;
-    margin-right: 100px;
-    margin-left: 96px;
+	margin-bottom: 20px;
+	float: left;
+	margin-right: 100px;
+	margin-left: 188px;
 }
 
 .ctg-area button {
@@ -126,29 +130,24 @@ li {
 
 .b_write {
 	border: none;
-    float: right;
-    margin-right: 98px;
-}
-.b_delete{
-	border: none;
-    float: right;
-    margin-right:10px;
+	float: right;
+	margin-right: 98px
 }
 
-.ltgt {
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: lightgray;
-	color: #fff;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
+/*페이징바*/
+.container{
+    margin-top: 50px;
 }
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
+}
+.page-item.active .page-link {
+    color: #fff !important;
+    background: black!important;
+}
+
 </style>
 <body>
 
@@ -161,7 +160,7 @@ li {
 		  학생이 로그인하면 smySidebar -->
 	
 	
-	<div style="background-color:rgb(235,242,252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 	<div class="sidewrap">
 	<jsp:include page="../student/smySidebar.jsp" />
 	</div>

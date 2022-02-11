@@ -13,29 +13,23 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
 	color: rgb(15, 43, 80);
-	font-size: 40px;
-	font-weight: 800;
-	margin-top: 50px;
-	margin-bottom: 10px;
-	margin-left: 92px;
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 37px;
+    margin-bottom: 10px;
+    margin-left: 53px;
 }
 
-.msg_division {
-	font-size: 20px;
-	margin-left: 100px;
-	font-weight: 700;
-	margin-top: 35px;
-}
 
 #searchForm>* {
 	float: left;
@@ -47,12 +41,6 @@
 	border: 1px solid lightgray;
 	height: 25px;
 	border-radius: 3px;
-}
-
-.search_wrap {
-	margin-left: 654px;
-	margin-top: 0px;
-	margin-bottom: 15px
 }
 
 .search_wrap .btn {
@@ -73,8 +61,14 @@
 	margin-left: 0px;
 }
 
+.search_wrap {
+	margin-left: 728px;
+	margin-top: 10px;
+	margin-bottom: 15px
+}
+
 .head_count {
-	margin-left: 100px;
+	margin-left: 55px;
 }
 
 .bo_content table {
@@ -120,7 +114,7 @@ li {
 	margin-bottom: 20px;
 	float: left;
 	margin-right: 100px;
-	margin-left: 96px;
+	margin-left: 188px;
 }
 
 .ctg-area button {
@@ -134,63 +128,26 @@ li {
 	font-weight: 700;
 }
 
-.btn-area{
-	float: right;
-    margin-right: 100px;
-}
- 
 .b_write {
 	border: none;
 	float: right;
 	margin-right: 98px
 }
 
-.ltgt {
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: lightgray;
-	color: #fff;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
+/*페이징바*/
+.container{
+    margin-top: 50px;
 }
-.modal-title{
-	margin: auto;
-    font-size: 30px;
-    font-weight: 600;
-    margin-right: -10px;
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
 }
-.modal-body{margin:auto;}
-.modalText{
-	width: 383px;
-    resize: none;
-    height: 400px;
+.page-item.active .page-link {
+    color: #fff !important;
+    background: black!important;
 }
-#sendModal{
-	margin:auto;
-}
-.moBtn{
-	background-color: rgb(15, 43, 80);
-	color: white;
-	height: 40px;
-	width: 80px;
-	border-radius: 3px;
-	font-size: 14px;
-	cursor: pointer;
-	position: relative;
-	right: 0px;
-	border:none;
-}
-#close{
-	position: relative;
-    top: 10px;
-    right: 20px;
-}
+
 </style>
 <body>
 
@@ -203,7 +160,7 @@ li {
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 		<div class="sidewrap">
 			<jsp:include page="../student/smySidebar.jsp" />
 		</div>

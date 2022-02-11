@@ -16,7 +16,6 @@
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;
 	float:left;
-	margin-top:50px;
 }
 
 .total_menu {
