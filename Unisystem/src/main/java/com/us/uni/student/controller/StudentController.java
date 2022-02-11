@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.student.model.service.StudentService;
@@ -42,14 +44,19 @@ public class StudentController {
 		
 		return mv; 
 	}
+
 	
-	@RequestMapping("department")
+	@ResponseBody
+	@RequestMapping(value="department", produces="application/json; charset=UTF-8")
 	public String selectDepartment(String studUniv, Model model) {
-		ArrayList<Student> depart = sService.selectDepartment(studUniv);
-		model.addAttribute(depart);
-		System.out.println(depart);
-		return "student/adminStudentListView";
 		
+		System.out.println(studUniv);
+		
+		ArrayList<Student> depart = sService.selectDepartment(studUniv);
+		
+		System.out.println(depart);
+		
+		return new Gson().toJson(depart);
 		
 	}
 	

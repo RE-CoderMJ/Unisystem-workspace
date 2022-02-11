@@ -42,12 +42,13 @@
 		padding-left:40px;
 		background:rgb(21, 62, 115);
 	}
-	.searchBox>input{
+	.searchBox>input, select{
 		margin-top:15px;
 		padding-left:10px;
 		width:200px;
    		border-radius:8px;
    		border:0;
+   		height:40px;
 	}
 	.searchBox>button{
 		background:none;
@@ -227,8 +228,8 @@
 			<div class="searchList">
 				<div class="searchBox">
 					<span class="nameTag">학생 목록</span>
-					<input type="text" name="univ" list="univList" placeholder="대학별 조회">
-					<datalist id="univList">
+					<select id="univList" required>
+						<option value="" style="display: none;" selected>대학별 조회</option>
 						<option>문과대학</option>
 						<option>공과대학</option>
 						<option>경영대학</option>
@@ -236,13 +237,14 @@
 						<option>의과대학</option>
 						<option>예술대학</option>
 						<option>자연과학대학</option>
-					</datalist>
-					<input type="text" name="department" list="departList" placeholder="학부별 조회">
-					<datalist id="departList">
-						<c:forEach var="de" items="${depart}">
-							<option>${de.studDepartment}</option>
-						</c:forEach>
-					</datalist>
+					</select>
+					<select id="departList">
+						<!--
+						<option value="" style="display: none;" selected>학부별 조회</option>
+						  -->
+						  <option>예술대학</option><option>예술대학</option><option>예술대학</option><option>예술대학</option>
+						
+					</select>
 					<input type="text" placeholder="이름으로 조회">
 					<button type="submit">검색</button>
 				</div>
@@ -326,6 +328,7 @@
                    		  <c:choose>
                     		<c:when test="${ pi.currentPage == p }">
                     			<li class="page-item active"><a class="page-link" href="student.ad?cpage=${p}">${p}</a></li>
+            			        <!-- $(".pagination a").text() 와 ${ pi.currentPage } 가 일치할 경우 a의 부모요소 li에 active 부여   -->
                     		</c:when>		    			
 		                    <c:otherwise>
 		                   		<li class="page-item"><a class="page-link" href="student.ad?cpage=${p}">${p}</a></li>
@@ -355,11 +358,31 @@
 			
 			
 			<script>
+				// switch 관련
 				var check = $("input[type='checkbox']");
 					check.click(function(){
 						$(".switchBox p").toggle();
 					});
-				
+					
+				// 대학별 학부 조회
+    			$(document).ready(function(){
+	    			$("#univList").on("change", function(){
+					let list = "";
+	    				$.ajax({
+	    					url:"department",
+	    					data:{studUniv:$(this).val()},
+	    					success:data => {
+	    						$(data).each(function(index, value){
+	    							list += "<option>" + value.studDepartment + "</option>";
+	    						})
+	    							$("#departList").html(list);
+	    					}, error:() => {
+	    						console.log("대학별 학과 조회 실패");
+	    					}
+	    				})
+	    			})
+    			
+    			})
 			</script>
 			
 </body>
