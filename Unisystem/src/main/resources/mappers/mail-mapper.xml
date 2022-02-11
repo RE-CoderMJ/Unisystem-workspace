@@ -3,26 +3,6 @@
 
 <mapper namespace="mailMapper">
 	
-	<insert id="saveDraft">
-		insert
-		  into mail_from
-		  (
-		  	mail_from_no
-		  , from_user
-		  , from_add
-		  , title
-		  , content
-		  , save_status
-		  )
-		  values
-		  (
-		  	seq_mfno.nextval
-		  , #{}
-		  , #{}
-		  , #{}
-		  , #{}
-		  , #{}
-		  )
-	</insert>
+
 	
 </mapper>

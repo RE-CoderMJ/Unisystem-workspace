@@ -13,7 +13,7 @@
 
 <body>	
 
-   <jsp:include page="../board/boardListView.jsp" />
+   <jsp:include page="../common/userLogin.jsp" />
    
 </body>
 </html>
