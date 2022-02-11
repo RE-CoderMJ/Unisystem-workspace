@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- font -->
-link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&family=IBM+Plex+Sans+KR:wght@300&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <!-- JavaScript -->
@@ -122,6 +122,14 @@ link rel="preconnect" href="https://fonts.googleapis.com">
 </style>
 </head>
 <body>
+
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
     <header id="header">
 
         <div id="header-up">
@@ -139,7 +147,7 @@ link rel="preconnect" href="https://fonts.googleapis.com">
         	<div id="header-down-line">
 	            <img src="resources/images/LOGO_WIDTH.png">
 	            <nav id="header-down-right">
-	                <a href="">웹메일</a>
+	                <a href="webMail.inbox">웹메일</a>
 	                <a href="">마이페이지</a>
 	                <a href="">공지사항</a>
 	                <a href="list.bo">커뮤니티</a>
