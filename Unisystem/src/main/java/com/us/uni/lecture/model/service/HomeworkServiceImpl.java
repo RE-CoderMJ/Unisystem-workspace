@@ -23,9 +23,11 @@ public class HomeworkServiceImpl implements HomeworkService{
 	public int selectHomeworkListCount() {
 		return hDao.selectHomeworkListCount(sqlSession);
 	}
-
+	
+	
 	@Override
 	public ArrayList<HomeworkP> selectHomeworkpList(PageInfo pi) {
 		return hDao.selectHomeworkpList(sqlSession, pi);
 	}
+	
 }

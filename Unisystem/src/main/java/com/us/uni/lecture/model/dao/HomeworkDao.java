@@ -16,8 +16,9 @@ public class HomeworkDao {
 	}
 	
 	
-	public ArrayList<HomeworkP> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
-		return 
+	public int selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
+		return ;
 	}
+	
 	
 }

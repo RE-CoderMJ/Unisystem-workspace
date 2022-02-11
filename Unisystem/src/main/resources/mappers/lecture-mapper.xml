@@ -11,7 +11,8 @@
 		   and homeworkp_category = 'I'	
 	</select>
 	
-	<!-- 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
+	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
+	<!-- 
 	<select id="selectHomeworkpList" resultMap="">
 		select 
 		       homeworkp_no
@@ -26,5 +27,6 @@
 		 where homeworkp_category = 'I'
 		   and status = 'Y'	
 	</select>
+	 -->
 
 </mapper>
