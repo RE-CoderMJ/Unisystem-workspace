@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lectureMapper">
+
+	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->
+	<select id="selectHomeworkListCount" resultType="_int">
+		select
+		       count(*)
+		  from homeworkp
+		 where status = 'Y'
+		   and homeworkp_category = 'I'	
+	</select>
+	
+	<!-- 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
+	<select id="" resultMap="">
+	
+	</select>
+
+</mapper>
