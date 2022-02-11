@@ -30,20 +30,11 @@ public class HomeworkServiceImpl implements HomeworkService{
 	public int selectHomeworkListCount() {
 		return hDao.selectHomeworkListCount(sqlSession);
 	}
-	
-<<<<<<< Updated upstream
-	
-=======
 	/*
->>>>>>> Stashed changes
 	@Override
 	public ArrayList<HomeworkP> selectHomeworkpList(PageInfo pi) {
 		return ;
-	}
-<<<<<<< Updated upstream
-	
-=======
 	*/
 
->>>>>>> Stashed changes
+
 }

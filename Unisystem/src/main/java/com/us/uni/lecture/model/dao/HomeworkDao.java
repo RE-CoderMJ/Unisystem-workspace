@@ -22,14 +22,13 @@ public class HomeworkDao {
 	}
 	
 	
-<<<<<<< Updated upstream
+	/*
 	public int selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
 		return ;
-=======
+
 	public String selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
 		return "";
->>>>>>> Stashed changes
 	}
-	
+	*/
 	
 }
