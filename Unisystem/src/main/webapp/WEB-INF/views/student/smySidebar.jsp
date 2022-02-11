@@ -96,7 +96,7 @@ a:hover {
 			</div>
 			<p>
 				<a href="">- 수강 시간표</a>
-				<a href="">- 내가 수강중인 강의</a>
+				<a href="studentClassList.me">- 내가 수강중인 강의</a>
 			</p>
 
 			<div class="side_title">

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.HomeworkDao;
 import com.us.uni.lecture.model.vo.HomeworkP;
+import com.us.uni.lecture.model.vo.Lecture;
+import com.us.uni.users.model.vo.Users;
 
 @Service
 public class HomeworkServiceImpl implements HomeworkService{
@@ -20,12 +22,28 @@ public class HomeworkServiceImpl implements HomeworkService{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
+	public ArrayList<Lecture> selectStudentClassList(int userNo) {
+		return hDao.selectStudentClassList(sqlSession, userNo);
+	}
+	
+	@Override
 	public int selectHomeworkListCount() {
 		return hDao.selectHomeworkListCount(sqlSession);
 	}
-
+	
+<<<<<<< Updated upstream
+	
+=======
+	/*
+>>>>>>> Stashed changes
 	@Override
 	public ArrayList<HomeworkP> selectHomeworkpList(PageInfo pi) {
-		return hDao.selectHomeworkpList(sqlSession, pi);
+		return ;
 	}
+<<<<<<< Updated upstream
+	
+=======
+	*/
+
+>>>>>>> Stashed changes
 }
