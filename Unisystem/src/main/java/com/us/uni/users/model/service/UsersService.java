@@ -17,5 +17,5 @@ public interface UsersService {
 	//비밀번호찾기
 	void findPwd(HttpServletResponse response, Users m) throws Exception;
 	void sendEmail(Users m, String email);
-
+	
 }

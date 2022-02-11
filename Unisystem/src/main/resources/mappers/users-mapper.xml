@@ -17,12 +17,39 @@
 				<result column="webmail" property="webMail" />
 				<result column="user_div" property="userDiv" />
 				<result column="profile_img" property="profileImg" />
+				
+				<!-- STUDENT -->
+				<result column="stud_no" property="studNo" />
+				<result column="sprof_no" property="sprofNo" />
+				<result column="stud_univ" property="studUniv" />
+				<result column="stud_department" property="studDepartment" />
+				<result column="stud_major" property="studMajor" />
+				<result column="stud_minor" property="studMinor" />
+				<result column="stud_into" property="studInto" />
+				<result column="stud_grad" property="studGrad" />
+				<result column="stud_division" property="studDivision" />
+				<result column="stud_status" property="studStatus" />
+				<result column="stud_semester" property="studSemester" />
+				
+				<!-- PROFESSOR -->
+				<result column="prof_no" property="profNo" />
+				<result column="prof_rank" property="profRank" />
+				<result column="rank_change" property="rankChange" />
+				<result column="prof_univ" property="profUniv" />
+				<result column="prof_department" property="profDepartment" />
+				<result column="prof_major" property="profMajor" />
+				<result column="prof_into" property="profInto" />
+				<result column="prof_resign" property="profResign" />
+				<result column="prof_location" property="profLocation" />
+				<result column="prof_tel" property="profTel" />
+				<result column="prof_status" property="profStatus" />
+				<result column="prof_app_day" property="profAppDay" />
+				<result column="prof_app_time" property="profAppTime" />
 			</resultMap>
 			
 			
-<!-- 로그인 -->
-<select id="loginUser" resultMap="usersResult">
-		<!-- 암호화 완료 -->
+<!-- 학생로그인 -->
+<select id="stuloginUser" resultMap="usersResult">
 		select
 		       user_no
 		     , password
@@ -37,10 +64,58 @@
 		     , WEBMAIL
 		     , user_div
 		     , profile_img
-		  from users
-		  where
+		     , stud_no
+		     , prof_no as "sprof_no"
+		     , stud_univ
+		     , stud_department
+		     , stud_major
+		     , stud_minor
+		     , stud_into
+		     , stud_grad
+		     , stud_division
+		     , stud_status
+		     , total_semester as "stud_semester"
+			   from users u
+			   join student s on (user_no = stud_no)
+		   where
 		   user_no = #{userNo}
 </select>
+<!-- 교수로그인 -->
+<select id="profloginUser" resultMap="usersResult">
+		select
+		       user_no
+		     , password
+		     , kor_name
+		     , eng_name
+		     , birthday
+		     , gender
+		     , email
+		     , phone
+		     , address
+		     , nation
+		     , WEBMAIL
+		     , user_div
+		     , profile_img
+		     , prof_no
+		     , prof_rank
+		     , prof_change
+		     , prof_univ
+		     , prof_department
+		     , prof_major
+		     , prof_resign
+		     , prof_location
+		     , prof_tel
+		     , prof_status
+		     , prof_app_day
+		     , prof_app_time
+			   from users u
+			   join professor s on (user_no = prof_no)
+		   where
+		   user_no = #{userNo}
+</select>
+
+
+
 
 <!-- 아이디찾기 -->
 <select id="findId" resultMap="usersResult">

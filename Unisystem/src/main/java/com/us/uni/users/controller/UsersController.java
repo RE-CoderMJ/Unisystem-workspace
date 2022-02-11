@@ -52,7 +52,6 @@ public class UsersController {
 		//System.out.println("암호문:"+ encPwd);
 		
 		//m.setUserPwd(encPwd);
-	
 		if(loginUser != null || bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			
 			// 로그인 성공
@@ -67,6 +66,7 @@ public class UsersController {
 			mv.setViewName("common/errorPage"); 
 		}
 		
+		//System.out.println(loginUser);
 		return mv;	
 	}
 	

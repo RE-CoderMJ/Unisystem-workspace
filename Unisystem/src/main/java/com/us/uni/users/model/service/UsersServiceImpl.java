@@ -30,9 +30,10 @@ public class UsersServiceImpl implements UsersService{
 	public Users loginUser(Users m) {
 		
 		Users loginUser = uDao.loginUser(sqlSession,m);
+		
 		return loginUser;
 	}
-
+	
 	@Override
 	public Users findId(Users m) {
 		Users findId = uDao.findId(sqlSession,m);
