@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
-import com.us.uni.lecture.model.service.ClassboardService;
+import com.us.uni.lecture.model.service.HomeworkService;
 import com.us.uni.lecture.model.vo.HomeworkP;
 
 @Controller
 public class LectureController {
 	
 	@Autowired
-	private ClassboardService cService;
+	private HomeworkService hService;
 	
 	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("studentClassList.me")
@@ -128,11 +128,11 @@ public class LectureController {
 		// @RequestParam => request.getParameter를 대신함
 		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
 		
-		int listCount = cService.selectHomeworkListCount();
+		int listCount = hService.selectHomeworkListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
-		ArrayList<HomeworkP> list = cService.selectHomeworkpList(pi);
+		ArrayList<HomeworkP> list = hService.selectHomeworkpList(pi);
 		
 		
 		return "lecture/lectureHomeworkListView";
