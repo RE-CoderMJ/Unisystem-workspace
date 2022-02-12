@@ -9,6 +9,7 @@
 		<typeAliases>
 			<typeAlias type="com.us.uni.users.model.vo.Users" alias="Users" />
 			<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
+			
 			<typeAlias type="com.us.uni.mail.model.vo.MailFrom" alias="MailFrom" />
 
 			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />

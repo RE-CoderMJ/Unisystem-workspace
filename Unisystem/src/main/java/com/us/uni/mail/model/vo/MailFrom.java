@@ -13,11 +13,11 @@ public class MailFrom {
 	
 	private int mailNo;
 	private int userNo;
+	private String userToNo;
 	private String address;
 	private String title;
 	private String content;
 	private String sendDate;
 	private String toMe;
 	private String saveStatus;
-	private String cc;
 }

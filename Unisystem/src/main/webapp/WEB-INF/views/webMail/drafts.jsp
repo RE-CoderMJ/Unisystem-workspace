@@ -43,45 +43,52 @@
             <article>
                 <table class="table table-hover" id="list">
                     <tbody>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope-open"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from">(받는이없음)</td>
-                            <td class="title">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope-open"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from">김땡땡 교수님</td>
-                            <td class="title">(제목없음)</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope-open"></i></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from">김땡땡 교수님</td>
-                            <td class="title">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
+                    	<c:forEach var="d" items="${ list }">
+	                        <tr>
+	                        	<input type="hidden" value="${d.mailNo }">
+	                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
+	                            <td class="read-status"><i class="far fa-envelope-open"></i></td>
+	                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
+	                            <td class="from overflow">${d.userToNo > " " ? d.userToNo:"(받는이 없음)" }</td>
+	                            <td class="title">${ d.title }</td>
+	                            <td class="date">${ d.sendDate }</td>
+	                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 
                 <div class="container">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                	<ul class="pagination justify-content-center">
+                	
+                		<c:choose>
+	                    	<c:when test="${ pi.currentPage eq 1 }" >
+		                    	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+	                      		<li class="page-item"><a class="page-link" href="webMail.draft?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	                      	</c:otherwise>
+	            		</c:choose>
+	            		
+	            		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	            			<c:choose>
+		            			<c:when test="${ pi.currentPage eq p }">
+		                    		<li class="page-item disabled active"><a class="page-link" href="webMail.draft?capge=${ p }">${ p }</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item disabled"><a class="page-link" href="webMail.draft?capge=${ p }">${ p }</a></li>
+		                    	</c:otherwise>
+	                    	</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${pi.currentPage eq pi.maxPage }">
+	                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+	                        </c:when>
+	                        <c:otherwise>
+	                        	<li class="page-item disabled"><a class="page-link" href="webMail.draft?cpage=${pi.currentPage + 1 }">&gt;</a></li>
+	                      	</c:otherwise>
+	                    </c:choose>
+	                    
                     </ul>
                   </div>
 
@@ -90,6 +97,14 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(function(){
+			$("#list>tbody>tr").click(function(){
+				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
+			})
+		})
+	</script>
 	
 	<script>
 		$(document).ready(function(){

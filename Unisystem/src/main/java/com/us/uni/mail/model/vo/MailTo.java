@@ -13,7 +13,7 @@ public class MailTo {
 	
 	private int mailNo;
 	private int mailFromNo;
-	private int userNo;
+	private int userToNo;
 	private String address;
 	private String important;
 	private String readDate;

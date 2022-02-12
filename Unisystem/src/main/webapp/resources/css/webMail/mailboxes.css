@@ -133,6 +133,16 @@ section::after{display:block;content:"";clear:both;}
 #list td{
     cursor: pointer;
 }
+
+.overflow{
+	display: block; /* 너비를 가질 수 있도록 설정 */
+   	white-space: nowrap; /* 내용이 넘치면 자동줄바꿈되는 것을 해제 */
+    overflow: hidden; /* 넘치는 부분을 hidden */
+    text-overflow: ellipsis; /* 텍스트의 말줄임표(...) 처리 */
+    margin:auto;
+    margin:0;
+}
+
 /*열 서식*/
 .check-area{
     width: 2px;
@@ -144,12 +154,17 @@ section::after{display:block;content:"";clear:both;}
     width: 1px;
 }
 .from{
-    width: 300px;
+    width: 387px;
     text-align: center;
+    padding-left:60px!important;
+    padding-right:60px!important;
 }
 .title{
     width: 500px;
     text-align: center;
+    white-space: nowrap; /* 내용이 넘치면 자동줄바꿈되는 것을 해제 */
+    overflow: hidden; /* 넘치는 부분을 hidden */
+    text-overflow: ellipsis; /* 텍스트의 말줄임표(...) 처리 */
 }
 .date{
     width: 200px;

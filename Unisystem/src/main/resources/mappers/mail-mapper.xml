@@ -3,6 +3,73 @@
 
 <mapper namespace="mailMapper">
 	
-
+	<resultMap type="MailFrom" id="fromResult">
+		<result column="mail_from_no" property="mailNo" />
+		<result column="from_user" property="userNo" />
+		<result column="from_add" property="address" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="send_date" property="sendDate" />
+		<result column="to_me" property="toMe" />
+		<result column="save_status" property="saveStatus" />
+		<result column="to_user" property="userToNo" />
+	</resultMap>
+	
+	<insert id="saveDraft">
+		insert
+		  into mail_from
+		  (
+		    mail_from_no
+		  , from_user
+		  , from_add
+		  , to_user
+		  , title
+		  , content
+		  , save_status
+		  )
+		  values
+		  (
+		    seq_mfno.nextval
+		  , #{userNo}
+		  , #{userNo} || '@unisystem.com'
+		  , #{userToNo}
+		  , #{title}
+		  , #{content}
+		  , 'Y'
+		  )
+	</insert>
+	
+	<select id="selectDraftListCount" resultType="_int">
+		select
+		       count(*)
+		  from mail_from
+		 where from_user = #{userNo}
+		   and save_status = 'Y'
+	</select>
+	
+	<select id="selectDraftList" resultMap="fromResult">
+		select
+			   mail_from_no
+			 , to_user
+			 , title
+			 , content
+			 , send_date
+	      from mail_from
+		 where from_user = #{userNo}
+		   and save_status = 'Y'
+		 order
+		    by mail_from_no desc
+	</select>
+	
+	<select id="selectDraft" resultMap="fromResult">
+		select
+			   mail_from_no
+			 , to_user
+			 , title
+			 , content
+		  from mail_from
+		 where mail_from_no = #{mfNo}
+		   and save_status = 'Y'
+	</select>
 	
 </mapper>

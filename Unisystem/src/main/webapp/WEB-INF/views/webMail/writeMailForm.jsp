@@ -74,24 +74,24 @@
 	            </header>
 	            <article>
 	               <div id="mail-info">
+	               		<input type="hidden" name="userNo" value="${ loginUser.userNo }">
 	                    <span>받는 사람</span>
-	                    <input id="write-to" type="text" name="userNo">
-	                    <br><br>
+	                    <input id="write-to" type="text" name="userToNo" required value="${mf.userToNo > null ? ' ' : mf.userToNo }">
+	                    <br><br> 
 	                    <span>참조</span>
 	                    <input id="write-cc" type="text" name="cc">
 	                    <br><br>
 	                    <span>제목</span>
-	                    <input id="write-title" type="text" name="title">
+	                    <input id="write-title" type="text" name="title" value="${mf.title > null ? ' ' : mf.title }">
 	                    <div id="contents-area">
-	                    	<textarea id="summernote" name="content" style="margin-left:100px"></textarea>
+	                    	<textarea id="summernote" name="content" style="margin-left:100px">${mf.content > null ? ' ' : mf.content }</textarea>
 	                    </div>
 	                 	<input type="file" multiple id="files" name="files">
 	               </div>
 	            </article>
             </form>
         </section>
-    </div>
-	
+    </div>	
 	
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">

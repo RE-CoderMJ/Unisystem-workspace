@@ -21,15 +21,27 @@ public class MailServiceImpl implements MailService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int saveDraft(MailFrom mf) {		
+		int result = mDao.saveDraft(sqlSession, mf);
+		return result;
+	}
+	
+	@Override
+	public int selectDraftListCount(int userNo) {
+		int result = mDao.selectDraftListCount(sqlSession, userNo);
+		return result;
 	}
 
 	@Override
-	public ArrayList<MailTo> selectMails(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<MailFrom> selectDraftList(int userNo, PageInfo pi) {
+		ArrayList<MailFrom> list = mDao.selectDraftList(sqlSession, userNo, pi);
+		return list;
+	}
+	
+	@Override
+	public MailFrom selectDraft(int mfNo) {
+		MailFrom mf = mDao.selectDraft(sqlSession, mfNo);
+		return mf;
 	}
 
 	@Override
@@ -56,12 +68,6 @@ public class MailServiceImpl implements MailService {
 		return 0;
 	}
 
-	@Override
-	public int saveDraft(MailFrom mf) {
-		
-		int result = mDao.saveDraft(sqlSession, mf);
-		
-		return result;
-	}
+
 
 }
