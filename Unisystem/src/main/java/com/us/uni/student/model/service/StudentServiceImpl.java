@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.student.model.dao.StudentDao;
-import com.us.uni.student.model.vo.Student;
+import com.us.uni.users.model.vo.Users;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -26,12 +26,12 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public ArrayList<Student> selectStudentList(PageInfo pi) {
+	public ArrayList<Users> selectStudentList(PageInfo pi) {
 		return sDao.selectStudentList(sqlSession, pi);
 	}
 
 	@Override
-	public ArrayList<Student> selectDepartment(String studUniv) {
+	public ArrayList<Users> selectDepartment(String studUniv) {
 		return sDao.selectDepartment(sqlSession, studUniv);
 	}
 
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public ArrayList<Student> searchStudent(HashMap map, PageInfo pi) {
+	public ArrayList<Users> searchStudent(HashMap map, PageInfo pi) {
 		return sDao.searchStudent(sqlSession, map, pi);
 	}
 

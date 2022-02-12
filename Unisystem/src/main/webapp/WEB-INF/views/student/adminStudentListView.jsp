@@ -238,7 +238,7 @@
 						<option>예술체육대학</option>
 						<option>자연과학대학</option>
 					</select>
-					<select id="departList">
+					<select id="departList" required>
 						<option value="" style="display: none;" selected>학부별 조회</option>
 					</select>
 					<input type="text" id="keyword" placeholder="이름으로 조회">
@@ -280,7 +280,7 @@
 								<tr>
 									<td><input type="checkbox"></td>
 									<td>${ std.studNo }</td>
-									<td>${ std.studKorName }</td>
+									<td>${ std.korName }</td>
 									<td>${ std.studUniv }</td>
 									<td>${ std.studDepartment }</td>
 									<td>${ std.studMajor }</td>
@@ -352,11 +352,21 @@
 			
 			
 			<script>
+			
+			<!--
+				// 사이드바 길이 조절
+				$(function(){
+					let $len = $("#wrap").height();
+					$("#sidebar").css('height', $len, + 22);
+				})
+			-->
+			
 				// switch 관련
 				var check = $("input[type='checkbox']");
 					check.click(function(){
 						$(".switchBox p").toggle();
 					});
+	
 					
 				// 대학별 학부 조회
     			$(document).ready(function(){
@@ -384,12 +394,17 @@
     			
     			// search 기능
 				function pagination(i){
-					console.log(i);
+					
+					if (!$("#univList").val().length==0 && $("#departList").val().length==0) {
+					  alert("학부를 선택해 주세요!");
+					  return;
+					}
 					
 					let list = "";
 					let status = "";
 					let page = "";
 					let cpage = i;
+					
 					
 					$.ajax({
 					url:"search.st",
@@ -445,7 +460,6 @@
 						
 					})
 				}
-    			
 			</script>
 			
 </body>

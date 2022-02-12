@@ -2,6 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="studentMapper">
 
+	<resultMap id="usersResult" type="Users">
+		<result column="user_no" property="userNo" />
+		<result column="password" property="userPwd" />
+		<result column="kor_name" property="korName" />
+		<result column="eng_name" property="engName" />
+		<result column="birthday" property="birthday" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="nation" property="nation" />
+		<result column="webmail" property="webMail" />
+		<result column="user_div" property="userDiv" />
+		<result column="profile_img" property="profileImg" />
+		
+		<!-- STUDENT -->
+		<result column="stud_no" property="studNo" />
+		<result column="sprof_no" property="sprofNo" />
+		<result column="stud_univ" property="studUniv" />
+		<result column="stud_department" property="studDepartment" />
+		<result column="stud_major" property="studMajor" />
+		<result column="stud_minor" property="studMinor" />
+		<result column="stud_into" property="studInto" />
+		<result column="stud_grad" property="studGrad" />
+		<result column="stud_division" property="studDivision" />
+		<result column="stud_status" property="studStatus" />
+		<result column="stud_semester" property="studSemester" />
+	</resultMap>
+
+	<!-- 
+	
 	<resultMap id="StudentResult" type="Student">
 		<result column="STUD_NO" property="studNo" />
 		<result column="PROF_NO" property="profNo" />
@@ -26,14 +57,15 @@
 		<result column="USER_DIV" property="studUserDiv" />
 		<result column="PROFILE_IMG" property="studProfileImg" />
 	</resultMap>
-	
+	 -->
+	 
 	<select id="selectListCount" resultType="_int">
 		SELECT
 			   COUNT(*)
 		  FROM STUDENT
 	</select>
 	
-	<select id="selectStudentList" resultMap="StudentResult">
+	<select id="selectStudentList" resultMap="usersResult">
 		SELECT 
 		       STUD_NO
 		     , KOR_NAME
@@ -48,7 +80,7 @@
 	        BY STUD_NO DESC
 	</select>
 	
-	<select id="selectDepartment" resultMap="StudentResult">
+	<select id="selectDepartment" resultMap="usersResult">
 		SELECT DISTINCT 
 		       STUD_DEPARTMENT
 		  FROM STUDENT
@@ -87,6 +119,10 @@
 		     , STUD_STATUS
 		  FROM STUDENT
 		  JOIN USERS ON(STUD_NO = USER_NO)
+		  <!-- 대학에 대해서만 검색한다면? -->
+		   <if test="depart.equals('') and keyword.equals('')">
+		     WHERE STUD_UNIV = #{univ}
+		   </if>
 	  	  <!-- 대학과 학과에 대해서만 검색한다면?-->
 		  <if test="keyword.equals('')">
 	  	  WHERE STUD_UNIV = #{univ}
