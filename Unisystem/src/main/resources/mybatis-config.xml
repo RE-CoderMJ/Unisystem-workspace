@@ -14,7 +14,7 @@
 
 			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />
 			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />
-
+			<typeAlias type="com.us.uni.lecture.model.vo.Lecture" alias="Lecture" />
 		</typeAliases>
 		
 		<mappers>
