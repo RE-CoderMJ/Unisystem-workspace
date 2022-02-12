@@ -140,10 +140,25 @@ margin:auto;
 margin-left: 210px;
 margin-top: 10px;
 }
+.updel{
+	height: 24px;
+    margin-right: 212px;
+    font-size: 15px;
+}
+.updel a{
+	text-decoration: none;
+	color: black;
+	float: right;
+}
+.bdel{
+	margin-right:4px;
+}
 </style>
 
 <body>
-
+	
+	
+	
 	<jsp:include page="../common/links.jsp"/>
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
@@ -159,55 +174,65 @@ margin-top: 10px;
 		</div>
 		
 		<div class="bo_content">
-			<jsp:useBean id="now" class="java.util.Date" />
-			<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy.MM.dd" /></c:set>
 			<!-- title -->
-			<div class="page_title">커뮤니티 글작성</div>
-			 
-			<form id="boardInsert" action="insert.bo" method="post" enctype="multipart/form-data">
+			<div class="page_title">커뮤니티</div>
+				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
+				 <c:if test="${ loginUser.userNo eq b.userNo }">
+				<div class="updel">
+				<a onclick="postFormSubmit(1);">수정</a> 
+				<a class="bdel" href="">삭제</a>
+				</div>
+				</c:if>
+				
 				<div class="grayWrap">
-					<input type="text" name="boardTitle" placeholder="제목을 입력하세요" required/><br>
+					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
 					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
 					
 						<div class="ctg-area">
-							<span>날짜</span> <c:out value="${today}" />
+							<span>날짜</span> ${ b.createDate }
 							<span>작성자</span> ${loginUser.korName}
-							<span>카테고리</span>
-						<!--제목,날짜,조회수 등록영역-->
-						<div id="search_wrap">
-							<select  name="subCategory" id="condition" class="custom-select">
-								<option class="ctg"  value="4">카테고리</option>
-								<option class="ctg"  value="5">자유</option>
-								<option class="ctg"  value="6">취업</option>
-								<option class="ctg"  value="7">정보</option>
-							</select>
+							<span>카테고리</span> ${ b.subCategory }
+					
 							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 0 </div>
+							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount } </div>
 						</div>
 						</div>
-						
-						
-			<c:if test="${ not empty condition }">
-			<script>
-				$(function(){
-					$("#search_wrap option[value=${subCategory}]").attr("selected", true);
-				})
-			</script>
-		</c:if>
-
-		</div>
+		
 	
 
-		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea name="boardContent"></textarea>
+			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
 		</div>
 		
 		<div class="upload-area">
-		<input id="upfile" name="upfile" type="file">
-		<button type="submit" class="b_write">등록하기</button>
+							<c:choose>
+                    		<c:when test="${ empty  at.originName }">
+	                    		첨부파일이 없습니다.
+	                    	</c:when>
+	                    	<c:otherwise>
+	                        	<a href="${at.path}${at.changeName}" download="${  at.originName }">${  at.originName }</a>
+                        	</c:otherwise>
+                       		</c:choose>
+                       		
+	            <form id="postForm" action="" method="post">
+	            	<input type="hidden" name="bno" value="${ b.boardNo }">
+	            	<input type="hidden" name="filePath" value="${  at.path } ${ at.changeName }">
+	            </form>
+	            
+	            <script>
+	            	function postFormSubmit(num){
+	            		if(num == 1){ // 수정하기 클릭시
+	            			$("#postForm").attr("action", "updateForm.bo").submit();
+	            		}else{ // 삭제하기 클릭시
+	            			$("#postForm").attr("action", "delete.bo").submit();
+	            		}
+	            	}
+	            </script>
+	            
+				<button onclick="history.go(-1);" class="b_write">목록으로</button>
 		</div>
-	</form>
+			</div>
+		</div>
 		<!--로그인한 회원에게만 보여지도록 조건처리-->
 	</div>
 

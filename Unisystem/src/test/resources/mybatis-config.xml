@@ -10,6 +10,7 @@
 		<typeAlias type="com.us.uni.user.model.vo.User" alias="User" />
 		<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.us.uni.board.model.vo.Reply" alias="Reply" />
+		<typeAlias type="com.us.uni.common.model.vo.Attachment" alias="Attachment" /> 
 	</typeAliases>
 	
 	<mappers>

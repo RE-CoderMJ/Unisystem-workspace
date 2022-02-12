@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.us.uni.board.model.dao.BoardDao;
 import com.us.uni.board.model.vo.Board;
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 
 @Service
@@ -63,6 +64,39 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.selectKeyword(sqlSession,pi,bokeyword);
 				
 	
+	}
+
+	@Override
+	public int insertBoard(Board b, Attachment at) {
+		 System.out.println(b);
+		 
+		int result1 = bDao.insertBoard(sqlSession, b);
+		//System.out.println("result1:"+result1);
+		
+		
+		
+		int result2 = bDao.insertAttachBoard(sqlSession, at);
+		System.out.println("result2:"+result2);
+		
+		return result1*result2;
+	}
+
+	 
+
+	@Override
+	public int increaseCount(int boardNo) {
+		return bDao.increaseCount(sqlSession, boardNo);
+	}
+
+	@Override
+	public Board selectBoard(int boardNo) {
+		return bDao.selectBoard(sqlSession, boardNo);
+	}
+	
+	public Attachment selectAttachBoard(int boardNo) {
+		
+		return bDao.selectAttachBoard(sqlSession, boardNo);
+		
 	}
 
 }
