@@ -88,20 +88,24 @@
             <div id="contentBox">
 
                 <div id="content_name">수강 강좌</div>
-                <form action="" method="">
+                
+                <form action="studentDateClassList.me" method="post">
                 
 	                <div id="date_border">
-	                    <span>년도 학기</span>
-	                    <select name="" id="year">
-	                        <option value="">2022</option>
-	                        <option value="">2021</option>
-	                        <option value="">2020</option>
+	                    <span>년도 학기</span>         
+	                    <c:forEach var="y" items="${ yearList }">
+	                    
+		                    <select name="year" id="year">
+		                        <option value="${ y.classYear }">${ y.classYear }</option>
+		                    </select>    
+		                    
+	                    </c:forEach>
+	                    
+	                    <select name="semester" id="semester">
+	                        <option value="1">1학기</option>
+	                        <option value="2">2학기</option>
 	                    </select>
-	                    <select name="" id="semester">
-	                        <option value="">1학기</option>
-	                        <option value="">2학기</option>
-	                    </select>
-	                    <button type="button">조회</button>
+	                    <button type="submit">조회</button>
 	                </div>
 	                
                 </form>
@@ -109,7 +113,7 @@
                 <table id="classList">
                 	<thead>
 	                    <tr id="table_header">
-	                        <th style="width: 70px;">번호</th>
+	                        <th style="width: 70px;">과목코드</th>
 	                        <th>강좌명</th>
 	                        <th style="width: 100px;">강의유형</th>
 	                        <th style="width: 100px;">담당교수</th>
@@ -119,9 +123,8 @@
                     <tbody>
                     
 	                    <c:forEach var="l" items="${ list }">
-	                    	<input type="hidden" id="hiddenId" name="lno" value="${ l.classCode }" />
 		                    <tr>
-		                        <td></td>
+		                        <td>${ l.classCode }</td>
 		                        <td>${l.classKorName}</td>
 		                        <td>
 		                        	<c:if test="${ l.classCategory eq 1 }">
@@ -143,9 +146,9 @@
 				<script>
             	//td요소에 클릭이라는 이벤트 발생 시 실행할 함수 => 링크이동
             	$(function(){
-            		$("#classList>tbody>tr").click(function(){
-            			location.href='lectureMain.stu?lno=' +$(this).siblings($('input[name="lno"]').val());
-            			
+            		$("#classList>tbody td:nth-child(2)").on("click", function(){
+            			location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
+            			//console.log($(this).siblings().eq(0).text());
             		});
             	})				
 				

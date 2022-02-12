@@ -31,17 +31,42 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도별, 학기 별 조회 시 강의목록을 띄워주는 컨트롤러 */
+	/*
+	@RequestMapping("studentDateClassList.me")
+	public void selectStudentDateClassList(int year, int semester) {
+		
+		System.out.println(year);
+		System.out.println(semester);
+		ArrayList<Lecture> list = hService.selectStudentDateClassList(year, semester);
+
+	}
+	*/
+	
+	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도값을 가져오는 컨트롤러 */
+	@RequestMapping
+	public ModelAndView selectYearList(ModelAndView mv) {
+		
+		ArrayList<Lecture> list = hService.selectYearList();
+		System.out.println(list);
+		mv.addObject("yearList", list).setViewName("student/studentClassList");
+		return mv;
+		
+	}
+	
+	/* 학생 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureMain.stu")
+	public String selectLectureMainPage() {
+		return "lecture/lectureStuMainPage";
+	}
+	
+	
 	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("professorClassList.me")
 	public String selectProfessorClassList() {
 		return "professor/professorClassList";
 	}
 	
-	/* 학생 - 강의홈을 띄워주는 컨트롤러 */
-	@RequestMapping("lectureMain.stu")
-	public String selectLectureMainPage() {
-		return "lecture/lectureStuMainPage";
-	}
 	
 	/* 교수 - 강의홈을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureProMain.stu")

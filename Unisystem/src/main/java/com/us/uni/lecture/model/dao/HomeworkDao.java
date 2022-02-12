@@ -21,6 +21,10 @@ public class HomeworkDao {
 		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount");
 	}
 	
+	public ArrayList<Lecture> selectYearList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectYearList");
+	}
+	
 	
 	/*
 	public int selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi){
