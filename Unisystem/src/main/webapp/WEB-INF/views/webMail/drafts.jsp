@@ -43,52 +43,13 @@
             <article>
                 <table class="table table-hover" id="list">
                     <tbody>
-                    	<c:forEach var="d" items="${ list }">
-	                        <tr>
-	                        	<input type="hidden" value="${d.mailNo }">
-	                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-	                            <td class="read-status"><i class="far fa-envelope-open"></i></td>
-	                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-	                            <td class="from overflow">${d.userToNo > " " ? d.userToNo:"(받는이 없음)" }</td>
-	                            <td class="title">${ d.title }</td>
-	                            <td class="date">${ d.sendDate }</td>
-	                        </tr>
-                        </c:forEach>
+                    	
                     </tbody>
                 </table>
                 
                 <div class="container">
                 	<ul class="pagination justify-content-center">
-                	
-                		<c:choose>
-	                    	<c:when test="${ pi.currentPage eq 1 }" >
-		                    	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-	                      		<li class="page-item"><a class="page-link" href="webMail.draft?cpage=${ pi.currentPage-1 }">&lt;</a></li>
-	                      	</c:otherwise>
-	            		</c:choose>
-	            		
-	            		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	            			<c:choose>
-		            			<c:when test="${ pi.currentPage eq p }">
-		                    		<li class="page-item disabled active"><a class="page-link" href="webMail.draft?capge=${ p }">${ p }</a></li>
-		                    	</c:when>
-		                    	<c:otherwise>
-		                    		<li class="page-item disabled"><a class="page-link" href="webMail.draft?capge=${ p }">${ p }</a></li>
-		                    	</c:otherwise>
-	                    	</c:choose>
-	                    </c:forEach>
-	                    
-	                    <c:choose>
-	                    	<c:when test="${pi.currentPage eq pi.maxPage }">
-	                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-	                        </c:when>
-	                        <c:otherwise>
-	                        	<li class="page-item disabled"><a class="page-link" href="webMail.draft?cpage=${pi.currentPage + 1 }">&gt;</a></li>
-	                      	</c:otherwise>
-	                    </c:choose>
-	                    
+
                     </ul>
                   </div>
 
@@ -97,6 +58,71 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(function(){
+			selectDraftList(1);
+		});
+		
+		function selectDraftList(cPageNo){
+			$.ajax({
+				url:"webMail.selectDraftList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					for(let i in result.list){
+						value += "<tr>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
+                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>"
+                    		   +	"<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
+                    	if(result.list[i].userToNo == " "){
+                    		value += "<td class='from overflow'>(받는이 없음)</td>"; 
+                    	}else{
+                    		value += "<td class='from overflow'>" + result.list[i].userToNo + "</td>";
+                    	}
+                    		   
+ 						value +=	"<td class='title'>" + result.list[i].title + "</td>"
+ 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
+ 							   + "</tr>";
+					}
+				
+					$("#list").html(value);
+					
+					let piValue = "";
+					
+					if(result.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' href='webMail.draft?cpage=" + result.pi.currentPage-1 + "'>&lt;</a></li>";
+					}
+                    
+					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+						
+						if(p == result.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' href='webMail.draft?capge=" + p + "'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item disabled'><a class='page-link' href='webMail.draft?capge=" + p + "'>" + p + "</a></li>";
+						}
+						
+					}
+	            	
+					if(result.pi.currentPage == result.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item disabled'><a class='page-link' href='webMail.draft?cpage=" + result.pi.currentPage + 1 + "'>&gt;</a></li>"
+					}
+					
+					$(".pagination").html(piValue);
+					
+				},error:function(){
+					console.log("임시보관함 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
 	
 	<script>
 		$(function(){

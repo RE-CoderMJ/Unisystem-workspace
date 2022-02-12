@@ -1,6 +1,8 @@
 package com.us.uni.mail.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
@@ -89,8 +90,19 @@ public class WebMailController {
 		return "webMail/writeMailForm";		
 	}
 	
+	/**
+	 * 메일 전송 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.send")
-	public String sendMail() {
+	public String sendMail(int userNo, String userToNo, String cc, String title, String content) {
+		
+		MailFrom mf = new MailFrom();
+		mf.setUserNo(userNo);
+		mf.setTitle(title);
+		mf.setContent(content);
+		
+		
 		
 		return "";
 	}
@@ -125,18 +137,26 @@ public class WebMailController {
 	 * @return
 	 */
 	@RequestMapping("webMail.drafts")
-	public ModelAndView selectDrafts(@RequestParam(value="cpage", defaultValue="1") int currentPage, int userNo, ModelAndView mv){
+	public String selectDrafts(){
+		
+		return "webMail/drafts";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="webMail.selectDraftList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectDraftList(int currentPage, int userNo){
+		
+		Map<String, Object> map = new HashMap();
 		
 		int listCount = mService.selectDraftListCount(userNo);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
 		ArrayList<MailFrom> list = mService.selectDraftList(userNo, pi);
 		
-		mv.addObject("pi", pi)
-		.addObject("list", list)
-		.setViewName("webMail/drafts");
+		map.put("pi", pi);
+		map.put("list", list);
 		
-		return mv;
+		return map;
 	}
 	
 	@RequestMapping("webMail.detailView")
