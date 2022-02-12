@@ -1,6 +1,7 @@
 package com.us.uni.student.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,17 @@ public class StudentServiceImpl implements StudentService{
 	public ArrayList<Student> selectDepartment(String studUniv) {
 		return sDao.selectDepartment(sqlSession, studUniv);
 	}
+
+	@Override
+	public int selectSearchCount(HashMap map) {
+		return sDao.selectSearchCount(sqlSession, map);
+	}
+	
+	@Override
+	public ArrayList<Student> searchStudent(HashMap map, PageInfo pi) {
+		return sDao.searchStudent(sqlSession, map, pi);
+	}
+
 	
 
 	

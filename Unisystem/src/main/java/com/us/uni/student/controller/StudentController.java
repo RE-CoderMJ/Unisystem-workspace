@@ -1,10 +1,11 @@
 package com.us.uni.student.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,15 +49,34 @@ public class StudentController {
 	
 	@ResponseBody
 	@RequestMapping(value="department", produces="application/json; charset=UTF-8")
-	public String selectDepartment(String studUniv, Model model) {
-		
-		System.out.println(studUniv);
-		
+	public String selectDepartment(String studUniv) {
 		ArrayList<Student> depart = sService.selectDepartment(studUniv);
-		
-		System.out.println(depart);
-		
 		return new Gson().toJson(depart);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="search.st", produces="application/json; charset=UTF-8")
+	public String searchStudent(@RequestParam(value="cpage", defaultValue="1") String currentPage, String univ, String depart, String keyword) {
+
+		HashMap map = new HashMap();
+		map.put("univ", univ);
+		map.put("depart", depart);
+		map.put("keyword", keyword);
+		
+		int listCount = sService.selectSearchCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, Integer.parseInt(currentPage), 10, 10);
+		ArrayList<Student> searchList = sService.searchStudent(map, pi);	
+		
+		JSONObject jobj = new JSONObject();
+		jobj.put("searchList", searchList);
+		jobj.put("pi", pi);
+		jobj.put("univ", univ);
+		jobj.put("depart", depart);
+		jobj.put("keyword", keyword);
+		
+		return new Gson().toJson(jobj);
 		
 	}
 	

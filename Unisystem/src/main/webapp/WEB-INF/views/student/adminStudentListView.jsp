@@ -235,18 +235,14 @@
 						<option>경영대학</option>
 						<option>사범대학</option>
 						<option>의과대학</option>
-						<option>예술대학</option>
+						<option>예술체육대학</option>
 						<option>자연과학대학</option>
 					</select>
 					<select id="departList">
-						<!--
 						<option value="" style="display: none;" selected>학부별 조회</option>
-						  -->
-						  <option>예술대학</option><option>예술대학</option><option>예술대학</option><option>예술대학</option>
-						
 					</select>
-					<input type="text" placeholder="이름으로 조회">
-					<button type="submit">검색</button>
+					<input type="text" id="keyword" placeholder="이름으로 조회">
+					<button type='submit' onclick='pagination("1");'>검색</button>
 				</div>
 				
 				<div class="btnBox">
@@ -262,7 +258,6 @@
 						<button class="btn btn-sm btn-outline-secondary">새로 등록</button>
 						<button class="btn btn-sm btn-outline-secondary">삭제</button>
 					</div>
-					
 				</div>
 
 
@@ -281,7 +276,6 @@
 							</tr>
 						</thead>
 						<tbody>
-						
 							<c:forEach var="std" items="${ list }">
 								<tr>
 									<td><input type="checkbox"></td>
@@ -311,7 +305,7 @@
 						</tbody>
 					</table>
 					
-					
+					<!-- $(".page-link).val(""); -->
 					<div class="container">
                     <ul class="pagination justify-content-center">
                     
@@ -372,10 +366,13 @@
 	    					url:"department",
 	    					data:{studUniv:$(this).val()},
 	    					success:data => {
+	    						list += "<option value='' style='display: none;' selected>학부별 조회</option>";
+	    						
 	    						$(data).each(function(index, value){
 	    							list += "<option>" + value.studDepartment + "</option>";
 	    						})
 	    							$("#departList").html(list);
+	    						
 	    					}, error:() => {
 	    						console.log("대학별 학과 조회 실패");
 	    					}
@@ -383,6 +380,72 @@
 	    			})
     			
     			})
+	    						
+    			
+    			// search 기능
+				function pagination(i){
+					console.log(i);
+					
+					let list = "";
+					let status = "";
+					let page = "";
+					let cpage = i;
+					
+					$.ajax({
+					url:"search.st",
+					data:{
+						cpage:cpage,
+						univ:$("#univList").val(),
+						depart:$("#departList").val(),
+						keyword:$("#keyword").val()
+							}, 
+						success:data => {
+							
+							// 검색 결과 리스트
+							$(data.searchList).each(function(index, value){
+	   						
+							if(value.studStatus == 1){
+								status = "재학";
+							}else if(value.studStatus == 2){
+								status = "휴학"
+							}else if(value.studStatus == 3){
+								status = "졸업";
+							}else{
+								status = "자퇴";
+							}
+								
+	    						list += "<tr>" 
+			    							+ "<td><input type='checkbox'></td>"
+	    									+ "<td>" + value.studNo + "</td>"
+	    									+ "<td>" + value.studKorName + "</td>"
+	    									+ "<td>" + value.studUniv + "</td>"
+	    									+ "<td>" + value.studDepartment + "</td>"
+	    									+ "<td>" + value.studMajor + "</td>"
+	    									+ "<td>" + status + "</td>"
+	  								 + "</tr>";
+								})
+	  							
+	  							$(".appList tbody").html(list);
+							
+							// 페이징	
+							for(let i=data.pi.startPage; i<=data.pi.endPage; i++){
+								
+								if(data.pi.currentPage == i){
+									page += "<li class='page-item active'><a class='page-link' onclick='pagination("+ i +");' >" + i + "</a></li>";
+								}else{
+									page += "<li class='page-item'><a class='page-link' onclick='pagination("+ i +");' >" + i + "</a></li>";
+								}
+							}
+							
+							$(".pagination").html(page);
+							
+						}, error:() => {
+							console.log("검색 페이징 통신 실패");
+						}
+						
+					})
+				}
+    			
 			</script>
 			
 </body>

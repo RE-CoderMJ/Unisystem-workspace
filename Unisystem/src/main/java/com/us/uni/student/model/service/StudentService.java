@@ -1,6 +1,7 @@
 package com.us.uni.student.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.student.model.vo.Student;
@@ -12,9 +13,8 @@ public interface StudentService {
 	ArrayList<Student> selectStudentList(PageInfo pi);
 	
 	
-	// 2. 학부, 전공 조회
+	// 2. 검색
 	ArrayList<Student> selectDepartment(String studUniv);
-	
-	
-	
+	int selectSearchCount(HashMap map);
+	ArrayList<Student> searchStudent(HashMap map, PageInfo pi);
 }
