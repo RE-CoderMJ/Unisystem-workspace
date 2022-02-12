@@ -13,12 +13,12 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
@@ -203,7 +203,7 @@ li {
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 		<div class="sidewrap">
 			<jsp:include page="../student/smySidebar.jsp" />
 		</div>

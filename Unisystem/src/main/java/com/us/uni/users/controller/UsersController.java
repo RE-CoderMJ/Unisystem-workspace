@@ -47,12 +47,11 @@ public class UsersController {
 	
 		Users loginUser = uService.loginUser(m);
 		//String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
-		
 		//System.out.println("평문:" + m.getUserPwd());
 		//System.out.println("암호문:"+ encPwd);
-		
 		//m.setUserPwd(encPwd);
-	
+		
+		
 		if(loginUser != null || bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			
 			// 로그인 성공
@@ -62,7 +61,6 @@ public class UsersController {
 			
 		} else {
 			// 로그인 실패
-			
 			mv.addObject("alertMsg", "로그인 실패");
 			mv.setViewName("common/errorPage"); 
 		}

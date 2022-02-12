@@ -1,0 +1,93 @@
+@charset "UTF-8";
+div{
+    box-sizing: border-box;
+	}
+	#wrapper{
+	    width: 1500px;
+	    height: auto;
+	    margin: auto;
+	    margin-top: 30px;
+	    margin-bottom:50px;
+	}
+	
+	/*내용 영역 스타일*/
+section{
+    background-color: white;
+    width: 1270px;
+    height: auto;
+    min-height:700px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+    display: block;
+    float: right;
+    padding-top: 23px;
+}
+section::after{display:block;content:"";clear:both;}
+.nameStyle{
+   color: rgb(15, 43, 80);
+   font-size: 22px;
+   font-weight: 900;
+   width: auto;
+   margin-top: 12px;
+   margin-bottom: 25px;
+   float:left;
+}
+.gradeAll-header{
+    margin-left: 50px;
+}
+.pageName{padding:3px;}
+.pageName>p{
+	margin:0px;
+	float:left;
+}
+
+.table-wrapper{
+	width:1180px;
+	max-height:300px;
+	overflow: auto;
+	margin-left: 50px;
+	margin-bottom: 50px;
+   	border-top:darkgray 2px solid;
+   	border-bottom:darkgray 2px solid;
+}
+#list{
+   width: 1160px;
+   text-align:center ;
+   font-size:15px;
+   border-collapse: collapse;
+}
+#gradeByGrade{
+	width: 1160px;
+	height:auto;
+  	text-align:center ;
+   	font-size:15px;
+   	border-top:darkgray 2px solid;
+   	border-bottom:darkgray 2px solid;
+   	margin-left: 50px;
+   	margin-bottom: 50px;
+}
+#list td{
+	padding:0;
+   	vertical-align:middle;
+}
+#list th{
+	position:sticky;
+	top: 0px;
+	background-color:rgb(232, 232, 232)!important;
+	padding:0;
+	vertical-align:middle;
+}
+#list tr{
+	height:35px;
+}
+
+#average{
+	width: 300px;
+  	text-align:center;
+   	font-size:15px;
+   	border-top:darkgray 2px solid;
+   	border-bottom:darkgray 2px solid;
+   	margin-left: 900px;
+   	margin-bottom: 100px;
+   	margin-top: 100px;
+}

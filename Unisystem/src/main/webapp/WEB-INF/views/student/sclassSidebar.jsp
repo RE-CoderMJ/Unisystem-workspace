@@ -17,7 +17,7 @@
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;
 	padding-bottom:100px;
-	margin-top:50px;
+	margin-top:16px;
 }
 
 .total_menu {
@@ -104,7 +104,7 @@ a:hover {
 				<a href="lectureVideoMat.stu">- 영상자료실</a>
 			</div>
 			<div style="margin-left: 3px;">
-				<a href="lectureHomework.stu">- 과제 업로드</a>
+				<a href="homeworkList.lec">- 과제 업로드</a>
 			</div>
 
 

@@ -151,7 +151,7 @@
 	<jsp:include page="modals.jsp" />
 	<nav id="webMail-sidebar">
             <div id="btn-wrapper">
-                <button id="writeMail">메일쓰기</button>
+                <button id="writeMail" onclick="location.href='webMail.writeForm'">메일쓰기</button>
                 <button id="writeMailToMS">내게쓰기</button>
             </div>
             <div id="top" align="center">

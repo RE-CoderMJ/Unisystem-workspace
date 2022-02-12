@@ -13,6 +13,12 @@
 			<!-- 
 			 <typeAlias type="com.us/uni/Professor.model.vo.Professor" alias="Professor" />
 			 -->
+
+			<typeAlias type="com.us.uni.mail.model.vo.MailFrom" alias="MailFrom" />
+
+			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />
+			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />
+			<typeAlias type="com.us.uni.lecture.model.vo.Lecture" alias="Lecture" />
 		</typeAliases>
 		
 		<mappers>
@@ -22,6 +28,9 @@
 			<!-- 
 			<mapper resource="/mappers/professor-mapper.xml" />			
 			 -->
+
+			<mapper resource="/mappers/mail-mapper.xml" />			
+			<mapper resource="/mappers/lecture-mapper.xml" />
 		</mappers>
 		
 </configuration>

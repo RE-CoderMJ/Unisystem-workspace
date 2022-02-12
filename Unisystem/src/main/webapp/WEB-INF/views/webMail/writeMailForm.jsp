@@ -8,14 +8,7 @@
 <title>UNI SYSTEM</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 <link href="resources/css/webMail/mailboxes.css" rel="stylesheet">
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <style>
     #mail-info{
         width: 1170px;
@@ -31,7 +24,7 @@
         height: 30px;
     }
     #write-to{
-        margin-left: 15px;
+        margin-left: 18px;
     }
     #write-cc, #write-title{
         margin-left: 50px;
@@ -76,32 +69,38 @@
 	            <header id="mail-boxes-header">
 	                <div id="mailbox-name">메일 쓰기</div>
 	                <br><br>
-	                <button id="send-btn" type="submit"><i class="fas fa-arrow-right"></i>&nbsp;보내기</button>
-	                <button id="draft-btn">임시저장</button>
+	                <button id="send-btn" type="submit" formaction="webMail.send"><i class="fas fa-arrow-right"></i>&nbsp;보내기</button>
+	                <button id="draft-btn" type="submit" formaction="webMail.saveDraft">임시저장</button>
 	            </header>
 	            <article>
 	               <div id="mail-info">
 	                    <span>받는 사람</span>
-	                    <input id="write-to" type="text">
+	                    <input id="write-to" type="text" name="userNo">
 	                    <br><br>
 	                    <span>참조</span>
-	                    <input id="write-cc" type="text">
+	                    <input id="write-cc" type="text" name="cc">
 	                    <br><br>
 	                    <span>제목</span>
-	                    <input id="write-title" type="text">
+	                    <input id="write-title" type="text" name="title">
 	                    <div id="contents-area">
-	                    	<textarea id="summernote" name="editordata" style="margin-left:100px"></textarea>
+	                    	<textarea id="summernote" name="content" style="margin-left:100px"></textarea>
 	                    </div>
-	                 	<input type="file" multiple id="file">
+	                 	<input type="file" multiple id="files" name="files">
 	               </div>
 	            </article>
             </form>
         </section>
     </div>
 	
-	<jsp:include page="../common/footer.jsp" />
 	
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
+	<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script>
 		$(document).ready(function(){
 			$("#summernote").summernote({
@@ -133,5 +132,6 @@
 		
 	</script>
 	
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

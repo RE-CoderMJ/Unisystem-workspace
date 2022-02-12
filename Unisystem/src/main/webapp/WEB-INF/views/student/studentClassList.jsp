@@ -80,7 +80,7 @@
             <!-- sidebar 영역 -->
             <jsp:include page="../student/smySidebar.jsp" />
         </div>
-
+		
         <div id="wrap_content" style="float: left;">
             
             <article id="content_header"><span>수업 > </span>내가 수강중인 강의</article>
@@ -88,72 +88,68 @@
             <div id="contentBox">
 
                 <div id="content_name">수강 강좌</div>
-                <div id="date_border">
-                    <span>년도 학기</span>
-                    <select name="" id="year">
-                        <option value="">2022</option>
-                        <option value="">2021</option>
-                        <option value="">2020</option>
-                    </select>
-                    <select name="" id="semester">
-                        <option value="">1학기</option>
-                        <option value="">2학기</option>
-                    </select>
-                    <button type="button">조회</button>
-                </div>
+                <form action="" method="">
+                
+	                <div id="date_border">
+	                    <span>년도 학기</span>
+	                    <select name="" id="year">
+	                        <option value="">2022</option>
+	                        <option value="">2021</option>
+	                        <option value="">2020</option>
+	                    </select>
+	                    <select name="" id="semester">
+	                        <option value="">1학기</option>
+	                        <option value="">2학기</option>
+	                    </select>
+	                    <button type="button">조회</button>
+	                </div>
+	                
+                </form>
               
-                <table>
-                    <tr id="table_header">
-                        <th style="width: 70px;">번호</th>
-                        <th>강좌명</th>
-                        <th style="width: 100px;">강의유형</th>
-                        <th style="width: 100px;">담당교수</th>
-                        <th style="width: 100px;">수강인원</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
+                <table id="classList">
+                	<thead>
+	                    <tr id="table_header">
+	                        <th style="width: 70px;">번호</th>
+	                        <th>강좌명</th>
+	                        <th style="width: 100px;">강의유형</th>
+	                        <th style="width: 100px;">담당교수</th>
+	                        <th style="width: 100px;">수강인원</th>
+	                    </tr>
+                	</thead>
+                    <tbody>
+                    
+	                    <c:forEach var="l" items="${ list }">
+	                    	<input type="hidden" id="hiddenId" name="lno" value="${ l.classCode }" />
+		                    <tr>
+		                        <td></td>
+		                        <td>${l.classKorName}</td>
+		                        <td>
+		                        	<c:if test="${ l.classCategory eq 1 }">
+		                        		대면강의
+		                        	</c:if>
+		                        	<c:if test="${ l.classCategory eq 2 }">
+		                        		비대면강의
+		                        	</c:if>
+		                        </td>
+		                        <td>${ l.korName }</td>
+		                        <td>${ l.currStud }</td>
+		                    </tr>                    
+	                    </c:forEach>
+       
+                    </tbody>
+                    
                 </table>
-
+				
+				<script>
+            	//td요소에 클릭이라는 이벤트 발생 시 실행할 함수 => 링크이동
+            	$(function(){
+            		$("#classList>tbody>tr").click(function(){
+            			location.href='lectureMain.stu?lno=' +$(this).siblings($('input[name="lno"]').val());
+            			
+            		});
+            	})				
+				
+				</script>
 
             </div>
 

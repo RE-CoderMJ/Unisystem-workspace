@@ -1,6 +1,7 @@
 package com.us.uni.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,38 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectList(PageInfo pi) {
 		
 		return bDao.selectList(sqlSession, pi);
+	}
+
+	@Override
+	public int selectSearchCount(HashMap<String, String> map) {
+		
+		int searchCount = bDao.selectSearchCount(sqlSession, map);
+		
+		return searchCount;
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi) {
+		
+		ArrayList<Board> list = bDao.selectSearchList(sqlSession, map, pi);
+		
+		return list;
+	}
+
+	@Override
+	public int selectKeywordListCount(int bokeyword) {
+		
+		int keyCount = bDao.selectKeywordListCount(sqlSession, bokeyword);
+		
+		return keyCount;
+	}
+
+	@Override
+	public ArrayList<Board> selectKeyword(PageInfo pi, int bokeyword) {
+		
+		return bDao.selectKeyword(sqlSession,pi,bokeyword);
+				
+	
 	}
 
 }

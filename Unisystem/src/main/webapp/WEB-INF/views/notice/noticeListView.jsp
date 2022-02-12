@@ -13,22 +13,23 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
 	color: rgb(15, 43, 80);
-	font-size: 40px;
-	font-weight: 800;
-	margin-top: 50px;
-	margin-bottom: 10px;
-	margin-left: 100px;
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 37px;
+    margin-bottom: 10px;
+    margin-left: 53px;
 }
+
 
 #searchForm>* {
 	float: left;
@@ -61,13 +62,13 @@
 }
 
 .search_wrap {
-	margin-left: 660px;
+	margin-left: 728px;
 	margin-top: 10px;
 	margin-bottom: 15px
 }
 
 .head_count {
-	margin-left: 100px;
+	margin-left: 55px;
 }
 
 .bo_content table {
@@ -113,7 +114,7 @@ li {
 	margin-bottom: 20px;
 	float: left;
 	margin-right: 100px;
-	margin-left: 96px;
+	margin-left: 188px;
 }
 
 .ctg-area button {
@@ -133,20 +134,20 @@ li {
 	margin-right: 98px
 }
 
-.ltgt {
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: lightgray;
-	color: #fff;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
+/*페이징바*/
+.container{
+    margin-top: 50px;
 }
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
+}
+.page-item.active .page-link {
+    color: #fff !important;
+    background: black!important;
+}
+
 </style>
 <body>
 
@@ -159,7 +160,7 @@ li {
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 		<div class="sidewrap">
 			<jsp:include page="../student/smySidebar.jsp" />
 		</div>

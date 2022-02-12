@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lectureMapper">
+	
+	<resultMap type="Lecture" id="lectureResult">
+		<result column="class_stud_no" property="classStudNo" />
+		<result column="class_kor_name" property="classKorName" />
+		<result column="class_category" property="classCategory" />
+		<result column="curr_stud" property="currStud" />
+		<result column="class_code" property="classCode" />
+		
+		<result column="kor_name" property="korName" />
+	</resultMap>
+	
+	
+	<!-- 학생 - 내가 수강중인 강의 조회 : 로그인한 학생의 수강중인 강의 리스트를 불러오는 sql -->
+	<select id="selectStudentClassList" resultMap="lectureResult">
+		select
+		       class_stud_no
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		     , class_code
+		  from class_stud
+		  join class using(class_no)
+		  join professor using(prof_no)
+		  join users on(prof_no = user_no)
+		  where stud_no = #{userNo}
+	</select>
+	
+	
+	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->
+	<select id="selectHomeworkListCount" resultType="_int">
+		select
+		       count(*)
+		  from homeworkp
+		 where status = 'Y'
+		   and homeworkp_category = 'I'	
+	</select>
+	
+
+	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
+	<!-- 
+	<select id="selectHomeworkpList" resultMap="">
+		select 
+		       homeworkp_no
+		     , class_no
+		     , homeworkp_name
+		     , kor_name
+		     , homeworkp_enddatetime
+		  from homeworkp
+		  join class using(class_no)
+		  join professor using(prof_no)
+		  join users on (prof_no = user_no)
+		 where homeworkp_category = 'I'
+		   and status = 'Y'	
+	</select>
+	 -->
+
+
+</mapper>

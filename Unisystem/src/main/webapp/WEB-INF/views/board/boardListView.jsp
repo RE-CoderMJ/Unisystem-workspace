@@ -13,22 +13,23 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
 	color: rgb(15, 43, 80);
-	font-size: 40px;
-	font-weight: 800;
-	margin-top: 50px;
-	margin-bottom: 10px;
-	margin-left: 100px;
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 37px;
+    margin-bottom: 10px;
+    margin-left: 53px;
 }
+
 
 #searchForm>* {
 	float: left;
@@ -61,13 +62,13 @@
 }
 
 .search_wrap {
-	margin-left: 620px;
+	margin-left: 728px;
 	margin-top: 10px;
 	margin-bottom: 15px
 }
 
 .head_count {
-	margin-left: 100px;
+	margin-left: 55px;
 }
 
 .bo_content table {
@@ -113,7 +114,7 @@ li {
 	margin-bottom: 20px;
 	float: left;
 	margin-right: 100px;
-	margin-left: 96px;
+	margin-left: 188px;
 }
 
 .ctg-area button {
@@ -159,12 +160,10 @@ li {
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
-		<div class="sidewrap">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 			<jsp:include page="../student/smySidebar.jsp" />
-		</div>
 
-		<div class="bo_content">
+		<div class="bo_content" >
 			<!-- title -->
 
 
@@ -179,42 +178,41 @@ li {
 
 			<!--검색 영역 -->
 			<div class="search_wrap">
-				<form id="searchForm" action="" method="get">
+			
+			
+			<form id="searchForm" action="search.bo" method="get">
 					<div class="select">
+						<input type="hidden" name="cpage" value="1"/>
 						<select name="condition" class="custom-select">
-							<option class="bctg" value="4">카테고리</option>
-							<option class="bctg" value="5">자유</option>
-							<option class="bctg" value="6">취업</option>
-							<option class="bctg" value="7">정보</option>
+							<option value="writer">작성자</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
 						</select>
 					</div>
 
 					<div id="bo_search">
-						<input type="text" placeholder=" ">
+						<input type="text" name="keyword" value="${ keyword }">
 					</div>
 					<button class="btn" type="submit">검색</button>
 				</form>
 			</div>
-
+			
+			<c:if test="${ not empty condition }">
+			<script>
+				$(function(){
+					$("#searchForm option[value=${condition}]").attr("selected", true);
+				})
+			</script>
+		</c:if>
+			
+		<form action="keyword.bo" method="get">
 			<div class="ctg-area">
+				<input type="hidden" name="cpage" value="1"/>
 				<button class="bkeyword" name="bokeyword" value="5">자유</button>
 				<button class="bkeyword" name="bokeyword" value="6">취업</button>
 				<button class="bkeyword" name="bokeyword" value="7">정보공유</button>
 			</div>
-
-			<script>
-        	$(function(){
-        		
-        		$(".bkeyword").click(function(){
-        			
-        			location.href = 'search.faq?bokeyword=' + $(this).val();
-        			
-        		})
-        		
-        	})
-        
-        </script>
-
+		</form>
 
 			<br clear="both"> <br> <br>
 
@@ -229,7 +227,7 @@ li {
 						<th width="80px">번호</th>
 						<th width="95px">카테고리</th>
 						<th>제목</th>
-						<th>작성자</th>
+						<th width="95px">작성자</th>
 						<th>작성일</th>
 						<th>조회</th>
 					</tr>
@@ -238,9 +236,21 @@ li {
 					<c:forEach var="b" items="${ list }">
 						<tr>
 							<td class="bno">${ b.boardNo }</td>
-							<td>${b.subCategory}</td>
+							
+							     <c:choose>
+			                        <c:when test="${ b.subCategory eq 5 }">
+			                       	 	<td>자유</td>
+			                        </c:when>
+			                        <c:when test="${ b.subCategory eq 6 }">
+			                        	<td>취업</td>
+			                        </c:when>
+			                        <c:when test="${ b.subCategory eq 7 }">
+			                        	<td>정보공유</td>
+			                        </c:when>
+		                   		</c:choose>  
+		                   		
 							<td>${ b.boardTitle }</td>
-							<td>${ b.userNo }</td>
+							<td>${ b.boardWriter }</td>
 							<td>${ b.createDate }</td>
 							<td>${ b.boCount }</td>
 						</tr>

@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <!-- CSS -->
@@ -18,6 +21,9 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
+	body *{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
     #header-up{
         background-color: rgb(21, 62, 115);
         height: 43px;
@@ -116,6 +122,14 @@
 </style>
 </head>
 <body>
+
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
     <header id="header">
 
         <div id="header-up">
@@ -123,7 +137,7 @@
 	            <div style="float: left;"><a href="" id="homepage">HOMEPAGE</a></div>
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
-	                <span>홍길동(학생)님 환영합니다.</span>
+	                <span>${loginUser.korName}(학생)님 환영합니다.</span>
 	                <a href="logout.me" id="logout">로그아웃 →</a>
 	            </div>
             </div>
@@ -133,8 +147,9 @@
         	<div id="header-down-line">
 	            <img src="resources/images/LOGO_WIDTH.png">
 	            <nav id="header-down-right">
-	                <a href="">웹메일</a>
-	                <a href="">마이페이지</a>
+
+	                <a href="webMail.inbox">웹메일</a>
+	                <a href="studentClassList.me?userNo=${loginUser.userNo}">마이페이지</a>
 	                <a href="">공지사항</a>
 	                <a href="list.bo">커뮤니티</a>
 	                <div id="search-area">

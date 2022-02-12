@@ -1,8 +1,9 @@
 package com.us.uni.board.model.vo;
 
+
 public class Board {
 	 private int boardNo;
-	 private int userNo;
+	 private String userNo;
 	 private int userDivision;
 	 private String boardTitle;
 	 private String boardContent;
@@ -12,11 +13,12 @@ public class Board {
 	 private String deleteYN;
 	 private int boCategory;
 	 private int subCategory;
+	 private String boardWriter;
 	 
 	public Board() {}
 	
-	public Board(int boardNo, int userNo, int userDivision, String boardTitle, String boardContent, int boCount,
-			String createDate, String noticeYN, String deleteYN, int boCategory, int subCategory) {
+	public Board(int boardNo, String userNo, int userDivision, String boardTitle, String boardContent, int boCount,
+			String createDate, String noticeYN, String deleteYN, int boCategory, int subCategory, String boardWriter) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
@@ -29,6 +31,7 @@ public class Board {
 		this.deleteYN = deleteYN;
 		this.boCategory = boCategory;
 		this.subCategory = subCategory;
+		this.boardWriter = boardWriter;
 	}
 
 	public int getBoardNo() {
@@ -39,11 +42,11 @@ public class Board {
 		this.boardNo = boardNo;
 	}
 
-	public int getUserNo() {
+	public String getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(int userNo) {
+	public void setUserNo(String userNo) {
 		this.userNo = userNo;
 	}
 
@@ -119,13 +122,23 @@ public class Board {
 		this.subCategory = subCategory;
 	}
 
+	public String getBoardWriter() {
+		return boardWriter;
+	}
+
+	public void setBoardWriter(String boardWriter) {
+		this.boardWriter = boardWriter;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", userNo=" + userNo + ", userDivision=" + userDivision + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boCount=" + boCount + ", createDate=" + createDate
 				+ ", noticeYN=" + noticeYN + ", deleteYN=" + deleteYN + ", boCategory=" + boCategory + ", subCategory="
-				+ subCategory + "]";
+				+ subCategory + ", boardWriter=" + boardWriter + "]";
 	}
 	
+	
+	 
 	
 }

@@ -1,15 +1,34 @@
 package com.us.uni.lecture.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.common.template.Pagination;
+import com.us.uni.lecture.model.service.HomeworkService;
+import com.us.uni.lecture.model.vo.HomeworkP;
+import com.us.uni.lecture.model.vo.Lecture;
 
 @Controller
 public class LectureController {
 	
+	@Autowired
+	private HomeworkService hService;
+	
 	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("studentClassList.me")
-	public String selectStudentClassList() {
-		return "student/studentClassList";
+	public ModelAndView selectStudentClassList(int userNo, ModelAndView mv) {
+		
+		ArrayList<Lecture> list = hService.selectStudentClassList(userNo);
+
+		mv.addObject("list", list).setViewName("student/studentClassList");
+		
+		return mv;
 	}
 	
 	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
@@ -108,9 +127,22 @@ public class LectureController {
 		return "lecture/lectureVideoMaterialDetailView";
 	}
 	
-	/* 과제업로드를  리스트를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomework.stu")
-	public String selectLectureHomework() {
+	/* 학생 - 메뉴바에서 과제업로드 클릭 시  마감된 과제 리스트를 띄워주는 컨트롤러 */
+	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
+	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
+	@RequestMapping("homeworkList.lec")
+	public String selectHomeworkList(@RequestParam(value="cpage", defaultValue="1") int currentPage) { 
+		// @RequestParam => request.getParameter를 대신함
+		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
+		
+		int listCount = hService.selectHomeworkListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		/*
+		ArrayList<HomeworkP> list = hService.selectHomeworkpList(pi);
+		*/
+		
 		return "lecture/lectureHomeworkListView";
 	}
 	
