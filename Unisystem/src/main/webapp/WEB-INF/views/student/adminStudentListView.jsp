@@ -11,7 +11,7 @@
 	#wrap{
 		margin:auto;
 		width:1500px;
-		height:830px;
+		height:auto;
 	}
 	#sidebar{
 		width:230px;
@@ -353,14 +353,24 @@
 			
 			<script>
 			
-			<!--
-				// 사이드바 길이 조절
 				$(function(){
-					let $len = $("#wrap").height();
-					$("#sidebar").css('height', $len, + 22);
+					sidebar();
 				})
-			-->
 			
+				// 사이드바 길이 조절
+				function sidebar(){
+					document.getElementById("content").style.marginBottom = "50px";
+					let $len = $("#content").height();
+					
+						if($len > 750){
+							console.log("true");
+							$(".wrap_sidebar").css('height', $len);
+						}else{
+							$(".wrap_sidebar").css('height', 270);
+							document.getElementById("content").style.marginBottom = "280px";
+						}
+				}
+				
 				// switch 관련
 				var check = $("input[type='checkbox']");
 					check.click(function(){
@@ -394,7 +404,7 @@
     			
     			// search 기능
 				function pagination(i){
-					
+    				
 					if (!$("#univList").val().length==0 && $("#departList").val().length==0) {
 					  alert("학부를 선택해 주세요!");
 					  return;
@@ -416,6 +426,8 @@
 							}, 
 						success:data => {
 							
+							
+							
 							// 검색 결과 리스트
 							$(data.searchList).each(function(index, value){
 	   						
@@ -432,7 +444,7 @@
 	    						list += "<tr>" 
 			    							+ "<td><input type='checkbox'></td>"
 	    									+ "<td>" + value.studNo + "</td>"
-	    									+ "<td>" + value.studKorName + "</td>"
+	    									+ "<td>" + value.korName + "</td>"
 	    									+ "<td>" + value.studUniv + "</td>"
 	    									+ "<td>" + value.studDepartment + "</td>"
 	    									+ "<td>" + value.studMajor + "</td>"
@@ -453,6 +465,8 @@
 							}
 							
 							$(".pagination").html(page);
+							
+							sidebar();
 							
 						}, error:() => {
 							console.log("검색 페이징 통신 실패");

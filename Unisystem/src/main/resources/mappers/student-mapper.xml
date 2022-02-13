@@ -109,7 +109,7 @@
   		  </if>
 	</select>
 	
-	<select id="searchStudent" resultMap="StudentResult">
+	<select id="searchStudent" resultMap="usersResult">
 		SELECT 
 		       STUD_NO
 		     , KOR_NAME
