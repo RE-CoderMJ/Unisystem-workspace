@@ -15,6 +15,7 @@
 			 -->
 
 			<typeAlias type="com.us.uni.mail.model.vo.MailFrom" alias="MailFrom" />
+			<typeAlias type="com.us.uni.common.model.vo.Attachment" alias="Attachment" />
 
 			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />
 			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />

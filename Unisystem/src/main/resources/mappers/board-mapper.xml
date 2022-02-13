@@ -4,9 +4,9 @@
 <mapper namespace="boardMapper">
 
 	<resultMap id="boardResult" type="Board">
+		<!-- 게시판 -->
 		<result column="board_no" property="boardNo" />
-		<result column="user_no" property="user_no" />
-		<result column="user_division" property="userDivision" />
+		<result column="user_no" property="userNo" />
 		<result column="board_title" property="boardTitle" />
 		<result column="board_content" property="boardContent" />
 		<result column="bcount" property="boCount" />
@@ -17,9 +17,20 @@
 		<result column="sub_category" property="subCategory" />
 		<result column="board_writer" property="boardWriter" />
 	</resultMap>
+
+	<resultMap id="AttachmentResult" type="Attachment">		
+		<!-- 첨부파일 -->
+		<result column="attatch_no" property="attatchNo" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="path" property="path" />
+		<result column="status" property="status" />
+	</resultMap>	
 	
 	
-		<resultMap id="usersResult" type="Users">
+			<resultMap id="usersResult" type="Users">
 				<result column="user_no" property="userNo" />
 				<result column="kor_name" property="korName" />
 			</resultMap>
@@ -116,7 +127,7 @@
 	
 	<select id="selectKeyword" parameterType="Board" resultMap="boardResult">
 			select 
-		      board_no
+		       board_no
 		     , sub_category
 		     , board_title
 		     , u.kor_name as "board_writer"
@@ -139,6 +150,88 @@
 		    </choose>
 		   	 
 	</select>
+	<!-- 게시글 등록 -->
+	<insert id="insertBoard">
+		insert
+		  into board
+		  (
+		  	BOARD_NO
+			,USER_NO
+			,BOARD_TITLE
+			,BOARD_CONTENT
+			,BO_CATEGORY
+			,SUB_CATEGORY
+		  )
+		  values
+		  (
+		    seq_bno.nextval
+		  , #{userNo}
+		  , #{boardTitle}
+		  , #{boardContent}
+		  , 4
+		  , #{subCategory}		  
+		  )
+	</insert>
+	
+	<!-- 첨부파일 등록 -->
+	<insert id="insertAttachBoard">
+		insert
+		  into ATTACHMENT
+		  (
+		 	ATTACH_NO
+			,REF_TYPE
+			,REF_NO
+			,ORIGIN_NAME
+			,CHANGE_NAME
+			,path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'B'
+		  , seq_bno.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
+	<!-- 조회수증가 -->
+	<update id="increaseCount">
+		update
+		       board
+		   set bcount = bcount+1
+		 where board_no = #{boardNo}
+		   and delete_yn = 'N'
+	</update>
+	
+	<!-- 게시글 상세조회 -->
+	<select id="selectBoard" resultMap="boardResult">
+		select
+		       board_no
+		     , board_title
+		     , u.user_no as "board_writer"
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , board_content
+		  from board b
+		  join users u on (u.user_no = b.user_no)
+		 where board_no = #{boardNo}  
+	</select>
+	
+	<select id="selectAttachBoard" resultMap="AttachmentResult">
+		select
+				ATTACH_NO
+				,REF_TYPE
+				,ORIGIN_NAME
+				,CHANGE_NAME
+				,PATH
+		  from attachment
+		 where ref_type = 'B'
+		 and ref_no = #{boardNo}  
+	</select>
+	
+	
+	
 	
 	
 </mapper>

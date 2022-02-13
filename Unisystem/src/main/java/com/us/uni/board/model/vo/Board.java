@@ -1,10 +1,9 @@
 package com.us.uni.board.model.vo;
-
+ 
 
 public class Board {
 	 private int boardNo;
 	 private String userNo;
-	 private int userDivision;
 	 private String boardTitle;
 	 private String boardContent;
 	 private int boCount;
@@ -15,14 +14,15 @@ public class Board {
 	 private int subCategory;
 	 private String boardWriter;
 	 
-	public Board() {}
-	
-	public Board(int boardNo, String userNo, int userDivision, String boardTitle, String boardContent, int boCount,
-			String createDate, String noticeYN, String deleteYN, int boCategory, int subCategory, String boardWriter) {
+	 
+	 public Board() {}
+	 
+	 
+	 public Board(int boardNo, String userNo, String boardTitle, String boardContent, int boCount, String createDate,
+			String noticeYN, String deleteYN, int boCategory, int subCategory, String boardWriter) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
-		this.userDivision = userDivision;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
 		this.boCount = boCount;
@@ -33,112 +33,148 @@ public class Board {
 		this.subCategory = subCategory;
 		this.boardWriter = boardWriter;
 	}
+
 
 	public int getBoardNo() {
 		return boardNo;
 	}
 
+
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
 	}
+
 
 	public String getUserNo() {
 		return userNo;
 	}
 
+
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
 	}
 
-	public int getUserDivision() {
-		return userDivision;
-	}
-
-	public void setUserDivision(int userDivision) {
-		this.userDivision = userDivision;
-	}
 
 	public String getBoardTitle() {
 		return boardTitle;
 	}
 
+
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
 	}
+
 
 	public String getBoardContent() {
 		return boardContent;
 	}
 
+
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
+
 
 	public int getBoCount() {
 		return boCount;
 	}
 
+
 	public void setBoCount(int boCount) {
 		this.boCount = boCount;
 	}
+
 
 	public String getCreateDate() {
 		return createDate;
 	}
 
+
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+
 
 	public String getNoticeYN() {
 		return noticeYN;
 	}
 
+
 	public void setNoticeYN(String noticeYN) {
 		this.noticeYN = noticeYN;
 	}
+
 
 	public String getDeleteYN() {
 		return deleteYN;
 	}
 
+
 	public void setDeleteYN(String deleteYN) {
 		this.deleteYN = deleteYN;
 	}
+
 
 	public int getBoCategory() {
 		return boCategory;
 	}
 
+
 	public void setBoCategory(int boCategory) {
 		this.boCategory = boCategory;
 	}
+
 
 	public int getSubCategory() {
 		return subCategory;
 	}
 
+
 	public void setSubCategory(int subCategory) {
 		this.subCategory = subCategory;
 	}
+
 
 	public String getBoardWriter() {
 		return boardWriter;
 	}
 
+
 	public void setBoardWriter(String boardWriter) {
 		this.boardWriter = boardWriter;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Board [boardNo=" + boardNo + ", userNo=" + userNo + ", userDivision=" + userDivision + ", boardTitle="
-				+ boardTitle + ", boardContent=" + boardContent + ", boCount=" + boCount + ", createDate=" + createDate
-				+ ", noticeYN=" + noticeYN + ", deleteYN=" + deleteYN + ", boCategory=" + boCategory + ", subCategory="
-				+ subCategory + ", boardWriter=" + boardWriter + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Board [boardNo=");
+		builder.append(boardNo);
+		builder.append(", userNo=");
+		builder.append(userNo);
+		builder.append(", boardTitle=");
+		builder.append(boardTitle);
+		builder.append(", boardContent=");
+		builder.append(boardContent);
+		builder.append(", boCount=");
+		builder.append(boCount);
+		builder.append(", createDate=");
+		builder.append(createDate);
+		builder.append(", noticeYN=");
+		builder.append(noticeYN);
+		builder.append(", deleteYN=");
+		builder.append(deleteYN);
+		builder.append(", boCategory=");
+		builder.append(boCategory);
+		builder.append(", subCategory=");
+		builder.append(subCategory);
+		builder.append(", boardWriter=");
+		builder.append(boardWriter);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
+
 	 
-	
+
+
 }
