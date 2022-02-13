@@ -177,12 +177,12 @@ margin-top: 10px;
 			<!-- title -->
 			<div class="page_title">커뮤니티</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
-				 <c:if test="${ loginUser.userNo eq b.userNo }">
+				
 				<div class="updel">
 				<a onclick="postFormSubmit(1);">수정</a> 
-				<a class="bdel" href="">삭제</a>
+				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
-				</c:if>
+				 
 				
 				<div class="grayWrap">
 					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
@@ -210,13 +210,13 @@ margin-top: 10px;
 	                    		첨부파일이 없습니다.
 	                    	</c:when>
 	                    	<c:otherwise>
-	                        	<a href="${at.path}${at.changeName}" download="${  at.originName }">${  at.originName }</a>
+	                        	<a href="${at.path}${at.changeName}" download="${at.originName}">${at.originName}</a>
                         	</c:otherwise>
                        		</c:choose>
                        		
 	            <form id="postForm" action="" method="post">
 	            	<input type="hidden" name="bno" value="${ b.boardNo }">
-	            	<input type="hidden" name="filePath" value="${  at.path } ${ at.changeName }">
+	            	<input type="hidden" name="filePath" value="${at.path}${at.changeName}">
 	            </form>
 	            
 	            <script>
@@ -229,7 +229,7 @@ margin-top: 10px;
 	            	}
 	            </script>
 	            
-				<button onclick="history.go(-1);" class="b_write">목록으로</button>
+				<button onclick="list.bo" class="b_write">목록으로</button>
 		</div>
 			</div>
 		</div>

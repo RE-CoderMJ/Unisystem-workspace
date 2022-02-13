@@ -230,6 +230,20 @@
 		 and ref_no = #{boardNo}  
 	</select>
 	
+	<update id="deleteBoard">
+		update
+		       board
+		   set DELETE_YN = 'Y'
+		 where board_no = #{boardNo}
+	</update>
+	
+	<update id="deleteAttachBoard">
+		update
+		       attachment
+		   set status = 'N'
+		 where ref_no = #{boardNo}
+	</update>
+	
 	
 	
 	

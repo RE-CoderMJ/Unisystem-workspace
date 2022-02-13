@@ -32,5 +32,9 @@ public interface BoardService {
 		Board selectBoard(int bno);
 		Attachment selectAttachBoard(int boardNo);
 		
+		//게시글 삭제
+		int deleteBoard(int bno);
+		int deleteAttachBoard(int bno);
+		
 		
 }

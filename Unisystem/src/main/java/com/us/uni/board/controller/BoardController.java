@@ -167,7 +167,7 @@ public class BoardController {
 				  .addObject("at",at)
 				  .setViewName("board/boardDetailView");
 				
-			System.out.println("상세ctr:"+ at);
+			//System.out.println("상세ctr:"+ at);
 			
 		}else {
 		
@@ -178,6 +178,35 @@ public class BoardController {
 	}
 	
 
+		@RequestMapping("delete.bo")
+		public String deleteBoard(int bno, String filePath, HttpSession session, Model model) {
+		
+			//System.out.println(bno);
+			//System.out.println(filePath);
+			
+			
+		int result = bService.deleteBoard(bno);
+		
+		if(result > 0) {
+			
+			// 첨부파일이 있었을 경우 => 파일 삭제
+			if(!filePath.equals("")) {  
+				int atresult = bService.deleteAttachBoard(bno);
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			// 게시판 리스트페이지   list.bo  url재요청
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			return "redirect:list.bo";
+			
+		}else {
+			// 삭제 실패
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "redirect:/";
+		}
+		
+		
+	}
 
 	
 	}

@@ -82,8 +82,18 @@ public class BoardDao {
 		
 		//게시글 상세조회(첨부파일)
 		public Attachment selectAttachBoard(SqlSessionTemplate sqlSession, int boardNo) {
-			System.out.println("상세 dao: " + boardNo);
+			//System.out.println("상세 dao: " + boardNo);
 			return sqlSession.selectOne("boardMapper.selectAttachBoard", boardNo);
+		}
+
+		public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+			
+			return sqlSession.update("boardMapper.deleteBoard", bno);
+		}
+		 
+		public int deleteAttachBoard(SqlSessionTemplate sqlSession, int bno) {
+			
+			return sqlSession.update("boardMapper.deleteAttachBoard", bno);
 		}
 		 
 		

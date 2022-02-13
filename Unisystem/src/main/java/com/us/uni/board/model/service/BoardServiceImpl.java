@@ -99,4 +99,16 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public int deleteBoard(int bno) {
+		
+		return bDao.deleteBoard(sqlSession, bno);
+	}
+	
+	@Override
+	public int deleteAttachBoard(int bno) {
+		
+		return bDao.deleteAttachBoard(sqlSession, bno);
+	}
+
 }
