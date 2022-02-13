@@ -13,10 +13,14 @@ import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.HomeworkService;
+import com.us.uni.lecture.model.service.LectureService;
 import com.us.uni.lecture.model.vo.Lecture;
 
 @Controller
 public class LectureController {
+	
+	@Autowired
+	private LectureService lService;
 	
 	@Autowired
 	private HomeworkService hService;
@@ -25,7 +29,7 @@ public class LectureController {
 	@RequestMapping("studentClassList.me")
 	public ModelAndView selectStudentClassList(int userNo, ModelAndView mv) {
 		
-		ArrayList<Lecture> list = hService.selectStudentClassList(userNo);
+		ArrayList<Lecture> list = lService.selectStudentClassList(userNo);
 
 		mv.addObject("list", list).setViewName("student/studentClassList");
 		
@@ -35,24 +39,22 @@ public class LectureController {
 	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도별, 학기 별 조회 시 강의목록을 띄워주는 컨트롤러 */
 	@ResponseBody
 	@RequestMapping(value="studentSearchList.me", produces="application/json; charset=UTF-8")
-	public String selectStudentSearchClassList(int userNo, String classYear, int classSemester) {
+	public String AjaxSelectStudentSearchClassList(int userNo, String classYear, int classSemester) {
 		
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassYear(classYear);
 		l.setClassSemester(classSemester);
 
-		ArrayList<Lecture> searchList = hService.selectStudentSearchClassList(l);
+		ArrayList<Lecture> searchList = lService.selectStudentSearchClassList(l);
 		return new Gson().toJson(searchList);
-	
-
 	}
 	
 	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도값을 가져오는 컨트롤러 */
 	@ResponseBody
 	@RequestMapping(value="studentYearList.me", produces="application/json; charset=UTF-8")
-	public String selectYearList() {
-		ArrayList<Lecture> list = hService.selectYearList();
+	public String AjaxSelectYearList() {
+		ArrayList<Lecture> list = lService.selectYearList();
 		return new Gson().toJson(list);
 		
 	}
@@ -61,6 +63,15 @@ public class LectureController {
 	@RequestMapping("lectureMain.stu")
 	public String selectLectureMainPage() {
 		return "lecture/lectureStuMainPage";
+	}
+	
+	/* 학생 - 강의홈에서 드롭박스에 수강중인 강의 리스트를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="studentClassList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectStudentClassList(int userNo) {
+		
+		ArrayList<Lecture> list = lService.selectStudentClassList(userNo);
+		return new Gson().toJson(list);
 	}
 	
 	

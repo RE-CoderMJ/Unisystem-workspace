@@ -194,7 +194,6 @@
             		var userNo = $("#userNo").val();
             		var classYear = $("select[name=classYear]").val();
             		var classSemester = $("select[name=classSemester]").val();      
-            		var classCategory="";
             		
             		$.ajax({
             			url:"studentSearchList.me",
@@ -206,15 +205,28 @@
             			success:function(searchList){
             				console.log(searchList);
             				let value = "";
+            				var classCategory="";
             				for(let i in searchList){
+            					
+            					if(searchList[i].classCategory == 1){
+            						classCategory = "대면강의";
+            					} else {
+            						classCategory = "비대면강의";
+            					}
+            					
                             	value += "<tr>"
-                                    +		"<td>" + searchList[i].classCode + "</th>"
-                                    +		"<td>" + searchList[i].classKorName + "</td>"                 
-                                    +		"<td>" + searchList[i].classCategory + "</td>"
+                                    +		"<td id='classCode'>" + searchList[i].classCode + "</th>"
+                                    +		"<td id='className'>" + searchList[i].classKorName + "</td>"                            
+                                    +		"<td>" + classCategory + "</td>"
                                     +		"<td>" + searchList[i].korName + "</td>"
                                     +		"<td>" + searchList[i].currStud + "</td>"
                               	  		+ "</tr>";
- 
+ 								
+                              	 
+	                             $(document).on("click", "#className", function(){
+	                             	location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
+	                             });	
+  
             				}
             				$("#classList>tbody").html(value);
             				
