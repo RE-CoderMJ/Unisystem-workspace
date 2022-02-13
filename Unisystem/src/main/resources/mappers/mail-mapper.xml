@@ -72,4 +72,156 @@
 		   and save_status = 'Y'
 	</select>
 	
+	<update id="updateMailFrom">
+		update
+			   mail_from
+		   set title = #{title}
+		     , content = #{content}
+		     , send_date = sysdate
+		     , save_status = 'N'
+		     , to_user = ' '
+		 where mail_from_no = #{mailNo}
+		   and from_user = #{userNo}
+	</update>
+	
+	<insert id="insertMailFrom">
+		insert
+		  into mail_from
+		  (
+		    mail_from_no
+		  , from_user
+		  , from_add
+		  , title
+		  , content
+		  )
+		  values
+		  (
+		    seq_mfno.nextval
+		  , #{userNo}
+		  , #{userNo} || '@unisystem.com'
+		  , #{title}
+		  , #{content}
+		  )
+	</insert>
+	
+	<insert id="insertDraftMailTo">
+		insert
+		  into mail_to
+		  (
+		    mail_to_no
+		  , mail_from_no
+		  , to_user
+		  , to_add
+		  )
+		  values
+		  (
+		    seq_mtno.nextval
+		  , #{mailFromNo}
+		  , #{userToNo}
+		  , #{userToNo} || '@unisystem.com'
+		  )
+	</insert>
+	
+	<insert id="insertMailTo">
+		insert
+		  into mail_to
+		  (
+		    mail_to_no
+		  , mail_from_no
+		  , to_user
+		  , to_add
+		  )
+		  values
+		  (
+		    seq_mtno.nextval
+		  , seq_mfno.currval
+		  , #{userToNo}
+		  , #{userToNo} || '@unisystem.com'
+		  )
+	</insert>
+	
+	<insert id="insertDraftCcMailTo">
+		insert
+		  into mail_to
+		  (
+		    mail_to_no
+		  , mail_from_no
+		  , to
+		  , to_add
+		  , cc_status
+		  )
+		  values
+		  (
+		    seq_mtno.nextval
+		  , #{mailFromNo}
+		  , #{userToNo}
+		  , #{userToNo} || '@unisystem.com'
+		  , 'Y'
+		  )
+	</insert>
+	
+	<insert id="insertCcMailTo">
+		insert
+		  into mail_to
+		  (
+		    mail_to_no
+		  , mail_from_no
+		  , to
+		  , to_add
+		  , cc_status
+		  )
+		  values
+		  (
+		    seq_mtno.nextval
+		  , seq_mfno.currval
+		  , #{userToNo}
+		  , #{userToNo} || '@unisystem.com'
+		  , 'Y'
+		  )
+	</insert>
+	
+	<insert id="insertAttachment">
+		insert
+		  into attachment
+		  (
+		  	attach_no
+		  , ref_type
+		  , ref_no
+		  , origin_name
+		  , change_name
+		  , path
+		  )
+		  values
+		  (
+		  	seq_attno.nextval
+		  , 'M'
+		  , seq_mfno.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
+	<insert id="insertDraftAttachment">
+		insert
+		  into attachment
+		  (
+		  	attach_no
+		  , ref_type
+		  , ref_no
+		  , origin_name
+		  , change_name
+		  , path
+		  )
+		  values
+		  (
+		  	seq_attno.nextval
+		  , 'M'
+		  , #{refNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
 </mapper>

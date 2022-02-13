@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter 
 @Getter
 @ToString
-public class Attatchment {
+public class Attachment {
 	
 	 private int attachNo;
 	 private String refType;

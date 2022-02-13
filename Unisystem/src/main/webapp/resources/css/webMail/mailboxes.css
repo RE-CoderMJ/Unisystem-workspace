@@ -133,6 +133,9 @@ section::after{display:block;content:"";clear:both;}
 #list td{
     cursor: pointer;
 }
+#list tr:hover{
+	background : rgb(228, 228, 228);
+}
 
 .overflow{
 	display: block; /* 너비를 가질 수 있도록 설정 */

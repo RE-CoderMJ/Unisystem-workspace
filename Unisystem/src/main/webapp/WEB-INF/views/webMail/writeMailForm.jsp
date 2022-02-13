@@ -65,7 +65,7 @@
 
         <jsp:include page="webMailSidebar.jsp" />
         <section>
-        	<form method="post">
+        	<form method="post" enctype="multipart/form-data">
 	            <header id="mail-boxes-header">
 	                <div id="mailbox-name">메일 쓰기</div>
 	                <br><br>
@@ -75,11 +75,12 @@
 	            <article>
 	               <div id="mail-info">
 	               		<input type="hidden" name="userNo" value="${ loginUser.userNo }">
+	               		<input type="hidden" name="mNo" value="${mf.mailNo}">
 	                    <span>받는 사람</span>
-	                    <input id="write-to" type="text" name="userToNo" required value="${mf.userToNo > null ? ' ' : mf.userToNo }">
+	                    <input id="write-to" type="text" name="userToNo" required value="${mf.userToNo > null ? ' ' : mf.userToNo }" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
 	                    <br><br> 
 	                    <span>참조</span>
-	                    <input id="write-cc" type="text" name="cc">
+	                    <input id="write-cc" type="text" name="cc" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
 	                    <br><br>
 	                    <span>제목</span>
 	                    <input id="write-title" type="text" name="title" value="${mf.title > null ? ' ' : mf.title }">
@@ -126,10 +127,21 @@
 			});
 			
 			let $len = $("section").height();
-			console.log($len);
 			$("#webMail-sidebar").css('height', $len + 22);
 		});
 		
+	</script>
+	
+	<script>
+		function noSpaceForm(obj) { // 공백사용못하게
+		    var str_space = /\s/;  // 공백체크
+		    if(str_space.exec(obj.value)) { //공백 체크
+		        alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+		        obj.focus();
+		        obj.value = obj.value.replace(' ',''); // 공백제거
+		        return false;
+		    }
+		}
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />

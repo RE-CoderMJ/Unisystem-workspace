@@ -126,8 +126,9 @@
 	
 	<script>
 		$(function(){
-			$("#list>tbody>tr").click(function(){
+			$(document).on("click", "tr", function(){
 				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
+				console.log($(this).children("input").val());
 			})
 		})
 	</script>
@@ -135,7 +136,6 @@
 	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
-			console.log($len);
 			$("#webMail-sidebar").css('height', $len + 22);
 		})
 	</script>

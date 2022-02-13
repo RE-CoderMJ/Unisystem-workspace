@@ -6,8 +6,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.mail.model.vo.MailFrom;
+import com.us.uni.mail.model.vo.MailTo;
 
 @Repository
 public class MailDao {
@@ -34,6 +36,43 @@ public class MailDao {
 	public MailFrom selectDraft(SqlSessionTemplate sqlSession, int mfNo) {
 		
 		return sqlSession.selectOne("mailMapper.selectDraft", mfNo);
+	}
+
+	public int insertUpdateMailFrom(SqlSessionTemplate sqlSession, MailFrom mf) {
+
+		if(mf.getMailNo() == 0) {
+			return sqlSession.insert("mailMapper.insertMailFrom", mf);
+		}else {
+			return sqlSession.update("mailMapper.updateMailFrom", mf);			
+		}
+		
+	}
+
+	public int insertMailTo(SqlSessionTemplate sqlSession, MailTo mt) {
+				
+		if(mt.getMailFromNo() == 0) {
+			return sqlSession.insert("mailMapper.insertMailTo", mt);			
+		}else {
+			return sqlSession.insert("mailMapper.insertDraftMailTo", mt);			
+		}
+	}
+	
+	public int insertCcMailTo(SqlSessionTemplate sqlSession, MailTo mt) {
+		
+		if(mt.getMailFromNo() == 0) {
+			return sqlSession.insert("mailMapper.insertCcMailTo", mt);			
+		}else {
+			return sqlSession.insert("mailMapper.insertDraftCcMailTo", mt);
+		}
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment att) {
+		
+		if(att.getRefNo() == 0) {
+			return sqlSession.insert("mailMapper.insertAttachment",att);			
+		}else {
+			return sqlSession.insert("mailMapper.insertDraftAttachment", att);			
+		}
 	}
 
 }

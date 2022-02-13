@@ -2,6 +2,7 @@ package com.us.uni.mail.model.service;
 
 import java.util.ArrayList;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
@@ -21,7 +22,7 @@ public interface MailService {
 	MailFrom selectDraft(int mfNo);
 	
 	// 메일 작성하기 서비스
-	int sendMail(MailFrom mf, MailTo mt);
+	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);
 	
 	// 메일 상세조회용 서비스
 	MailTo selectMail(int mailNo);
