@@ -13,8 +13,11 @@ public interface StudentService {
 	ArrayList<Users> selectStudentList(PageInfo pi);
 	
 	
-	// 2. 검색
+	// 2. 학생 검색
 	ArrayList<Users> selectDepartment(String studUniv);
 	int selectSearchCount(HashMap map);
 	ArrayList<Users> searchStudent(HashMap map, PageInfo pi);
+	
+	// 3. 학생 삭제
+	int studentDelete(String dno);
 }

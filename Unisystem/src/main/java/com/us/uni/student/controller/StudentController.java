@@ -3,6 +3,8 @@ package com.us.uni.student.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,6 @@ import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.student.model.service.StudentService;
-import com.us.uni.student.model.vo.Student;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
@@ -81,6 +82,26 @@ public class StudentController {
 		
 	}
 	
+	@RequestMapping("delete.st")
+	public String studentDelete(String[] dno, HttpSession session) {
 		
+		int result = 0;
+		
+		for(int i=0; i<dno.length; i++) {
+			result = sService.studentDelete(dno[i]);
+		}
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "삭제되었습니다!");
+			return "redirect:student.ad";
+		}else {
+			session.setAttribute("alertMsg", "학생 삭제를 실패했습니다.");
+			return "common/errorPage";
+		}
+		
+		
+		
+		
+	}
 	
 }

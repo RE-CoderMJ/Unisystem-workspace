@@ -4,120 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="resources/css/pages/wrapperStyle.css" rel="stylesheet">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <style>
-	#wrap{
-		margin:auto;
-		width:1500px;
-		height:auto;
-	}
-	#sidebar{
-		width:230px;
-		height:700px;
-		margin-top:30px;
-	}
-	#content{
-		width:1270px;
-		height:auto;
-		margin-top:30px;
-		margin-bottom:50px;
-		background-color:white;
-	}
-	.pageName{padding:7px;}
-	.pageName>p{
-		margin:0px;
-		float:left;
-	}
-	.topBox{
-		width:100%;
-		height:50px;
-	}
-	.searchBox{
-		margin:20px;
-		width:1230px;
-		height:70px;
-		line-height:35px;
-		padding-left:40px;
-		background:rgb(21, 62, 115);
-	}
-	.searchBox>input, select{
-		margin-top:15px;
-		padding-left:10px;
-		width:200px;
-   		border-radius:8px;
-   		border:0;
-   		height:40px;
-	}
-	.searchBox>button{
-		background:none;
-		color:white;
-		font-weight:600;
-		border:0;
-	}
-	.appList{
-		margin:20px;
-		border:1px solid lightgray;
-		position:relative;
-		padding:20px;
-	}
-	.table{
-		border-top:2px solid lightgray;
-		border-bottom:3px solid lightgray;
-	}
-	.table th{
-		border-bottom:2px solid gray;
-		background:rgb(235, 235, 235);
-		line-height:20px;
-		padding:0;
-		text-align:center;
-	}
-	.table td{
-		padding:0;
-		text-align:center;
-	}
-	.table input[type="checkbox"]{
-		width:16px;
-		height:16px;
-	}
-	
-	/*페이징*/
-	.pagebar{
-		width:100%;
-		height:35px;
-		margin-top:15px;
-	}
-	.pagebar>.btn-light{
-		border-radius:100px;
-		color:black;
-		background-color:rgb(240, 240, 240);
-	}
-	.pagebar>.btn-basic{
-		color:white;
-		background-color:rgb(21, 62, 115);
-	}
-	.container{
-	    margin-top: 30px;
-	}
-	.page-link{
-	    color:rgb(33, 33, 33)!important;
-	    border: none!important;
-	    border-radius: 200px!important;
-	}
-	.page-item.active .page-link {
-	    color: #fff !important;
-	    background: rgb(21, 62, 115)!important;
-	}
-	.nameTag{
-		font-size:20px;
-		font-weight:700;
-		color:white;
-		margin-right:430px;
-	}
-	*:focus {
-    outline: none;
-	}
 	#selectG{
 		width:200px;
 		border:none;
@@ -184,33 +75,21 @@
 	.slider.round:before {
 	border-radius: 50%;
 	}
-	p{
-		margin:0px;
-		display:inline-block;
-		font-size:15px;
-		font-weight:bold;
-	}
-	.btnBox{
-		width:100%;
-		height:30px;
-		margin-left:20px;
-		position:relative;
-	}
-	.btnBox>div{
-		width:auto;
-		height:30px;
-		float:left;
-	}
+	
 	.switchBox>div{
 		padding-left:30px;
 		width:200px;
 		height:30px;
 		float:left;
 	}
+	.btnBox{
+		position:relative;
+	}
 	.btnDiv{
 		position:absolute;
 		right:45px;
 	}
+
 </style>
 </head>
 <body>
@@ -221,7 +100,7 @@
 		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>
 		<div id="content" style="float:left;">
 			<div class="topBox">
-				<div class="pageName"><p style="color:gray">마이페이지>기본정보>&nbsp;</p><p style="font-size:19px; font-weight:600;">학생 관리</p></div>
+				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;기본정보&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;학생 관리</p></div>
 			</div>
 			
 			
@@ -245,6 +124,8 @@
 					<button type='submit' onclick='pagination("1");'>검색</button>
 				</div>
 				
+				
+			<form id="studDelete">
 				<div class="btnBox">
 					<div class="switchBox">
 						<label class="switch">
@@ -254,19 +135,19 @@
 						<p >&nbsp;모두 보기</p><p style="display:none;">&nbsp;재학생만 보기</p>
 					</div>
 
+					
 					<div class="btnDiv">
 						<button class="btn btn-sm btn-outline-secondary">새로 등록</button>
-						<button class="btn btn-sm btn-outline-secondary">삭제</button>
+						<button onclick="studentDelete();" class="btn btn-sm btn-outline-secondary">삭제</button>
 					</div>
 				</div>
-
 
 
 					<div class="appList">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th width="30"><input type="checkbox"></th>
+								<th width="30"><input type="checkbox" id="allCheck"></th>
 								<th width="150">학번</th>
 								<th width="220">이름</th>
 								<th width="220">대학</th>
@@ -278,7 +159,7 @@
 						<tbody>
 							<c:forEach var="std" items="${ list }">
 								<tr>
-									<td><input type="checkbox"></td>
+									<td><input type="checkbox" class="deleteNo" name="dno" value="${std.studNo}"></td>
 									<td>${ std.studNo }</td>
 									<td>${ std.korName }</td>
 									<td>${ std.studUniv }</td>
@@ -343,6 +224,7 @@
                  </div>
 						
 				</div> <!-- appList -->
+				</form> <!-- delete용 form -->
 			</div> <!-- searchList -->
 			
 			
@@ -355,15 +237,55 @@
 			
 				$(function(){
 					sidebar();
+					
+					// checkBox 전체 선택
+					$("#allCheck").click(function(){
+			            if($(this).is(":checked")){
+			                $(":checkbox", $("table")).prop("checked", true);
+			            }else {
+			                $(":checkbox", $("table")).prop("checked", false);
+			            }
+			        })	
+					
 				})
-			
+				
+				
+				// 선택 회원 삭제
+				function studentDelete(){
+					
+					const checkboxes = document.getElementsByClassName('deleteNo');
+					var checkNum = 0;
+					var delForm = document.getElementById('studDelete');
+					
+					
+					for(var i=0; i<checkboxes.length; i++) {
+						if(checkboxes[i].checked == true) {
+						// 단순 체크된 박스의 개수를 세는 작업
+						// checkBox name="dno"으로 form태그 안에서 넘기고 있기 때문에 콘솔로 출력하지 않아도 controller에서는 값을 전달받음! 
+							checkNum += 1;
+						}
+					}
+
+					if(checkNum == 0) {
+						alert("삭제할 게시글을 선택해주세요.");
+					} else if(checkNum > 0) {
+						if(confirm("정말 삭제하시겠습니까?")){
+							// 관리자의 비밀번호를 입력받기
+							 
+							// 삭제 요청
+							delForm.action = "delete.st";
+							delForm.submit();
+						}
+					}
+
+				}
+				
 				// 사이드바 길이 조절
 				function sidebar(){
 					document.getElementById("content").style.marginBottom = "50px";
 					let $len = $("#content").height();
 					
 						if($len > 750){
-							console.log("true");
 							$(".wrap_sidebar").css('height', $len);
 						}else{
 							$(".wrap_sidebar").css('height', 270);
@@ -372,7 +294,7 @@
 				}
 				
 				// switch 관련
-				var check = $("input[type='checkbox']");
+				var check = $(".switchBox input[type='checkbox']");
 					check.click(function(){
 						$(".switchBox p").toggle();
 					});
@@ -474,6 +396,7 @@
 						
 					})
 				}
+				
 			</script>
 			
 </body>
