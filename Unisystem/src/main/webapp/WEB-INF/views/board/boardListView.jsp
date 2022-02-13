@@ -131,7 +131,7 @@ li {
 .b_write {
 	border: none;
 	float: right;
-	margin-right: 98px
+	margin-right: 188px;
 }
 
 /*페이징바*/
@@ -147,7 +147,7 @@ li {
     color: #fff !important;
     background: black!important;
 }
-
+ #boardList>tbody>tr:hover{cursor:pointer;}
 </style>
 <body>
 
@@ -261,7 +261,7 @@ li {
 
 			<!--로그인한 회원에게만 보여지도록 조건처리-->
 			<c:if test="${ not empty loginUser }">
-				<button class="b_write btn-sm btn-secondary">글쓰기</button>
+				<a class="b_write btn-sm btn-secondary" href="enrollForm.bo">글쓰기</a>
 			</c:if>
 			<script>
             	$(function(){

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="studentMapper">
+
+	<resultMap id="usersResult" type="Users">
+		<result column="user_no" property="userNo" />
+		<result column="password" property="userPwd" />
+		<result column="kor_name" property="korName" />
+		<result column="eng_name" property="engName" />
+		<result column="birthday" property="birthday" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="nation" property="nation" />
+		<result column="webmail" property="webMail" />
+		<result column="user_div" property="userDiv" />
+		<result column="profile_img" property="profileImg" />
+		
+		<!-- STUDENT -->
+		<result column="stud_no" property="studNo" />
+		<result column="sprof_no" property="sprofNo" />
+		<result column="stud_univ" property="studUniv" />
+		<result column="stud_department" property="studDepartment" />
+		<result column="stud_major" property="studMajor" />
+		<result column="stud_minor" property="studMinor" />
+		<result column="stud_into" property="studInto" />
+		<result column="stud_grad" property="studGrad" />
+		<result column="stud_division" property="studDivision" />
+		<result column="stud_status" property="studStatus" />
+		<result column="stud_semester" property="studSemester" />
+	</resultMap>
+
+	<!-- 
+	
+	<resultMap id="StudentResult" type="Student">
+		<result column="STUD_NO" property="studNo" />
+		<result column="PROF_NO" property="profNo" />
+		<result column="STUD_UNIV" property="studUniv" />
+		<result column="STUD_DEPARTMENT" property="studDepartment" />
+		<result column="STUD_MAJOR" property="studMajor" />
+		<result column="STUD_MINOR" property="studMinor" />
+		<result column="STUD_INTO" property="studInto" />
+		<result column="STUD_GRAD" property="studGrad" />
+		<result column="STUD_DIVISION" property="studDivision" />
+		<result column="STUD_STATUS" property="studStatus" />
+		<result column="TOTAL_SEMESTER" property="studSemester" />
+		<result column="KOR_NAME" property="studKorName" />
+		<result column="ENG_NAME" property="studEngName" />
+		<result column="BIRTHDAY" property="studBirthday" />
+		<result column="GENDER" property="studGender" />
+		<result column="EMAIL" property="studEmail" />
+		<result column="PHONE" property="studPhone" />
+		<result column="ADDRESS" property="studAddress" />
+		<result column="NATION" property="studNation" />
+		<result column="WEBMAIL" property="studWebMail" />
+		<result column="USER_DIV" property="studUserDiv" />
+		<result column="PROFILE_IMG" property="studProfileImg" />
+	</resultMap>
+	 -->
+	 
+	<select id="selectListCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM STUDENT
+	</select>
+	
+	<select id="selectStudentList" resultMap="usersResult">
+		SELECT 
+		       STUD_NO
+		     , KOR_NAME
+		     , STUD_UNIV
+		     , STUD_DEPARTMENT
+		     , STUD_MAJOR
+		     , STUD_STATUS
+		  FROM STUDENT
+		  JOIN USERS ON(STUD_NO = USER_NO)
+		 WHERE STUD_STATUS != 4
+		 ORDER
+	        BY STUD_NO DESC
+	</select>
+	
+	<select id="selectDepartment" resultMap="usersResult">
+		SELECT DISTINCT 
+		       STUD_DEPARTMENT
+		  FROM STUDENT
+		 WHERE STUD_UNIV = #{studUniv}
+	</select>
+	
+	<select id="selectSearchCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM STUDENT
+		  JOIN USERS ON(STUD_NO = USER_NO)
+		    <!-- 대학과 학과에 대해서만 검색한다면?-->
+		  <if test="keyword.equals('')">
+	  	  WHERE STUD_UNIV = #{univ}
+	  	    AND STUD_DEPARTMENT = #{depart}  
+		  </if>		  
+		  <!-- 이름만 검색한다면? -->
+  		  <if test="univ.equals('')">
+  		    WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		  </if>
+  		 <!-- 대학, 학과, 이름을 전부 검색한다면? -->
+  		  <if test="!univ.equals('') and !keyword.equals('')">
+		  WHERE STUD_UNIV = #{univ}
+   		    AND STUD_DEPARTMENT = #{depart}  
+   	     	AND KOR_NAME LIKE '%'||#{keyword}||'%'
+  		  </if>
+	</select>
+	
+	<select id="searchStudent" resultMap="usersResult">
+		SELECT 
+		       STUD_NO
+		     , KOR_NAME
+		     , STUD_UNIV
+		     , STUD_DEPARTMENT
+		     , STUD_MAJOR
+		     , STUD_STATUS
+		  FROM STUDENT
+		  JOIN USERS ON(STUD_NO = USER_NO)
+		  <!-- 대학에 대해서만 검색한다면? -->
+		   <if test="depart.equals('') and keyword.equals('')">
+		     WHERE STUD_UNIV = #{univ}
+		   </if>
+	  	  <!-- 대학과 학과에 대해서만 검색한다면?-->
+		  <if test="keyword.equals('')">
+	  	  WHERE STUD_UNIV = #{univ}
+	  	    AND STUD_DEPARTMENT = #{depart}  
+		  </if>		  
+		  <!-- 이름만 검색한다면? -->
+  		  <if test="univ.equals('')">
+  		     WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		  </if>
+  		 <!-- 대학, 학과, 이름을 전부 검색한다면? -->
+  		  <if test="!univ.equals('') and !keyword.equals('')">
+		  WHERE STUD_UNIV = #{univ}
+   		    AND STUD_DEPARTMENT = #{depart}  
+   	     	AND KOR_NAME LIKE '%'||#{keyword}||'%'
+  		  </if>
+		  ORDER
+		     BY KOR_NAME
+	</select>
+	
+</mapper>
