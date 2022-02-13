@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.HomeworkService;
-import com.us.uni.lecture.model.vo.HomeworkP;
 import com.us.uni.lecture.model.vo.Lecture;
 
 @Controller
@@ -32,25 +33,27 @@ public class LectureController {
 	}
 	
 	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도별, 학기 별 조회 시 강의목록을 띄워주는 컨트롤러 */
-	/*
-	@RequestMapping("studentDateClassList.me")
-	public void selectStudentDateClassList(int year, int semester) {
+	@ResponseBody
+	@RequestMapping(value="studentSearchList.me", produces="application/json; charset=UTF-8")
+	public String selectStudentSearchClassList(int userNo, String classYear, int classSemester) {
 		
-		System.out.println(year);
-		System.out.println(semester);
-		ArrayList<Lecture> list = hService.selectStudentDateClassList(year, semester);
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassYear(classYear);
+		l.setClassSemester(classSemester);
+
+		ArrayList<Lecture> searchList = hService.selectStudentSearchClassList(l);
+		return new Gson().toJson(searchList);
+	
 
 	}
-	*/
 	
 	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도값을 가져오는 컨트롤러 */
-	@RequestMapping
-	public ModelAndView selectYearList(ModelAndView mv) {
-		
+	@ResponseBody
+	@RequestMapping(value="studentYearList.me", produces="application/json; charset=UTF-8")
+	public String selectYearList() {
 		ArrayList<Lecture> list = hService.selectYearList();
-		System.out.println(list);
-		mv.addObject("yearList", list).setViewName("student/studentClassList");
-		return mv;
+		return new Gson().toJson(list);
 		
 	}
 	

@@ -14,7 +14,7 @@
     }
     /* page header 영역 */
     #content_header{
-        margin-top: 30px;
+        margin-bottom: 30px;
         margin-left: 30px;
         font-size: 24px;
         font-weight: 900;
@@ -27,7 +27,7 @@
         width: 1270px;
         height: 700px;
         background-color: white;
-        padding-top: 30px;
+        padding-top: 13px;
     }  
     #contentBox>div{padding-left: 30px;}  
     #content_name{
@@ -41,13 +41,13 @@
         height: 80px;
     }
     #date_border>span{font-weight: 700; margin-left: 390px;}
-    #year, #semester{
+    #classYear, #classSemester{
         width: 80px;
         height: 30px;
         margin-left: 20px;
         margin-top: 25px;
     }
-    #semester{margin-left: 10px;}
+    #classSemester{margin-left: 10px;}
     #date_border>button{
         border: none;
         border-radius: 5px;
@@ -76,40 +76,39 @@
 
     <div id="wrap">
 
-        <div style="float: left;">
+        <div style="float: left; margin-top : 30px">
             <!-- sidebar 영역 -->
-            <jsp:include page="../student/smySidebar.jsp" />
+            <jsp:include page="../student/smySidebar.jsp"/>
         </div>
 		
         <div id="wrap_content" style="float: left;">
             
-            <article id="content_header"><span>수업 > </span>내가 수강중인 강의</article>
 
             <div id="contentBox">
+            <article id="content_header"><span>수업 > </span>내가 수강중인 강의</article>
 
                 <div id="content_name">수강 강좌</div>
                 
-                <form action="studentDateClassList.me" method="post">
                 
+                <form action="studentDateClassList.me" method="post">
+                	<input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
 	                <div id="date_border">
 	                    <span>년도 학기</span>         
-	                    <c:forEach var="y" items="${ yearList }">
 	                    
-		                    <select name="year" id="year">
-		                        <option value="${ y.classYear }">${ y.classYear }</option>
-		                    </select>    
+		                <select name="classYear" id="classYear">
+	                    	<!-- 년도를 출력해주는 ajax 함수 실행하는 공간 -->
+		                </select>    
 		                    
-	                    </c:forEach>
 	                    
-	                    <select name="semester" id="semester">
+	                    <select name="classSemester" id="classSemester">
 	                        <option value="1">1학기</option>
 	                        <option value="2">2학기</option>
 	                    </select>
-	                    <button type="submit">조회</button>
+	                    <button type="button" onclick="searchClassList();">조회</button>
 	                </div>
 	                
                 </form>
-              
+               
                 <table id="classList">
                 	<thead>
 	                    <tr id="table_header">
@@ -123,6 +122,17 @@
                     <tbody>
                     
 	                    <c:forEach var="l" items="${ list }">
+	                    	
+	                    	<!-- list가 비어있을 경우 -->
+	                    	<c:if test="${ empty list}">
+		                    	<tr>
+			                    	<td colspan=6>
+			                    	 강의가 존재하지 않습니다.
+			                    	</td>
+		                    	</tr>
+	                    	</c:if>
+	                    	
+	                    	<!-- list가 비어있지 않을 경우 -->
 		                    <tr>
 		                        <td>${ l.classCode }</td>
 		                        <td>${l.classKorName}</td>
@@ -148,9 +158,75 @@
             	$(function(){
             		$("#classList>tbody td:nth-child(2)").on("click", function(){
             			location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
-            			//console.log($(this).siblings().eq(0).text());
             		});
-            	})				
+            	})		
+            	
+            	
+            	$(function(){
+            		// 페이지상에 모든 요소들이 다 만들어지고 년도리스트 조회해오는 함수 호출
+             		selectYearList();
+            	})
+            	
+            	// 년도 list를 가져오는 ajax
+            	function selectYearList(){ 
+            		$.ajax({
+            			url:"studentYearList.me",
+            			data:{},
+            			async : false,
+            			success:function(list){
+            				console.log(list);
+            				let value = "";
+            				for(let i in list){
+                            	value += "<option value=" + list[i].classYear +">" + list[i].classYear + "</option>";
+            				}
+            				$("#classYear").append(value);
+            				
+            			}, error:function(){
+            				console.log("년도리스트조회용 ajax 통신 실패");
+            			}
+            			
+            		})
+            	}
+            	
+            	// 검색된 년도와 학기에 맞는 강의 list를 가져오는 ajax
+            	function searchClassList(){
+            		
+            		var userNo = $("#userNo").val();
+            		var classYear = $("select[name=classYear]").val();
+            		var classSemester = $("select[name=classSemester]").val();      
+            		var classCategory="";
+            		
+            		$.ajax({
+            			url:"studentSearchList.me",
+            			data:{
+            				userNo : userNo,
+            				classYear : classYear,
+            				classSemester : classSemester
+            				},
+            			success:function(searchList){
+            				console.log(searchList);
+            				let value = "";
+            				for(let i in searchList){
+                            	value += "<tr>"
+                                    +		"<td>" + searchList[i].classCode + "</th>"
+                                    +		"<td>" + searchList[i].classKorName + "</td>"                 
+                                    +		"<td>" + searchList[i].classCategory + "</td>"
+                                    +		"<td>" + searchList[i].korName + "</td>"
+                                    +		"<td>" + searchList[i].currStud + "</td>"
+                              	  		+ "</tr>";
+ 
+            				}
+            				$("#classList>tbody").html(value);
+            				
+            			}, error:function(){
+            				console.log("년도학기에 따른 강의조회용 ajax 통신 실패")
+            			}
+            			
+            		})
+						
+            	}
+            	
+            	
 				
 				</script>
 

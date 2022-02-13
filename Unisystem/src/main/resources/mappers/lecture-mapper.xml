@@ -9,6 +9,7 @@
 		<result column="curr_stud" property="currStud" />
 		<result column="class_code" property="classCode" />
 		<result column="class_year" property="classYear" />
+		<result column="class_semester" property="classSemester" />
 		
 		<result column="kor_name" property="korName" />
 	</resultMap>
@@ -29,6 +30,26 @@
 		  join users on(prof_no = user_no)
 		  where stud_no = #{userNo}
             and status = 'Y'
+          order
+             by class_code asc
+	</select>
+	
+	<!-- 학생 - 내가 수강중인 강의 조회 : 원하는 년도, 학기에 따라 강의를 불러오는 sql -->
+	<select id="selectStudentSearchClassList" resultMap="lectureResult">
+        select
+		       class_stud_no
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		     , class_code
+		  from class_stud
+		  join class using(class_no)
+		  join professor using(prof_no)
+		  join users on(prof_no = user_no)
+		  where stud_no = #{userNo}
+            and class_year = #{classYear}
+            and class_semester = #{classSemester}
           order
              by class_code asc
 	</select>

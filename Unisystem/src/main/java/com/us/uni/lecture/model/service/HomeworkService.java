@@ -14,7 +14,7 @@ public interface HomeworkService {
 	ArrayList<Lecture> selectStudentClassList(int userNo);
 	
 	// 2. 학생 - 마이페이지 - 내가수강중인 강의 : 원하는 년도, 학기에 따라 강의 리스트 조회
-	ArrayList<Lecture> selectStudentDateClassList(int year, int semester);
+	ArrayList<Lecture> selectStudentSearchClassList(Lecture l);
 	
 	// 3. 학생 - 마이페이지 - 내가수강중인 강의 : 년도값을 가져오는 리스트 조회
 	ArrayList<Lecture> selectYearList();

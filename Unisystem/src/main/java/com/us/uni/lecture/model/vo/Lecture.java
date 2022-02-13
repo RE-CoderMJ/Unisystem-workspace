@@ -47,6 +47,7 @@ public class Lecture {
 	private int studNo;               // 학번
 	private String status;            // 수강중(Y) | 수강완료(N)
 	
-	private String korName;
+	private String korName;			  
+	private int userNo;				  // 학번 및 교번
 
 }

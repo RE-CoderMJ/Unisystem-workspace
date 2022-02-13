@@ -30,9 +30,8 @@ public class HomeworkServiceImpl implements HomeworkService{
 	
 	@Override
 	// 2. 학생 - 마이페이지 - 내가수강중인 강의 : 원하는 년도, 학기에 따라 강의 리스트 조회
-	public ArrayList<Lecture> selectStudentDateClassList(int year, int semester) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Lecture> selectStudentSearchClassList(Lecture l) {
+		return hDao.selectStudentSearchClassList(sqlSession, l);
 	}
 	
 	// 3. 학생 - 마이페이지 - 내가수강중인 강의 : 년도값을 가져오는 리스트 조회
