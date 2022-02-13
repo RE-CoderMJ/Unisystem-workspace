@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.HomeworkService;
-import com.us.uni.lecture.model.vo.HomeworkP;
 import com.us.uni.lecture.model.vo.Lecture;
 
 @Controller
@@ -31,17 +32,44 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도별, 학기 별 조회 시 강의목록을 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="studentSearchList.me", produces="application/json; charset=UTF-8")
+	public String selectStudentSearchClassList(int userNo, String classYear, int classSemester) {
+		
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassYear(classYear);
+		l.setClassSemester(classSemester);
+
+		ArrayList<Lecture> searchList = hService.selectStudentSearchClassList(l);
+		return new Gson().toJson(searchList);
+	
+
+	}
+	
+	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도값을 가져오는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="studentYearList.me", produces="application/json; charset=UTF-8")
+	public String selectYearList() {
+		ArrayList<Lecture> list = hService.selectYearList();
+		return new Gson().toJson(list);
+		
+	}
+	
+	/* 학생 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureMain.stu")
+	public String selectLectureMainPage() {
+		return "lecture/lectureStuMainPage";
+	}
+	
+	
 	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("professorClassList.me")
 	public String selectProfessorClassList() {
 		return "professor/professorClassList";
 	}
 	
-	/* 학생 - 강의홈을 띄워주는 컨트롤러 */
-	@RequestMapping("lectureMain.stu")
-	public String selectLectureMainPage() {
-		return "lecture/lectureStuMainPage";
-	}
 	
 	/* 교수 - 강의홈을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureProMain.stu")
