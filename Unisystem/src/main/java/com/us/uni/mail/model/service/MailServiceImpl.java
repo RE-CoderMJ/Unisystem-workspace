@@ -65,8 +65,9 @@ public class MailServiceImpl implements MailService {
 		}
 		
 		int result3 = 1;
+		
 		//참조 메일주소를 입력했을 경우 참조메일 전송
-		if(ccNoArr.length > 1) {
+		if(ccNoArr.length != 0) {
 			
 			for(String cc : ccNoArr) {
 				MailTo mt = new MailTo();

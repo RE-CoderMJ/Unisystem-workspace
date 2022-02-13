@@ -146,7 +146,7 @@
 		  (
 		    mail_to_no
 		  , mail_from_no
-		  , to
+		  , to_user
 		  , to_add
 		  , cc_status
 		  )
@@ -166,7 +166,7 @@
 		  (
 		    mail_to_no
 		  , mail_from_no
-		  , to
+		  , to_user
 		  , to_add
 		  , cc_status
 		  )
