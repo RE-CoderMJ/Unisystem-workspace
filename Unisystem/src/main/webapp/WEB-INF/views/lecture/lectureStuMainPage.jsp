@@ -207,10 +207,10 @@
                </form>
 
                 <div id="classHeader_info_left">
-                    <div>IT미디어와미래역량</div>
+                    <div id="className">${ lec.classKorName }</div>
                     <div id="classHeader_info_left_pro">
                         <div><i class="fas fa-user-circle"></i></div>
-                        <div id="classHeader_info_left_pro_name">김말똥 교수</div>
+                        <div id="classHeader_info_left_pro_name">${ lec.korName } 교수</div>
                     </div>
                 </div>
 

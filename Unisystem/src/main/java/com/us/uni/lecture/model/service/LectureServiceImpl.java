@@ -24,6 +24,7 @@ public class LectureServiceImpl implements LectureService{
 
 	@Override
 	// 1. 학생 - 마이페이지 - 내가 수강중인 강의 리스트 조회
+	// 4. 학생 - 강의홈 - 내가 수강중인 강의 리스트 조회
 	public ArrayList<Lecture> selectStudentClassList(int userNo) {
 		return lDao.selectStudentClassList(sqlSession, userNo);
 	}
@@ -38,6 +39,12 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public ArrayList<Lecture> selectYearList() {
 		return lDao.selectYearList(sqlSession);
+	}
+	
+	// 5. 학생 - 강의홈 - 내가수강중인강의에서 클릭한 강의 정보 조회(강의명, 교수명)
+	@Override
+	public Lecture selectLectureMainPage(int lno) {
+		return lDao.selectLectureMainPage(sqlSession, lno);
 	}
 
 	// 학생 - 마이페이지 - 내가 수강중인 강의 관련 

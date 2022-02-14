@@ -61,8 +61,11 @@ public class LectureController {
 	
 	/* 학생 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMain.stu")
-	public String selectLectureMainPage() {
-		return "lecture/lectureStuMainPage";
+	public ModelAndView selectLectureMainPage(int lno, ModelAndView mv) {
+		Lecture l = lService.selectLectureMainPage(lno);
+		System.out.println(l);
+		mv.addObject("lec", l).setViewName("lecture/lectureStuMainPage");
+		return mv;
 	}
 	
 	/* 학생 - 강의홈에서 드롭박스에 수강중인 강의 리스트를 띄워주는 컨트롤러 */

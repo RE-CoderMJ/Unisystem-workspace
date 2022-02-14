@@ -3,6 +3,7 @@
 <mapper namespace="lectureMapper">
 	
 	<resultMap type="Lecture" id="lectureResult">
+		<result column="class_no" property="classNo" />
 		<result column="class_stud_no" property="classStudNo" />
 		<result column="class_kor_name" property="classKorName" />
 		<result column="class_category" property="classCategory" />
@@ -63,7 +64,18 @@
 		    by class_year desc	
 	</select>
 	
-	
+	<!-- 학생 - 강의홈 : 내가수강중인강의에서 클릭한 강의 정보(강의명, 교수명)을 가져오는 sql -->
+	<select id="selectLectureMainPage" resultMap="lectureResult">
+		select
+		       class_no
+		     , class_code
+		     , class_kor_name
+		     , kor_name
+		  from class
+		  join professor using(prof_no)
+		  join users on (prof_no = user_no)
+		 where class_code = #{lno}	
+	</select>
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->
 	<select id="selectHomeworkListCount" resultType="_int">
 		select

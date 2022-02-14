@@ -27,5 +27,12 @@ public class LectureDao {
 	public ArrayList<Lecture> selectYearList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectYearList");
 	}
+	
+	// 5. 학생 - 강의홈 - 내가수강중인강의에서 클릭한 강의 정보 조회(강의명, 교수명)
+	public Lecture selectLectureMainPage(SqlSessionTemplate sqlSession, int lno) {
+		return sqlSession.selectOne("lectureMapper.selectLectureMainPage", lno);
+	}
+	
+	
 
 }
