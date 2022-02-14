@@ -50,6 +50,11 @@ public class StudentServiceImpl implements StudentService{
 		return sDao.studentDelete(sqlSession, dno);
 	}
 
+	@Override
+	public int studentInsert(Users student) {
+		return sDao.studentInsert(sqlSession, student);
+	}
+
 	
 
 	

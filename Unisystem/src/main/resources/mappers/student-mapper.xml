@@ -154,4 +154,66 @@
 		 WHERE USER_NO = #{studNo}	
 	</delete>
 	
+	<insert id="studentInsert1">
+		INSERT 
+		  INTO USERS 
+		     ( 
+		       USER_NO
+		     , PASSWORD
+		     , KOR_NAME
+		     , ENG_NAME
+		     , BIRTHDAY
+		     , GENDER
+		     , EMAIL
+		     , PHONE
+		     , ADDRESS
+		     , NATION
+		     , WEBMAIL
+		     , USER_DIV
+		     , PROFILE_IMG
+		     )
+		       VALUES
+		     (
+		       ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.NEXTVAL)
+		     , #{birthday}
+		     , #{korName}   
+		     , #{engName}
+		     , #{birthday}
+		     , #{gender}
+		     , #{email}
+		     , #{phone}
+		     , #{address}
+		     , #{nation}
+		     , ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.CURRVAL) || '@unisystem.com'
+		     , 1
+		     , #{profileImg}
+		     )
+	</insert>
+	
+	<insert id="studentInsert2">
+	    INSERT 
+		  INTO STUDENT 
+		     ( 
+		       USER_NO
+		     , PROF_NO
+		     , STUD_UNIV
+		     , STUD_DEPARTMENT
+		     , STUD_MAJOR
+		     , STUD_MINOR
+		     , STUD_INTO
+		     , STUD_GRAD
+		     )
+		       VALUES
+		     (
+		       ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.CURRVAL)
+		     , NULL
+		     , #{studUniv}
+		     , #{studDepartment}
+		     , #{studMajor}
+		     , NULL
+		     , ((TO_CHAR(SYSDATE, 'YYYY')) || '년 3월 2일'
+		     , NULL
+		     )
+	</insert>
+	
 </mapper>

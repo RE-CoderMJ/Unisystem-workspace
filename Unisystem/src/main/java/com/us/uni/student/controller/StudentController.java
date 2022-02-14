@@ -16,14 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
-import com.us.uni.student.model.service.StudentService;
+import com.us.uni.student.model.service.StudentServiceImpl;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
 public class StudentController {
 
 	@Autowired
-	private StudentService sService;
+	private StudentServiceImpl sService;
 	
 	@RequestMapping("list.st")
 	public String selectStudentInfo() {
@@ -86,10 +86,10 @@ public class StudentController {
 	public String studentDelete(String[] dno, HttpSession session) {
 		
 		int result = 0;
-		
 		for(int i=0; i<dno.length; i++) {
 			result = sService.studentDelete(dno[i]);
 		}
+		
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "삭제되었습니다!");
@@ -98,6 +98,16 @@ public class StudentController {
 			session.setAttribute("alertMsg", "학생 삭제를 실패했습니다.");
 			return "common/errorPage";
 		}
+		
+	}
+	
+	@RequestMapping("insert.st")
+	public void studentInsert(Users student) {
+	
+		int result = 0;
+		result = sService.studentInsert(student);		
+		
+		System.out.println(result);
 		
 	}
 	

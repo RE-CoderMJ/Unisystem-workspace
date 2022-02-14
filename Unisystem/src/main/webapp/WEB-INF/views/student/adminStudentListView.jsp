@@ -137,7 +137,7 @@
 
 					
 					<div class="btnDiv">
-						<button class="btn btn-sm btn-outline-secondary">새로 등록</button>
+						<a class="btn btn-sm btn-outline-secondary" href="enrollForm.st">새로 등록</a>
 						<button onclick="studentDelete();" class="btn btn-sm btn-outline-secondary">삭제</button>
 					</div>
 				</div>

@@ -20,4 +20,7 @@ public interface StudentService {
 	
 	// 3. 학생 삭제
 	int studentDelete(String dno);
+	
+	// 4. 학생 등록
+	int studentInsert(Users student);
 }
