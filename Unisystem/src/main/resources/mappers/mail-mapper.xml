@@ -14,6 +14,7 @@
 		<result column="save_status" property="saveStatus" />
 		<result column="to_user" property="userToNo" />
 		<result column="file_name" property="fileName" />
+		<result column="important" property="important" />
 	</resultMap>
 	
 	<resultMap type="MailTo" id="toResult">
@@ -54,6 +55,32 @@
 		  , #{userToNo}
 		  , #{title}
 		  , #{content}
+		  , 'Y'
+		  )
+	</insert>
+	
+	<insert id="saveToMeDraft">
+		insert
+		  into mail_from
+		  (
+		    mail_from_no
+		  , from_user
+		  , from_add
+		  , to_user
+		  , title
+		  , content
+		  , save_status
+		  , to_me
+		  )
+		  values
+		  (
+		    seq_mfno.nextval
+		  , #{userNo}
+		  , #{userNo} || '@unisystem.com'
+		  , #{userToNo}
+		  , #{title}
+		  , #{content}
+		  , 'Y'
 		  , 'Y'
 		  )
 	</insert>
@@ -121,6 +148,30 @@
 		  , #{userToNo}
 		  , #{title}
 		  , #{content}
+		  )
+	</insert>
+	
+	<insert id="insertMailToMeFrom">
+		insert
+		  into mail_from
+		  (
+		    mail_from_no
+		  , from_user
+		  , from_add
+		  , to_user
+		  , title
+		  , content
+		  , to_me
+		  )
+		  values
+		  (
+		    seq_mfno.nextval
+		  , #{userNo}
+		  , #{userNo} || '@unisystem.com'
+		  , #{userToNo}
+		  , #{title}
+		  , #{content}
+		  , 'Y'
 		  )
 	</insert>
 	
@@ -305,4 +356,36 @@
 		 order
 		 	by mail_to_no desc
 	</select>
+	
+	<select id="selectToMeListCount" resultType="_int">
+		select
+			   count(*)
+		  from mail_from
+		 where from_user = #{userNo}
+		   and to_me = 'Y'
+	</select>
+	
+	<select id="selectToMeList" resultMap="fromResult">
+		select
+			   mail_from_no
+			 , from_add
+			 , important
+			 , title
+			 , content
+			 , send_date
+             , (select
+                       origin_name
+                  from attachment
+                 where ref_no = f.mail_from_no
+                   and ref_type = 'M'
+                   and rownum = 1) "file_name"
+	      from mail_from f
+		 where from_user = #{userNo}
+		   and save_status = 'N'
+		   and to_me = 'Y'
+		 order
+		    by mail_from_no desc
+	</select>
+	
+	
 </mapper>

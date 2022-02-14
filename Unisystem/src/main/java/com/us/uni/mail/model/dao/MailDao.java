@@ -32,6 +32,11 @@ public class MailDao {
 
 		return sqlSession.insert("mailMapper.saveDraft", mf);
 	}
+	
+	public int saveToMeDraft(SqlSessionTemplate sqlSession, MailFrom mf) {
+		
+		return sqlSession.insert("mailMapper.saveToMeDraft", mf);
+	}
 
 	public int selectDraftListCount(SqlSessionTemplate sqlSession, int userNo) {
 		
@@ -55,7 +60,11 @@ public class MailDao {
 	public int insertUpdateMailFrom(SqlSessionTemplate sqlSession, MailFrom mf) {
 
 		if(mf.getMailNo() == 0) {
-			return sqlSession.insert("mailMapper.insertMailFrom", mf);
+			if(mf.getUserNo() == Integer.parseInt(mf.getUserToNo().substring(0, mf.getUserToNo().indexOf("@")))) {
+				return sqlSession.insert("mailMapper.insertMailToMeFrom", mf);
+			}else {
+				return sqlSession.insert("mailMapper.insertMailFrom", mf);				
+			}
 		}else {
 			return sqlSession.update("mailMapper.updateMailFrom", mf);			
 		}
@@ -102,6 +111,22 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSentList", userNo, rowBounds);
 	}
+
+	public int selectToMeListCount(SqlSessionTemplate sqlSession, int userNo) {
+
+		return sqlSession.selectOne("mailMapper.selectToMeListCount", userNo);
+	}
+
+	public ArrayList<MailFrom> selectToMeList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectToMeList", userNo, rowBounds);
+	}
+
+	
 
 	
 

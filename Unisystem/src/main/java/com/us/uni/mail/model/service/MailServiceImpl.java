@@ -46,8 +46,26 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
+	public int selectToMeListCount(int userNo) {
+		int result = mDao.selectToMeListCount(sqlSession, userNo);
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailFrom> selectToMeList(int userNo, PageInfo pi) {
+		ArrayList<MailFrom> list = mDao.selectToMeList(sqlSession, userNo, pi);
+		return list;
+	}
+	
+	@Override
 	public int saveDraft(MailFrom mf) {		
 		int result = mDao.saveDraft(sqlSession, mf);
+		return result;
+	}
+	
+	@Override
+	public int saveToMeDraft(MailFrom mf) {
+		int result = mDao.saveToMeDraft(sqlSession, mf);
 		return result;
 	}
 	
@@ -136,6 +154,10 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
 
 
 }

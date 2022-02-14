@@ -104,11 +104,37 @@ public class WebMailController {
 		return "webMail/readReceipt";
 	}
 	
+	/**
+	 * 내게 쓴 메일함 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.toMe")
 	public String selectToMeMails(){
 		return "webMail/toMe";
 	}
 	
+	/**
+	 * 내게 쓴 메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectToMeList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectToMeList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectToMeListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailFrom> list = mService.selectToMeList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
+	}
 	
 	@RequestMapping("webMail.spam")
 	public String selectSpamMails(){
@@ -152,6 +178,17 @@ public class WebMailController {
 		return "webMail/writeMailForm";		
 	}
 	
+
+	/**
+	 * 내게쓰기 작성폼 컨트롤러
+	 * @return
+	 */
+	@RequestMapping("webMail.writeToMeForm")
+	public String writeMailToMeForm(String mNo, Model m){
+		
+		return "webMail/writeMailToMeForm";		
+	}
+	
 	/**
 	 * 메일 전송 컨트롤러
 	 * @return
@@ -168,7 +205,6 @@ public class WebMailController {
 		
 		if(!mNo.equals("")) {
 			mf.setMailNo(Integer.parseInt(mNo));
-			System.out.println(mNo);
 		}
 		
 		
@@ -205,6 +241,26 @@ public class WebMailController {
 		}
 	}
 	
+	/**
+	 * 내게 쓰기 메일 임시저장 컨트롤러
+	 * @param mf
+	 * @param session
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("webMail.saveToMeDraft")
+	public String saveToMeDraft(MailFrom mf, HttpSession session, Model m) {
+		
+		int result = mService.saveToMeDraft(mf);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 임시저장 되었습니다.");
+			m.addAttribute("userNo", mf.getUserNo());
+			return "redirect:webMail.drafts";
+		}else {
+			return "";
+		}
+	}
 	
 	/**
 	 * 작성 중 메일 임시저장 컨트롤러
