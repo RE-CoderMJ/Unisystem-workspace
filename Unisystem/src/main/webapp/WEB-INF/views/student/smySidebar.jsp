@@ -153,6 +153,16 @@ a:hover {
 				<a href="">- 중요 메시지</a>
 				<a href="">- 스팸 보관함</a>
 			</p>
+			
+			<div class="side_title">
+				<b>게시판</b>
+			</div>
+			<p>
+				<a href="list.nbo">- 공지사항</a>
+				<a href="list.bo">- 커뮤니티</a>
+				<a href="list.vbo">- 대외활동</a>
+				<a href="list.cbo">- 동아리 </a>
+			</p>
 		</div>
 	</div>
 	

@@ -43,7 +43,7 @@ public class UsersController {
 	
 	// 로그인
 	@RequestMapping("login.me")
-	public ModelAndView loginUser(Users m,HttpSession session, ModelAndView mv){
+	public ModelAndView loginUser(Users m, HttpSession session, ModelAndView mv){
 	
 		Users loginUser = uService.loginUser(m);
 		//String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
@@ -56,18 +56,24 @@ public class UsersController {
 			
 			// 로그인 성공
 			session.setAttribute("loginUser", loginUser);
-			mv.addObject("alertMsg", "로그인 성공");
 			mv.setViewName("redirect:enview");
 			
 		} else {
+			
 			// 로그인 실패
 			mv.addObject("alertMsg", "로그인 실패");
 			mv.setViewName("common/errorPage"); 
 		}
-		
 		return mv;	
 	}
 	
+		
+	
+	/*관리자 로그인페이지*/
+	@GetMapping("adminEnview")
+	public ModelAndView adminLogin() {
+		return new ModelAndView ("admin/adminLogin");
+	}
 	
 	
 	// 로그아웃
@@ -131,8 +137,23 @@ public class UsersController {
 			return mv;
 		}
 			
-	
-		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 		
 
 	
