@@ -2,6 +2,7 @@
 	*:focus {
     	outline: none;
 	}
+	div{box-sizing:border-box;}
 	
 	/* 부모요소 */
 	#wrap{

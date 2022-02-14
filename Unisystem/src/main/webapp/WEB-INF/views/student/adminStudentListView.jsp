@@ -348,8 +348,6 @@
 							}, 
 						success:data => {
 							
-							
-							
 							// 검색 결과 리스트
 							$(data.searchList).each(function(index, value){
 	   						
@@ -380,9 +378,9 @@
 							for(let i=data.pi.startPage; i<=data.pi.endPage; i++){
 								
 								if(data.pi.currentPage == i){
-									page += "<li class='page-item active'><a class='page-link' onclick='pagination("+ i +");' >" + i + "</a></li>";
+									page += "<li class='page-item active'><a class='page-link' onclick='pagination(" + i + ");' >" + i + "</a></li>";
 								}else{
-									page += "<li class='page-item'><a class='page-link' onclick='pagination("+ i +");' >" + i + "</a></li>";
+									page += "<li class='page-item'><a class='page-link' onclick='pagination(" + i + ");' >" + i + "</a></li>";
 								}
 							}
 							
