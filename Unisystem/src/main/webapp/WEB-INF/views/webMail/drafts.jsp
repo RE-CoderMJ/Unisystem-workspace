@@ -88,22 +88,22 @@
  							   + "</tr>";
 					}
 				
-					$("#list").html(value);
+					$("#list > tbody").html(value);
 					
 					let piValue = "";
 					
 					if(result.pi.currentPage == 1){
 						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
 					}else{
-						piValue += "<li class='page-item'><a class='page-link' href='webMail.draft?cpage=" + result.pi.currentPage-1 + "'>&lt;</a></li>";
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
 					}
                     
 					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
 						
 						if(p == result.pi.currentPage){
-							piValue += "<li class='page-item disabled active'><a class='page-link' href='webMail.draft?capge=" + p + "'>" + p + "</a></li>";
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
 						}else{
-							piValue += "<li class='page-item disabled'><a class='page-link' href='webMail.draft?capge=" + p + "'>" + p + "</a></li>";
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
 						}
 						
 					}
@@ -111,7 +111,7 @@
 					if(result.pi.currentPage == result.pi.maxPage){
 						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
 					}else{
-						piValue += "<li class='page-item disabled'><a class='page-link' href='webMail.draft?cpage=" + result.pi.currentPage + 1 + "'>&gt;</a></li>"
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
 					}
 					
 					$(".pagination").html(piValue);

@@ -22,6 +22,7 @@ import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.mail.model.service.MailService;
 import com.us.uni.mail.model.vo.MailFrom;
+import com.us.uni.mail.model.vo.MailTo;
 
 /**
  * @author Minji Kim
@@ -33,14 +34,69 @@ public class WebMailController {
 	@Autowired
 	private MailService mService;
 
+	/**
+	 * 받은 메일함 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.inbox")
 	public String selectReceivedMails(){
 		return "webMail/inbox";
 	}
 	
+	/**
+	 * 받은 메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectInboxList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectInboxList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectInboxListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailTo> list = mService.selectInboxList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	/**
+	 * 보낸 메일함 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.sent")
-	public String selectSentMails(){
+	public String sentPage(){
+	
 		return "webMail/sent";
+	}
+	
+	/**
+	 * 보낸 메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectSentList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectSentList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectSentListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailFrom> list = mService.selectSentList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
 	}
 	
 	@RequestMapping("webMail.sent.readReceipt")
@@ -106,6 +162,7 @@ public class WebMailController {
 		MailFrom mf = new MailFrom();
 		mf.setUserNo(mfInfo.getUserNo());
 		mf.setAddress(mfInfo.getUserNo() + "@unisystem.com");
+		mf.setUserToNo(mfInfo.getUserToNo());
 		mf.setTitle(mfInfo.getTitle());
 		mf.setContent(mfInfo.getContent());
 		
@@ -117,8 +174,8 @@ public class WebMailController {
 		
 		String[] userToNoArr = mfInfo.getUserToNo().split(",");
 		
-		// 참조자가 있을 경우
 		String[] ccNoArr = {};
+		// 참조자가 있을 경우
 		if(!cc.equals("")) {
 			ccNoArr = cc.split(",");
 		}

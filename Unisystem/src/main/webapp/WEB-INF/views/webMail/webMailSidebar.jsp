@@ -167,10 +167,10 @@
             </div>
             <hr class="sidebar-lines">
             <div id="mail-boxes">
-                <div>받은메일함 <span>6</span></div>
+                <div onclick="location.href='webMail.inbox'">받은메일함 <span>6</span></div>
                 <div>내게쓴메일함</div>
-                <div>보낸메일함<button>수신확인</button></div>
-                <div onclick="location.href='webMail.drafts?userNo=${loginUser.userNo}'">임시보관함</div>
+                <div onclick="location.href='webMail.sent'">보낸메일함<button>수신확인</button></div>
+                <div onclick="location.href='webMail.drafts'">임시보관함</div>
                 <div>
                    	 스팸메일함
                     <span>10</span>

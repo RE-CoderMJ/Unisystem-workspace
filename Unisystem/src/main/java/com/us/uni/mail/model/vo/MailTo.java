@@ -15,10 +15,15 @@ public class MailTo {
 	private int mailFromNo;
 	private int userToNo;
 	private String address;
+	private int userFromNo;
+	private String userFromAdd;
 	private String important;
 	private String readDate;
+	private String sendDate;
 	private String status;
 	private String spamStatus;
 	private String ccStatus;
-	
+	private String title;
+	private String content;
+	private String fileName;
 }

@@ -13,6 +13,25 @@
 		<result column="to_me" property="toMe" />
 		<result column="save_status" property="saveStatus" />
 		<result column="to_user" property="userToNo" />
+		<result column="file_name" property="fileName" />
+	</resultMap>
+	
+	<resultMap type="MailTo" id="toResult">
+		<result column="mail_to_no" property="mailNo" />
+		<result column="mail_from_no" property="mailFromNo" />
+		<result column="to_user" property="userToNo" />
+		<result column="to_add" property="address" />
+		<result column="important" property="important" />
+		<result column="send_date" property="sendDate" />
+		<result column="read_date" property="readDate" />
+		<result column="status" property="status" />
+		<result column="spam_status" property="spam_status" />
+		<result column="cc_status" property="ccStatus" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="file_name" property="fileName" />
+		<result column="from_user" property="userFromNo" />
+		<result column="from_add" property="userFromAdd" />
 	</resultMap>
 	
 	<insert id="saveDraft">
@@ -79,7 +98,6 @@
 		     , content = #{content}
 		     , send_date = sysdate
 		     , save_status = 'N'
-		     , to_user = ' '
 		 where mail_from_no = #{mailNo}
 		   and from_user = #{userNo}
 	</update>
@@ -91,6 +109,7 @@
 		    mail_from_no
 		  , from_user
 		  , from_add
+		  , to_user
 		  , title
 		  , content
 		  )
@@ -99,6 +118,7 @@
 		    seq_mfno.nextval
 		  , #{userNo}
 		  , #{userNo} || '@unisystem.com'
+		  , #{userToNo}
 		  , #{title}
 		  , #{content}
 		  )
@@ -224,4 +244,65 @@
 		  )
 	</insert>
 	
+	<select id="selectSentListCount" resultType="_int">
+		select 
+		       count(*)
+		  from mail_from
+		 where from_user = #{userNo}
+		   and save_status = 'N'
+	</select>
+	
+	<select id="selectSentList" resultMap="fromResult">
+		select
+			   mail_from_no
+			 , to_user
+			 , title
+			 , content
+			 , send_date
+             , (select
+                       origin_name
+                  from attachment
+                 where ref_no = f.mail_from_no
+                   and ref_type = 'M'
+                   and rownum = 1) "file_name"
+	      from mail_from f
+		 where from_user = #{userNo}
+		   and save_status = 'N'
+		 order
+		    by mail_from_no desc
+	</select>
+	
+	<select id="selectInboxListCount" resultType="_int">
+		select
+			   count(*)
+		  from mail_to
+		 where to_user = #{userNo}
+		   and status = 'N'
+		   and spam_status = 'N'
+	</select>
+	
+	<select id="selectInboxList" resultMap="toResult">
+		select
+			   mail_to_no
+			 , from_add
+			 , t.important
+			 , title
+			 , from_add
+			 , send_date
+			 , read_date
+			 , cc_status
+			 , (select
+                       origin_name
+                  from attachment
+                 where ref_no = t.mail_from_no
+                   and ref_type = 'M'
+                   and rownum = 1) "file_name"
+		  from mail_to t
+		  join mail_from f on (t.mail_from_no = f.mail_from_no)
+		 where t.to_user = #{userNo}
+		   and status = 'N'
+		   and spam_status = 'N'
+		 order
+		 	by mail_to_no desc
+	</select>
 </mapper>

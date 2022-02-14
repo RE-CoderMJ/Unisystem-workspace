@@ -44,45 +44,13 @@
             <article>
                 <table class="table table-hover" id="list">
                     <tbody>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from unread">김땡땡 교수님</td>
-                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from unread">김땡땡 교수님</td>
-                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope-open"></i></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from">김땡땡 교수님</td>
-                            <td class="title">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                   </div>
 
@@ -93,7 +61,71 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
-		$(document).ready(function(){
+		$(function(){
+			selectSentList(1);
+		});
+		
+		function selectSentList(cPageNo){
+			$.ajax({
+				url:"webMail.selectSentList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					for(let i in result.list){
+						value += "<tr>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
+                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
+                    	if(result.list[i].fileName != null){
+                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
+                    	}else{
+	                    	value += "<td class='att'></td>";                    		
+                    	}
+                    	value += 	"<td class='from overflow'>" + result.list[i].userToNo + "</td>"
+ 							   +	"<td class='title'>" + result.list[i].title + "</td>"
+ 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
+ 							   + "</tr>";
+					}
+				
+					$("#list").html(value);
+					
+					let piValue = "";
+					
+					if(result.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectSentList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+					}
+                    
+					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+						
+						if(p == result.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectSentList(" + p + ")'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectSentList(" + p + ")'>" + p + "</a></li>";
+						}
+						
+					}
+	            	
+					if(result.pi.currentPage == result.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectSentList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+					}
+					
+					$(".pagination").html(piValue);
+					
+				},error:function(){
+					console.log("보낸메일함 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
+	
+	<script>
+		$(document).on('click', '#mail-boxes > div', function(){
 			let $len = $("section").height();
 			console.log($len);
 			$("#webMail-sidebar").css('height', $len + 22);

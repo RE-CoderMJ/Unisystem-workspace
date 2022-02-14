@@ -22,6 +22,30 @@ public class MailServiceImpl implements MailService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	public int selectInboxListCount(int userNo) {
+		int result = mDao.selectInboxListCount(sqlSession, userNo);
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailTo> selectInboxList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectInboxList(sqlSession, userNo, pi);
+		return list;
+	}
+	
+	@Override
+	public int selectSentListCount(int userNo) {
+		int result = mDao.selectSentListCount(sqlSession, userNo);
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailFrom> selectSentList(int userNo, PageInfo pi) {
+		ArrayList<MailFrom> list = mDao.selectSentList(sqlSession, userNo, pi);
+		return list;
+	}
+	
+	@Override
 	public int saveDraft(MailFrom mf) {		
 		int result = mDao.saveDraft(sqlSession, mf);
 		return result;
@@ -112,7 +136,6 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 
 
 }

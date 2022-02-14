@@ -156,6 +156,9 @@ section::after{display:block;content:"";clear:both;}
 .read-status{
     width: 1px;
 }
+.att{
+	width: 1px!important;
+}
 .from{
     width: 387px;
     text-align: center;
@@ -188,6 +191,7 @@ section::after{display:block;content:"";clear:both;}
     color:RGB(26,86,162)!important;
     border: none!important;
     border-radius: 200px!important;
+    cursor:pointer;
 }
 .page-item.active .page-link {
     color: #fff !important;

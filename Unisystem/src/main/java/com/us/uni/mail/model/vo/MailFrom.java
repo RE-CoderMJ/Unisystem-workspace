@@ -20,4 +20,5 @@ public class MailFrom {
 	private String sendDate;
 	private String toMe;
 	private String saveStatus;
+	private String fileName;
 }
