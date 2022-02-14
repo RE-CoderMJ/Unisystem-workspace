@@ -31,18 +31,19 @@
         padding-left: 30px;
         padding-right: 30px;
     }
-    #contentBox>div:first-child{
+    #contentBox_title{
+    	display:inline-block;
+        width: auto;
         background-color: rgb(15, 43, 80);
         color: white;
         padding: 10px 25px;
-        width: 115px;
     }
-    #contentBox>div:nth-child(2){
+    #underLine{
         width: 1230px;
         border-bottom: 2px solid lightgray;
         margin-bottom: 20px;
     }
-    #contentBox>div:nth-child(3){
+    #stu_info_outer{
         border: 1px solid lightgray;
         height: 130px;
         padding-top: 10px;
@@ -57,7 +58,7 @@
     #stu_info tr:first-child{border-top: 2px solid lightgray; border-bottom: 1px solid lightgray;}
     #stu_info tr:last-child{border-top: 1px solid lightgray; border-bottom: 2px solid lightgray;}
 
-    #contentBox>div:nth-child(4){
+    #table_outer{
         border: 1px solid lightgray;
         height: 490px;
         margin-top: 20px;
@@ -107,28 +108,22 @@
             <article id="content_header"><span>성적/출석관리 > </span>온라인 출석부</article>
 
             <div id="contentBox">
+	            <form id="postForm" action="" method="post">
+	            	   <input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
+	            </form>
                 
-                <div>출석현황</div>
-                <div></div>
-
-                <div>
+                <div id="contentBox_title">[${ classInfo.classKorName }] 출석현황</div>
+                <div id="underLine"></div>
+                
+                <div id="stu_info_outer">
                     <table id="stu_info">
-                        <tr>
-                            <th>학번</th>
-                            <td>20131111</td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td>홍길동</td>
-                        </tr>
-                        <tr>
-                            <th>휴대전화</th>
-                            <td>01012345678</td>
-                        </tr>
+                    	<tbody>
+                    	
+                    	</tbody>
                     </table>
                 </div>
-
-                <div>
+				
+                <div id="table_outer">
                     <div style="font-size: 15px;">*출석 요건 : 기간 내 출석 인정 요구 시간 이상을 학습할 경우</div>
                     <div style="margin-bottom: 10px; font-size: 15px;">출석-[○], 지각=[▲], 결석-[X]</div>
                     <table id="attendance_table">
@@ -221,5 +216,48 @@
 
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
+    
+	<script>
+			
+		$(function(){
+			// 페이지상에 모든 요소들이 다 만들어지고 로그인한 학생 정보를 조회해오는 함수 호출
+			selectLoginStuInfo();
+		})
+		
+			// 로그인한 학생 정보를 가져오는 ajax
+			function selectLoginStuInfo(){
+			
+				var userNo = $("#userNo").val();
+		
+				$.ajax({
+					url:"LoginStuInfo.stu",
+					data:{userNo:userNo},
+					success:function(user){
+						
+						let value = "";
+
+                           	value += "<tr>"
+                           	 +			"<th>학번</th>"
+                           	 +			"<td>" + user.userNo + "</td>"
+                           	 +		 "</tr>"
+                           	 +		 "<tr>"
+                           	 +			"<th>이름</th>"
+                           	 +			"<td>" + user.korName + "</td>"
+                           	 +		 "</tr>"
+                           	 +		 "<tr>"
+                           	 +			"<th>휴대전화</th>"
+                           	 +			"<td>" + user.phone + "</td>"
+                           	 +		 "</tr>";
+                           			                            		
+           			$("#stu_info tbody").html(value);
+
+					}, error:function(){
+						
+					}
+					
+				})
+		}
+		
+	</script>
 </body>
 </html>

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.us.uni.lecture.model.dao.HomeworkDao;
 import com.us.uni.lecture.model.dao.LectureDao;
 import com.us.uni.lecture.model.vo.Lecture;
+import com.us.uni.users.model.vo.Users;
 
 @Service
 public class LectureServiceImpl implements LectureService{
@@ -47,8 +49,19 @@ public class LectureServiceImpl implements LectureService{
 		return lDao.selectLectureMainPage(sqlSession, lno);
 	}
 
-	// 학생 - 마이페이지 - 내가 수강중인 강의 관련 
-	// 강의 메인페이지
+	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
+	@Override
+	public Users selectLoginStuInfo(int userNo) {
+		return lDao.selectLoginStuInfo(sqlSession, userNo);
+	}
+	
+	// 7. 학생 - 강의홈 - 온라인 출석부 - 진행한 강좌 총 개수 조회
+	@Override
+	public int selectAttListCount(Lecture l) {
+		return lDao.selectAttListCount(sqlSession, l);
+	}
+
+
 	
 
 	

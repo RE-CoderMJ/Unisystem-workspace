@@ -1,9 +1,16 @@
 package com.us.uni.lecture.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +22,7 @@ import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.HomeworkService;
 import com.us.uni.lecture.model.service.LectureService;
 import com.us.uni.lecture.model.vo.Lecture;
+import com.us.uni.users.model.vo.Users;
 
 @Controller
 public class LectureController {
@@ -30,7 +38,6 @@ public class LectureController {
 	public ModelAndView selectStudentClassList(int userNo, ModelAndView mv) {
 		
 		ArrayList<Lecture> list = lService.selectStudentClassList(userNo);
-
 		mv.addObject("list", list).setViewName("student/studentClassList");
 		
 		return mv;
@@ -61,9 +68,10 @@ public class LectureController {
 	
 	/* 학생 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMain.stu")
-	public ModelAndView selectLectureMainPage(int lno, ModelAndView mv) {
+	public ModelAndView selectLectureMainPage(int lno, HttpSession session, ModelAndView mv) {
 		Lecture l = lService.selectLectureMainPage(lno);
-		System.out.println(l);
+		session.setAttribute("classInfo", l);
+		
 		mv.addObject("lec", l).setViewName("lecture/lectureStuMainPage");
 		return mv;
 	}
@@ -75,6 +83,50 @@ public class LectureController {
 		
 		ArrayList<Lecture> list = lService.selectStudentClassList(userNo);
 		return new Gson().toJson(list);
+	}
+	
+	/* 학생 - 온라인출석부에서 학생 정보를 가져오는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="LoginStuInfo.stu", produces="application/json; charset=UTF-8")
+	public String AjaxSelectLoginStuInfo(int userNo) {
+		
+		Users u = lService.selectLoginStuInfo(userNo);
+		return new Gson().toJson(u);
+	}
+	
+	/* 학생 - 온라인출석부를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAtt.stu")
+	public String selectLectureAttList(int userNo, int classCode, ModelAndView mv) {
+
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+		
+		int listCount = lService.selectAttListCount(l); // 진행한 강좌 총 개수
+		System.out.println(listCount);
+		
+		return "lecture/lectureAttendanceStu";
+	}
+	
+	/*
+	@RequestMapping("test.stu")
+	public String selctTest(int userNo) {
+		
+		return "lecture/lectureAttendanceStu";
+	}
+	*/
+	
+	
+	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAttControl.stu")
+	public String selectLectureAttControl() {
+		return "lecture/lectureAttendanceControl";
+	}
+	
+	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureAttDetailControl.stu")
+	public String selectLectureAttDetailControl() {
+		return "lecture/lectureAttendanceDetailControl";
 	}
 	
 	
@@ -125,24 +177,6 @@ public class LectureController {
 	@RequestMapping("lecturePlan.stu")
 	public String selectLecturePlan() {
 		return "lecture/lecturePlan";
-	}
-	
-	/* 학생 - 온라인출석부를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureAtt.stu")
-	public String selectLectureAtt() {
-		return "lecture/lectureAttendance";
-	}
-	
-	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureAttControl.stu")
-	public String selectLectureAttControl() {
-		return "lecture/lectureAttendanceControl";
-	}
-	
-	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureAttDetailControl.stu")
-	public String selectLectureAttDetailControl() {
-		return "lecture/lectureAttendanceDetailControl";
 	}
 	
 	/* 수업자료실을 띄워주는 컨트롤러 */

@@ -3,9 +3,11 @@ package com.us.uni.lecture.model.dao;
 import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import com.us.uni.lecture.model.vo.Lecture;
+import com.us.uni.users.model.vo.Users;
 
 @Repository
 public class LectureDao {
@@ -33,6 +35,13 @@ public class LectureDao {
 		return sqlSession.selectOne("lectureMapper.selectLectureMainPage", lno);
 	}
 	
+	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
+	public Users selectLoginStuInfo(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("lectureMapper.selectLoginStuInfo", userNo);
+	}
 	
-
+	// 7. 학생 - 강의홈 - 온라인 출석부 - 진행한 강좌 총 개수 조회
+	public int selectAttListCount(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.selectOne("lectureMapper.selectAttListCount", l);
+	}
 }

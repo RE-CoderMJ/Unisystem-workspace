@@ -3,6 +3,7 @@ package com.us.uni.lecture.model.service;
 import java.util.ArrayList;
 
 import com.us.uni.lecture.model.vo.Lecture;
+import com.us.uni.users.model.vo.Users;
 
 public interface LectureService {
 	
@@ -21,6 +22,10 @@ public interface LectureService {
 	
 	// 5. 학생 - 강의홈 - 내가수강중인강의에서 클릭한 강의 정보 조회(강의명, 교수명)
 	Lecture selectLectureMainPage(int lno);
-
-
+	
+	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
+	Users selectLoginStuInfo(int userNo);
+	
+	// 7. 학생 - 강의홈 - 온라인 출석부 - 진행한 강좌 총 개수 조회
+	int selectAttListCount(Lecture l);
 }

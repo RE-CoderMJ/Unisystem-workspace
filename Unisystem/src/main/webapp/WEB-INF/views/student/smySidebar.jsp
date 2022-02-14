@@ -96,7 +96,7 @@ a:hover {
 			</div>
 			<p>
 				<a href="">- 수강 시간표</a>
-				<a href="studentClassList.me?userNo=${loginUser.userNo}">- 내가 수강중인 강의</a>
+				<a onclick="urlSubmit(1);">- 내가 수강중인 강의</a>
 			</p>
 
 			<div class="side_title">
@@ -156,6 +156,10 @@ a:hover {
 		</div>
 	</div>
 	
+	<form id="myForm" action="" method="post">
+		<input type="hidden" name="userNo" value="${ loginUser.userNo }" />
+	</form>
+	
 	<script>
 		$(function(){
 			$(".side_title").click(function(){
@@ -172,6 +176,13 @@ a:hover {
 				}
 			})
 		})
+
+		function urlSubmit(num){
+    	   if(num == 1){ // 수업 - 내가수강중인 강의 클릭 시  
+    		   $("#myForm").attr("action", "studentClassList.me").submit();
+    	   } 
+    	   
+       }
 	</script>
 </body>
 </html>

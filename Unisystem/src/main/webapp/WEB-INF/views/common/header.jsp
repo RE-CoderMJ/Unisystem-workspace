@@ -149,7 +149,7 @@
 	            <nav id="header-down-right">
 
 	                <a href="webMail.inbox">웹메일</a>
-	                <a href="studentClassList.me?userNo=${loginUser.userNo}">마이페이지</a>
+	                <a href="list.st">마이페이지</a>
 	                <a href="">공지사항</a>
 	                <a href="list.bo">커뮤니티</a>
 	                <div id="search-area">
@@ -159,6 +159,8 @@
 	            </nav>
             </div>
         </div>
+        
     </header>
+    
 </body>
 </html>

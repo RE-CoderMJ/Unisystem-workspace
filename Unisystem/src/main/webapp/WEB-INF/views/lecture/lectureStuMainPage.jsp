@@ -41,7 +41,7 @@
         height: 150px;
     }
     #classHeader_info_right h6{margin-bottom: 10px;}
-
+	#className{font-size:22px; font-weight:900;}
     /* 흰색 내용부분 css */
     #wrap{
         height: 1000px;
@@ -203,14 +203,13 @@
             
                <form id="postForm" action="" method="post">
                	   <input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
-                   <input type="hidden" name="lno" value="${ b.boardNo }" />
                </form>
 
                 <div id="classHeader_info_left">
                     <div id="className">${ lec.classKorName }</div>
                     <div id="classHeader_info_left_pro">
                         <div><i class="fas fa-user-circle"></i></div>
-                        <div id="classHeader_info_left_pro_name">${ lec.korName } 교수</div>
+                        <div id="classHeader_info_left_pro_name">${ classInfo.korName } 교수</div>
                     </div>
                 </div>
 
@@ -271,7 +270,8 @@
             			}
             			
             		})
-            	}	    	
+            	}	 
+	    	
 	    	
         </script>
         
