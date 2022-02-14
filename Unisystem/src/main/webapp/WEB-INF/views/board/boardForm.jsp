@@ -199,7 +199,7 @@ margin-top: 10px;
 
 		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea name="boardContent"></textarea>
+			<textarea name="boardContent" required></textarea>
 		</div>
 		
 		<div class="upload-area">

@@ -175,14 +175,15 @@ margin-top: 10px;
 		
 		<div class="bo_content">
 			<!-- title -->
-			<div class="page_title">대외활동</div>
+			<div class="page_title">공지사항</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
 				
+				<c:if test="${loginUser.userDiv == 3 }">
 				<div class="updel">
 				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
-				 
+				</c:if>
 				
 				<div class="grayWrap">
 					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
@@ -204,7 +205,17 @@ margin-top: 10px;
 			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
 		</div>
 		
-		  <form id="postForm" action="" method="post">
+		<div class="upload-area">
+							<c:choose>
+                    		<c:when test="${ empty  at.originName }">
+	                    		첨부파일이 없습니다.
+	                    	</c:when>
+	                    	<c:otherwise>
+	                        	<a href="${at.path}${at.changeName}" download="${at.originName}">${at.originName}</a>
+                        	</c:otherwise>
+                       		</c:choose>
+                       		
+	            <form id="postForm" action="" method="post">
 	            	<input type="hidden" name="bno" value="${ b.boardNo }">
 	            	<input type="hidden" name="filePath" value="${at.path}${at.changeName}">
 	            </form>
@@ -212,14 +223,14 @@ margin-top: 10px;
 	            <script>
 	            	function postFormSubmit(num){
 	            		if(num == 1){ // 수정하기 클릭시
-	            			$("#postForm").attr("action", "updateForm.vbo").submit();
+	            			$("#postForm").attr("action", "updateForm.nbo").submit();
 	            		}else{ // 삭제하기 클릭시
-	            			$("#postForm").attr("action", "delete.vbo").submit();
+	            			$("#postForm").attr("action", "delete.nbo").submit();
 	            		}
 	            	}
 	            </script>
 	            
-				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
+				<button onclick="list.nbo" class="b_write">목록으로</button>
 		</div>
 			</div>
 		</div>

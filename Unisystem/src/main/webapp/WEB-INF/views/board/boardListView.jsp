@@ -173,12 +173,10 @@ li {
 				총 <b style="color: rgb(231, 76, 60);">${ pi.listCount }</b> 건
 			</div>
 
-
 			<br>
 
 			<!--검색 영역 -->
 			<div class="search_wrap">
-			
 			
 			<form id="searchForm" action="search.bo" method="get">
 					<div class="select">

@@ -159,17 +159,17 @@
 			<!-- title -->
 			<div class="page_title">공지사항 글수정</div>
 			 
-			<form id="boardInsert" action="" method="post">
+			<form id="boardInsert" action="update.bo" method="post" enctype="multipart/form-data">
 			
 				<!--제목,날짜,조회수 등록영역-->
 				<div class="grayWrap">
-					<input type="text" placeholder="제목을 입력하세요"/><br>
+					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
 
 						<div class="ctg-area">
-							<span>날짜</span> 2021.01.21 
+							<span>날짜</span> ${ b.createDate }
 							<span>작성자</span> 관리자
 							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 1024</div>
+							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount }</div>
 						</div>
 
 		</div>
@@ -177,15 +177,37 @@
 
 		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea></textarea>
+			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
 		</div>
 
 		<!-- 첨부파일 영역 -->
 		<input id="bfile" type="file"><br>
 		<input class="bcheckbox" type="checkbox"> 공지로 등록
+		<input type="hidden" name="noticeYN" id="YN"/>
+		<script>
+		 $("#bcheckbox").change(
+				  function() {
+
+				   // 체크박스 값에 따라 히든 값 변경
+
+				   if ( $("#bcheckbox").is(":checked") ){
+
+				       $("#YN").val('Y');
+
+				   } else {
+
+				       $("#YN").val('N');
+
+				   }
+
+				  }
+
+				 );
+		</script>
+		
 	</form>
 		<!--관리자에게만 보여지도록 조건처리-->
-		<button class="b_write">등록하기</button>
+		<button type="submit" class="b_write">등록하기</button>
 	</div>
 
 	<br clear="both">

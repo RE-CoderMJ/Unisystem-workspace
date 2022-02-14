@@ -229,7 +229,7 @@ margin-top: 10px;
 	            	}
 	            </script>
 	            
-				<button onclick="list.bo" class="b_write">목록으로</button>
+				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
 		</div>
 			</div>
 		</div>

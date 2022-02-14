@@ -150,6 +150,7 @@
 		    </choose>
 		   	 
 	</select>
+	
 	<!-- 게시글 등록 -->
 	<insert id="insertBoard">
 		insert
@@ -220,11 +221,13 @@
 	
 	<select id="selectAttachBoard" resultMap="AttachmentResult">
 		select
-				ATTACH_NO
+				attach_no
 				,REF_TYPE
+				,ref_no
 				,ORIGIN_NAME
 				,CHANGE_NAME
 				,PATH
+				,status
 		  from attachment
 		 where ref_type = 'B'
 		 and ref_no = #{boardNo}  
@@ -244,7 +247,361 @@
 		 where ref_no = #{boardNo}
 	</update>
 	
+	<update id="updateBoard">
+		update 
+			board
+		set 
+		board_title = #{boardTitle}
+		,board_content = #{boardContent}
+		where board_no = #{boardNo}
+	</update>
 	
+	<update id="updateAttachBoard" parameterType="hashMap">
+		update 
+			attachment
+		set origin_name = #{originName}
+			,change_name = #{changeName}
+			,path = #{path}
+			where ref_no = #{boardNo}
+	</update>
+	
+	<!-- 첨부파일 등록 -->
+	<insert id="newUpdateAttachBoard">
+		insert
+		  into ATTACHMENT
+		  (
+		 	ATTACH_NO
+			,REF_TYPE
+			,REF_NO
+			,ORIGIN_NAME
+			,CHANGE_NAME
+			,path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'B'
+		  , #{boardNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
+	<!-- 대외활동 동아리 게시판 -->
+	<select id="volselectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category = 2
+	</select>
+	
+	<select id="volselectList" parameterType="Board" resultMap="boardResult">
+		select
+             board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b 
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+	</select>
+	
+	<select id="cirselectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category = 3
+	</select>
+	
+	<select id="cirselectList" parameterType="Board" resultMap="boardResult">
+		select
+             board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b 
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+	</select>
+	
+	
+	<!-- 공지사항 게시판  -->
+	<select id="nselectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category = 1
+	</select>
+	
+	<select id="nselectList" parameterType="Board" resultMap="boardResult">
+		select
+             board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		     , notice_yn
+		  from board b 
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 1
+		 ORDER BY DECODE(notice_yn, 'Y', 1), create_date DESC
+	</select>
+	
+	 <select id="nselectSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 1
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+		 
+		  
+	</select>
+	
+	<select id="nselectSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 1
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
+
+
+	<!-- 게시글 등록 -->
+	<insert id="ninsertBoard">
+		insert
+		  into board
+		  (
+		  	BOARD_NO
+			,USER_NO
+			,BOARD_TITLE
+			,BOARD_CONTENT
+			,BO_CATEGORY
+			,notice_yn
+		  )
+		  values
+		  (
+		    seq_bno.nextval
+		  , #{userNo}
+		  , #{boardTitle}
+		  , #{boardContent}
+		  , 1
+		  ,#{noticeYN}
+		  )
+	</insert>
+
+<!-- 대외활동 -->
+
+<select id="vselectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category =2
+	</select>
+	
+	<select id="vselectList" parameterType="Board" resultMap="boardResult">
+		select
+             		board_no
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b 
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category =2
+	</select>
+	
+	<!-- community 검색 기능 -->
+	 <select id="vselectSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category =2
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+	</select>
+	
+	<select id="vselectSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 게시글 등록 -->
+	<insert id="vinsertBoard">
+		insert
+		  into board
+		  (
+		  	BOARD_NO
+			,USER_NO
+			,BOARD_TITLE
+			,BOARD_CONTENT
+			,BO_CATEGORY
+		  )
+		  values
+		  (
+		    seq_bno.nextval
+		  , #{userNo}
+		  , #{boardTitle}
+		  , #{boardContent}
+		  , 2
+		  )
+	</insert>
+
+<!-- 동아리 -->
+<select id="cselectListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where delete_yn = 'N'
+		 and bo_category =3
+	</select>
+	
+	<select id="cselectList" parameterType="Board" resultMap="boardResult">
+		select
+             		board_no
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b 
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+	</select>
+	
+	 <select id="cselectSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category =3
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+	</select>
+	
+	<select id="cselectSearchList" parameterType="Board" resultMap="boardResult">
+				select 
+		      board_no
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 게시글 등록 -->
+	<insert id="cinsertBoard">
+		insert
+		  into board
+		  (
+		  	BOARD_NO
+			,USER_NO
+			,BOARD_TITLE
+			,BOARD_CONTENT
+			,BO_CATEGORY
+		  )
+		  values
+		  (
+		    seq_bno.nextval
+		  , #{userNo}
+		  , #{boardTitle}
+		  , #{boardContent}
+		  , 3
+		  )
+	</insert>
 	
 	
 	

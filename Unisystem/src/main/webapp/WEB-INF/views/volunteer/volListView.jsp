@@ -149,6 +149,21 @@ li {
 	text-decoration: none;
 	cursor: pointer;
 }
+
+/*페이징바*/
+.container{
+    margin-top: 50px;
+}
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
+}
+.page-item.active .page-link {
+    color: #fff !important;
+    background: black!important;
+}
+ #boardList>tbody>tr:hover{cursor:pointer;}
 </style>
 <body>
 
@@ -162,9 +177,7 @@ li {
 	
 	
 	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
-	<div class="sidewrap">
 	<jsp:include page="../student/smySidebar.jsp" />
-	</div>
 	
 	<div class="bo_content">
 		<!-- title -->
@@ -173,7 +186,7 @@ li {
 		<div class="page_title">대외활동</div>
 
 		<div class="head_count">
-			총 <b style="color: rgb(231, 76, 60);">XXX</b> 건
+			총 <b style="color: rgb(231, 76, 60);">${ pi.listCount }</b> 건
 		</div>
 		
 		
@@ -181,21 +194,30 @@ li {
 
 		<!--검색 영역 -->
 		<div class="search_wrap">
-			<form id="searchForm" action="" method="get">
-				<div class="select">
-					<select name="condition" class="custom-select">
-						<option class=" " value="">검색</option>
-						<option class=" " value="">제목</option>
-						<option class=" " value="">내용</option>
-					</select>
-				</div>
+			<form id="searchForm" action="search.bo" method="get">
+					<div class="select">
+						<input type="hidden" name="cpage" value="1"/>
+						<select name="condition" class="custom-select">
+							<option value="writer">작성자</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+					</div>
 
-				<div id="bo_search">
-					<input type="text" placeholder=" ">
-				</div>
-				<button class="btn" type="submit">검색</button>
-			</form>
+					<div id="bo_search">
+						<input type="text" name="keyword" value="${ keyword }">
+					</div>
+					<button class="btn" type="submit">검색</button>
+				</form>
 		</div>
+		
+		<c:if test="${ not empty condition }">
+			<script>
+				$(function(){
+					$("#searchForm option[value=${condition}]").attr("selected", true);
+				})
+			</script>
+		</c:if>
  
 		<br clear="both"> <br>
 		<br>
@@ -203,9 +225,9 @@ li {
 
 
 		<!-- list 영역-->
-		<table class="table" style="width: 900px; text-align: center;">
+		<table class="table" id="boardList" style="width: 900px; text-align: center;">
 
-
+		<thead>
 			<tr>
 				<th width="100px">번호</th>
 				<th>제목</th>
@@ -213,74 +235,70 @@ li {
 				<th>작성일</th>
 				<th>조회</th>
 			</tr>
-
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-			
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-			
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-			
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-			
-			<tr>
-				<td>1</td>
-				<td>제목입니다</td>
-				<td>김민수</td>
-				<td>2019.03.23</td>
-				<td>1004</td>
-			</tr>
-
+			</thead>
+		<tbody>
+				<c:forEach var="b" items="${ list }">
+						<tr>
+							<td class="bno">${ b.boardNo }</td>
+							<td>${ b.boardTitle }</td>
+							<td>${ b.boardWriter }</td>
+							<td>${ b.createDate }</td>
+							<td>${ b.boCount }</td>
+						</tr>				
+				 </c:forEach>
+				 </tbody>
 		</table>
  
-
-		<!-- paging bar 영역-->
-		<div id="pagingArea">
-
-			<ul class="pagination">
-				<li class="page-item ltgt"><a href="">&lt;</a></li>
-				<li class="page-item"><a href="">1</a></li>
-				<li class="page-item"><a href="">2</a></li>
-				<li class="page-item"><a href="">3</a></li>
-				<li class="page-item"><a href="">4</a></li>
-				<li class="page-item"><a href="">5</a></li>
-				<li class="page-item ltgt"><a href="">&gt;</a></li>
-			</ul>
-		</div>
+ 	
+            
+            
+			<!-- paging bar 영역-->
+			<div class="container">
+                    <ul class="pagination justify-content-center">
+                    <c:choose>
+						<c:when test="${ pi.currentPage eq 1 }">
+                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                      </c:when>
+						<c:otherwise>
+						<li class="page-item"><a
+								href="list.vbo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<li class="page-item"><a class="page-link" href="list.vbo?cpage=${ p }">${ p }</a></li>
+					</c:forEach>
+					 <c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+							<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a
+								href="list.vbo?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+						</c:otherwise>
+					</c:choose>
+                    </ul>
+                 </div>
+                 
+                 
+                 <!--로그인한 회원에게만 보여지도록 조건처리-->
+			<c:if test="${ not empty loginUser }">
+				<a class="b_write btn-sm btn-secondary" href="enrollForm.vbo">글쓰기</a>
+			</c:if>
+			
+			
+			<script>
+            	$(function(){
+            		$("#boardList>tbody>tr").click(function(){
+            			location.href = 'detail.vbo?bno=' + $(this).children(".bno").text();
+            		});
+            	})
+            </script>
+            
+            </div>
+	<!-- side바 div영역 끝 -->
+	<br clear="both">
 		
-		</div>
-		<!-- side바 div영역 끝 -->
-		
-		<br clear="both">
-		
-		<script>
-
-    </script>
-
-		<!-- footer.jsp-->
+	<!-- footer.jsp-->
 	<jsp:include page="../common/footer.jsp" />
 	
 	</div>

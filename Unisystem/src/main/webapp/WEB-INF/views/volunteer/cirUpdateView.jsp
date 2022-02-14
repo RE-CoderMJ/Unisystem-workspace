@@ -175,7 +175,7 @@ margin-top: 10px;
 		
 		<div class="bo_content">
 			<!-- title -->
-			<div class="page_title">대외활동</div>
+			<div class="page_title">동아리 수정</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
 				
 				<div class="updel">
@@ -183,9 +183,11 @@ margin-top: 10px;
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
 				 
-				
+				 <form id="updateForm" method="post" action="update.cbo" enctype="multipart/form-data">
+                 <input type="hidden" name="boardNo" value="${ b.boardNo }">
+                
 				<div class="grayWrap">
-					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
+					<input type="text" name="boardTitle" value="${ b.boardTitle }"/><br>
 					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
 					
 						<div class="ctg-area">
@@ -201,25 +203,23 @@ margin-top: 10px;
 	
 
 		<div class="board-content">
-			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
+			<textarea name="boardContent">${ b.boardContent }</textarea>
 		</div>
 		
-		  <form id="postForm" action="" method="post">
-	            	<input type="hidden" name="bno" value="${ b.boardNo }">
-	            	<input type="hidden" name="filePath" value="${at.path}${at.changeName}">
-	            </form>
+		<div class="upload-area">
+							<input type="file" id="upfile" class="form-control-file border" name="reupfile" style="width:300px;">
+							
+                    		
+	                    	 <c:if test="${ not empty at.originName }">
+	                    		현재파일 :
+	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>
+	                        	<input type="hidden" name="originName" value="${ at.originName }">
+                            	<input type="hidden" name="changeName" value="${ at.changeName }">
+                        	</c:if>
+                       		
 	            
-	            <script>
-	            	function postFormSubmit(num){
-	            		if(num == 1){ // 수정하기 클릭시
-	            			$("#postForm").attr("action", "updateForm.vbo").submit();
-	            		}else{ // 삭제하기 클릭시
-	            			$("#postForm").attr("action", "delete.vbo").submit();
-	            		}
-	            	}
-	            </script>
-	            
-				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
+				<button type="submit" class="b_write">수정하기</button>
+				</form>
 		</div>
 			</div>
 		</div>

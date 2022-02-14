@@ -134,7 +134,7 @@
 
         <div id="header-up">
         	<div id="header-up-line">
-	            <div style="float: left;"><a href="" id="homepage">HOMEPAGE</a></div>
+	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
 	                <span>${loginUser.korName}(학생)님 환영합니다.</span>
@@ -150,7 +150,7 @@
 
 	                <a href="webMail.inbox">웹메일</a>
 	                <a href="studentClassList.me?userNo=${loginUser.userNo}">마이페이지</a>
-	                <a href="">공지사항</a>
+	                <a href="list.nbo">공지사항</a>
 	                <a href="list.bo">커뮤니티</a>
 	                <div id="search-area">
 	                    <input type="text" name="search" id="search">

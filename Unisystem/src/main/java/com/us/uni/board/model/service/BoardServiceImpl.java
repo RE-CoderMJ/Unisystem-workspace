@@ -111,4 +111,116 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.deleteAttachBoard(sqlSession, bno);
 	}
 
+	@Override
+	public int updateBoard(Board b) {
+		
+		return bDao.updateBoard(sqlSession, b);
+	}
+	
+	@Override
+	public int updateAttachBoard(HashMap<String,Object> map) {
+		
+		return bDao.updateAttachBoard(sqlSession, map);
+	}
+
+	@Override
+	public int newUpdateAttachBoard(HashMap<String, Object> map) {
+		
+		return bDao.newUpdateAttachBoard(sqlSession, map);
+	}
+
+	
+	@Override
+	public int volselectListCount() {
+		
+		return bDao.volselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> volselectList(PageInfo pi) {
+		
+		return bDao.volselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int cirselectListCount() {
+		
+		return bDao.cirselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> cirselectList(PageInfo pi) {
+		
+		return bDao.cirselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int nselectListCount() {
+		
+		return bDao.nselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> nselectList(PageInfo pi) {
+		
+		return bDao.nselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int nselectSearchCount(HashMap<String, String> map) {
+		
+		return bDao.nselectSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> nselectSearchList(HashMap<String, String> map, PageInfo pi) {
+		
+		ArrayList<Board> list = bDao.nselectSearchList(sqlSession, map, pi);
+		
+		return list;
+	}
+
+	@Override
+	public int ninsertBoard(Board b, Attachment at) {
+		
+		int result1 = bDao.ninsertBoard(sqlSession, b);
+		int result2 = bDao.insertAttachBoard(sqlSession, at);
+
+		return result1*result2;
+	}
+
+	@Override
+	public Board nselectBoard(int bno) {
+		
+		return bDao.nselectBoard(sqlSession, bno);
+	}
+
+	@Override
+	public int vinsertBoard(Board b) {
+		
+		int result1 = bDao.vinsertBoard(sqlSession, b);
+		return result1;
+	}
+
+	@Override
+	public Board vselectBoard(int bno) {
+		
+		return bDao.vselectBoard(sqlSession, bno);
+
+	}
+
+	@Override
+	public int cinsertBoard(Board b) {
+		
+		int result1 = bDao.cinsertBoard(sqlSession, b);
+
+		return result1;
+	}
+
+	@Override
+	public Board cselectBoard(int bno) {
+		
+		return bDao.cselectBoard(sqlSession, bno);
+	}
+
 }
