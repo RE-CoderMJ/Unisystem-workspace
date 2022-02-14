@@ -101,6 +101,11 @@ public class BoardDao {
 			return sqlSession.update("boardMapper.updateBoard", b);
 		}
 		 
+		public int nupdateBoard(SqlSessionTemplate sqlSession, Board b) {
+			
+			return sqlSession.update("boardMapper.nupdateBoard", b);
+		}
+
 		public int updateAttachBoard(SqlSessionTemplate sqlSession, HashMap<String,Object> map){
 			System.out.println(map);
 			

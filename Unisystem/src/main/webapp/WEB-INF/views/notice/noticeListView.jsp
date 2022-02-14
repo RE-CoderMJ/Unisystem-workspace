@@ -291,7 +291,7 @@ li {
 			<script>
             	$(function(){
             		$("#boardList>tbody>tr").click(function(){
-            			location.href = 'detail.bo?bno=' + $(this).children(".bno").text();
+            			location.href = 'detail.nbo?bno=' + $(this).children(".bno").text();
             		});
             	})
             </script>

@@ -214,6 +214,7 @@
 		     , u.user_no as "board_writer"
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , board_content
+		     ,notice_yn
 		  from board b
 		  join users u on (u.user_no = b.user_no)
 		 where board_no = #{boardNo}  
@@ -264,6 +265,17 @@
 			,path = #{path}
 			where ref_no = #{boardNo}
 	</update>
+	
+	<update id="nupdateBoard">
+		update 
+			board
+		set 
+		board_title = #{boardTitle}
+		,board_content = #{boardContent}
+		,notice_yn = #{noticeYN}
+		where board_no = #{boardNo}
+	</update>
+	
 	
 	<!-- 첨부파일 등록 -->
 	<insert id="newUpdateAttachBoard">

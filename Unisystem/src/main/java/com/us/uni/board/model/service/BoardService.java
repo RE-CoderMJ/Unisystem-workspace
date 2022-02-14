@@ -56,6 +56,7 @@ public interface BoardService {
 		ArrayList<Board> nselectSearchList(HashMap<String, String> map, PageInfo pi);
 		int ninsertBoard(Board b, Attachment at);
 		Board nselectBoard(int bno);
+		int nupdateBoard(Board b);
 		
 		//대외활동
 		int vinsertBoard(Board b);

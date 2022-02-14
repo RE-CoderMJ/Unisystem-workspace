@@ -415,8 +415,37 @@ public class BoardController {
 					}
 					
 				}
+				
+				@RequestMapping("detail.nbo")
+				public ModelAndView nselectBoard(int bno, ModelAndView mv) {
+					// bno에는 상세조회하고자하는 해당 게시글 번호 담겨있음
+					
+					Attachment at = new Attachment();
+					// 해당 게시글 조회수 증가용 서비스 호출 결과 받기 (update하고 옴)
+					int result = bService.increaseCount(bno);	
+					if(result > 0) {
+					
+						Board b = bService.selectBoard(bno);
+						
+						if(at != null) {
+							at = bService.selectAttachBoard(bno);
+						}
+						
+							mv.addObject("b", b)
+							  .addObject("at",at)
+							  .setViewName("notice/noticeDetailView");
+							
+						//System.out.println("상세ctr:"+ at);
+						
+					}else {
+					
+						mv.addObject("errorMsg", "상세조회 실패").setViewName("notice/noticeListView");
+					}
+					
+					return mv;
+				}
 	
-		/*대외활동*/
+				/*대외활동*/
 				
 				//대외활동 등록
 				@RequestMapping("enrollForm.vbo")
@@ -544,7 +573,7 @@ public class BoardController {
 					
 					// 게시판 리스트페이지   list.bo  url재요청
 					session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
-					return "redirect:list.bo";
+					return "redirect:list.nbo";
 					
 				}else {
 					// 삭제 실패
@@ -557,13 +586,16 @@ public class BoardController {
 
 				@RequestMapping("updateForm.nbo")
 				public String nupdateForm(int bno, Model model) {
+					
 					model.addAttribute("b", bService.selectBoard(bno));
-					return "notice/noticeLisrView";
+					
+					return "notice/noticeUpdateForm";
 				}
 				
 				
 				@RequestMapping("update.nbo")
 				public String nupdateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+					System.out.println(b);
 					
 					Attachment at = new Attachment();
 					HashMap<String, Object> map = new HashMap<>();
@@ -575,7 +607,7 @@ public class BoardController {
 						if(at.getOriginName() != null) {
 							new File(session.getServletContext().getRealPath(at.getPath())).delete();
 							
-							
+							System.out.println(session.getServletContext().getRealPath(at.getPath()));
 							
 							
 							// 새로넘어온 첨부파일 서버 업로드 시키기 
@@ -610,8 +642,8 @@ public class BoardController {
 						
 						
 					}
-				
-					int result = bService.updateBoard(b);
+				 
+					int result = bService.nupdateBoard(b);
 					
 					if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
 						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
@@ -619,8 +651,9 @@ public class BoardController {
 						
 					}else { // 수정 실패 => 에러페이지
 						model.addAttribute("errorMsg", "게시글 수정 실패");
-						return "board/list.nbo";
+						return "notice/noticeListView";
 					}
+					
 					
 				}
 				

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +16,12 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
@@ -28,22 +30,24 @@
 	font-weight: 800;
 	margin-top: 50px;
 	margin-bottom: 10px;
-	margin-left: 120px;
+	margin-left: 207px;
 }
 
-.search_wrap {
+#condition {
 	width: 110px;
 	display: inline-block;
 	height: 30px;
 }
 
-.custom-select {
-	height: 30px;
-	box-sizing: border-box;
-	font-size: 13px;
+#condition {
+	width: 110px;
+    display: inline-block;
+    position: relative;
+    left: 329px;
+    top: -26px;
 }
 
-.custom-select .ctg {
+#condition .ctg {
 	font-size: 13px;
 	margin-left: 10px;
 }
@@ -88,59 +92,78 @@
 .ctg-area {
 	font-size: 16px;
 	display: inline-block;
-	margin-top: -58px;
+	width:800px;
+	margin-top: 11px;
 }
 
 .bo_content {
 	position: relative;
 	top: 0px;
 }
-
 .b_write {
 	border: none;
-	float: right;
-	margin-right: 120px;
-    margin-top: -30px;
+    float: right;
+    margin-right: 212px;
     background-color: rgb(15, 43, 80);
-	color: white;
-	height: 35px;
-	width: 90px;
-	border-radius: 3px;
-	font-size: 14px;
-	cursor: pointer;
-	position: relative;
-	right: 0px;
+    color: white;
+    height: 35px;
+    width: 90px;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    right: 0px;
 }
 .board-content textarea{
 	resize: none;
     width: 850px;
     margin: auto;
     height: 650px;
-    margin-left: 126px;
+    margin-left: 210px;
     margin-top:20px;
 }
 .b-count{
-	font-size:16px;
-	display:inline-block;
-	float: right;
+	font-size: 16px;
+    display: inline-block;
+    float: right;
     position: relative;
-    left: 490px;
+    left: 34px;
+    top: -10px;
 }
 
 #bfile{
-	margin-left: 126px;
+	margin-left: 210px;
 	margin-top: 10px;
+}
+.upload-area{
+margin:auto;
+margin-left: 210px;
+margin-top: 10px;
+}
+.updel{
+	height: 24px;
+    margin-right: 212px;
+    font-size: 15px;
+}
+.updel a{
+	text-decoration: none;
+	color: black;
+	float: right;
+}
+.bdel{
+	margin-right:4px;
+}
+.bfile{
+margin-left:213px;
 }
 
-.bcheckbox{
-	margin-left: 126px;
-	margin-top: 10px;
-}
 </style>
 
 <body>
-
-
+	
+	
+	
+	<jsp:include page="../common/links.jsp"/>
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
 
@@ -149,65 +172,105 @@
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 		<div class="sidewrap">
 			<jsp:include page="../student/smySidebar.jsp" />
 		</div>
 		
 		<div class="bo_content">
-			
 			<!-- title -->
-			<div class="page_title">공지사항 글수정</div>
-			 
-			<form id="boardInsert" action="update.bo" method="post" enctype="multipart/form-data">
-			
-				<!--제목,날짜,조회수 등록영역-->
+			<div class="page_title">공지사항 수정</div>
+				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
+				
+				<div class="updel">
+				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
+				</div>
+				 
+				 <form id="updateForm" method="post" action="update.nbo" enctype="multipart/form-data">
+                 <input type="hidden" name="boardNo" value="${ b.boardNo }">
+                
 				<div class="grayWrap">
-					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
-
+					<input type="text" name="boardTitle" value="${ b.boardTitle }"/><br>
+					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
+					
 						<div class="ctg-area">
 							<span>날짜</span> ${ b.createDate }
-							<span>작성자</span> 관리자
+							<span>작성자</span> ${loginUser.korName}
+							<span>카테고리</span> ${ b.subCategory }
+					
 							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount }</div>
+							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount } </div>
 						</div>
-
-		</div>
+						</div>
+		
 	
 
-		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
+			<textarea name="boardContent">${ b.boardContent }</textarea>
 		</div>
-
-		<!-- 첨부파일 영역 -->
-		<input id="bfile" type="file"><br>
-		<input class="bcheckbox" type="checkbox"> 공지로 등록
-		<input type="hidden" name="noticeYN" id="YN"/>
-		<script>
-		 $("#bcheckbox").change(
-				  function() {
-
-				   // 체크박스 값에 따라 히든 값 변경
-
-				   if ( $("#bcheckbox").is(":checked") ){
-
-				       $("#YN").val('Y');
-
-				   } else {
-
-				       $("#YN").val('N');
-
-				   }
-
-				  }
-
-				 );
-		</script>
 		
-	</form>
-		<!--관리자에게만 보여지도록 조건처리-->
-		<button type="submit" class="b_write">등록하기</button>
+		<div class="upload-area">
+							<input type="file" id="upfile" class="form-control-file border" name="reupfile" style="width:300px;">
+							
+                    		
+	                    	 <c:if test="${ not empty at.originName }">
+	                    		현재파일 :
+	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>
+	                        	<input type="hidden" name="originName" value="${ at.originName }">
+                            	<input type="hidden" name="changeName" value="${ at.changeName }">
+                        	</c:if>
+                        	
+                        	
+      <input type="hidden" name="noticeYN" id="YN"/>
+  <c:choose>
+    <c:when test="${ b.noticeYN.equals('N') }">
+    <input id="bcheckbox" type="checkbox"> 공지로 등록
+      <script>
+       $("#bcheckbox").change(
+              function() {
+
+               // 체크박스 값에 따라 히든 값 변경
+
+               if ( $("#bcheckbox").is(":checked") ){
+
+                   $("#YN").val('Y');
+
+               }}
+             );
+      </script>
+	  </c:when>
+	  
+	  <c:otherwise>
+    	<input id="bcheckbox" type="checkbox"> 공지 해제
+      <script>
+       $("#bcheckbox").change(
+              function() {
+
+               // 체크박스 값에 따라 히든 값 변경
+
+               if ( $("#bcheckbox").is(":checked") ){
+
+                   $("#YN").val('N');
+
+               }  
+
+              }
+
+             );
+      </script>
+	  
+	  </c:otherwise>
+	  </c:choose>
+	  
+	  
+	  
+	  
+				<button type="submit" class="b_write">수정하기</button>
+				</form>
+		</div>
+			</div>
+		</div>
+		<!--로그인한 회원에게만 보여지도록 조건처리-->
 	</div>
 
 	<br clear="both">

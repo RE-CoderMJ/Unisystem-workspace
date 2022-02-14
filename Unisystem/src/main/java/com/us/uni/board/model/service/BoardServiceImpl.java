@@ -223,4 +223,10 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.cselectBoard(sqlSession, bno);
 	}
 
+	@Override
+	public int nupdateBoard(Board b) {
+		
+		return bDao.nupdateBoard(sqlSession, b);
+	}
+
 }
