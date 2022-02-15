@@ -108,8 +108,6 @@ public class StudentController {
 	
 	@RequestMapping("insert.st")
 	public String studentInsert(Users student, MultipartFile upfile, HttpSession session) {
-
-		System.out.println(upfile);
 		
 		int result = 0;
 		

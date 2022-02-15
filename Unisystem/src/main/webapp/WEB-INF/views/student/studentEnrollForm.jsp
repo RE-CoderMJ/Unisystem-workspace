@@ -162,8 +162,8 @@
 																			 
 			                	    <br>
 					           	  <label>* 프로필 사진 :</label>
-		                	    <div>
 		                	    	<input type="file" id="upfile" class="form-control-file" name="upfile">
+		                	    <div>
 		                	    </div>
 			                
 					           	

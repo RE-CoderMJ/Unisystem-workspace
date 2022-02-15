@@ -7,37 +7,8 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<link href="resources/css/pages/wrapperStyle.css" rel="stylesheet">
 <style>
-	div{box-sizing:border-box;}
-	#wrap{
-		margin:auto;
-		width:1500px;
-	}
-	#wrap>div{
-		float:left;
-	}
-	#sidebar{
-		width:230px;
-		height:1100px;
-	}
-	#content{
-		width:1270px;
-		height:1050px;
-		margin-top:50px;
-		margin-bottom:50px;
-		background-color:white;
-		border:1px solid lightgray;
-	}
-	.pageName{
-		padding:7px;
-		height:50px;
-		}
-	
-	.pageName>p{
-		margin:0px;
-		float:left;
-		line-height:30px;
-	}
 	.topBar{
 		margin-top:30px;
 		clear:both;
@@ -66,12 +37,16 @@
 		padding:8px;
 	}
 	.btn.btn-primary{
-		color:gray;
+		color:#9b9fa3;
 		background-color:rgb(235,242,252);
 		border:none;
 		width:38px;
+		height:38px;
 		margin:8px !important;
 		border-radius:7px !important;
+		font-size:13px;
+		padding-left:2px;
+		
 	}
 	.container, .row, .col{
 		width:480px;
@@ -86,15 +61,18 @@
 		color:gray;
 		font-size:18px;
 	}
+	.btnBox{
+		width:100%;
+		height:250px;
+	}
 	.submitBtn{
 		background:rgb(21, 62, 115);
 	    width:300px;
 	    height:90px;
-	    margin:auto;
 	    margin-top:70px;
+	    margin-left:475px;
 	    border-radius:7px;
-	}
-	.submitBtn>p{
+
 		color:white;
 		font-size:30px;
 		font-weight:700;
@@ -112,8 +90,8 @@
 	<jsp:include page="../common/header.jsp" />
 	
 	<div id="wrap">
-		<div id="sidebar"><jsp:include page="../student/smySidebar.jsp" /></div>
-		<div id="content">
+		<div id="sidebar" style="float:left"><jsp:include page="../student/smySidebar.jsp" /></div>
+		<div id="content" style="float:left">
 			<div class="pageName"><p style="color:gray">마이페이지>시설물 예약>&nbsp;</p><p style="font-size:19px; font-weight:600;">열람실 예약</p></div>
 			<div class="topBar">
 				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
@@ -121,10 +99,26 @@
 			
 			<form>
 			<div class="srvdBox">
-				<div class="container">
+				<div class="container" style="margin:0">
 					<div class="row">
 						<div class="col" style="padding:0">
 							<div class="btn-group btn-group-toggle" data-toggle="buttons" style="display:block">
+							
+								
+								
+								<c:forEach var="j" begin="0" end="6" step="1">
+									
+									<c:forEach var="i" begin="1" end="8" step="1">
+									
+										<label class="btn btn-primary">
+											<input type="radio" name="jb-radio" id="jb-radio-1">${j}${i}
+										</label>
+									
+									</c:forEach>
+								</c:forEach>
+							
+								<!-- 
+								
 								<label class="btn btn-primary">
 									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
 								</label>
@@ -296,6 +290,7 @@
 								<label class="btn btn-primary">
 									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
 								</label>
+								 -->
 								
 								
 							</div>
@@ -310,10 +305,13 @@
 					<label>1시간 이상 자리를 비우면 적발 시 강제 퇴실</label>
 				</div>
 				
-				<div class="submitBtn" onclick="">
-					<p>자리 예약</p>
+				<div class="btnBox">
+					<button type="submit" class="submitBtn">
+						자리예약
+					</button>
 				</div>
-			</form>
+		
+		</form>
 							
 				
 		</div>
@@ -322,5 +320,26 @@
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 	
+	<script>
+
+	$(function(){
+		sidebar();
+		
+		})
+		
+		
+		// 사이드바 길이 조절
+		function sidebar(){
+			document.getElementById("content").style.marginBottom = "50px";
+			let $len = $("#content").height();
+			
+				if($len > 750){
+					$(".wrap_sidebar").css('height', $len);
+				}else{
+					$(".wrap_sidebar").css('height', 270);
+					document.getElementById("content").style.marginBottom = "280px";
+				}
+			}
+	</script>
 </body>
 </html>
