@@ -61,8 +61,10 @@ public class StudentDao {
 		
 		int result = 0;
 		
-		int result1 = sqlSession.insert("studentmapper.studentInsert1", student);
-		int result2 = sqlSession.insert("studentmapper.studentInsert2", student);		
+		int result1 = sqlSession.insert("studentMapper.studentInsert1", student);
+		int result2 = sqlSession.insert("studentMapper.studentInsert2", student);		
+		
+		System.out.println(result);
 		
 		result = result1 * result2;
 		

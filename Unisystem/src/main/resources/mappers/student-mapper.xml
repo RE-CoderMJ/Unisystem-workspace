@@ -174,7 +174,7 @@
 		     )
 		       VALUES
 		     (
-		       ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.NEXTVAL)
+		       (TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.NEXTVAL
 		     , #{birthday}
 		     , #{korName}   
 		     , #{engName}
@@ -194,7 +194,7 @@
 	    INSERT 
 		  INTO STUDENT 
 		     ( 
-		       USER_NO
+		       STUD_NO
 		     , PROF_NO
 		     , STUD_UNIV
 		     , STUD_DEPARTMENT
@@ -205,13 +205,13 @@
 		     )
 		       VALUES
 		     (
-		       ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.CURRVAL)
+		       (TO_CHAR(SYSDATE, 'YYYY')) || SEQ_STUDENT.CURRVAL
 		     , NULL
 		     , #{studUniv}
 		     , #{studDepartment}
 		     , #{studMajor}
 		     , NULL
-		     , ((TO_CHAR(SYSDATE, 'YYYY')) || '년 3월 2일'
+		     , (TO_CHAR(SYSDATE, 'YYYY')) || '.03.02'
 		     , NULL
 		     )
 	</insert>

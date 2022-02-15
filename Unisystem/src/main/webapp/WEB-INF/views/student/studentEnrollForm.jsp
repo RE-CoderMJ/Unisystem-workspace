@@ -67,7 +67,7 @@
 						<div class="form">
 				            <h2 style="font-weight:700">학생 등록</h2>
 					        <br>
-			               <form id="insertForm" action="insert.st" method="post">
+			               <form id="insertForm" action="insert.st" method="post" enctype="multipart/form-data">
 			                <div class="form-group">
 			                
 		                	  
@@ -149,7 +149,7 @@
 								
 								<div class="ads">
 									<input type="hidden" id="totalAddress" name="address">
-									<input type="text" id="sample3_postcode" placeholder="우편번호" style="width:170px">
+									<input type="text" id="sample3_postcode" placeholder="우편번호" style="width:170px" required>
 									<input type="button" onclick="postNo();" value="우편번호 찾기" style="width:130px"><br>
 									<input type="text" id="sample3_address" placeholder="주소" style="width:500px"><br>
 									<input type="text" id="sample3_detailAddress" placeholder="상세주소" style="width:300px">
@@ -163,7 +163,7 @@
 			                	    <br>
 					           	  <label>* 프로필 사진 :</label>
 		                	    <div>
-		                	    	<input type="file" name="profileImg" value="1">
+		                	    	<input type="file" id="upfile" class="form-control-file" name="upfile">
 		                	    </div>
 			                
 					           	
