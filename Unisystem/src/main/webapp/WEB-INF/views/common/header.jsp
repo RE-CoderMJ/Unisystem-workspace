@@ -149,8 +149,23 @@
 	            <nav id="header-down-right">
 
 	                <a href="webMail.inbox">웹메일</a>
-
-	                <a href="list.st">마이페이지</a>
+					
+					<!-- 마이페이지 : 학생일 때 -->
+					<c:if test="${ loginUser.userDiv eq 1 }">
+		                <a href="list.st">마이페이지</a>
+					</c:if>
+					
+					<!-- 마이페이지 : 교수일 때 -->
+					<c:if test="${ loginUser.userDiv eq 2 }">
+		                <a href="list.pr">마이페이지</a>
+					</c:if>	
+					
+					<!-- 마이페이지 : 관리자일 때 -->
+					<c:if test="${ loginUser.userDiv eq 3 }">
+		                <a href="student.ad">마이페이지</a>
+					</c:if>					
+					
+									
 	                <a href="list.nbo">공지사항</a>
 
 	                <a href="list.bo">커뮤니티</a>
