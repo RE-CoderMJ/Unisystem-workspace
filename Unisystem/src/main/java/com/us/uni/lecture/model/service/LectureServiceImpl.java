@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.HomeworkDao;
 import com.us.uni.lecture.model.dao.LectureDao;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -59,6 +60,12 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public int selectAttListCount(Lecture l) {
 		return lDao.selectAttListCount(sqlSession, l);
+	}
+
+	// 8. 학생 - 강의홈 - 온라인 출석부 - 선택한 강좌의 진행한 강좌리스트 조회
+	@Override
+	public ArrayList<Lecture> selectAttList(PageInfo pi, Lecture l) {
+		return lDao.selectAttList(sqlSession, pi, l);
 	}
 
 

@@ -2,6 +2,7 @@ package com.us.uni.lecture.model.service;
 
 import java.util.ArrayList;
 
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -28,4 +29,7 @@ public interface LectureService {
 	
 	// 7. 학생 - 강의홈 - 온라인 출석부 - 진행한 강좌 총 개수 조회
 	int selectAttListCount(Lecture l);
+	
+	// 8. 학생 - 강의홈 - 온라인 출석부 - 선택한 강좌의 진행한 강좌리스트 조회
+	ArrayList<Lecture> selectAttList(PageInfo pi, Lecture l);
 }

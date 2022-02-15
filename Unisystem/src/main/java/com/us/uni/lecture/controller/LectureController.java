@@ -96,26 +96,23 @@ public class LectureController {
 	
 	/* 학생 - 온라인출석부를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAtt.stu")
-	public String selectLectureAttList(int userNo, int classCode, ModelAndView mv) {
+	public ModelAndView selectLectureAttList(int userNo, int classCode, int lno, ModelAndView mv) {
 
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
 		
+		int currentPage = lno;
+
 		int listCount = lService.selectAttListCount(l); // 진행한 강좌 총 개수
-		System.out.println(listCount);
 		
-		return "lecture/lectureAttendanceStu";
-	}
-	
-	/*
-	@RequestMapping("test.stu")
-	public String selctTest(int userNo) {
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Lecture> list = lService.selectAttList(pi, l);
 		
-		return "lecture/lectureAttendanceStu";
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureAttendanceStu");
+		
+		return mv;
 	}
-	*/
-	
 	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")

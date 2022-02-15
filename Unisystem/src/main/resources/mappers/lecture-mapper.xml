@@ -21,9 +21,14 @@
 		<result column="max_stud" property="maxStud" />
 		<result column="curr_stud" property="currStud" />
 						
-		
+		<result column="rownum" property="rownum" />	
 		<result column="class_stud_no" property="classStudNo" />
 		<result column="kor_name" property="korName" />
+		<result column="attendance_no" property="attendanceNo" />
+		<result column="class_title" property="classTitle" />
+		<result column="attDate" property="attendanceDate" />
+		<result column="attendance_status" property="attendanceStatus" />
+
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -130,7 +135,28 @@
 		   and class_code = #{classCode} 
 	</select>
 	
-	
+	<!-- 학생 - 온라인출석부 : 선택한 강의의 현재까지 진행한 강의리스트 조회 -->
+	<select id="selectAttList" resultMap="lectureResult">
+        select
+               rownum
+             , class_code
+             , attendance_no
+             , class_title
+             , to_char(to_date(attendance_date, 'YYYY-MM-DD'), 'YYYY.MM.DD') "attDate"
+             , attendance_status
+          from (
+                select 
+                       *
+                  from attendance
+                  join class using(class_no)
+                  join student using(stud_no)
+                  join users on (stud_no = user_no)
+                 where class_code = #{classCode}
+                   and user_no = #{userNo}
+                 order
+                    by attendance_date desc             
+                ) 
+	</select>
 	
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->

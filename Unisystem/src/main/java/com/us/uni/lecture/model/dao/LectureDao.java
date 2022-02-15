@@ -2,10 +2,11 @@ package com.us.uni.lecture.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -43,5 +44,15 @@ public class LectureDao {
 	// 7. 학생 - 강의홈 - 온라인 출석부 - 진행한 강좌 총 개수 조회
 	public int selectAttListCount(SqlSessionTemplate sqlSession, Lecture l) {
 		return sqlSession.selectOne("lectureMapper.selectAttListCount", l);
+	}
+	
+	// 8. 학생 - 강의홈 - 온라인 출석부 - 선택한 강좌의 진행한 강좌리스트 조회
+	public ArrayList<Lecture> selectAttList(SqlSessionTemplate sqlSession, PageInfo pi, Lecture l){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectAttList", l, rowBounds);
 	}
 }
