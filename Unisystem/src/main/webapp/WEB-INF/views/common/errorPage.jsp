@@ -209,6 +209,7 @@ li {
 				<form action="login.me" id="log-input" method="post">
 
 					로그인에 실패하였습니다 
+					올바른 정보를 입력해주세요 
 					
 				</form>
 

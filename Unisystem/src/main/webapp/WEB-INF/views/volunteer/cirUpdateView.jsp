@@ -132,7 +132,7 @@
 }
 
 #bfile{
-	margin-left: 210px;
+	margin-left: 126px;
 	margin-top: 10px;
 }
 .upload-area{
@@ -153,10 +153,6 @@ margin-top: 10px;
 .bdel{
 	margin-right:4px;
 }
-.bfile{
-margin-left:213px;
-}
-
 </style>
 
 <body>
@@ -179,10 +175,10 @@ margin-left:213px;
 		
 		<div class="bo_content">
 			<!-- title -->
-			<div class="page_title">공지사항 수정</div>
+			<div class="page_title">동아리 수정</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
-				
-				<div class="updel">
+				 
+			<div class="updel">
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
 				
@@ -195,8 +191,7 @@ margin-left:213px;
 	            		}
 	            	}
 	            </script>
-				 
-				 <form id="updateForm" method="post" action="update.nbo" enctype="multipart/form-data">
+				 <form id="updateForm" method="post" action="update.cbo" enctype="multipart/form-data">
                  <input type="hidden" name="boardNo" value="${ b.boardNo }">
                 
 				<div class="grayWrap">
@@ -229,52 +224,8 @@ margin-left:213px;
 	                        	<input type="hidden" name="originName" value="${ at.originName }">
                             	<input type="hidden" name="changeName" value="${ at.changeName }">
                         	</c:if>
-                        	
-                        	
-      <input type="hidden" name="noticeYN" id="YN"/>
-  <c:choose>
-    <c:when test="${ b.noticeYN.equals('N') }">
-    <input id="bcheckbox" type="checkbox"> 공지로 등록
-      <script>
-       $("#bcheckbox").change(
-              function() {
-
-               // 체크박스 값에 따라 히든 값 변경
-
-               if ( $("#bcheckbox").is(":checked") ){
-
-                   $("#YN").val('Y');
-
-               }}
-             );
-      </script>
-	  </c:when>
-	  
-	  <c:otherwise>
-    	<input id="bcheckbox" type="checkbox"> 공지 해제
-      <script>
-       $("#bcheckbox").change(
-              function() {
-
-               // 체크박스 값에 따라 히든 값 변경
-
-               if ( $("#bcheckbox").is(":checked") ){
-
-                   $("#YN").val('N');
-
-               }  
-
-              }
-
-             );
-      </script>
-	  
-	  </c:otherwise>
-	  </c:choose>
-	  
-	  
-	  
-	  
+                       		
+	            
 				<button type="submit" class="b_write">수정하기</button>
 				</form>
 		</div>

@@ -132,7 +132,7 @@
 }
 
 #bfile{
-	margin-left: 210px;
+	margin-left: 126px;
 	margin-top: 10px;
 }
 .upload-area{
@@ -153,10 +153,6 @@ margin-top: 10px;
 .bdel{
 	margin-right:4px;
 }
-.bfile{
-margin-left:213px;
-}
-
 </style>
 
 <body>
@@ -179,28 +175,18 @@ margin-left:213px;
 		
 		<div class="bo_content">
 			<!-- title -->
-			<div class="page_title">공지사항 수정</div>
+			<div class="page_title">공지사항</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
 				
+				<c:if test="${ loginUser != null || loginUser.userDiv == 3 }">
 				<div class="updel">
+				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
+				</c:if>
 				
-				 <script>
-	            	function postFormSubmit(num){
-	            		if(num == 1){ // 수정하기 클릭시
-	            			$("#postForm").attr("action", "updateForm.nbo").submit();
-	            		}else{ // 삭제하기 클릭시
-	            			$("#postForm").attr("action", "delete.nbo").submit();
-	            		}
-	            	}
-	            </script>
-				 
-				 <form id="updateForm" method="post" action="update.nbo" enctype="multipart/form-data">
-                 <input type="hidden" name="boardNo" value="${ b.boardNo }">
-                
 				<div class="grayWrap">
-					<input type="text" name="boardTitle" value="${ b.boardTitle }"/><br>
+					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
 					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
 					
 						<div class="ctg-area">
@@ -216,67 +202,35 @@ margin-left:213px;
 	
 
 		<div class="board-content">
-			<textarea name="boardContent">${ b.boardContent }</textarea>
+			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
 		</div>
 		
 		<div class="upload-area">
-							<input type="file" id="upfile" class="form-control-file border" name="reupfile" style="width:300px;">
-							
-                    		
-	                    	 <c:if test="${ not empty at.originName }">
-	                    		현재파일 :
-	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>
-	                        	<input type="hidden" name="originName" value="${ at.originName }">
-                            	<input type="hidden" name="changeName" value="${ at.changeName }">
-                        	</c:if>
-                        	
-                        	
-      <input type="hidden" name="noticeYN" id="YN"/>
-  <c:choose>
-    <c:when test="${ b.noticeYN.equals('N') }">
-    <input id="bcheckbox" type="checkbox"> 공지로 등록
-      <script>
-       $("#bcheckbox").change(
-              function() {
-
-               // 체크박스 값에 따라 히든 값 변경
-
-               if ( $("#bcheckbox").is(":checked") ){
-
-                   $("#YN").val('Y');
-
-               }}
-             );
-      </script>
-	  </c:when>
-	  
-	  <c:otherwise>
-    	<input id="bcheckbox" type="checkbox"> 공지 해제
-      <script>
-       $("#bcheckbox").change(
-              function() {
-
-               // 체크박스 값에 따라 히든 값 변경
-
-               if ( $("#bcheckbox").is(":checked") ){
-
-                   $("#YN").val('N');
-
-               }  
-
-              }
-
-             );
-      </script>
-	  
-	  </c:otherwise>
-	  </c:choose>
-	  
-	  
-	  
-	  
-				<button type="submit" class="b_write">수정하기</button>
-				</form>
+							<c:choose>
+                    		<c:when test="${ empty  at.originName }">
+	                    		첨부파일이 없습니다.
+	                    	</c:when>
+	                    	<c:otherwise>
+	                        	<a href="${at.path}${at.changeName}" download="${at.originName}">${at.originName}</a>
+                        	</c:otherwise>
+                       		</c:choose>
+                       		
+	            <form id="postForm" action="" method="post">
+	            	<input type="hidden" name="bno" value="${ b.boardNo }">
+	            	<input type="hidden" name="filePath" value="${at.path}${at.changeName}">
+	            </form>
+	            
+	            <script>
+	            	function postFormSubmit(num){
+	            		if(num == 1){ // 수정하기 클릭시
+	            			$("#postForm").attr("action", "updateForm.nbo").submit();
+	            		}else{ // 삭제하기 클릭시
+	            			$("#postForm").attr("action", "delete.nbo").submit();
+	            		}
+	            	}
+	            </script>
+	            
+				<button onclick="location.href='list.nbo';" class="b_write">목록으로</button>
 		</div>
 			</div>
 		</div>

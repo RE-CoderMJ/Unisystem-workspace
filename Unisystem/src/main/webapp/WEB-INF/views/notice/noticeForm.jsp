@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -159,17 +161,21 @@
 			<!-- title -->
 			<div class="page_title">공지사항 글작성</div>
 			 
-			<form id="boardInsert" action="" method="post">
+			<form id="boardInsert" action="insert.nbo" method="post" enctype="multipart/form-data">
+			<jsp:useBean id="now" class="java.util.Date" />
+			<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy.MM.dd" /></c:set>
 			
 				<!--제목,날짜,조회수 등록영역-->
 				<div class="grayWrap">
-					<input type="text" placeholder="제목을 입력하세요"/><br>
-
+					<input type="text" name="boardTitle" placeholder="제목을 입력하세요"/><br>
+					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
+					
+					
 						<div class="ctg-area">
-							<span>날짜</span> 2021.01.21 
+							<span>날짜</span> <c:out value="${today}" />
 							<span>작성자</span> 관리자
 							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 1024</div>
+							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 0</div>
 						</div>
 
 		</div>
@@ -177,15 +183,37 @@
 
 		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea></textarea>
+			<textarea name="boardContent" required></textarea>
 		</div>
 
 		<!-- 첨부파일 영역 -->
 		<input id="bfile" type="file"><br>
-		<input class="bcheckbox" type="checkbox"> 공지로 등록
+		<input id="bcheckbox" type="checkbox"> 공지로 등록
+		<input type="hidden" name="noticeYN" id="YN"/>
+		<script>
+		 $("#bcheckbox").change(
+				  function() {
+
+				   // 체크박스 값에 따라 히든 값 변경
+
+				   if ( $("#bcheckbox").is(":checked") ){
+
+				       $("#YN").val('Y');
+
+				   } else {
+
+				       $("#YN").val('N');
+
+				   }
+
+				  }
+
+				 );
+		</script>
+		
+		<button type="submit" class="b_write">등록하기</button>
 	</form>
-		<!--관리자에게만 보여지도록 조건처리-->
-		<button class="b_write">등록하기</button>
+
 	</div>
 
 	<br clear="both">

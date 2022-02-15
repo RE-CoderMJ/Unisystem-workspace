@@ -214,10 +214,23 @@ height:none;
 				
 				<form action="login.me" id="log-input" method="post">
 				
-				<div style="font-size:14px; margin-bottom:10px; margin-top:-25px;">
-			<input id="radioSt" style="" name="regState" type="radio" value="1">학생 
-			<input id="radioSt" style="" name="regState" type="radio" value="2">교수
+				<div id="divCheck" style="font-size:14px; margin-bottom:10px; margin-top:-25px;">
+			<input id="radioSt1"  name="userDiv" type="radio" value="1" required>학생 
+			<input id="radioSt2"  name="userDiv" type="radio" value="2">교수
 				</div>
+				
+					
+				
+				 
+			<script>
+						$(function(){
+							$('input[name=userDiv]:checked').val();
+						})
+					
+						
+			</script>
+		 
+			
 				
 					<input id="log-form" type="text" name="userNo" id="userNo" placeholder="  아이디"> 	<br>
 					<input id="log-form" type="password" name="userPwd" id="userPwd" placeholder=" 비밀번호">

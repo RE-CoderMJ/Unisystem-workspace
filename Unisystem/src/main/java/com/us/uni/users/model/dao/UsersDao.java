@@ -18,10 +18,18 @@ public class UsersDao {
 		
 		int div = m.getUserDiv();
 		
-		if(div == 2) { 
+		 if(div == 2) {
+			
 			return sqlSession.selectOne("usersMapper.profloginUser",m);
-		} else {
+			
+		} else if(div == 3) {
+			
+			return sqlSession.selectOne("usersMapper.adminLoginUser",m);
+			
+		} else{ 
+			
 			return sqlSession.selectOne("usersMapper.stuloginUser",m);
+		
 		}
 	}
 	
