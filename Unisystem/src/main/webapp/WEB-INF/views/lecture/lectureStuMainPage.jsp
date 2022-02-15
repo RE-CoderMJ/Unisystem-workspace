@@ -133,7 +133,6 @@
         background-color: #E74C3C;
         font-size: 32px;
         color: white;
-        padding-left: 16px;
         padding-top: 12px;
         margin-top: 20px;
         margin-left: 60px;
@@ -149,7 +148,7 @@
     #attend{margin-left: 40px;}
     #absence, #lateness{margin-left: 30px;}
     #absence>div:first-child, #lateness>div:first-child{padding-left: 26px;}
-    #attend>div:first-child{background-color: #153e73;}
+    #attend>div:first-child{background-color: #153e73; text-align:center;}
     #absence>div:first-child{background-color: #C0392B;}
     #lateness>div:first-child{background-color: #16A085;}
     #attendance_title_right>div{margin-top: 25px;}
@@ -203,6 +202,7 @@
             
                <form id="postForm" action="" method="post">
                	   <input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
+               	   <input type="hidden" name="classCode" value="${classInfo.classCode}" id="classCode"/>
                </form>
 
                 <div id="classHeader_info_left">
@@ -237,6 +237,9 @@
 	    	$(function(){
 	    		// 페이지상에 모든 요소들이 다 만들어지고 년도리스트 조회해오는 함수 호출
 	     		selectClassList();
+	    		selectAttStaListA(); // 출석
+	    		selectAttStaListB(); // 결석
+	    		selectAttStaListC(); // 지각
 	    	})
 	    	
             	// 수강중인 강의 list를 가져오는 ajax
@@ -305,18 +308,18 @@
 
                         <div id="attendance_title_left">
                             <p>출석 현황</p>
-                            <div id="attend" onclick="">
-                                <div>32</div>
+                            <div id="attend">
+                                <div id="att"></div>
                                 <div>출석</div>
                             </div>
         
-                            <div id="absence" onclick="">
-                                <div>0</div>
+                            <div id="absence">
+                                <div id="abs"></div>
                                 <div>결석</div>
                             </div>
         
-                            <div id="lateness" onclick="">
-                                <div>0</div>
+                            <div id="lateness">
+                                <div id="lat"></div>
                                 <div>지각</div>
                             </div>
 
@@ -334,6 +337,72 @@
 
 
                 </div>
+                
+                <script>
+                	// 출석 상태 총 개수를 알아오는 AJAX
+	                function selectAttStaListA(){
+	                	
+		    			var userNo = $("#userNo").val();
+		    			var classCode = $("#classCode").val();
+		        		
+	            		$.ajax({
+	            			url:"selectAttStaListA.lec",
+	            			data:{
+	            				  userNo:userNo,
+	            				  classCode:classCode
+	            				 },
+	            			success:function(att){
+	            				$("#att").html(att);	
+	            			}, error:function(){
+	            				console.log("출석상태 호출 ajax 오류");
+	            			}
+	            			
+	            		})	                
+	            	}
+
+                	// 결석 상태 총 개수를 알아오는 AJAX
+	                function selectAttStaListB(){
+	                	
+		    			var userNo = $("#userNo").val();
+		    			var classCode = $("#classCode").val();
+		        		
+	            		$.ajax({
+	            			url:"selectAttStaListB.lec",
+	            			data:{
+	            				  userNo:userNo,
+	            				  classCode:classCode
+	            				 },
+	            			success:function(att){
+	            				$("#abs").html(att);	
+	            			}, error:function(){
+	            				console.log("결석 상태 호출 ajax 오류");
+	            			}
+	            			
+	            		})	                
+	            	}
+
+                	// 지각 상태 총 개수를 알아오는 AJAX
+	                function selectAttStaListC(){
+	                	
+		    			var userNo = $("#userNo").val();
+		    			var classCode = $("#classCode").val();
+		        		
+	            		$.ajax({
+	            			url:"selectAttStaListB.lec",
+	            			data:{
+	            				  userNo:userNo,
+	            				  classCode:classCode
+	            				 },
+	            			success:function(att){
+	            				$("#lat").html(att);	
+	            			}, error:function(){
+	            				console.log("결석 상태 호출 ajax 오류");
+	            			}
+	            			
+	            		})	                
+	            	}
+                
+                </script>
 
                 <div id="classPlan">
 

@@ -85,6 +85,45 @@ public class LectureController {
 		return new Gson().toJson(list);
 	}
 	
+	/* 학생 - 강의홈에서 로그인한 학생의 출석상태(출석)를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="selectAttStaListA.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectAttStaListA(int userNo, int classCode) {
+		
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+		
+		int lec = lService.SelectAttStaListA(l);
+		return new Gson().toJson(lec);
+	}
+	
+	/* 학생 - 강의홈에서 로그인한 학생의 출석상태(결석)를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="selectAttStaListB.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectAttStaListB(int userNo, int classCode) {
+		
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+		
+		int lec = lService.SelectAttStaListB(l);
+		return new Gson().toJson(lec);
+	}
+	
+	/* 학생 - 강의홈에서 로그인한 학생의 출석상태(지각)를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="selectAttStaListC.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectAttStaListC(int userNo, int classCode) {
+		
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+		
+		int lec = lService.SelectAttStaListC(l);
+		return new Gson().toJson(lec);
+	}
+	
 	/* 학생 - 온라인출석부에서 학생 정보를 가져오는 컨트롤러 */
 	@ResponseBody
 	@RequestMapping(value="LoginStuInfo.stu", produces="application/json; charset=UTF-8")
@@ -114,6 +153,23 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("professorClassList.me")
+	public ModelAndView selectProfessorClassList(int userNo, ModelAndView mv) {
+		
+		ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
+		mv.addObject("list", list).setViewName("professor/professorClassList");
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
 	public String selectLectureAttControl() {
@@ -125,14 +181,6 @@ public class LectureController {
 	public String selectLectureAttDetailControl() {
 		return "lecture/lectureAttendanceDetailControl";
 	}
-	
-	
-	/* 교수 - 마이페이지에서 진행강의조회 페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("professorClassList.me")
-	public String selectProfessorClassList() {
-		return "professor/professorClassList";
-	}
-	
 	
 	/* 교수 - 강의홈을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureProMain.stu")

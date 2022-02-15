@@ -55,4 +55,24 @@ public class LectureDao {
 		
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectAttList", l, rowBounds);
 	}
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(출석)
+	public int SelectAttStaListA(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.selectOne("lectureMapper.SelectAttStaListA", l);
+	}
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(결석)
+	public int SelectAttStaListB(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.selectOne("lectureMapper.SelectAttStaListB", l);
+	}
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(지각)
+	public int SelectAttStaListC(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.selectOne("lectureMapper.SelectAttStaListC", l);
+	}
+	
+	// 교수 - 마이페이지 - 진행강의 조회 리스트 조회
+	public ArrayList<Lecture> selectProfessorClassList(SqlSessionTemplate sqlSession, int userNo){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProfessorClassList", userNo);
+	}
 }

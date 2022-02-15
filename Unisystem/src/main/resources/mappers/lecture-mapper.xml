@@ -113,6 +113,20 @@
 		 where class_code = #{lno}	
 	</select>
 	
+	<select id="SelectAttStaListA" resultType="_int">
+		select
+		       count(attendance_status)
+		  from attendance
+		  join student using(stud_no)
+		  join class using(class_no)
+		  join users on(stud_no = user_no)
+		 where user_no = #{userNo}
+		   and class_code = #{classCode}
+		   and attendance_status = 'A'	
+	</select>
+	
+	
+	
 	<!-- 학생 - 온라인 출석부 : 로그인한 학생 정보를 가져오는 sql문 -->
 	<select id="selectLoginStuInfo" resultMap="usersResult">
 		select
@@ -122,7 +136,31 @@
 		  from users
 		 where user_no = #{userNo}	
 	</select>
+
+	<select id="SelectAttStaListB" resultType="_int">
+		select
+		       count(attendance_status)
+		  from attendance
+		  join student using(stud_no)
+		  join class using(class_no)
+		  join users on(stud_no = user_no)
+		 where user_no = #{userNo}
+		   and class_code = #{classCode}
+		   and attendance_status = 'B'	
+	</select>
 	
+	<select id="SelectAttStaListC" resultType="_int">
+		select
+		       count(attendance_status)
+		  from attendance
+		  join student using(stud_no)
+		  join class using(class_no)
+		  join users on(stud_no = user_no)
+		 where user_no = #{userNo}
+		   and class_code = #{classCode}
+		   and attendance_status = 'C'	
+	</select>
+			
 	<!-- 학생 - 온라인출석부 : 현재 진행된 강의 총 개수를 구하는 sql문 -->
 	<select id="selectAttListCount" resultType="_int">
 		select 
@@ -157,6 +195,33 @@
                     by attendance_date desc             
                 ) 
 	</select>
+	
+	<!-- 교수 - 마이페이지 : 진행강의 조회 페이지 리스트를 조회해오는 sql문  -->
+	<select id="selectProfessorClassList" resultMap="lectureResult">
+		select
+		       distinct
+		       class_no 
+		     , class_code
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		  from class 
+		  join professor using(prof_no)
+		  join users on (prof_no = user_no)
+		  join class_stud using(class_no)
+		 where user_no = #{userNo}
+		   and status = 'Y'
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->

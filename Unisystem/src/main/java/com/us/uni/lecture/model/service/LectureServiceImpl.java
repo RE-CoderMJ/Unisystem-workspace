@@ -68,6 +68,30 @@ public class LectureServiceImpl implements LectureService{
 		return lDao.selectAttList(sqlSession, pi, l);
 	}
 
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(출석)
+	@Override
+	public int SelectAttStaListA(Lecture l) {
+		return lDao.SelectAttStaListA(sqlSession, l);
+	}
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(결석)
+	@Override
+	public int SelectAttStaListB(Lecture l) {
+		return lDao.SelectAttStaListB(sqlSession, l);
+	}
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(지각)
+	@Override
+	public int SelectAttStaListC(Lecture l) {
+		return lDao.SelectAttStaListC(sqlSession, l);
+	}
+
+	// 교수 - 마이페이지 - 진행강의 조회 리스트 조회
+	@Override
+	public ArrayList<Lecture> selectProfessorClassList(int userNo) {
+		return lDao.selectProfessorClassList(sqlSession, userNo);
+	}
+
 
 	
 

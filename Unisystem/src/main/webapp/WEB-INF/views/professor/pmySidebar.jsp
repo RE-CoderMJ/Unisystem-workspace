@@ -62,6 +62,11 @@ a:hover {
 	color: rgb(26, 86, 162);
 	font-weight: bolder;
 }
+#myClassList:hover{
+	color: rgb(26, 86, 162);
+	text-decoration:underline;
+	cursor:pointer;
+}
 </style>
 
 <body>
@@ -100,7 +105,7 @@ a:hover {
 				<a href="">- 강의시간표 조회</a>
 			</div>
 			<div>
-				<a href="">- 진행강의 조회</a>
+				<a onclick="urlSubmit(1);" id="myClassList">- 진행강의 조회</a>
 			</div>
 			<div>
 				<a href="app.pr">- 강의 관리</a>
@@ -139,7 +144,19 @@ a:hover {
 			<div>
 				<a href="">- 스팸 보관함</a>
 			</div>
-
+			
+			<form id="myForm" action="" method="post">
+				<input type="hidden" name="userNo" value="${ loginUser.userNo }" />
+			</form>
+			
+			<script>
+				function urlSubmit(num){
+			    	   if(num == 1){ // 강의 - 진행강의 조회 클릭 시  
+			    		   $("#myForm").attr("action", "professorClassList.me").submit();
+			    	   } 
+			    	   
+			       }
+			</script>
 		</div>
 	</div>
 </body>
