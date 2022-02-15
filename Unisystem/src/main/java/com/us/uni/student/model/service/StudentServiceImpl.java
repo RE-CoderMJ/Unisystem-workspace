@@ -45,6 +45,16 @@ public class StudentServiceImpl implements StudentService{
 		return sDao.searchStudent(sqlSession, map, pi);
 	}
 
+	@Override
+	public int studentDelete(String dno) {
+		return sDao.studentDelete(sqlSession, dno);
+	}
+
+	@Override
+	public int studentInsert(Users student) {
+		return sDao.studentInsert(sqlSession, student);
+	}
+
 	
 
 	

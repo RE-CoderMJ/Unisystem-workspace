@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +16,12 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
@@ -28,22 +30,24 @@
 	font-weight: 800;
 	margin-top: 50px;
 	margin-bottom: 10px;
-	margin-left: 120px;
+	margin-left: 207px;
 }
 
-.search_wrap {
+#condition {
 	width: 110px;
 	display: inline-block;
 	height: 30px;
 }
 
-.custom-select {
-	height: 30px;
-	box-sizing: border-box;
-	font-size: 13px;
+#condition {
+	width: 110px;
+    display: inline-block;
+    position: relative;
+    left: 329px;
+    top: -26px;
 }
 
-.custom-select .ctg {
+#condition .ctg {
 	font-size: 13px;
 	margin-left: 10px;
 }
@@ -88,59 +92,59 @@
 .ctg-area {
 	font-size: 16px;
 	display: inline-block;
-	margin-top: 13px;
+	width:800px;
+	margin-top: 11px;
 }
 
 .bo_content {
 	position: relative;
 	top: 0px;
 }
-
 .b_write {
 	border: none;
-	float: right;
-	margin-right: 120px;
-    margin-top: -30px;
+    float: right;
+    margin-right: 212px;
     background-color: rgb(15, 43, 80);
-	color: white;
-	height: 35px;
-	width: 90px;
-	border-radius: 3px;
-	font-size: 14px;
-	cursor: pointer;
-	position: relative;
-	right: 0px;
+    color: white;
+    height: 35px;
+    width: 90px;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    right: 0px;
 }
 .board-content textarea{
 	resize: none;
     width: 850px;
     margin: auto;
     height: 650px;
-    margin-left: 126px;
+    margin-left: 210px;
     margin-top:20px;
 }
 .b-count{
-	font-size:16px;
-	display:inline-block;
-	float: right;
+	font-size: 16px;
+    display: inline-block;
+    float: right;
     position: relative;
-    left: 490px;
+    left: 34px;
+    top: -10px;
 }
 
 #bfile{
 	margin-left: 126px;
 	margin-top: 10px;
 }
-
-.bcheckbox{
-	margin-left: 126px;
-	margin-top: 10px;
+.upload-area{
+margin:auto;
+margin-left: 210px;
+margin-top: 10px;
 }
 </style>
 
 <body>
 
-
+	<jsp:include page="../common/links.jsp"/>
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
 
@@ -149,42 +153,44 @@
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
-		<div class="sidewrap">
+	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 			<jsp:include page="../student/smySidebar.jsp" />
-		</div>
 		
 		<div class="bo_content">
-			
+			<jsp:useBean id="now" class="java.util.Date" />
+			<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy.MM.dd" /></c:set>
 			<!-- title -->
 			<div class="page_title">대외활동 글작성</div>
 			 
-			<form id="boardInsert" action="" method="post">
-			
-				<!--제목,날짜,조회수 등록영역-->
+			<form id="boardInsert" action="insert.vbo" method="post" enctype="multipart/form-data">
 				<div class="grayWrap">
-					<input type="text" placeholder="제목을 입력하세요"/><br>
-
+					<input type="text" name="boardTitle" placeholder="제목을 입력하세요" required/><br>
+					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
+					
 						<div class="ctg-area">
-							<span>날짜</span> 2021.01.21 
-							<span>작성자</span> 관리자
-							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 1024</div>
+							<span>날짜</span> <c:out value="${today}" />
+							<span>작성자</span> ${loginUser.korName}
+						
+						
+							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> 0 </div>
 						</div>
-
-		</div>
+						</div>
+	
+		
 	
 
 		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea></textarea>
+			<textarea name="boardContent" required></textarea>
 		</div>
-
-		<!-- 첨부파일 영역 -->
-		<input id="bfile" type="file"><br>
+		
+		<div class="upload-area">
+		
+		
+		<button type="submit" class="b_write">등록하기</button>
+		</div></div>
 	</form>
-		<!--관리자에게만 보여지도록 조건처리-->
-		<button class="b_write">등록하기</button>
+		<!--로그인한 회원에게만 보여지도록 조건처리-->
 	</div>
 
 	<br clear="both">

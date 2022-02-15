@@ -4,45 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="resources/css/pages/wrapperStyle.css" rel="stylesheet">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <style>
-	div{box-sizing:border-box;}
-	#wrap{
-		margin:auto;
-		width:1500px;
-		height:auto;
-	}
-	#wrap>div{
-		float:left;
-	}
-	#sidebar{
-		width:20%;
-		height:1100px;
-	}
-	#content{
-		width:80%;
-		height:auto;
-		margin-top:50px;
-		margin-bottom:50px;
-		background-color:white;
-		border:1px solid lightgray;
-	}
-	.pageName{
-		padding:7px;
-		height:50px;
-		}
-	
-	.pageName>p{
-		margin:0px;
-		float:left;
-		line-height:30px;
-	}
-	.form-group input, .select{
-		width:250px;
-		margin:0px;
-		margin-right:10px;
-	}
 	.float{
 		float:left;
 	}
@@ -50,10 +16,15 @@
 		padding-left:100px;
 		margin-top:50px;
 	}
+	.form-group input, .select, input{
+		width:250px;
+		margin:0px;
+		margin-right:10px;
+	}
 	#Male, #Female{
 		width:13px;
 	}
-	.select{
+	select, .ads input{
 		height:40px;
 		border:1px solid lightgray;
 		border-radius: 5px;
@@ -68,70 +39,79 @@
 	    margin-left:350px;
 	}
 	.submitBtn>p{
+		width:100%;
 		color:white;
 		font-size:30px;
 		font-weight:700;
 		text-align:center;
   		line-height:90px;	
 	}
+	.ads>input{
+		margin-bottom:10px;
+		margin-right:5px;
+	}
 </style>
 </head>
 <body>
-		
+	<jsp:include page="../common/links.jsp" />
 	<jsp:include page="../common/header.jsp" />
 	
 		
 		<div id="wrap">
 			<div id="sidebar" style="float:left"><jsp:include page="../common/adminSidebar.jsp" /></div>
 			<div id="content" style="float:left">
-						<div class="pageName"><p style="color:gray">마이페이지>기본정보>&nbsp;</p><p style="font-size:19px; font-weight:600;">학생 관리</p></div>
+				<div class="topBox">
+					<div class="pageName"><p>마이페이지&nbsp;>&nbsp;기본정보&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;학생 관리</p></div>
+				</div>
 					
 						<div class="form">
 				            <h2 style="font-weight:700">학생 등록</h2>
 					        <br>
-			               <form action="" method="post" onsubmit="">
+			               <form id="insertForm" action="insert.st" method="post" enctype="multipart/form-data">
 			                <div class="form-group">
-			                    <label for="userId">* 이름 :</label>
+			                
+		                	  
+			                    <label>* 이름 :</label>
 			                    <div>
-				                    <input type="text" class="form-control float" id="userId" name="" placeholder="한글" required>
-				                    <input type="text" class="form-control" id="userId" name="" placeholder="영문" required>
+				                    <input type="text" class="form-control float" id="korName" name="korName" placeholder="한글" required>
+				                    <input type="text" class="form-control" id="engName" name="engName" placeholder="영문" required>
 			                    </div>
 			                    <br>
 			                    
 			                    <label for="userPwd">* 생년월일 :</label>
-			                    <input type="number" class="form-control" id="userPwd" name="" placeholder="ex) 970222" required><br>
+			                    <input type="number" class="form-control" id="birthday" name="birthday" placeholder="ex) 970222" required><br>
 			                    
 			                    <label for=""> * 성별 : </label><br>
 			                    <div>				                    
-				                    <input type="radio" name="" id="Male" value="M">
+				                    <input type="radio" name="gender" id="Male" value="M">
 				                    <label for="Male">남자</label> &nbsp;&nbsp;
-				                    <input type="radio" name="" id="Female" value="F">
+				                    <input type="radio" name="gender" id="Female" value="F">
 				                    <label for="Female">여자</label><br>
 			                    </div><br>
 			                    
 			                    <label for="univ">* 대학 :</label>
 									<div>
-										<input type="text" class="form-control float" id="" placeholder="대학" list="univList" required>
-										<div>
-											<datalist id="univList">
-												<option>조회해오기</option>
-											</datalist>
+										<div class="float">
+												
+											<input type="hidden" name="studUniv">
+											<select id="univList" class="select" required>
+												<option value="" style="display: none;" selected>대학별 조회</option>
+												<option>문과대학</option>
+												<option>공과대학</option>
+												<option>경영대학</option>
+												<option>사범대학</option>
+												<option>의과대학</option>
+												<option>예술체육대학</option>
+												<option>자연과학대학</option>
+											</select>
 										</div>
-									
-									<input type="text" class="form-control float" id="" list="departList" placeholder="학과" required>
-									<div>
-										<datalist id="departList">
-											<option>조회해오기</option>
-										</datalist>
+										<div>
+											<input type="text" class="form-control float" name="studDepartment" placeholder="학과" required>
+																		
+											<input type="text" class="form-control" name="studMajor" placeholder="전공" required>
+										</div>
 									</div>
 									
-									<input type="text" class="form-control" id="" placeholder="전공" list="majorList" required>
-									<div>
-										<datalist id="majorList">
-											<option>조회해오기</option>
-										</datalist>
-									</div>
-								</div>
 								<br>
 
 								
@@ -139,7 +119,8 @@
 			                    <label for="userName">* 입학 정보 :</label>
 			                    <div>
 									<div>
-										<select class="select float">
+										<input type="hidden" >
+										<select class="select float" name="studDivision">
 											<option value="1">신입</option>
 											<option value="2">편입</option>
 											<option value="3">재입학</option>
@@ -147,33 +128,53 @@
 									</div>
 
 									<div>
-										<select class="select">
-											<option value="1">재학</option>
-											<option value="2">휴학</option>
-											<option value="3">졸업</option>
+										<input type="hidden">
+										<select class="select" name="studStatus" disabled>
+											<option value="1" selected>재학</option>
 										</select>
 									</div>
 								</div>
 								<br>
 
 			                    <label for="nation"> * 국적 :</label>
-			                    <input type="text" class="form-control" id="age" name="" placeholder="대한민국"><br>
+			                    <input type="text" class="form-control" id="nation" name="nation" value="대한민국"><br>
 			                    
 			                    <label for="phone"> * 연락처 :</label>
-			                    <input type="tel" class="form-control" id="phone" name="" placeholder="(-없이 입력)"><br>
+			                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="11" placeholder="(-없이 입력)"><br>
 			                    
 			                    <label for="email"> * 이메일 :</label>
-			                    <input type="email" class="form-control" id="email" name="" placeholder=""><br>
+			                    <input type="email" class="form-control" id="email" name="email"><br>
 			                    
 								<label for="address"> * 주소 :</label>
-								<div>
-				                    <input type="text" class="form-control float" id="address" name="" placeholder="우편번호" style="width:150px">
-				                    <input type="text" class="form-control" id="address" name="" placeholder="상세주소" style="width:500px"><br>
+								
+								<div class="ads">
+									<input type="hidden" id="totalAddress" name="address">
+									<input type="text" id="sample3_postcode" placeholder="우편번호" style="width:170px" required>
+									<input type="button" onclick="postNo();" value="우편번호 찾기" style="width:130px"><br>
+									<input type="text" id="sample3_address" placeholder="주소" style="width:500px"><br>
+									<input type="text" id="sample3_detailAddress" placeholder="상세주소" style="width:300px">
+									<input type="text" id="sample3_extraAddress" placeholder="참고항목" style="width:187px;">
 								</div>
-			                   	
-									<div class="submitBtn" onclick="">
-										<p>정보 등록</p>
-									</div>
+								
+								<div id="wrapper" style="display:none; border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+									<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="esc()" alt="접기 버튼">
+								</div>
+																			 
+			                	    <br>
+					           	  <label>* 프로필 사진 :</label>
+		                	    	<input type="file" id="upfile" class="form-control-file" name="upfile">
+		                	    <div>
+		                	    </div>
+			                
+					           	
+					           	
+					           	
+									<button type="submit" class="submitBtn">
+										<p>학생 정보 등록</p>
+									</button>
+									
+									
+									
 				                </div>
 				                <br>
 				            </form>
@@ -185,6 +186,169 @@
 				
 		
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		
+		$(function(){
+			
+			sidebar();
+			
+			var result = "";
+			
+			// 생년월일 글자수 제한
+			$("#birthday").on('keypress', function(){
+				birth = $(this).val();
+				result = handleOnInput(birth, 5);
+				
+				if(result != null){			
+					$("#birthday").val(result);
+					// 컨트롤러로 넘어간 값이 6자리가 맞는지 확인할 것!	
+				}
+			})
+			
+			// controller로 넘기기 위한 studUniv:값 형태
+			$("#univList").on("change", function(){
+				let checkUniv = $(this).val();
+				
+				$("input[name=studUniv]").val(checkUniv);
+				
+			})
+			
+			
+			
+			   
+		})
+		
+		// 주소 api 닫기
+		function esc(){
+			$("#wrapper").hide();
+			sidebar();	
+		}
+		
+		function submitBtn(){
+			$("#insertForm").submit();
+		}
+		
+		// 사이드바 길이 조절
+		function sidebar(){
+			document.getElementById("content").style.marginBottom = "50px";
+			let $len = $("#content").height();
+				if($len > 750){
+					$(".wrap_sidebar").css('height', $len);
+				}else if($len > 1400){
+					consone.log("짱김");
+					$(".wrap_sidebar").css('height', $len + 170);
+				}else{
+					$(".wrap_sidebar").css('height', 270);
+					document.getElementById("content").style.marginBottom = "280px";
+				}
+		}
+	
+		// 글자수 제한 핸들러
+		function handleOnInput(el, maxlength){
+		
+			let value = 0;
+			if(el.length > maxlength)	{
+				value = el.substr(0, maxlength);
+				return value;
+			}
+		}
+	
+		
+		// 주소 API
+		function postNo(){
+             // 우편번호 찾기 찾기 화면을 넣을 element
+		    var element_wrap = document.getElementById('wrapper');	
+		    
+	        // 현재 scroll 위치를 저장해놓는다.
+	        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	            
+	                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+					
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+                    
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample3_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample3_extraAddress").value = '';
+	                }
+	              
+	              
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample3_postcode').value = data.zonecode;
+	                document.getElementById("sample3_address").value = addr;
+	                
+	                document.getElementById('totalAddress').value = data.zonecode + " " + addr + extraAddr;
+	                
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample3_detailAddress").focus();
+	
+	                // iframe을 넣은 element를 안보이게 한다.
+	                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+	                element_wrap.style.display = 'none';
+	
+	                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+	                document.body.scrollTop = currentScroll;
+	            },
+	            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+	            onresize : function(size) {
+	            	
+	            	address();
+	                element_wrap.style.height = size.height+'px';
+	            },
+	            width : '100%',
+	            height : '100%'
+	        }).embed(element_wrap);
+	        
+	        // iframe을 넣은 element를 보이게 한다.
+	        element_wrap.style.display = 'block';
+	        
+	        
+	        // 최종적으로 name="address"에 담을 내용
+	        $("#sample3_detailAddress").focusout(function(){
+		        sidebar();
+	        	
+	        	let address = $("#totalAddress").val();
+				let detailAd = $("#sample3_detailAddress").val();
+				
+			  $("#totalAddress").val(address + " " + detailAd);
+				
+	        })
+	       
+		}
+		
+		
+		
+	</script>
 	
 </body>
 </html>

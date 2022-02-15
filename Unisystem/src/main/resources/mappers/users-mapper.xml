@@ -98,7 +98,7 @@
 		     , profile_img
 		     , prof_no
 		     , prof_rank
-		     , prof_change
+		     , rank_change
 		     , prof_univ
 		     , prof_department
 		     , prof_major
@@ -109,10 +109,30 @@
 		     , prof_app_day
 		     , prof_app_time
 			   from users u
-			   join professor s on (user_no = prof_no)
+			   join professor s on (u.user_no = s.prof_no)
 		   where
 		   user_no = #{userNo}
 </select>
+<!-- 관리자 로그인 -->
+<select id="adminLoginUser" resultMap="usersResult">
+		select
+		       user_no
+		     , password
+		     , kor_name
+		     , eng_name
+		     , birthday
+		     , gender
+		     , email
+		     , phone
+		     , address
+		     , nation
+		     , WEBMAIL 
+			   from users u
+		   where
+		   user_no = #{userNo}
+		   and user_div = 3
+</select>
+
 
 
 

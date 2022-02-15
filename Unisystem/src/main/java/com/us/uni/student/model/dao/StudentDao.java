@@ -41,5 +41,39 @@ public class StudentDao {
 		return (ArrayList)sqlSession.selectList("studentMapper.searchStudent", map, rowBounds);
 	}
 	
+	public int studentDelete(SqlSessionTemplate sqlSession, String dno) {
+		
+		int result = 0;
+	
+		int result1 = sqlSession.delete("studentMapper.studentDelete1", dno);
+		int result2 = sqlSession.delete("studentMapper.studentDelete2", dno);
+		
+		result = result1 * result2;
+		
+		if(result > 0) {
+			return result;
+		}
+		
+		return 0;
+	}
+	
+	public int studentInsert(SqlSessionTemplate sqlSession, Users student) {
+		
+		int result = 0;
+		
+		int result1 = sqlSession.insert("studentMapper.studentInsert1", student);
+		int result2 = sqlSession.insert("studentMapper.studentInsert2", student);		
+		
+		System.out.println(result);
+		
+		result = result1 * result2;
+		
+		if(result > 0) {
+			return result;
+		}
+		
+		return 0;
+	}
+	
 	
 }
