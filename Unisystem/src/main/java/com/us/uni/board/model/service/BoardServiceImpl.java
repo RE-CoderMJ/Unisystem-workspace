@@ -70,15 +70,20 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(Board b, Attachment at) {
 		 System.out.println(b);
 		 
+		 
 		int result1 = bDao.insertBoard(sqlSession, b);
 		//System.out.println("result1:"+result1);
 		
 		
-		
+		if(at.getOriginName() != null) {
+			
 		int result2 = bDao.insertAttachBoard(sqlSession, at);
 		System.out.println("result2:"+result2);
 		
 		return result1*result2;
+		}
+		
+		return result1;
 	}
 
 	 
@@ -97,6 +102,136 @@ public class BoardServiceImpl implements BoardService{
 		
 		return bDao.selectAttachBoard(sqlSession, boardNo);
 		
+	}
+
+	@Override
+	public int deleteBoard(int bno) {
+		
+		return bDao.deleteBoard(sqlSession, bno);
+	}
+	
+	@Override
+	public int deleteAttachBoard(int bno) {
+		
+		return bDao.deleteAttachBoard(sqlSession, bno);
+	}
+
+	@Override
+	public int updateBoard(Board b) {
+		
+		return bDao.updateBoard(sqlSession, b);
+	}
+	
+	@Override
+	public int updateAttachBoard(HashMap<String,Object> map) {
+		
+		return bDao.updateAttachBoard(sqlSession, map);
+	}
+
+	@Override
+	public int newUpdateAttachBoard(HashMap<String, Object> map) {
+		
+		return bDao.newUpdateAttachBoard(sqlSession, map);
+	}
+
+	
+	@Override
+	public int volselectListCount() {
+		
+		return bDao.volselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> volselectList(PageInfo pi) {
+		
+		return bDao.volselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int cirselectListCount() {
+		
+		return bDao.cirselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> cirselectList(PageInfo pi) {
+		
+		return bDao.cirselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int nselectListCount() {
+		
+		return bDao.nselectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> nselectList(PageInfo pi) {
+		
+		return bDao.nselectList(sqlSession, pi);
+	}
+
+	@Override
+	public int nselectSearchCount(HashMap<String, String> map) {
+		
+		return bDao.nselectSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> nselectSearchList(HashMap<String, String> map, PageInfo pi) {
+		
+		ArrayList<Board> list = bDao.nselectSearchList(sqlSession, map, pi);
+		
+		return list;
+	}
+
+	@Override
+	public int ninsertBoard(Board b, Attachment at) {
+		
+		int result1 = bDao.ninsertBoard(sqlSession, b);
+		int result2 = bDao.insertAttachBoard(sqlSession, at);
+
+		return result1*result2;
+	}
+
+	@Override
+	public Board nselectBoard(int bno) {
+		
+		return bDao.nselectBoard(sqlSession, bno);
+	}
+
+	@Override
+	public int vinsertBoard(Board b) {
+		
+		int result1 = bDao.vinsertBoard(sqlSession, b);
+		return result1;
+	}
+
+	@Override
+	public Board vselectBoard(int bno) {
+		
+		return bDao.vselectBoard(sqlSession, bno);
+
+	}
+
+	@Override
+	public int cinsertBoard(Board b) {
+		
+		int result1 = bDao.cinsertBoard(sqlSession, b);
+
+		return result1;
+	}
+
+	@Override
+	public Board cselectBoard(int bno) {
+		
+		return bDao.cselectBoard(sqlSession, bno);
+	}
+
+	@Override
+	public int nupdateBoard(Board b) {
+		
+		return bDao.nupdateBoard(sqlSession, b);
 	}
 
 }

@@ -49,5 +49,13 @@ public class Lecture {
 	
 	private String korName;			  
 	private int userNo;				  // 학번 및 교번
+	
+	// attendance 테이블
+	private int attendanceNo;
+	private String classTitle;
+	private String attendanceDate;
+	private String attendanceStatus;
+	
+	private int rownum;
 
 }

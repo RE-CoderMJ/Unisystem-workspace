@@ -32,5 +32,40 @@ public interface BoardService {
 		Board selectBoard(int bno);
 		Attachment selectAttachBoard(int boardNo);
 		
+		//게시글 삭제
+		int deleteBoard(int bno);
+		int deleteAttachBoard(int bno);
+		
+		
+		int updateBoard(Board b);
+		int updateAttachBoard(HashMap<String,Object> map);
+		int newUpdateAttachBoard(HashMap<String,Object> map);
+		
+		
+		int volselectListCount();
+		ArrayList<Board> volselectList(PageInfo pi);
+		
+		int cirselectListCount();
+		ArrayList<Board> cirselectList(PageInfo pi);
+		
+		int nselectListCount();
+		ArrayList<Board> nselectList(PageInfo pi);
+		
+		//공지
+		int nselectSearchCount(HashMap<String, String> map);
+		ArrayList<Board> nselectSearchList(HashMap<String, String> map, PageInfo pi);
+		int ninsertBoard(Board b, Attachment at);
+		Board nselectBoard(int bno);
+		int nupdateBoard(Board b);
+		
+		//대외활동
+		int vinsertBoard(Board b);
+		Board vselectBoard(int bno);
+		
+		//동아리
+		int cinsertBoard(Board b);
+		Board cselectBoard(int bno);
+		
+		
 		
 }

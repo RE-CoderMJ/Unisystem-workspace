@@ -73,7 +73,8 @@
     <!-- header 영역 -->
     <jsp:include page="../common/header.jsp" />
     <jsp:include page="../common/links.jsp"/>
-
+    
+	
     <div id="wrap">
 
         <div style="float: left; margin-top : 30px">
@@ -122,6 +123,8 @@
                     <tbody>
                     
 	                    <c:forEach var="l" items="${ list }">
+	                    <input type="hidden" value="${ l.classNo }" id="classNo" name="classNo"/>
+	                    	
 	                    	
 	                    	<!-- list가 비어있을 경우 -->
 	                    	<c:if test="${ empty list}">
@@ -135,7 +138,7 @@
 	                    	<!-- list가 비어있지 않을 경우 -->
 		                    <tr>
 		                        <td>${ l.classCode }</td>
-		                        <td>${l.classKorName}</td>
+		                        <td id="classKorName">${l.classKorName}</td>
 		                        <td>
 		                        	<c:if test="${ l.classCategory eq 1 }">
 		                        		대면강의
@@ -154,6 +157,12 @@
                 </table>
 				
 				<script>
+            	$(function(){
+            		// 페이지상에 모든 요소들이 다 만들어지고 년도리스트 조회해오는 함수 호출
+             		selectYearList();
+            	})
+            	
+            	
             	//td요소에 클릭이라는 이벤트 발생 시 실행할 함수 => 링크이동
             	$(function(){
             		$("#classList>tbody td:nth-child(2)").on("click", function(){
@@ -162,12 +171,7 @@
             	})		
             	
             	
-            	$(function(){
-            		// 페이지상에 모든 요소들이 다 만들어지고 년도리스트 조회해오는 함수 호출
-             		selectYearList();
-            	})
-            	
-            	// 년도 list를 가져오는 ajax
+            	// 드롭박스에 년도 list를 가져오는 ajax
             	function selectYearList(){ 
             		$.ajax({
             			url:"studentYearList.me",
@@ -194,7 +198,6 @@
             		var userNo = $("#userNo").val();
             		var classYear = $("select[name=classYear]").val();
             		var classSemester = $("select[name=classSemester]").val();      
-            		var classCategory="";
             		
             		$.ajax({
             			url:"studentSearchList.me",
@@ -203,18 +206,32 @@
             				classYear : classYear,
             				classSemester : classSemester
             				},
+            			type:"POST",
             			success:function(searchList){
             				console.log(searchList);
             				let value = "";
+            				var classCategory="";
             				for(let i in searchList){
+            					
+            					if(searchList[i].classCategory == 1){
+            						classCategory = "대면강의";
+            					} else {
+            						classCategory = "비대면강의";
+            					}
+            					
                             	value += "<tr>"
-                                    +		"<td>" + searchList[i].classCode + "</th>"
-                                    +		"<td>" + searchList[i].classKorName + "</td>"                 
-                                    +		"<td>" + searchList[i].classCategory + "</td>"
+                                    +		"<td id='classCode'>" + searchList[i].classCode + "</th>"
+                                    +		"<td id='className'>" + searchList[i].classKorName + "</td>"                            
+                                    +		"<td>" + classCategory + "</td>"
                                     +		"<td>" + searchList[i].korName + "</td>"
                                     +		"<td>" + searchList[i].currStud + "</td>"
                               	  		+ "</tr>";
- 
+ 								
+                              	 
+	                             $(document).on("click", "#className", function(){
+	                             	location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
+	                             });	
+  
             				}
             				$("#classList>tbody").html(value);
             				
@@ -234,12 +251,8 @@
 
         </div>
     </div>
-
-
-
-
     </div>
-
+  
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
 </body>

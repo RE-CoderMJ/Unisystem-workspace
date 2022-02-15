@@ -176,7 +176,6 @@ margin-top: 10px;
 						<!--제목,날짜,조회수 등록영역-->
 						<div id="search_wrap">
 							<select  name="subCategory" id="condition" class="custom-select">
-								<option class="ctg"  value="4">카테고리</option>
 								<option class="ctg"  value="5">자유</option>
 								<option class="ctg"  value="6">취업</option>
 								<option class="ctg"  value="7">정보</option>
@@ -200,7 +199,7 @@ margin-top: 10px;
 
 		<!-- 글작성 영역-->
 		<div class="board-content">
-			<textarea name="boardContent"></textarea>
+			<textarea name="boardContent" required></textarea>
 		</div>
 		
 		<div class="upload-area">

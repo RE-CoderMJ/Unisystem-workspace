@@ -134,7 +134,7 @@
 
         <div id="header-up">
         	<div id="header-up-line">
-	            <div style="float: left;"><a href="" id="homepage">HOMEPAGE</a></div>
+	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
 	                <span>${loginUser.korName}(학생)님 환영합니다.</span>
@@ -145,12 +145,29 @@
 
         <div id="header-down">
         	<div id="header-down-line">
-	            <img src="resources/images/LOGO_WIDTH.png">
+	            <a href="enview"><img src="resources/images/LOGO_WIDTH.png"></a>
 	            <nav id="header-down-right">
 
 	                <a href="webMail.inbox">웹메일</a>
-	                <a href="studentClassList.me?userNo=${loginUser.userNo}">마이페이지</a>
-	                <a href="">공지사항</a>
+					
+					<!-- 마이페이지 : 학생일 때 -->
+					<c:if test="${ loginUser.userDiv eq 1 }">
+		                <a href="list.st">마이페이지</a>
+					</c:if>
+					
+					<!-- 마이페이지 : 교수일 때 -->
+					<c:if test="${ loginUser.userDiv eq 2 }">
+		                <a href="list.pr">마이페이지</a>
+					</c:if>	
+					
+					<!-- 마이페이지 : 관리자일 때 -->
+					<c:if test="${ loginUser.userDiv eq 3 }">
+		                <a href="student.ad">마이페이지</a>
+					</c:if>					
+					
+									
+	                <a href="list.nbo">공지사항</a>
+
 	                <a href="list.bo">커뮤니티</a>
 	                <div id="search-area">
 	                    <input type="text" name="search" id="search">
@@ -159,6 +176,8 @@
 	            </nav>
             </div>
         </div>
+        
     </header>
+    
 </body>
 </html>

@@ -100,11 +100,11 @@ input:focus {
 				</div>
 
 				<div class="admin_log_input">
-					<form action="" method="post" id="log-input">
-
-						<input type="text" name="" placeholder="  아이디"> <br>
-						<input type="password" class="ad_pwd" name="" placeholder=" 비밀번호">
-
+					<form action="login.me" method="post" id="log-input">
+						<input type="hidden" name="userDiv" value="3"/>
+						<input type="text" name="userNo" placeholder="  아이디"> <br>
+						<input type="password" class="ad_pwd" name="userPwd" placeholder=" 비밀번호">
+	
 						<button type="submit">로그인</button>
 					</form>
 				</div>
