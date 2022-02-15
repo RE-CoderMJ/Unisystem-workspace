@@ -26,4 +26,5 @@ public class MailTo {
 	private String title;
 	private String content;
 	private String fileName;
+	private String userFromName;
 }

@@ -46,106 +46,12 @@
             </header>
             <article>
                 <div id="mails">
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
-                    <div class="mail">
-                        <input class="checkbox-att" type="checkbox">
-                        <div class="important-att"><i class="fa fa-star fa-sm" aria-hidden="true"></i></div>
-                        <div class="read-status-att"><i class="far fa-envelope-open"></i></div>
-                        <div class="from-att">김나다</div>
-                        <div class="date-att">2022-01-19 22:05</div>
-                        <div class="title-att">[보낸메일함] 질문드립니다.</div>
-                        <hr class="line-att"><br>
-                        <a href="">첨부파일.hwp</a><br>
-                        <a href="">질문지.pdf</a>
-                    </div>
                     
                 </div>
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                  </div>
 
@@ -154,6 +60,102 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(function(){
+			selectAttachMailList(1);
+		});
+		
+		function selectAttachMailList(cPageNo){
+			$.ajax({
+				url:"webMail.selectAttachMailList",
+				data:{currentPage:cPageNo, userNo:"${loginUser.userNo}"},
+				success:function(result){
+					
+					let value="";
+					for(let i in result.list){
+						value += "<div class='mail'>"
+							   + "<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   + "<input class='checkbox-att' type='checkbox'>";
+						if(result.list[i].important == "N"){
+							value += "<div class='important-att'><i class='fa fa-star fa-sm' style='color:lightgray;' aria-hidden='true'></i></div>";
+						}else{
+							value += "<div class='important-att'><i class='fa fa-star fa-sm' aria-hidden='true'></i></div>";
+						}
+						
+						if(result.list[i].readDate != null){
+							value += "<div class='read-status-att'><i class='far fa-envelope-open'></i></div>";
+						}else{
+							value += "<div class='read-status-att'><i class='far fa-envelope'></i></div>";
+						}
+						
+						value += "<div class='from-att'>" + result.list[i].userFromName + "</div>"
+							   + "<div class='date-att'>" + result.list[i].sendDate + "</div>";
+						
+						if(result.list[i].readDate == null){
+							if(result.list[i].ccStatus == "N"){
+								value += "<div class='title-att' style='color:blue'>" + result.list[i].title + "</div>";								
+							}else{
+								value += "<div class='title-att' style='color:blue'> cc:" + result.list[i].title + "</div>";
+							}
+							
+						}else{
+							if(result.list[i].ccStatus == "N"){
+								value += "<div class='title-att'>" + result.list[i].title + "</div>";								
+							}else{
+								value += "<div class='title-att'> cc:" + result.list[i].title + "</div>";
+							}
+							
+						}
+						
+						value += "<hr class='line-att'><br>";
+						
+						for(let j in result.attList){
+							if(result.attList[j].refNo == result.list[i].mailFromNo){
+								value += "<a class='files' href='" + result.attList[j].path + result.attList[j].changeName + "' download='" + result.attList[j].originName + "'>" + result.attList[j].originName + "</a><br>";
+							}
+						}
+						
+						value += "</div>";
+						
+						$("#mails").html(value);
+						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectAttachMailList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectAttachMailList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectAttachMailList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectAttachMailList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+					}
+					
+                	
+					
+				},error:function(){
+					console.log("첨부파일 메일함 목록 조회용 ajax 통신 실패");
+				}
+			})
+		}
+	</script>
 	
 	<script>
 		$(document).ready(function(){

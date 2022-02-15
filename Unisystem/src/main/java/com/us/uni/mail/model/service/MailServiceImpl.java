@@ -136,6 +136,24 @@ public class MailServiceImpl implements MailService {
 		
 		return result * result2 * result3 * result4;
 	}
+	
+	@Override
+	public int selectAttachMailListCount(int userNo) {
+		int result = mDao.selectAttachMailListCount(sqlSession, userNo);
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailTo> selectAttachMailList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectAttachMailList(sqlSession, pi, userNo);
+		return list;
+	}
+
+	@Override
+	public ArrayList<Attachment> selectAllAttachmentList(int userNo) {
+		ArrayList<Attachment> attList = mDao.selectAllAttachmentList(sqlSession, userNo);
+		return attList;
+	}
 
 	@Override
 	public MailTo selectMail(int mailNo) {
@@ -154,9 +172,6 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
-
 	
 
 

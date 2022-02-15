@@ -31,6 +31,12 @@ public interface MailService {
 	// 임시저장 메일 작성페이지에 불러오기 서비스
 	MailFrom selectDraft(int mfNo);
 	
+	// 첨부파일 메일함 리스트 페이지 서비스
+	int selectAttachMailListCount(int userNo);
+	ArrayList<MailTo> selectAttachMailList(int userNo, PageInfo pi);	
+	ArrayList<Attachment> selectAllAttachmentList(int userNo);
+	
+	// 첨부파일 조회용 서비스
 	
 	// 메일 작성하기 서비스
 	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);

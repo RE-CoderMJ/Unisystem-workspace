@@ -33,8 +33,18 @@
 		<result column="file_name" property="fileName" />
 		<result column="from_user" property="userFromNo" />
 		<result column="from_add" property="userFromAdd" />
+		<result column="from_name" property="userFromName" />
 	</resultMap>
 	
+	<resultMap type="Attachment" id="attResult">
+		<result column="attach_no" property="attachNo" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="path" property="path" />
+	</resultMap>
+	
+	<!-- 임시저장 -->
 	<insert id="saveDraft">
 		insert
 		  into mail_from
@@ -59,6 +69,7 @@
 		  )
 	</insert>
 	
+	<!-- 내게쓰기 임시저장 -->
 	<insert id="saveToMeDraft">
 		insert
 		  into mail_from
@@ -85,6 +96,7 @@
 		  )
 	</insert>
 	
+	<!-- 임시보관함 -->
 	<select id="selectDraftListCount" resultType="_int">
 		select
 		       count(*)
@@ -107,6 +119,7 @@
 		    by mail_from_no desc
 	</select>
 	
+	<!-- 임시보관 메일 상세조회 -->
 	<select id="selectDraft" resultMap="fromResult">
 		select
 			   mail_from_no
@@ -118,6 +131,8 @@
 		   and save_status = 'Y'
 	</select>
 	
+	
+	<!-- 메일작성 -->
 	<update id="updateMailFrom">
 		update
 			   mail_from
@@ -129,6 +144,7 @@
 		   and from_user = #{userNo}
 	</update>
 	
+	<!-- 참조메일 작성 -->
 	<insert id="insertMailFrom">
 		insert
 		  into mail_from
@@ -295,6 +311,7 @@
 		  )
 	</insert>
 	
+	<!-- 보낸메일함 -->
 	<select id="selectSentListCount" resultType="_int">
 		select 
 		       count(*)
@@ -323,6 +340,7 @@
 		    by mail_from_no desc
 	</select>
 	
+	<!-- 받은 메일함 -->
 	<select id="selectInboxListCount" resultType="_int">
 		select
 			   count(*)
@@ -357,6 +375,7 @@
 		 	by mail_to_no desc
 	</select>
 	
+	<!-- 내게 쓴 메일함 -->
 	<select id="selectToMeListCount" resultType="_int">
 		select
 			   count(*)
@@ -387,5 +406,83 @@
 		    by mail_from_no desc
 	</select>
 	
+	<!-- 첨부파일 메일함 -->
+	<select id="selectAttachMailListCount" resultType="_int">
+		select 
+		       count(*)
+		  from
+		       (
+		         select
+		                distinct mail_to_no
+		           from (
+		                    select 
+		                           mail_to_no
+		                         , t.mail_from_no
+		                      from mail_to t
+		                      join mail_from f on(t.mail_from_no = f.mail_from_no)
+		                      join users on (from_user = user_no)
+		                     where t.to_user = #{userNo}
+		                       and t.status = 'N'
+		                       and spam_status = 'N'
+		                    )
+		             left join attachment a on (ref_no = mail_from_no)
+		               where ref_type = 'M'
+		                 and a.status = 'Y'
+		        )
+	</select>
+	
+	<select id="selectAttachMailList" resultMap="toResult">
+		select 
+		       distinct mail_to_no
+		     , kor_name as "from_name"
+		     , from_add
+		     , mail_from_no
+		     , to_user
+		     , important
+		     , read_date
+		     , cc_status
+		     , title
+		     , send_date
+		  from (
+		        select 
+		               mail_to_no
+		             , kor_name
+		             , from_add
+		             , t.mail_from_no
+		             , t.to_user
+		             , t.important
+		             , read_date
+		             , cc_status
+		             , title
+		             , send_date
+		          from mail_to t
+		          join mail_from f on(t.mail_from_no = f.mail_from_no)
+		          join users on (from_user = user_no)
+		         where t.to_user = #{userNo}
+		           and t.status = 'N'
+		           and spam_status = 'N'
+		        )
+		 left join attachment a on (ref_no = mail_from_no)
+		   where ref_type = 'M'
+		     and a.status = 'Y'
+		   order
+		      by mail_to_no desc
+	</select>
+	
+	<select id="selectAllAttachmentList" resultMap="attResult">
+		select
+		       attach_no
+		     , ref_no
+		     , origin_name
+		     , change_name
+		     , path
+		  from attachment a
+		  join mail_to on (ref_no = mail_from_no)
+		 where ref_type = 'M'
+		   and to_user = #{userNo}
+		   and a.status = 'Y'
+		 order
+		    by mail_from_no desc
+	</select>
 	
 </mapper>

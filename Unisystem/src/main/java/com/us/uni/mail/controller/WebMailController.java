@@ -109,7 +109,7 @@ public class WebMailController {
 	 * @return
 	 */
 	@RequestMapping("webMail.toMe")
-	public String selectToMeMails(){
+	public String toMeMailsPage(){
 		return "webMail/toMe";
 	}
 	
@@ -156,9 +156,39 @@ public class WebMailController {
 		return "webMail/important";
 	}
 	
+	/**
+	 * 첨부파일 메일함 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.attach")
-	public String selectMailsWithAttach(){
+	public String mailsWithAttachPage(){
 		return "webMail/attach";
+	}
+	
+	/**
+	 * 첨부파일 메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectAttachMailList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectAttachMailList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectAttachMailListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+		ArrayList<MailTo> list = mService.selectAttachMailList(userNo, pi);
+		ArrayList<Attachment> attList = mService.selectAllAttachmentList(userNo);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		map.put("attList", attList);
+		
+		return map;
+		
 	}
 	
 	/**

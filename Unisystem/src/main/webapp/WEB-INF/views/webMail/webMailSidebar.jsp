@@ -64,6 +64,7 @@
     .fa-star{color:RGB(252,175,23);}
     #att{
         margin-top: -2px;
+        cursor:pointer;
     }
     .fa-paperclip{color: gray;}
     
@@ -161,7 +162,7 @@
                 <div id="important">
                     <i class="fa fa-star fa-xs" aria-hidden="true"></i><div>중요</div>
                 </div>
-                <div id="att">
+                <div id="att" onclick="location.href='webMail.attach'">
                     <i class="fa fa-paperclip fa-sm" aria-hidden="true"></i><div>첨부</div>
                 </div>
             </div>

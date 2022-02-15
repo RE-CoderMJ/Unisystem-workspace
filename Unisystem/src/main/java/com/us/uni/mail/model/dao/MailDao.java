@@ -126,6 +126,25 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectToMeList", userNo, rowBounds);
 	}
 
+	public int selectAttachMailListCount(SqlSessionTemplate sqlSession, int userNo) {
+		
+		return sqlSession.selectOne("mailMapper.selectAttachMailListCount", userNo);
+	}
+
+	public ArrayList<MailTo> selectAttachMailList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", userNo, rowBounds);
+	}
+
+	public ArrayList<Attachment> selectAllAttachmentList(SqlSessionTemplate sqlSession, int userNo) {
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectAllAttachmentList", userNo);
+	}
+
 	
 
 	
