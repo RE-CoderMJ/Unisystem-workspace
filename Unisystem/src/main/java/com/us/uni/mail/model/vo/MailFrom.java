@@ -12,6 +12,7 @@ import lombok.ToString;
 public class MailFrom {
 	
 	private int mailNo;
+	private int mailToNo;
 	private int userNo;
 	private String userToNo;
 	private String address;

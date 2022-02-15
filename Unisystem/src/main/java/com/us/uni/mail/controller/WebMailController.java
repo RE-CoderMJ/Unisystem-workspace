@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
@@ -347,8 +348,20 @@ public class WebMailController {
 	}
 	
 	@RequestMapping("webMail.detailView")
-	public String selectMail(){
-		return "webMail/detailView";
+	public ModelAndView selectMail(int mNo, ModelAndView mv){
+		
+		int result = mService.updateReadDate(mNo);
+		
+		if(result > 0) {
+			MailTo mt = mService.selectMail(mNo);
+			ArrayList<Attachment> attList = mService.selectAttachmentList(mNo);
+			mv.addObject("mt", mt)
+			  .addObject("attList", attList)
+			  .setViewName("webMail/detailView");
+		}else {
+			
+		}
+		return mv;
 	}
 	
 	@RequestMapping("webMail.contact")

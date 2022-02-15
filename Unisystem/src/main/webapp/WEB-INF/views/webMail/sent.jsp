@@ -74,7 +74,7 @@
 					let value = "";
 					for(let i in result.list){
 						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailToNo + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
                     		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
                     	if(result.list[i].fileName != null){
@@ -122,6 +122,14 @@
 				
 			});
 		}
+	</script>
+	
+	<script>
+		$(function(){
+			$(document).on("click", "tr", function(){
+				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			});		
+		})
 	</script>
 	
 	<script>

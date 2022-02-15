@@ -18,6 +18,7 @@
     white-space: nowrap; /* 내용이 넘치면 자동줄바꿈되는 것을 해제 */
     overflow: hidden; /* 넘치는 부분을 hidden */
     text-overflow: ellipsis; /* 텍스트의 말줄임표(...) 처리 */
+    cursor:pointer;
 }
 .mail>div{
     float:left;

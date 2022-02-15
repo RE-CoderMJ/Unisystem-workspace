@@ -74,7 +74,7 @@
 					let value = "";
 					for(let i in result.list){
 						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailToNo + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 							   
 						if(result.list[i].important == "N"){
@@ -131,6 +131,14 @@
 				
 			});
 		}
+	</script>
+	
+	<script>
+		$(function(){
+			$(document).on("click", "tr", function(){
+				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			});		
+		})
 	</script>
 	
 	<script>

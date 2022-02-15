@@ -156,9 +156,21 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public MailTo selectMail(int mailNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateReadDate(int mNo) {
+		int result = mDao.updateReadDate(sqlSession, mNo);
+		return result;
+	}
+	
+	@Override
+	public MailTo selectMail(int mNo) {
+		MailTo mt = mDao.selectMail(sqlSession, mNo);
+		return mt;
+	}
+	
+	@Override
+	public ArrayList<Attachment> selectAttachmentList(int mNo) {
+		ArrayList<Attachment> attList = mDao.selectAttachmentList(sqlSession, mNo);
+		return attList;
 	}
 
 	@Override
@@ -172,6 +184,10 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
 	
 
 

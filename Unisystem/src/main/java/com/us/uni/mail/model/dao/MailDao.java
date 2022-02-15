@@ -145,6 +145,21 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectAllAttachmentList", userNo);
 	}
 
+	public int updateReadDate(SqlSessionTemplate sqlSession, int mNo) {
+		
+		return sqlSession.update("mailMapper.updateReadDate", mNo);
+	}
+
+	public MailTo selectMail(SqlSessionTemplate sqlSession, int mNo) {
+		
+		return sqlSession.selectOne("mailMapper.selectMail", mNo);
+	}
+
+	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, int mNo) {
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectAttachmentList", mNo);
+	}
+
 	
 
 	

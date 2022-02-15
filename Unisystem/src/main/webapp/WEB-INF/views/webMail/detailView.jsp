@@ -28,32 +28,41 @@
                 </div>
                 <hr class="detail-lines">
                 <div id="title-area">
-                	<i class="fa fa-star fa-xs" aria-hidden="true"></i>
-                	<span id="title">기말고사 질문에 대한 답변입니다.</span>
+                <c:choose>
+                	<c:when test="${mt.important eq 'Y' }">
+                		<i class="fa fa-star fa-xs" aria-hidden="true"></i>
+                	</c:when>
+                	<c:otherwise>
+                		<i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i>
+                	</c:otherwise>
+                </c:choose>
+                	<span id="title">${mt.title}</span>
                 </div>
                 <div id="info-area">
-               		<span>보낸 사람</span>김땡땡&lt;kimprof12@unisystem.com&gt;<br>
-               		<span>받는 사람</span>김나다&lt;20221394@unisystem.com&gt;
+               		<span>보낸 사람</span>${mt.userFromName}&lt;${mt.userFromAdd }&gt;<br>
+               		<span>받는 사람</span>${mt.userToName}&lt;${mt.address}&gt;
                 </div>
                 <hr class="detail-lines">
             </header>
             <article>
                 <div id="contents">
-                	남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디<br><br>
-
-					능히 품으며 그들의 이상은 아름답고 소담스러운 열매를 맺어 우리 인생을 풍부하게 하는 것이다 보라 청춘을 ! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며<br><br>
-					
-					맺어 우리 인생을 풍부하게 하는 것이다 보라 청춘을 ! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의<br><br>
-					남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디<br><br>
-
+                	${mt.content}
                 </div>
                
                 <hr class="detail-lines" style="margin-left:55px;">
 				<div id="att-area">
 					<span id="att-title">첨부파일</span>
 					<div id="att-list">
-						<div>설명.hwp</div>
-						<div>설명2.hwp</div>					
+					<c:choose>
+						<c:when test="${not empty attList}">
+							<c:forEach var="att" items="${attList}">
+								<div><a href="${att.path}${att.changeName}" download="${att.originName}">${ att.originName }</a></div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<div>첨부된 파일이 없습니다.</div>
+						</c:otherwise>
+					</c:choose>					
 					</div>
 				</div>                
                

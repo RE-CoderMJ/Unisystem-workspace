@@ -158,6 +158,14 @@
 	</script>
 	
 	<script>
+		$(function(){
+			$(document).on("click", ".mail", function(){
+				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			});		
+		})
+	</script>
+	
+	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
 			console.log($len);

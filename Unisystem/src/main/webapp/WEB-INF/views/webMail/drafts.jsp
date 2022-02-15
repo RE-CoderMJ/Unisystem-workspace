@@ -128,7 +128,6 @@
 		$(function(){
 			$(document).on("click", "tr", function(){
 				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
-				console.log($(this).children("input").val());
 			})
 		})
 	</script>

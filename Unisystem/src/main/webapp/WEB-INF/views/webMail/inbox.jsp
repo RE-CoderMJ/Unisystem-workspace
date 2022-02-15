@@ -106,8 +106,6 @@
 	                    	}else{
 	                    		value += "<td class='title'>cc : " + result.list[i].title + "</td>";
 	                    	}
-	 							value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
-	 							   	   + "</tr>";
                     	}else{
                     		value += "<td class='from overflow unread'>" + result.list[i].userFromAdd + "</td>";
 	                    	if(result.list[i].ccStatus == "N"){
@@ -116,7 +114,7 @@
 	                    		value += "<td class='title unread'>cc : " + result.list[i].title + "</td>";
 	                    	}
                     	}
-                    	
+
 	 					value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
 	 					   	   + "</tr>";
 					}
@@ -155,6 +153,14 @@
 				
 			});
 		}
+	</script>
+	
+	<script>
+		$(function(){
+			$(document).on("click", "tr", function(){
+				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			});		
+		})
 	</script>
 	
 	<script>

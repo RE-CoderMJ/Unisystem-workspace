@@ -42,13 +42,18 @@ public interface MailService {
 	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);
 	
 	// 메일 상세조회용 서비스
-	MailTo selectMail(int mailNo);
+	MailTo selectMail(int mNo);
+	ArrayList<Attachment> selectAttachmentList(int mNo);
 	
 	// 메일 삭제용(휴지통) 서비스
 	int moveToTrash(int mailNo);
 	
 	// 메일 영구삭제용 서비스
 	int deleteMail(int mailNo);
+	
+	// 메일 읽음 처리용 서비스
+	int updateReadDate(int mNo);
+
 	
 		
 	// 중요메일

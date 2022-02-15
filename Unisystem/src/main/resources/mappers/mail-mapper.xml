@@ -5,6 +5,7 @@
 	
 	<resultMap type="MailFrom" id="fromResult">
 		<result column="mail_from_no" property="mailNo" />
+		<result column="mail_to_no" property="mailToNo" />
 		<result column="from_user" property="userNo" />
 		<result column="from_add" property="address" />
 		<result column="title" property="title" />
@@ -34,6 +35,7 @@
 		<result column="from_user" property="userFromNo" />
 		<result column="from_add" property="userFromAdd" />
 		<result column="from_name" property="userFromName" />
+		<result column="to_name" property="userToName" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -322,8 +324,9 @@
 	
 	<select id="selectSentList" resultMap="fromResult">
 		select
-			   mail_from_no
-			 , to_user
+			   f.mail_from_no
+			 , mail_to_no
+			 , f.to_user
 			 , title
 			 , content
 			 , send_date
@@ -334,6 +337,7 @@
                    and ref_type = 'M'
                    and rownum = 1) "file_name"
 	      from mail_from f
+	      join mail_to t on(f.mail_from_no = t.mail_from_no)
 		 where from_user = #{userNo}
 		   and save_status = 'N'
 		 order
@@ -386,9 +390,10 @@
 	
 	<select id="selectToMeList" resultMap="fromResult">
 		select
-			   mail_from_no
+			   f.mail_from_no
+			 , mail_to_no
 			 , from_add
-			 , important
+			 , f.important
 			 , title
 			 , content
 			 , send_date
@@ -399,6 +404,7 @@
                    and ref_type = 'M'
                    and rownum = 1) "file_name"
 	      from mail_from f
+	      join mail_to t on (f.mail_from_no = t.mail_from_no)
 		 where from_user = #{userNo}
 		   and save_status = 'N'
 		   and to_me = 'Y'
@@ -483,6 +489,47 @@
 		   and a.status = 'Y'
 		 order
 		    by mail_from_no desc
+	</select>
+	
+	<update id="updateReadDate">
+		update 
+			   mail_to
+		   set read_date = sysdate
+		 where mail_to_no = #{mNo}
+	</update>
+	
+	<select id="selectMail" resultMap="toResult">
+		select
+			   mail_to_no
+			 , u.kor_name "from_name"
+             , s.kor_name "to_name"
+			 , t.mail_from_no
+			 , f.from_add
+			 , to_add
+             , title
+             , content
+			 , t.important
+			 , cc_status
+		  from mail_to t
+		  join mail_from f on (t.mail_from_no = f.mail_from_no)
+          join users u on (from_user = u.user_no)
+          join users s on (t.to_user = s.user_no)
+		 where mail_to_no = #{mNo}
+	</select>
+	
+	<select id="selectAttachmentList" resultMap="attResult">
+		select
+		       attach_no
+		     , ref_no
+		     , origin_name
+		     , change_name
+		     , path
+		  from attachment
+          join mail_to on (mail_from_no = ref_no)
+		 where ref_type = 'M'
+		   and mail_to_no = #{mNo}
+		 order
+		    by attach_no desc
 	</select>
 	
 </mapper>
