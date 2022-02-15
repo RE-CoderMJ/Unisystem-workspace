@@ -185,6 +185,16 @@ margin-left:213px;
 				<div class="updel">
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
+				
+				 <script>
+	            	function postFormSubmit(num){
+	            		if(num == 1){ // 수정하기 클릭시
+	            			$("#postForm").attr("action", "updateForm.nbo").submit();
+	            		}else{ // 삭제하기 클릭시
+	            			$("#postForm").attr("action", "delete.nbo").submit();
+	            		}
+	            	}
+	            </script>
 				 
 				 <form id="updateForm" method="post" action="update.nbo" enctype="multipart/form-data">
                  <input type="hidden" name="boardNo" value="${ b.boardNo }">

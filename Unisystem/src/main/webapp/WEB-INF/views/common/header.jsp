@@ -145,7 +145,7 @@
 
         <div id="header-down">
         	<div id="header-down-line">
-	            <img src="resources/images/LOGO_WIDTH.png">
+	            <a href="enview"><img src="resources/images/LOGO_WIDTH.png"></a>
 	            <nav id="header-down-right">
 
 	                <a href="webMail.inbox">웹메일</a>

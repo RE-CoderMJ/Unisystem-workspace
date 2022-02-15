@@ -179,9 +179,18 @@ margin-top: 10px;
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
 				
 				<div class="updel">
-				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
+				
+				 <script>
+	            	function postFormSubmit(num){
+	            		if(num == 1){ // 수정하기 클릭시
+	            			$("#postForm").attr("action", "updateForm.vbo").submit();
+	            		}else{ // 삭제하기 클릭시
+	            			$("#postForm").attr("action", "delete.nbo").submit();
+	            		}
+	            	}
+	            </script>
 				 
 				 <form id="updateForm" method="post" action="update.vbo" enctype="multipart/form-data">
                  <input type="hidden" name="boardNo" value="${ b.boardNo }">

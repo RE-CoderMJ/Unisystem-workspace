@@ -180,7 +180,7 @@ li {
 
 		<!--검색 영역 -->
 			<div class="search_wrap">
-				<form id="searchForm" action="search.nbo" method="get">
+				<form id="searchForm" action="search.cbo" method="get">
 					<div class="select">
 						<input type="hidden" name="cpage" value="1"/>
 						<select name="condition" class="custom-select">

@@ -177,12 +177,20 @@ margin-top: 10px;
 			<!-- title -->
 			<div class="page_title">동아리 수정</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
-				
-				<div class="updel">
-				<a onclick="postFormSubmit(1);">수정</a> 
+				 
+			<div class="updel">
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
-				 
+				
+				 <script>
+	            	function postFormSubmit(num){
+	            		if(num == 1){ // 수정하기 클릭시
+	            			$("#postForm").attr("action", "updateForm.nbo").submit();
+	            		}else{ // 삭제하기 클릭시
+	            			$("#postForm").attr("action", "delete.nbo").submit();
+	            		}
+	            	}
+	            </script>
 				 <form id="updateForm" method="post" action="update.cbo" enctype="multipart/form-data">
                  <input type="hidden" name="boardNo" value="${ b.boardNo }">
                 

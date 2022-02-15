@@ -70,15 +70,20 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(Board b, Attachment at) {
 		 System.out.println(b);
 		 
+		 
 		int result1 = bDao.insertBoard(sqlSession, b);
 		//System.out.println("result1:"+result1);
 		
 		
-		
+		if(at.getOriginName() != null) {
+			
 		int result2 = bDao.insertAttachBoard(sqlSession, at);
 		System.out.println("result2:"+result2);
 		
 		return result1*result2;
+		}
+		
+		return result1;
 	}
 
 	 

@@ -100,17 +100,10 @@ public class BoardController {
 	@RequestMapping("insert.bo")
 	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
 		
-		
 		Attachment at = new Attachment();
-		
-		 // 첨부파일을 선택했든 안했든 생성된 객체임 (다만 filename에 원본명이 있냐, ""이냐)
-		
-		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 => 원본명, 서버업로드된경로를 b에 이어서 담기
 		if(!upfile.getOriginalFilename().equals("")) {
 			
-		
 			String changeName = saveFile(upfile, session);
-			
 			// 원본명, 서버업로드된경로를 Attatchment 에 이어서 담기
 			at.setOriginName(upfile.getOriginalFilename());
 			at.setChangeName(changeName);
@@ -269,25 +262,7 @@ public class BoardController {
 				
 			}
 			
-			/*
-			 * b에 boardNo, boardTitle, boardContent 무조건 담겨있음
-			 * 
-			 * 1. 새로 첨부된 파일 x, 기존 첨부 파일 x 
-			 *    => originName : null, changeName : null
-			 * 
-			 * 2. 새로 첨부된 파일 x, 기존 첨부 파일 o
-			 *    => originName : 기존첨부파일원본명, changeName : 기존첨부파일저장경로
-			 *    
-			 * 3. 새로 첨부된 파일 o, 기존 첨부 파일 x 
-			 *    => 새로 전달된 파일 서버에 업로드
-			 *    => originName : 새로운첨부파일원본명, changeName : 새로운첨부파일저장경로
-			 * 
-			 * 4. 새로 첨부된 파일 o, 기존 첨부 파일 o
-			 *    => 기존의 파일 삭제
-			 *    => 새로 전달된 파일 서버에 업로드
-			 *    => originName : 새로운첨부파일원본명, changeName : 새로운첨부파일저장경로
-			 * 
-			 */
+			 
 			int result = bService.updateBoard(b);
 			
 			if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
@@ -300,7 +275,8 @@ public class BoardController {
 			}
 			
 		}
-	
+		
+ 
 		
 			/*대외활동 리스트 조회*/
 			@RequestMapping("list.vbo")
@@ -356,12 +332,7 @@ public class BoardController {
 					return mv;
 				}
 		
-
-				
-				
-		/*공지사항*/
-				
-				//공지사항 검색
+				/*공지사항*/
 				@RequestMapping("search.nbo")
 				public ModelAndView nsearchList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
 						
@@ -501,7 +472,7 @@ public class BoardController {
 				}
 
 				
-		/*동아리*/
+				/*동아리*/
 				
 				//동아리 등록
 				@RequestMapping("enrollForm.cbo")
