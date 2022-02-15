@@ -68,6 +68,11 @@ a:hover {
 	color: rgb(26, 86, 162);
 	font-weight:bolder;
 }
+#myClassList:hover{
+	color: rgb(26, 86, 162);
+	text-decoration:underline;
+	cursor:pointer;
+}
 </style>
 </head>
 
@@ -96,7 +101,7 @@ a:hover {
 			</div>
 			<p>
 				<a href="">- 수강 시간표</a>
-				<a onclick="urlSubmit(1);">- 내가 수강중인 강의</a>
+				<a onclick="urlSubmit(1);" id="myClassList">- 내가 수강중인 강의</a>
 			</p>
 
 			<div class="side_title">

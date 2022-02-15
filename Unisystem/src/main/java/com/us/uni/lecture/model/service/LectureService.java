@@ -24,6 +24,15 @@ public interface LectureService {
 	// 5. 학생 - 강의홈 - 내가수강중인강의에서 클릭한 강의 정보 조회(강의명, 교수명)
 	Lecture selectLectureMainPage(int lno);
 	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(출석)
+	int SelectAttStaListA(Lecture l);
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(결석)
+	int SelectAttStaListB(Lecture l);
+	
+	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(지각)
+	int SelectAttStaListC(Lecture l);
+	
 	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
 	Users selectLoginStuInfo(int userNo);
 	
@@ -32,4 +41,7 @@ public interface LectureService {
 	
 	// 8. 학생 - 강의홈 - 온라인 출석부 - 선택한 강좌의 진행한 강좌리스트 조회
 	ArrayList<Lecture> selectAttList(PageInfo pi, Lecture l);
+	
+	// 교수 - 마이페이지 - 진행강의 조회 리스트 조회
+	ArrayList<Lecture> selectProfessorClassList(int userNo);
 }
