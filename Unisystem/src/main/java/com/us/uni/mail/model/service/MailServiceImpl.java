@@ -46,6 +46,20 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
+	public int selectReadReceiptListCount(int userNo) {
+		int result = mDao.selectReadReceiptListCount(sqlSession, userNo);
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailTo> selectReadReceiptList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectReadReceiptList(sqlSession, userNo, pi);
+		
+		return list;
+	}
+	
+	@Override
 	public int selectToMeListCount(int userNo) {
 		int result = mDao.selectToMeListCount(sqlSession, userNo);
 		return result;
@@ -196,13 +210,6 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
-
-	
-
-	
-	
 
 
 }

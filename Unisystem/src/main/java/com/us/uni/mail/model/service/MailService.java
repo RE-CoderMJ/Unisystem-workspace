@@ -17,6 +17,10 @@ public interface MailService {
 	int selectSentListCount(int userNo);
 	ArrayList<MailFrom> selectSentList(int userNo, PageInfo pi);
 	
+	// 수신확인 리스트 페이지 서비스
+	int selectReadReceiptListCount(int userNo);
+	ArrayList<MailTo> selectReadReceiptList(int userNo, PageInfo pi);
+	
 	// 내게 쓴 메일함 리스트 페이지 서비스
 	int selectToMeListCount(int userNo);
 	ArrayList<MailFrom> selectToMeList(int userNo, PageInfo pi);
@@ -57,6 +61,7 @@ public interface MailService {
 	
 	// 메일 읽음 처리용 서비스
 	int updateReadDate(int mNo);
+	
 
 	
 		

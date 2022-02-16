@@ -173,7 +173,7 @@
             <div id="mail-boxes">
                 <div onclick="location.href='webMail.inbox'">받은메일함 <span>6</span></div>
                 <div onclick="location.href='webMail.toMe'">내게쓴메일함</div>
-                <div onclick="location.href='webMail.sent'">보낸메일함<button>수신확인</button></div>
+                <div><a href="webMail.sent" style="text-decoration:none; color:black;">보낸메일함</a><button onclick='location.href="webMail.sent.readReceipt"'>수신확인</button></div>
                 <div onclick="location.href='webMail.drafts'">임시보관함</div>
                 <div>
                    	 스팸메일함

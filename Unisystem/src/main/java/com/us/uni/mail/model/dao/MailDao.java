@@ -161,6 +161,19 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadList", userNo, rowBounds);
 	}
 
+	public int selectReadReceiptListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectReadReceiptListCount", userNo);
+	}
+
+	public ArrayList<MailTo> selectReadReceiptList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReadReceiptList", userNo, rowBounds);
+	}
+
 	
 
 	

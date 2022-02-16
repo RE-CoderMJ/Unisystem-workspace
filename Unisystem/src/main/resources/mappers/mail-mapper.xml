@@ -565,4 +565,40 @@
 		 order
 		 	by mail_to_no desc
 	</select>
+	
+	<select id="selectReadReceiptListCount" resultType="_int">
+		select
+		       count(*)
+		  from (
+		  		 select
+				        mail_to_no
+				  from mail_to t
+				  join mail_from f on(t.mail_from_no = f.mail_from_no)
+				 where from_user = #{userNo}
+		  		)
+	</select>
+	
+	<select id="selectReadReceiptList" resultMap="toResult">
+		select
+		       mail_to_no
+		     , t.mail_from_no
+		     , t.to_user
+		     , to_add
+		     , read_date
+		     , send_date
+		     , cc_status
+		     , title
+		     , content
+		     , (select
+		               origin_name
+		          from attachment
+		         where ref_no = f.mail_from_no
+		           and ref_type = 'M'
+		           and rownum = 1) "file_name"
+		  from mail_to t
+		  join mail_from f on(t.mail_from_no = f.mail_from_no)
+		 where from_user = #{userNo}
+		 order
+		    by mail_to_no desc
+	</select>
 </mapper>

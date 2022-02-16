@@ -100,9 +100,36 @@ public class WebMailController {
 		return map;
 	}
 	
+	/**
+	 * 수신확인 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.sent.readReceipt")
 	public String selectreadReceiptMails(){
 		return "webMail/readReceipt";
+	}
+	
+	/**
+	 * 수신확인 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectReadReceiptList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectReadReceiptList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectReadReceiptListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailTo> list = mService.selectReadReceiptList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
 	}
 	
 	/**
