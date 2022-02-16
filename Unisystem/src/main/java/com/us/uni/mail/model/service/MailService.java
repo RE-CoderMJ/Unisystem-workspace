@@ -36,6 +36,10 @@ public interface MailService {
 	ArrayList<MailTo> selectAttachMailList(int userNo, PageInfo pi);	
 	ArrayList<Attachment> selectAllAttachmentList(int userNo);
 	
+	// 안읽은 메일함 리스트 페이지 서비스
+	int selectUnreadListCount(int userNo);
+	ArrayList<MailTo> selectUnreadList(int userNo, PageInfo pi);
+	
 	// 첨부파일 조회용 서비스
 	
 	// 메일 작성하기 서비스

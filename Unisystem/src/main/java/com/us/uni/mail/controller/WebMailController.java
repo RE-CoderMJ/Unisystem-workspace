@@ -147,9 +147,36 @@ public class WebMailController {
 		return "webMail/trash";
 	}
 	
+	/**
+	 * 안읽은 메일함 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.unread")
 	public String selectUnreadMails(){
 		return "webMail/unread";
+	}
+	
+	/**
+	 * 안읽은 메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectUnreadList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectUnreadList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectUnreadListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailTo> list = mService.selectUnreadList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
 	}
 	
 	@RequestMapping("webMail.important")

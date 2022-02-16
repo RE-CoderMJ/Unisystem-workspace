@@ -25,7 +25,7 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
+                        <input type="checkbox" id="checkAll">
                         <button style="margin-left: 10px;">읽음</button>
                         <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button style="margin-left: -5px;">스팸등록</button>
@@ -46,45 +46,13 @@
             <article>
                 <table class="table table-hover" id="list">
                     <tbody>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from unread">김땡땡 교수님</td>
-                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from unread">김땡땡 교수님</td>
-                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
-                        <tr>
-                            <td class="check-area"><input type="checkbox" class="checkbox"></td>
-                            <td class="important"><i class="fa fa-star fa-xs" aria-hidden="true"></i></td>
-                            <td class="read-status"><i class="far fa-envelope"></i></td>
-                            <td class="att"><i class="fa fa-paperclip fa-sm" aria-hidden="true"></i></td>
-                            <td class="from unread">김땡땡 교수님</td>
-                            <td class="title unread">이번 기말고사에 관한 답변입니다.</td>
-                            <td class="date">2022-01-18 16:29</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                   </div>
 
@@ -93,6 +61,106 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(function(){
+			selectUnreadList(1);
+		});
+		
+		function selectUnreadList(cPageNo){
+			$.ajax({
+				url:"webMail.selectUnreadList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					for(let i in result.list){
+						value += "<tr>"
+							   + 	"<input type='hidden' name='mNo' value='" + result.list[i].mailNo + "'>"
+							   + 	"<input type='hidden' name='read-date' value='" + result.list[i].readDate + "'>"
+							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
+							   
+						if(result.list[i].important == "N"){
+							value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
+						}else{
+							value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
+						}			
+
+						value += "<td class='read-status'><i class='far fa-envelope'></i></td>";
+						
+						if(result.list[i].fileName != null){
+                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
+                    	}else{
+	                    	value += "<td class='att'></td>";                    		
+                    	}
+                    	
+                    	value += "<td class='from overflow unread'>" + result.list[i].userFromAdd + "</td>";
+                    	
+	                    if(result.list[i].ccStatus == "N"){
+	 						value += "<td class='title unread'>" + result.list[i].title + "</td>";                    		
+	                    }else{
+	                    	value += "<td class='title unread'>cc : " + result.list[i].title + "</td>";
+	                    }
+                    	
+	 					value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
+	 					   	   + "</tr>";
+					}
+				
+					$("#list").html(value);
+					
+					let piValue = "";
+					
+					if(result.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+					}
+                    
+					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+						
+						if(p == result.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
+						}
+						
+					}
+	            	
+					if(result.pi.currentPage == result.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+					}
+					
+					$(".pagination").html(piValue);
+					
+				},error:function(){
+					console.log("안읽은 메일함 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
+	
+	<!-- 상세조회 -->
+	<script>
+		$(function(){
+			$(document).on("click", ".title", function(){
+				location.href="webMail.detailView?mNo=" + $(this).siblings("input[name=mNo]").val();
+			});		
+		})
+	</script>
+	
+	<!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
 	
 	<script>
 		$(document).ready(function(){

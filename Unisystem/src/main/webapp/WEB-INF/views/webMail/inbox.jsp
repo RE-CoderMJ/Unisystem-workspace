@@ -26,8 +26,8 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 10px;">읽음</button>
+                        <input type="checkbox" id="checkAll">
+                        <button style="margin-left: 10px;" id="read">읽음</button>
                         <button data-toggle="modal" data-target="#deleteCompleted"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button data-toggle="modal" data-target="#spamConfirmModal" style="margin-left: -5px;">스팸등록</button>
                         <button>답장</button>
@@ -43,7 +43,7 @@
                         <button><i class="fas fa-search fa-sm" id="mail-search-btn"></i></button>
                     </div>
                 </div>
-            </header>
+            </header>	
             <article>
                 <table class="table table-hover" id="list">
                     <tbody>
@@ -77,7 +77,8 @@
 					let value = "";
 					for(let i in result.list){
 						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+							   + 	"<input type='hidden' name='mNo' value='" + result.list[i].mailNo + "'>"
+							   + 	"<input type='hidden' name='read-date' value='" + result.list[i].readDate + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 							   
 						if(result.list[i].important == "N"){
@@ -155,11 +156,37 @@
 		}
 	</script>
 	
+	<!-- 상세조회 -->
 	<script>
 		$(function(){
-			$(document).on("click", "tr", function(){
-				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			$(document).on("click", ".title", function(){
+				location.href="webMail.detailView?mNo=" + $(this).siblings("input[name=mNo]").val();
 			});		
+		})
+	</script>
+	
+	<!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 읽음처리 -->
+	<script>
+		$(document).on("click", "#read", function(){
+			let check_value = [];
+			let value;
+			$(".checkbox:checked").each(function(){
+				value = $(this).siblings("input[name=read-date]").val();
+				console.log(value);
+				check_value.push(value);
+			});
+			console.log(check_value);
 		})
 	</script>
 	

@@ -174,6 +174,18 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public int selectUnreadListCount(int userNo) {
+		int result = mDao.selectUnreadListCount(sqlSession, userNo);
+		return result;
+	}
+
+	@Override
+	public ArrayList<MailTo> selectUnreadList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectUnreadList(sqlSession, userNo, pi);
+		return list;
+	}
+	
+	@Override
 	public int moveToTrash(int mailNo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -184,6 +196,8 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 

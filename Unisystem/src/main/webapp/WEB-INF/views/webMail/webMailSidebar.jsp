@@ -58,6 +58,9 @@
         font-weight: 700;
         font-size: 17px;
     }
+    #unread{
+    	cursor:pointer;
+    }
     #important{
         margin-top: -3px;
     }
@@ -156,7 +159,7 @@
                 <button id="writeMailToMS" onclick="location.href='webMail.writeToMeForm'">내게쓰기</button>
             </div>
             <div id="top" align="center">
-                <div id="unread">
+                <div id="unread" onclick="location.href='webMail.unread'">
                     <div id="unread-count">6</div><div>안읽음</div>
                 </div>
                 <div id="important">

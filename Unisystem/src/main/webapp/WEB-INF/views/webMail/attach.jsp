@@ -159,8 +159,8 @@
 	
 	<script>
 		$(function(){
-			$(document).on("click", ".mail", function(){
-				location.href="webMail.detailView?mNo=" + $(this).children("input").val();
+			$(document).on("click", ".mail> .title-att", function(){
+				location.href="webMail.detailView?mNo=" + $(this).siblings("input").val();
 			});		
 		})
 	</script>

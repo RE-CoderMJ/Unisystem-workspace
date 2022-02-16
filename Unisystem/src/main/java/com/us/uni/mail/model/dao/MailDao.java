@@ -15,7 +15,6 @@ import com.us.uni.mail.model.vo.MailTo;
 public class MailDao {
 
 	public int selectInboxListCount(SqlSessionTemplate sqlSession, int userNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectInboxListCount", userNo);
 	}
 
@@ -29,17 +28,14 @@ public class MailDao {
 	}
 	
 	public int saveDraft(SqlSessionTemplate sqlSession, MailFrom mf) {
-
 		return sqlSession.insert("mailMapper.saveDraft", mf);
 	}
 	
 	public int saveToMeDraft(SqlSessionTemplate sqlSession, MailFrom mf) {
-		
 		return sqlSession.insert("mailMapper.saveToMeDraft", mf);
 	}
 
 	public int selectDraftListCount(SqlSessionTemplate sqlSession, int userNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectDraftListCount", userNo);
 	}
 
@@ -53,7 +49,6 @@ public class MailDao {
 	}
 
 	public MailFrom selectDraft(SqlSessionTemplate sqlSession, int mfNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectDraft", mfNo);
 	}
 
@@ -99,7 +94,6 @@ public class MailDao {
 	}
 
 	public int selectSentListCount(SqlSessionTemplate sqlSession, int userNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectSentListCount", userNo);
 	}
 
@@ -113,7 +107,6 @@ public class MailDao {
 	}
 
 	public int selectToMeListCount(SqlSessionTemplate sqlSession, int userNo) {
-
 		return sqlSession.selectOne("mailMapper.selectToMeListCount", userNo);
 	}
 
@@ -127,7 +120,6 @@ public class MailDao {
 	}
 
 	public int selectAttachMailListCount(SqlSessionTemplate sqlSession, int userNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectAttachMailListCount", userNo);
 	}
 
@@ -141,23 +133,32 @@ public class MailDao {
 	}
 
 	public ArrayList<Attachment> selectAllAttachmentList(SqlSessionTemplate sqlSession, int userNo) {
-		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectAllAttachmentList", userNo);
 	}
 
 	public int updateReadDate(SqlSessionTemplate sqlSession, int mNo) {
-		
 		return sqlSession.update("mailMapper.updateReadDate", mNo);
 	}
 
 	public MailTo selectMail(SqlSessionTemplate sqlSession, int mNo) {
-		
 		return sqlSession.selectOne("mailMapper.selectMail", mNo);
 	}
 
 	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, int mNo) {
-		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectAttachmentList", mNo);
+	}
+
+	public int selectUnreadListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectUnreadListCount", userNo);
+	}
+
+	public ArrayList<MailTo> selectUnreadList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadList", userNo, rowBounds);
 	}
 
 	
