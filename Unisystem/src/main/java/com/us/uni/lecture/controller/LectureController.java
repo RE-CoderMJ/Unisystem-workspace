@@ -176,30 +176,45 @@ public class LectureController {
 		return new Gson().toJson(proSearchList);
 	}
 	
-	
-	
-	
-	
-	
+	/* 교수 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureProMain.stu")
+	public ModelAndView selectLectureProMainPage(int lno, HttpSession session, ModelAndView mv) {
+		Lecture l = lService.selectLectureMainPage(lno);
+		session.setAttribute("classInfo", l);
+		
+		mv.addObject("lec", l).setViewName("lecture/lectureProMainPage");
+		return mv;
+	}
 	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
-	public String selectLectureAttControl() {
-		return "lecture/lectureAttendanceControl";
+	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+		
+		int currentPage = lno;
+
+		int listCount = lService.selectAttListCount(l); // 진행한 강좌 총 개수
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Lecture> list = lService.selectAttList(pi, l);
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureAttendanceProControl");
+		
+		return mv;
 	}
+	
+	
+	
+	
 	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
 	public String selectLectureAttDetailControl() {
-		return "lecture/lectureAttendanceDetailControl";
+		return "lecture/lectureAttendanceDetailProControl";
 	}
-	
-	/* 교수 - 강의홈을 띄워주는 컨트롤러 */
-	@RequestMapping("lectureProMain.stu")
-	public String selectLectureProMainPage() {
-		return "lecture/lectureProMainPage";
-	}
-	
+
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureNotice.stu")
 	public String selectLectureNotice() {

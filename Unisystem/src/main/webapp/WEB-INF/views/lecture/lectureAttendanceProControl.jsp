@@ -31,12 +31,6 @@
         padding-left: 30px;
         padding-right: 30px;
     }
-    #contentBox>div:first-child{
-        background-color: rgb(15, 43, 80);
-        color: white;
-        padding: 10px 25px;
-        width: 115px;
-    }
     #contentBox>div:nth-child(2){
         width: 1230px;
         border-bottom: 2px solid lightgray;
@@ -46,6 +40,13 @@
         border: 1px solid lightgray;
         height: 130px;
         padding-top: 10px;
+    }
+    #contentBox_title{
+	display:inline-block;
+    width: auto;
+    background-color: rgb(15, 43, 80);
+    color: white;
+    padding: 10px 25px;
     }
     #stu_info{
         width: 1210px;
@@ -109,18 +110,18 @@
 
             <div id="contentBox">
                 
-                <div>출석현황</div>
+                <div id="contentBox_title">[${ classInfo.classKorName }] 출석현황</div>
                 <div></div>
 
-                <div>
+                <div id="stu_info_outer">
                     <table id="stu_info">
                         <tr>
                             <th>강의명</th>
-                            <td>IT미디어와미래역량</td>
+                            <td>${ classInfo.classKorName }</td>
                         </tr>
                         <tr>
                             <th>수강인원</th>
-                            <td>74명</td>
+							<td>${ classInfo.currStud }명</td>
                         </tr>
                     </table>
                 </div>
@@ -135,67 +136,16 @@
                             <th>수업일자</th>
                             <th>출석</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>강의 첫날</td>
-                            <td>2022.01.01</td>
-                            <td><a href="">바로가기</a></td>
-                        </tr>
-
+                        
+                        <c:forEach var="l" items="${ list }">
+	                        <tr>
+	                            <td>${ l.rownum }</td>
+	                            <td>${ l.classTitle }</td>
+	                            <td>${ l.attendanceDate }</td>
+	                            <td><a href="lectureAttDetailControl.stu">바로가기</a></td>
+	                        </tr>
+						</c:forEach>
+						
                     </table>
 
                     <div class="container">

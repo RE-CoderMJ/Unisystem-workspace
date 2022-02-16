@@ -235,7 +235,7 @@
 	 								
 	                              	 
 		                             $(document).on("click", "#className", function(){
-		                             	location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
+		                             	location.href='lectureProMain.stu?lno=' + $(this).siblings().eq(0).text();
 		                             });	
 	  
 	            				}
