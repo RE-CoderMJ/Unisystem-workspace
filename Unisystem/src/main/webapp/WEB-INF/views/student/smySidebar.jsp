@@ -125,7 +125,7 @@ a:hover {
 				<b>My 캘린더</b>
 			</div>
 			<p>
-				<a href="">- 나의 일정</a>
+				<a href="calendar">- 나의 일정</a>
 				<a href="">- TO-DO LIST</a>
 			</p>
 			<div class="side_title">
@@ -148,7 +148,7 @@ a:hover {
 				<b>쪽지</b>
 			</div>
 			<p>
-				<a href="">- 받은 메시지</a>
+				<a href="list.msg">- 받은 메시지</a>
 				<a href="">- 보낸 메시지</a>
 				<a href="">- 중요 메시지</a>
 				<a href="">- 스팸 보관함</a>

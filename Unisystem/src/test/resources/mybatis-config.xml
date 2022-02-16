@@ -11,11 +11,13 @@
 		<typeAlias type="com.us.uni.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.us.uni.board.model.vo.Reply" alias="Reply" />
 		<typeAlias type="com.us.uni.common.model.vo.Attachment" alias="Attachment" /> 
+		<typeAlias type="com.us.uni.message.model.vo.Message" alias="Message" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/user-mapper.xml" />
 		<mapper resource="/mappers/board-mapper.xml" />
+		<mapper resource="/mappers/message-mapper.xml" />
 	</mappers>
 	<!-- 유의사항 : 미리등록해두려면 해당 mapper파일이 진짜 존재하고 있는 상태여야됨(뿐만아니라 namespace까지도 지정되어있어야됨) -->
 

@@ -177,7 +177,7 @@ margin-top: 10px;
 			<!-- title -->
 			<div class="page_title">커뮤니티</div>
 			
-			<c:if test="${ loginUser != null || loginUser.userNo eq b.userNo }">
+			<c:if test="${ loginUser != null || loginUser.userNo == b.userNo }">
 	          	<div class="updel">
 				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
