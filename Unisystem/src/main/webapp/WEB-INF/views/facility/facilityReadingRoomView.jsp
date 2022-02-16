@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <link href="resources/css/pages/wrapperStyle.css" rel="stylesheet">
 <style>
-	.topBar{
+	.lineBar{
 		margin-top:30px;
 		clear:both;
 		width:100%;
@@ -18,11 +18,18 @@
 		border-bottom:3px solid rgb(26, 86, 162);
 		text-align:center;
 	}
-	.topBar>span{
+	.lineBar>span{
 		margin:25px;
+		line-height:65px;
+		
+	}
+	.lineBar a{
 		font-size:20px;
-		line-height:70px;
-		color:gray;
+		color:gray;	
+	}
+	.lineBar a:hover{
+		text-decoration:none;
+		color:#0275d8;
 	}
 	#readingRoom{
 		font-weight:700;
@@ -72,7 +79,9 @@
 	    margin-top:70px;
 	    margin-left:475px;
 	    border-radius:7px;
-
+		border:none;	
+	}
+	.submitBtn>p{
 		color:white;
 		font-size:30px;
 		font-weight:700;
@@ -92,207 +101,30 @@
 	<div id="wrap">
 		<div id="sidebar" style="float:left"><jsp:include page="../student/smySidebar.jsp" /></div>
 		<div id="content" style="float:left">
-			<div class="pageName"><p style="color:gray">마이페이지>시설물 예약>&nbsp;</p><p style="font-size:19px; font-weight:600;">열람실 예약</p></div>
-			<div class="topBar">
-				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
+			<div class="topBox">
+				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;시설물 예약&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;열람실 예약</p></div>
+			</div>
+		
+			<div class="lineBar">
+				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a href="rsvdStudy">스터디룸 예약</a></span>
 			</div>
 			
-			<form>
+			<form id="readingForm" action="insert.rr">
 			<div class="srvdBox">
 				<div class="container" style="margin:0">
 					<div class="row">
 						<div class="col" style="padding:0">
 							<div class="btn-group btn-group-toggle" data-toggle="buttons" style="display:block">
 							
-								
-								
 								<c:forEach var="j" begin="0" end="6" step="1">
-									
 									<c:forEach var="i" begin="1" end="8" step="1">
-									
 										<label class="btn btn-primary">
-											<input type="radio" name="jb-radio" id="jb-radio-1">${j}${i}
+											<input type="radio" id="space" name="rsvdSpace" value="${j}${i}">${j}${i}
 										</label>
 									
 									</c:forEach>
 								</c:forEach>
-							
-								<!-- 
-								
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<hr class="lineBox">	
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-1"> 1
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-2"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="jb-radio" id="jb-radio-3"> &nbsp;
-								</label>
-								 -->
-								
-								
+						
 							</div>
 						</div>
 					</div>
@@ -305,16 +137,17 @@
 					<label>1시간 이상 자리를 비우면 적발 시 강제 퇴실</label>
 				</div>
 				
+				<input type="hidden" name="rsvdNo">
+				<input type="hidden" name="studNo" value="${ loginUser.studNo }">
 				<div class="btnBox">
 					<button type="submit" class="submitBtn">
-						자리예약
+						<p>자리 예약</p>
 					</button>
 				</div>
-		
-		</form>
+			</form>
+		</div>
 							
 				
-		</div>
 	
 	
 	</div>
@@ -323,23 +156,96 @@
 	<script>
 
 	$(function(){
+
+		var readingForm = document.getElementById('readingForm');
 		sidebar();
+		reserved();
 		
+		$(".submitBtn").on("click", function(){
+			cancel();
 		})
+		
+	})
 		
 		
 		// 사이드바 길이 조절
 		function sidebar(){
 			document.getElementById("content").style.marginBottom = "50px";
 			let $len = $("#content").height();
-			
+				
 				if($len > 750){
 					$(".wrap_sidebar").css('height', $len);
 				}else{
 					$(".wrap_sidebar").css('height', 270);
 					document.getElementById("content").style.marginBottom = "280px";
 				}
+	
 			}
+	
+		
+		// 예약된 좌석 불러오기
+		function reserved(){
+			// 로그인한 학생의 학번
+			const login = $("input[name=studNo]").val();
+			
+			$.ajax({
+				url:"selectReading",
+				success:data => {
+					
+					$(data).each(function(i, rsvd){
+						// 예약한 학생의 학번 
+						 let sno = data[i].studNo;
+						 // 예약된 자리
+						 let space = data[i].rsvdSpace;
+						 
+						 // 예약번호 hidden
+						 $("input[name=rsvdNo]").val(data[i].rsvdNo);
+						if(login == sno) {
+						// 예약자 본인의 좌석은 노란색으로 표시됨	
+						$("input[value='"+space+"']").parent().css("background", "#fc6").css("color", "white");
+						$("input[value='"+space+"']").attr("disabled", true);
+							
+						console.log(data[i].rsvdNo);
+						$(".submitBtn>p").text("퇴 실");
+						
+						}else{
+						// 다른 사용자가 예약한 좌석
+						$("input[value='"+space+"']").parent().css("background", "RGB(21,62,115)").css("color", "white");
+						$("input[value='"+space+"']").attr("disabled", true);
+							
+						}
+						 
+					})			
+						
+					
+			
+					
+				},error: () => {
+					console.log("좌석 실패");
+				}
+				
+			})
+			
+		}
+		
+		
+		function cancel(){
+			
+			let status = $(".submitBtn>p").text();
+			
+			if(status == "퇴 실"){
+				
+				readingForm.action = "cancel.rr";
+				
+			}
+			
+			
+		}
+					
+				
+		
+
 	</script>
+		
 </body>
 </html>
