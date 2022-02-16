@@ -59,7 +59,7 @@ public class LectureController {
 	
 	/* 학생, 교수 - 마이페이지 - 내가수강중인강의 페이지(학생) or 진행강의 조회(교수) 에서 년도값을 가져오는 컨트롤러 */
 	@ResponseBody
-	@RequestMapping(value="studentYearList.me", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="YearList.me", produces="application/json; charset=UTF-8")
 	public String AjaxSelectYearList() {
 		ArrayList<Lecture> list = lService.selectYearList();
 		return new Gson().toJson(list);
@@ -172,8 +172,8 @@ public class LectureController {
 		l.setClassYear(classYear);
 		l.setClassSemester(classSemester);
 
-		ArrayList<Lecture> prosearchList = lService.SelectProfessorSearchClassList(l);
-		return new Gson().toJson(prosearchList);
+		ArrayList<Lecture> proSearchList = lService.SelectProfessorSearchClassList(l);
+		return new Gson().toJson(proSearchList);
 	}
 	
 	

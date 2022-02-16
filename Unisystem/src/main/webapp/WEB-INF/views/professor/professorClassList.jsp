@@ -65,6 +65,11 @@
     table td{border-top: 1px solid lightgray;}
     table tr:last-child td{border-bottom: 2px solid lightgray;}
     #table_header th{background-color: #eeeeee; border-top: 2px solid lightgray;}
+    #className:hover{
+   		color: rgb(26, 86, 162);
+		text-decoration:underline;
+		cursor:pointer;
+    }
 </style>
 </head>
 <body>
@@ -117,10 +122,10 @@
 	                    </tr>
                 	</thead>
                     
-            	    <c:forEach var="l" items="${ list }">
-            	    <input type="hidden" value="${ l.classNo }" id="classNo" name="classNo"/>
-            	    	
                     <tbody>
+	            	    <c:forEach var="l" items="${ list }">
+	            	    <input type="hidden" value="${ l.classNo }" id="classNo" name="classNo"/>
+	            	    	
                     	<!-- list가 비어있을 경우 -->
                     	<c:if test="${ empty list}">
 	                    	<tr>
@@ -133,7 +138,7 @@
                     	<!-- list가 비어있지 않을 경우 -->            	    	
 	                    <tr>
 	                        <td>${ l.classCode }</td>
-	                        <td>${l.classKorName}</td>
+	                        <td id="className">${l.classKorName}</td>
 	                        <td>
 	                        	<c:if test="${ l.classCategory eq 1 }">
 	                        		대면강의
@@ -150,9 +155,9 @@
 	                        	${ l.currStud }
 	                        </td>
 	                    </tr>	                     
+	            	    </c:forEach>
                     </tbody>
                     
-            	    </c:forEach>
                 </table>
                 
                 <script>
@@ -165,7 +170,7 @@
 	            	//td요소에 클릭이라는 이벤트 발생 시 실행할 함수 => 링크이동
 	            	$(function(){
 	            		$("#classList>tbody td:nth-child(2)").on("click", function(){
-	            			location.href='lectureMain.stu?lno=' + $(this).siblings().eq(0).text();
+	            			location.href='lectureProMain.stu?lno=' + $(this).siblings().eq(0).text();
 	            		});
 	            	})		
 	            	
@@ -173,7 +178,7 @@
 	            	// 드롭박스에 년도 list를 가져오는 ajax
 	            	function selectYearList(){ 
 	            		$.ajax({
-	            			url:"studentYearList.me",
+	            			url:"YearList.me",
 	            			data:{},
 	            			async : false,
 	            			success:function(list){
@@ -206,26 +211,26 @@
 	            				classSemester : classSemester
 	            				},
 	            			type:"POST",
-	            			success:function(prosearchList){
-	            				console.log(prosearchList);
+	            			success:function(proSearchList){
+								
+	            				console.log(proSearchList); 
+	            				
 	            				let value = "";
 	            				var classCategory="";
-	            				for(let i in prosearchList){
+	            				for(let i in proSearchList){            					        
 	            					
-	            					console.log(prosearchList);
-	            					
-	            					if(prosearchList[i].classCategory == 1){
+	            					if(proSearchList[i].classCategory == 1){
 	            						classCategory = "대면강의";
 	            					} else {
 	            						classCategory = "비대면강의";
 	            					}
 	            					
 	                            	value += "<tr>"
-	                                    +		"<td id='classCode'>" + prosearchList[i].classCode + "</th>"
-	                                    +		"<td id='className'>" + prosearchList[i].classKorName + "</td>"                            
+	                                    +		"<td id='classCode'>" + proSearchList[i].classCode + "</th>"
+	                                    +		"<td id='className'>" + proSearchList[i].classKorName + "</td>"                            
 	                                    +		"<td>" + classCategory + "</td>"
-	                                    +		"<td>" + prosearchList[i].korName + "</td>"
-	                                    +		"<td>" + prosearchList[i].currStud + "</td>"
+	                                    +		"<td>" + proSearchList[i].korName + "</td>"
+	                                    +		"<td>" + proSearchList[i].currStud + "</td>"
 	                              	  		+ "</tr>";
 	 								
 	                              	 
@@ -234,7 +239,7 @@
 		                             });	
 	  
 	            				}
-	            				$("#classList>tbody").html(value);
+	            				$("#classList tbody").html(value);
 	            				
 	            			}, error:function(){
 	            				console.log("년도학기에 따른 강의조회용 ajax 통신 실패")
