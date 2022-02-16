@@ -65,6 +65,11 @@
     table td{border-top: 1px solid lightgray;}
     table tr:last-child td{border-bottom: 2px solid lightgray;}
     #table_header th{background-color: #eeeeee; border-top: 2px solid lightgray;}
+    #classKorName:hover{
+       	color: rgb(26, 86, 162);
+		text-decoration:underline;
+		cursor:pointer;
+    }
 </style>
 </head>
 <body>
@@ -174,7 +179,7 @@
             	// 드롭박스에 년도 list를 가져오는 ajax
             	function selectYearList(){ 
             		$.ajax({
-            			url:"studentYearList.me",
+            			url:"YearList.me",
             			data:{},
             			async : false,
             			success:function(list){
@@ -221,7 +226,7 @@
             					
                             	value += "<tr>"
                                     +		"<td id='classCode'>" + searchList[i].classCode + "</th>"
-                                    +		"<td id='className'>" + searchList[i].classKorName + "</td>"                            
+                                    +		"<td id='classKorName'>" + searchList[i].classKorName + "</td>"                            
                                     +		"<td>" + classCategory + "</td>"
                                     +		"<td>" + searchList[i].korName + "</td>"
                                     +		"<td>" + searchList[i].currStud + "</td>"

@@ -124,9 +124,7 @@
 		   and class_code = #{classCode}
 		   and attendance_status = 'A'	
 	</select>
-	
-	
-	
+		
 	<!-- 학생 - 온라인 출석부 : 로그인한 학생 정보를 가져오는 sql문 -->
 	<select id="selectLoginStuInfo" resultMap="usersResult">
 		select
@@ -161,7 +159,7 @@
 		   and attendance_status = 'C'	
 	</select>
 			
-	<!-- 학생 - 온라인출석부 : 현재 진행된 강의 총 개수를 구하는 sql문 -->
+	<!--학생 or 교수 - 온라인출석부 or 출결관리 : 현재 진행된 강의 총 개수를 구하는 sql문 -->
 	<select id="selectAttListCount" resultType="_int">
 		select 
 		       count(*)
@@ -173,7 +171,7 @@
 		   and class_code = #{classCode} 
 	</select>
 	
-	<!-- 학생 - 온라인출석부 : 선택한 강의의 현재까지 진행한 강의리스트 조회 -->
+	<!-- 학생 or 교수 - 온라인출석부 or 출결관리 : 선택한 강의의 현재까지 진행한 강의리스트 조회 -->
 	<select id="selectAttList" resultMap="lectureResult">
         select
                rownum
@@ -214,6 +212,26 @@
 		   and status = 'Y'
 	</select>
 	
+	<!-- 교수 - 진행강의조회 : 원하는 년도, 학기에 따라 강의를 불러오는 sql -->
+	<select id="SelectProfessorSearchClassList" resultMap="lectureResult">
+        select
+               distinct
+               class_code
+		     , class_no
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		  from class
+		  join professor using(prof_no)
+		  join users on(prof_no = user_no)
+          join class_stud using(class_no)
+		  where prof_no = #{userNo}
+            and class_year = #{classYear}
+            and class_semester = #{classSemester}
+          order
+             by class_code asc	
+	</select>
 	
 	
 	
