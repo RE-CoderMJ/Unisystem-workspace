@@ -75,4 +75,10 @@ public class LectureDao {
 	public ArrayList<Lecture> selectProfessorClassList(SqlSessionTemplate sqlSession, int userNo){
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectProfessorClassList", userNo);
 	}
+	
+	// 교수 - 마이페이지 - 진행강의조회 : 원하는 년도, 학기에 따라 강의 리스트 조회
+	public ArrayList<Lecture> SelectProfessorSearchClassList(SqlSessionTemplate sqlSession, Lecture l){
+		return (ArrayList)sqlSession.selectList("lectureMapper.SelectProfessorSearchClassList", l);
+	}
+
 }

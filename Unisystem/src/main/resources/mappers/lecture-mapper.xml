@@ -124,9 +124,7 @@
 		   and class_code = #{classCode}
 		   and attendance_status = 'A'	
 	</select>
-	
-	
-	
+		
 	<!-- 학생 - 온라인 출석부 : 로그인한 학생 정보를 가져오는 sql문 -->
 	<select id="selectLoginStuInfo" resultMap="usersResult">
 		select
@@ -214,6 +212,26 @@
 		   and status = 'Y'
 	</select>
 	
+		<!-- 교수 - 진행강의조회 : 원하는 년도, 학기에 따라 강의를 불러오는 sql -->
+	<select id="SelectProfessorSearchClassList" resultMap="lectureResult">
+        select
+               distinct
+               class_code
+		     , class_no
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		  from class
+		  join professor using(prof_no)
+		  join users on(prof_no = user_no)
+          join class_stud using(class_no)
+		  where prof_no = #{userNo}
+            and class_year = #{classYear}
+            and class_semester = #{classSemester}
+          order
+             by class_code asc	
+	</select>
 	
 	
 	
