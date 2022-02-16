@@ -21,14 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
-import com.us.uni.student.model.service.StudentServiceImpl;
+import com.us.uni.student.model.service.StudentService;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
 public class StudentController {
 
 	@Autowired
-	private StudentServiceImpl sService;
+	private StudentService sService;
 	
 	@RequestMapping("list.st")
 	public String selectStudentInfo() {
@@ -127,9 +127,6 @@ public class StudentController {
 			session.setAttribute("alertMsg", "학생 등록 실패했습니다.");
 			return "common/errorPage";
 		}
-	
-		
-		
 		
 	}
 	

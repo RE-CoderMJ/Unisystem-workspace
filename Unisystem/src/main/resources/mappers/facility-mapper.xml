@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="facilityMapper">
+
+	<resultMap id="facilityResult" type="Facility">
+		<result column="RSVD_NO" property="rsvdNo" />
+		<result column="STUD_NO" property="studNo" />
+		<result column="RSVD_SPACE" property="rsvdSpace" />
+		<result column="RSVD_NUM" property="rsvdNum" />
+		<result column="RSVD_DATE" property="rsvdDate" />
+		<result column="RSVD_START" property="rsvdStart" />
+		<result column="RSVD_EMD" property="rsvdEnd" />
+		<result column="RSVD_STATUS" property="rsvdStatus" />
+	</resultMap>
+
+
+	<select id="reservedReading" resultMap="facilityResult">
+		SELECT 
+			   RSVD_NO
+		     , STUD_NO
+		     , RSVD_SPACE
+		  FROM RESERVED
+		 WHERE RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+		   AND RSVD_END IS NULL
+	</select>
+
+	<insert id="insertReading">
+	INSERT 
+      INTO RESERVED
+         (
+           RSVD_NO
+         , STUD_NO
+         , RSVD_SPACE
+         , RSVD_NUM
+         , RSVD_DATE
+         , RSVD_START
+         , RSVD_END
+         , RSVD_STATUS
+         )
+   		   VALUES
+         (
+           SEQ_RESERVED.NEXTVAL
+         , #{studNo}
+         , #{rsvdSpace}
+         , 1
+		 , TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+         , TO_CHAR(SYSDATE, 'HH24:MI:SS')
+         , NULL
+         , 1
+         )
+	</insert>
+	
+	<update id="cancelReading">
+		UPDATE 
+           RESERVED 
+       SET RSVD_END = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+         , RSVD_STATUS = 2 
+     WHERE RSVD_NO = #{rsvdNo}
+	</update>
+		  
+		  	
+	
+	
+</mapper>

@@ -55,7 +55,7 @@
 	height: 20px;
 }
 
-p{
+.sidebar p{
 	display:none;
 }
 
