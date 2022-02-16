@@ -41,13 +41,13 @@
         height: 80px;
     }
     #date_border>span{font-weight: 700; margin-left: 390px;}
-    #year, #semester{
+    #classYear, #classSemester{
         width: 80px;
         height: 30px;
         margin-left: 20px;
         margin-top: 25px;
     }
-    #semester{margin-left: 10px;}
+    #classSemester{margin-left: 10px;}
     #date_border>button{
         border: none;
         border-radius: 5px;
@@ -88,70 +88,66 @@
             <div id="contentBox">
 
                 <div id="content_name">담당 강의</div>
-                <div id="date_border">
-                    <span>년도 학기</span>
-                    <select name="" id="year">
-                        <option value="">2022</option>
-                        <option value="">2021</option>
-                        <option value="">2020</option>
-                    </select>
-                    <select name="" id="semester">
-                        <option value="">1학기</option>
-                        <option value="">2학기</option>
-                    </select>
-                    <button type="button">조회</button>
-                </div>
-              
+                
+                <form action="studentDateClassList.me" method="post">
+                	<input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
+	                <div id="date_border">
+	                    <span>년도 학기</span>
+	                    
+	                    <select name="classYear" id="classYear">
+	                        <!-- 년도를 출력해주는 ajax 함수 실행하는 공간 -->
+	                    </select>
+	                    
+	                    <select name="classSemester" id="classSemester">
+	                        <option value="1">1학기</option>
+	                        <option value="2">2학기</option>
+	                    </select>
+	                    
+	                    <button type="button">조회</button>
+	                </div>
+              	</form>
                 <table>
                     <tr id="table_header">
-                        <th style="width: 70px;">번호</th>
+                        <th style="width: 70px;">강의코드</th>
                         <th>강좌명</th>
                         <th style="width: 100px;">강의유형</th>
                         <th style="width: 100px;">담당교수</th>
                         <th style="width: 100px;">수강인원</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="">IT미디어와 미래역량</a></td>
-                        <td>대면강의</td>
-                        <td>김말똥</td>
-                        <td>74</td>
-                    </tr>
+                    
+            	    <c:forEach var="l" items="${ list }">
+            	    <input type="hidden" value="${ l.classNo }" id="classNo" name="classNo"/>
+            	    	
+                    	<!-- list가 비어있을 경우 -->
+                    	<c:if test="${ empty list}">
+	                    	<tr>
+		                    	<td colspan=5>
+		                    	 강의가 존재하지 않습니다.
+		                    	</td>
+	                    	</tr>
+                    	</c:if>
+                    	
+                    	<!-- list가 비어있지 않을 경우 -->            	    	
+	                    <tr>
+	                        <td>${ l.classCode }</td>
+	                        <td><a href="">${l.classKorName}</a></td>
+	                        <td>
+	                        	<c:if test="${ l.classCategory eq 1 }">
+	                        		대면강의
+	                        	</c:if>
+	                        	<c:if test="${ l.classCategory eq 2 }">
+	                        		비대면강의
+	                        	</c:if>
+	                        </td>
+	                        <td>${ l.korName }</td>
+	                        <td>
+	                        	<c:if test="${ empty l.currStud }">
+	                        		0
+	                        	</c:if>
+	                        	${ l.currStud }
+	                        </td>
+	                    </tr>	    
+            	    </c:forEach>
                 </table>
 
 

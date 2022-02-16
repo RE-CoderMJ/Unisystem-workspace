@@ -249,7 +249,6 @@ height:none;
 					<li>학내 무선랜 와이파이 이용안내</li>
 					<li>전자결재 이용안내</li>
 					<li>비밀번호 찾기 이용방법</li>
-					<li><a href="lectureMain.stu">강의</a></li>
 				</ul>
 			</div>
 		</div>
