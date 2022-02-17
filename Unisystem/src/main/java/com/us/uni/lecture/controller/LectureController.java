@@ -1,16 +1,12 @@
 package com.us.uni.lecture.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -186,33 +182,45 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 학생 - 강의홈에서 드롭박스에 수강중인 강의 리스트를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="ProClassList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectProClassList(int userNo) {
+		
+		ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
+		return new Gson().toJson(list);
+	}
+	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
 	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
-		
+				
 		int currentPage = lno;
-
-		int listCount = lService.selectAttListCount(l); // 진행한 강좌 총 개수
-		
+		int listCount = lService.selectProAttListCount(l); // 진행한 강좌 총 개수
+	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Lecture> list = lService.selectAttList(pi, l);
-		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureAttendanceProControl");
+		ArrayList<Lecture> list = lService.selectProAttList(pi, l);
+
+		mv.addObject("pi", pi).addObject("plist", list).setViewName("lecture/lectureAttendanceProControl");
 		
 		return mv;
 	}
 	
-	
-	
-	
-	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
-	public String selectLectureAttDetailControl() {
-		return "lecture/lectureAttendanceDetailProControl";
+	public ModelAndView selectLectureAttDetailControl(int lno, String lDate, ModelAndView mv) {
+		
+		Lecture l = new Lecture();
+		l.setClassCode(lno);
+		l.setAttendanceDateB(lDate);
+		
+		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		
+		mv.addObject("list", list).setViewName("lecture/lectureAttendanceProDetailControl");
+		return mv;
 	}
 
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */

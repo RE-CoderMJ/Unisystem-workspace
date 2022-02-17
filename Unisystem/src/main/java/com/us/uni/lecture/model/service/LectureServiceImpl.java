@@ -97,6 +97,25 @@ public class LectureServiceImpl implements LectureService{
 	public ArrayList<Lecture> SelectProfessorSearchClassList(Lecture l) {
 		return lDao.SelectProfessorSearchClassList(sqlSession, l);
 	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 총 개수 조회
+	@Override
+	public int selectProAttListCount(Lecture l) {
+		return lDao.selectProAttListCount(sqlSession, l);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 리스트 조회
+	@Override
+	public ArrayList<Lecture> selectProAttList(PageInfo pi, Lecture l) {
+		return lDao.selectProAttList(sqlSession, pi, l);
+	}
+
+	// 교수 - 강의페이지 - 출결관리 - 출결관리 상세
+	@Override
+	public ArrayList<Lecture> selectAttDetail(Lecture l) {
+		return lDao.selectAttDetail(sqlSession, l);
+	}
+
 
 
 	

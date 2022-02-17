@@ -70,7 +70,7 @@
     #attendance_table tr:first-child{border-top: 2px solid lightgray;background-color: #eeeeee; width: 200px;}
     #attendance_table tr{border-bottom: 1px solid lightgray;}
     #attendance_table tr:last-child{border-bottom: 2px solid lightgray;}
-    #attendance_table th:first-child{width: 30px;}
+    #attendance_table th:first-child{width: 60px;}
     #attendance_table th:nth-child(3){width: 140px;}
     #attendance_table th:nth-child(4){width: 90px;}
     #attendance_table th, #attendance_table td{padding: 2px 0;}
@@ -131,18 +131,18 @@
                     <div style="margin-bottom: 10px; font-size: 15px;">출석-[○], 지각=[▲], 결석-[X]</div>
                     <table id="attendance_table">
                         <tr>
-                            <th></th>
+                            <th>번호</th>
                             <th>강의 제목</th>
                             <th>수업일자</th>
                             <th>출석</th>
                         </tr>
                         
-                        <c:forEach var="l" items="${ list }">
+                        <c:forEach var="pl" items="${ plist }">
 	                        <tr>
-	                            <td>${ l.rownum }</td>
-	                            <td>${ l.classTitle }</td>
-	                            <td>${ l.attendanceDate }</td>
-	                            <td><a href="lectureAttDetailControl.stu">바로가기</a></td>
+	                            <td id="rownum">${ pl.rownum }</td>
+	                            <td>${ pl.classTitle }</td>
+	                            <td>${ pl.attendanceDateA }</td>
+	                            <td><a href="lectureAttDetailControl.stu?lno=${ pl.classCode }&lDate=${ pl.attendanceDateB }">바로가기</a></td>
 	                        </tr>
 						</c:forEach>
 						
@@ -150,13 +150,29 @@
 
                     <div class="container">
                         <ul class="pagination justify-content-center">
-                          <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">4</a></li>
-                          <li class="page-item"><a class="page-link" href="#">5</a></li>
-                          <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                        
+                    		<c:choose>
+                    			<c:when test="${ pi.currentPage eq 1 }">
+		                        	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
+                    		
+                    		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                            	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ p }">${ p }</a></li>	
+                    		</c:forEach>
+                    		
+                    		<c:choose>
+                    			<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
+                    		
                         </ul>
                      </div>
                 </div>
