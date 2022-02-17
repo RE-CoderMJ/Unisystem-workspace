@@ -283,6 +283,7 @@
               (
                select
                       class_code
+                    , class_title 
                     , substr(stud_no,3,2) "학번"
                     , stud_no
                     , kor_name

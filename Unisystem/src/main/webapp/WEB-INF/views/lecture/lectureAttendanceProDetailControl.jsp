@@ -178,9 +178,9 @@
                     <div style="font-size: 15px;">*출석 요건 : 기간 내 출석 인정 요구 시간 이상을 학습할 경우</div>
                     <div style="margin-bottom: 10px; font-size: 15px;">출석-[○], 지각=[▲], 결석-[X]</div>
 
-                    <div id="class_title">2022.01.01강의 출결관리</div>
+                    <div id="class_title">${ title }</div>
                     <div id="StudentCount">
-                        총 <span>74</span>명
+                        총 <span>${ classInfo.currStud }</span>명
                     </div>
                     
                     <div class="scroll type2">
@@ -219,36 +219,72 @@
 				                            </td>
 				                            <td>${ l.studNo }</td>
 				                            <td>${ l.korName }</td>
-				                            <td></td>
+				                            <td class="status"></td>
 				                            <td>
-				                                <button class="attend">출석</button>
-				                                <button class="absence ">결석</button>
-				                                <button class="tardiness">지각</button>
+				                                <button class="attend" type="button" name="attend" onclick="btnFunction(1);">출석</button>
+				                                <button class="absence" type="button" name="absence" onclick="btnFunction(2);">결석</button>
+				                                <button class="tardiness" type="button" name="tardiness" onclick="btnFunction(3);">지각</button>
 				                            </td>
 				                        </tr>
 				                        
 		                        	</c:forEach>                 
 			                        
 		                        </tbody>
-	                        </form>
 	
 	                    </table>
 
                     </div>
 
-                    <div id="cancle_submit_button">
-                        <button>취소</button>
-                        <button>제출</button>
-                    </div>
+			                    <div id="cancle_submit_button">
+			                        <button>초기화</button>
+			                        <button type="submit">제출</button>
+			                    </div>
 
+	                        </form>
                 </div>
 
             </div>
 
         </div>
     </div>
+    
 
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
 </body>
+
+    <script>      
+    	$(function(){
+    		
+    		function btnFunction(num){
+	            if(num == 1){         // 출석 버튼 클릭
+	                $(".status").html("출석");
+	            } else if (num == 2){ // 결석 버튼 클릭
+	                $(".status").html("결석");
+	            } else {              // 지각버튼 클릭
+	                $(".status").html("지각");
+	            }
+    		}
+    		
+    		/*
+	        $(document).on("click", function btnFunction(num){
+	            if(num == 1){         // 출석 버튼 클릭
+	                $(this).parent().siblings(".status").text("출석");
+	            } else if (num == 2){ // 결석 버튼 클릭
+	                $(this).parent().siblings(".status").text("결석");
+	            } else {              // 지각버튼 클릭
+	                $(this).parent().siblings(".status").text("지각");
+	            }
+	        })
+	        */
+	        /*
+	        $(document).on("click"), function btnFunction(){
+    			
+    			$.ajax
+    		}
+    		*/
+    		
+    	});
+    </script>
+    
 </html>

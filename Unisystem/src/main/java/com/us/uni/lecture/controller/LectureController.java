@@ -218,8 +218,9 @@ public class LectureController {
 		l.setAttendanceDateB(lDate);
 		
 		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		String Title = list.get(0).getClassTitle();
 		
-		mv.addObject("list", list).setViewName("lecture/lectureAttendanceProDetailControl");
+		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
 		return mv;
 	}
 
