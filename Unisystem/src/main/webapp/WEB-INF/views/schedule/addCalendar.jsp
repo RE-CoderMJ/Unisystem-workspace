@@ -19,6 +19,8 @@
     font-size: 30px;
     font-weight: 600;
     margin-right: -10px;
+    text-align: center;
+    margin-bottom: 17px;
 }
 .modal-body{
 margin:auto;
@@ -53,57 +55,71 @@ margin:auto;
 	width: 300px;
     margin: auto;
     resize: none;
-    margin-left: 50px;
+ 
+}
+.domain{
+margin:auto;
+resize:none;
+ 
 }
 </style>
 <body>
 
 <!-- eventModal 영역 -->
+ 
+	<form id="scheduleData" action="insertSchedule" method="post">
+	<div style="margin:auto; width:400px;">
+	
 		<div class="modal" id="eventModal">
 	  	<div class="modal-dialog" id="modal-log">
-	    <div class="modal-content" style="border-radius: 80px;">
+	    <div class="modal-content" style="border-radius: 80px; text-align: center;">
 	
 	      <!-- Modal Header -->
 	      <div class="modal-header">
 	        <h4 class="modal-title">일정 등록</h4>
-	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
 	      </div>
 	
 	      <!-- Modal body -->
+	     	
 	      <div class="modal-body">
-	      <form>
-	      	<input class="modalText zTree-h1" type="text" placeholder="일정 제목을 입력하세요">
+	      
+	     	 <input type="hidden" id="euserNo" name="euserNo" value="${loginUser.userNo}" required/>
+	     	 
+	      	<input class="modalText zTree-h1" type="text" id="eventTitle" name="eventTitle" placeholder="일정 제목을 입력하세요">
 	      	
 	      	<div>
-	      		<h6>시작</h6>
+	      		<h4>시작</h4>
 	      	</div>
 	      	<div>
-	      		<input class = "zTree-h3 modalText date" id = "startDate" type = "text" name = "startDate" id = "startDate">
+	      		<input class = "zTree-h3 modalText date" id="startDate" type="text" name="startDate" id = "startDate" required/>
 	      	</div>
 	      	
 	      	<div>
-	      		<h6>종료</h6>
+	      		<h4>종료</h4>
 	      	</div>
 	      	
 	      	<div class = "domain">
-				<input class = "modalText date" id = "endDate" type = "text" name = "endDate" id = "endDate">
+				<input class ="modalText date" id = "endDate" type ="text" name="endDate" id = "endDate" required/>
 			</div>
 			
-			<h6 class = "zTree-h3"> 메모 </h6>
+			<h4 class = "zTree-h3"> 메모 </h4>
 			</div>
 			<div class = "domain">
-				<textarea class = "memo" id = "memo" name = "memo" rows = "7" cols = "20" placeholder="100글자까지 입력 가능합니다"></textarea> 
+				<textarea class ="memo" id ="eventContent" name="eventContent" style="width: 298px;height:150px; resize:none;">
+				</textarea> 
+				<input type="hidden" name="alldayYN" value="N" />
+				<input type="hidden" name="deleteYN" value="N" />
 	      	</div>
-	</form>
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
+	        <button type="submit" class="moBtn" id="sendModal">보내기</button>
 	      </div>
 	
+	</div>
 	    </div>
 	  </div>
 	</div>
-
+</form>
 <script>
 //datepicker
 $(function() {
@@ -125,6 +141,76 @@ $(function() {
 	$("#startDate").datepicker('setDate', 'today');
 	$("#endDate").datepicker('setDate', 'today');
 });
+
+
+
+$.fn.serializeObject = function(){
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+    	var name = $.trim(this.name),
+    		value = $.trim(this.value);
+    	
+        if (o[name]) {
+            if (!o[name].push) {
+                o[name] = [o[name]];
+            }
+            o[name].push(value || '');
+        } else {
+            o[name] = value || '';
+        }
+    });
+    return o;
+};
+
+function saveSchedule()
+{
+	var eventTitle = $("#eventTitle").val();
+	var startDate = $("#startDate").val();
+	var endDate = $("#endDate").val();
+
+	if(calendarTitle="")
+	{
+		alert("일정 명칭을 입력해 주세요.");
+		return false;
+	}
+	if(startDate="")
+	{
+		alert("시작 날짜를 입력해 주세요.");
+		return false;
+	}
+	if(endDate="")
+	{
+		alert("마침 날짜를 입력해 주세요.");
+		return false;
+	}
+
+	var scheduleData = JSON.stringify($('#calendar').serializeObject());
+	
+	$.ajax({
+		
+	  data: scheduleData,
+	  url: "insertSchedule",
+	  type:"POST",
+	  dataType:"JSON",
+	  success:function(map){
+		  if(map="{}"){
+		  window.close();
+		  }
+		  },
+	  error:function(){
+		  console.log("통신실패");
+	  window.close();
+	  },
+	  cache: false,
+	  async: false
+	})
+	;
+	 
+}
+
+
+
 
 </script>
 </body>
