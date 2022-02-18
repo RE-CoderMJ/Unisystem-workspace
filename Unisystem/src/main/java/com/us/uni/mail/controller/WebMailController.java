@@ -162,17 +162,7 @@ public class WebMailController {
 		map.put("list", list);
 		
 		return map;
-	}
-	
-	@RequestMapping("webMail.spam")
-	public String selectSpamMails(){
-		return "webMail/spam";
-	}
-	
-	@RequestMapping("webMail.trash")
-	public String selectDeletedMails(){
-		return "webMail/trash";
-	}
+	}	
 	
 	/**
 	 * 안읽은 메일함 페이지 컨트롤러
@@ -316,7 +306,13 @@ public class WebMailController {
 			}
 		}
 		
-		int result = mService.sendMail(mf, userToNoArr, ccNoArr, attList);
+		int result = 0;
+		
+		if(mf.getUserNo() == Integer.parseInt(mf.getUserToNo().substring(0, mf.getUserToNo().indexOf("@")))) {
+			result =  mService.sendToMeMail(mf, attList);
+		}else {
+			result = mService.sendMail(mf, userToNoArr, ccNoArr, attList);			
+		}
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 메일을 전송하였습니다.");
@@ -401,6 +397,13 @@ public class WebMailController {
 		return map;
 	}
 	
+	
+	/**
+	 * 메일 상세조회 페이지(mail_to)
+	 * @param mNo
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping("webMail.detailView")
 	public ModelAndView selectMail(int mNo, ModelAndView mv){
 		
@@ -416,6 +419,95 @@ public class WebMailController {
 			
 		}
 		return mv;
+	}
+	
+	/**
+	 * 메일 상세조회 페이지(mail_from)
+	 * @param mNo
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("webMail.detailMfView")
+	public ModelAndView selectMfMail(int mNo, ModelAndView mv){
+		
+		MailFrom mf = mService.selectMfMail(mNo);
+		ArrayList<Attachment> attList = mService.selectMfAttachmentList(mNo);
+		
+		mv.addObject("mf", mf)
+		  .addObject("attList", attList)
+		  .setViewName("webMail/mfDetailView");
+		return mv;
+	}
+	
+	/**
+	 * 메일 상세조회 페이지(내게쓴 메일 조회용)
+	 * @param mNo
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("webMail.detailToMeView")
+	public ModelAndView selectToMeMail(int mNo, ModelAndView mv){
+		
+		MailFrom mf = mService.selectToMeMail(mNo);
+		ArrayList<Attachment> attList = mService.selectMfAttachmentList(mNo);
+		
+		mv.addObject("mf", mf)
+		  .addObject("attList", attList)
+		  .setViewName("webMail/mfDetailView");
+		return mv;
+	}
+	
+	@RequestMapping("webMail.spam")
+	public String selectSpamMails(){
+		return "webMail/spam";
+	}
+	
+	/**
+	 * 휴지통 페이지 컨트롤러
+	 * @return
+	 */
+	@RequestMapping("webMail.trash")
+	public String selectDeletedMails(){
+		return "webMail/trash";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="webMail.trashList", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectTrashList(int currentPage, int userNo) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectTrashListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		ArrayList<MailTo> list = mService.selectTrashList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		return map;
+	}
+	
+	
+	/**
+	 * 휴지통으로 이동 컨트롤러
+	 * @param mNo
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.moveToTrash", produces="application/json; charset=utf-8")
+	public int moveToTrash(int mNo, int tNo) {
+		int result = mService.moveToTrash(mNo, tNo);
+		return result;
+	}
+	
+	/**
+	 * 읽음처리||안읽음처리용 컨트롤러
+	 * @param status
+	 * @param mNo
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.changeReadStatus", produces="application/json; charset=UTF-8")
+	public int changeReadStatus(int status, int mNo) {
+		return mService.changeReadStatus(status, mNo);
 	}
 	
 	@RequestMapping("webMail.contact")

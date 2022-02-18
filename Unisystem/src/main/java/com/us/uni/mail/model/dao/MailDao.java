@@ -55,15 +55,19 @@ public class MailDao {
 	public int insertUpdateMailFrom(SqlSessionTemplate sqlSession, MailFrom mf) {
 
 		if(mf.getMailNo() == 0) {
-			if(mf.getUserNo() == Integer.parseInt(mf.getUserToNo().substring(0, mf.getUserToNo().indexOf("@")))) {
-				return sqlSession.insert("mailMapper.insertMailToMeFrom", mf);
-			}else {
-				return sqlSession.insert("mailMapper.insertMailFrom", mf);				
-			}
+			return sqlSession.insert("mailMapper.insertMailFrom", mf);
 		}else {
 			return sqlSession.update("mailMapper.updateMailFrom", mf);			
 		}
 		
+	}
+	
+	public int insertMailToMeFrom(SqlSessionTemplate sqlSession, MailFrom mf) {
+		if(mf.getMailNo() == 0) {
+			return sqlSession.insert("mailMapper.insertMailToMeFrom", mf);			
+		}else {
+			return sqlSession.insert("mailMapper.updateMailFrom", mf);
+		}
 	}
 
 	public int insertMailTo(SqlSessionTemplate sqlSession, MailTo mt) {
@@ -143,10 +147,24 @@ public class MailDao {
 	public MailTo selectMail(SqlSessionTemplate sqlSession, int mNo) {
 		return sqlSession.selectOne("mailMapper.selectMail", mNo);
 	}
+	
+	public MailFrom selectMfMail(SqlSessionTemplate sqlSession, int mNo) {
+		return sqlSession.selectOne("mailMapper.selectMfMail", mNo);
+	}
+	
+	public MailFrom selectToMeMail(SqlSessionTemplate sqlSession, int mNo) {
+		return sqlSession.selectOne("mailMapper.selectToMeMail", mNo);
+	}
+
 
 	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, int mNo) {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectAttachmentList", mNo);
 	}
+	
+	public ArrayList<Attachment> selectMfAttachmentList(SqlSessionTemplate sqlSession, int mNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectMfAttachmentList", mNo);
+	}
+
 
 	public int selectUnreadListCount(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("mailMapper.selectUnreadListCount", userNo);
@@ -174,8 +192,37 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReadReceiptList", userNo, rowBounds);
 	}
 
-	
+	public int changeReadStatus(SqlSessionTemplate sqlSession, int status, int mNo) {
 
-	
+		if(status == 0) {
+			return sqlSession.update("mailMapper.updateReadDate", mNo);
+		}else {
+			return sqlSession.update("mailMapper.changeReadStatus", mNo);
+		}
+		
+	}
+
+	public int moveToTrash(SqlSessionTemplate sqlSession, int mNo, int tNo) {
+		if(tNo == 1) {
+			return sqlSession.update("mailMapper.moveToTrashF", mNo);
+		}else {
+			return sqlSession.update("mailMapper.moveToTrash", mNo);			
+		}
+	}
+
+	public int selectTrashListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectTrashListCount", userNo);
+	}
+
+	public ArrayList<MailTo> selectTrashList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashList", userNo, rowBounds);
+	}
+
+
 
 }

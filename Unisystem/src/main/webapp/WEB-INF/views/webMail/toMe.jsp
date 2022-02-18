@@ -26,8 +26,8 @@
                 <div id="tools">
                     <div id="tools-left">
                         <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 10px;">읽음</button>
-                        <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                        <button style="margin-left: 10px;" id="read">읽음</button>
+                        <button id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button style="margin-left: -4px;">전달</button>
                     </div>
                     <div id="tools-right" align="right">
@@ -53,7 +53,7 @@
                       
                     </ul>
                   </div>
-
+				<input type="hidden" id="cPage">
             </article>
         </section>
     </div>
@@ -74,7 +74,7 @@
 					let value = "";
 					for(let i in result.list){
 						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailToNo + "'>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 							   
 						if(result.list[i].important == "N"){
@@ -91,10 +91,10 @@
 	                    	value += "<td class='att'></td>";                    		
                     	}
                     	
-						value +=	"<td class='from overflow'>" + result.list[i].address + "</td>"
-							   +	"<td class='title'>" + result.list[i].title + "</td>"                    		
-	 						   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
-	 						   + "</tr>";
+	                    value += "<td class='from overflow'>" + result.list[i].address + "</td>"
+	                           + "<td class='title'>" + result.list[i].title + "</td>"   
+                    		   + "<td class='date'>" + result.list[i].sendDate + "</td>"
+	 					  	   + "</tr>";
 					}
 				
 					$("#list").html(value);
@@ -125,6 +125,12 @@
 					
 					$(".pagination").html(piValue);
 					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$("#webMail-sidebar").css('height', $len + 22);
+					
+					$("#cPage").val(result.pi.currentPage);
+					
 				},error:function(){
 					console.log("받은 메일함 목록 조회용 ajax 통신 실패");
 				}
@@ -136,17 +142,53 @@
 	<script>
 		$(function(){
 			$(document).on("click", ".title", function(){
-				location.href="webMail.detailView?mNo=" + $(this).siblings("input").val();
+				location.href="webMail.detailToMeView?mNo=" + $(this).siblings("input").val();
 			});		
 		})
 	</script>
 	
+	<!-- 전체 선택/해제 -->
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			console.log($len);
-			$("#webMail-sidebar").css('height', $len + 22);
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 메일 휴지통으로 이동 -->
+	<script>
+		$(document).on("click", "#trash", function(){
+			let checkValue = [];
+			
+			let mNo;
+
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input").val();
+				checkValue.push(mNo);
+			});
+			
+			for(let i in checkValue){
+				moveToTrash(checkValue[i]);
+			}
 		})
+		
+		function moveToTrash(mNo){
+			$.ajax({
+				url:"webMail.moveToTrash",
+				data:{mNo:mNo, tNo:1},
+				success:function(){
+					$("#deleteCompleted").modal('show');
+					selectToMeList($("#cPage").val());
+				},error:function(){
+					console.log("휴지통 이동 ajax통신 실패");
+				}
+			
+			})
+		}
+		
 	</script>
 	
 </body>

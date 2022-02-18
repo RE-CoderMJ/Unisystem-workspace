@@ -48,19 +48,33 @@ public interface MailService {
 	
 	// 메일 작성하기 서비스
 	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);
+	// 내게쓰기 서비스
+	int sendToMeMail(MailFrom mf, ArrayList<Attachment> attList);
 	
 	// 메일 상세조회용 서비스
 	MailTo selectMail(int mNo);
+	MailFrom selectMfMail(int mNo);
+	MailFrom selectToMeMail(int mNo);
 	ArrayList<Attachment> selectAttachmentList(int mNo);
+	ArrayList<Attachment> selectMfAttachmentList(int mNo);
 	
 	// 메일 삭제용(휴지통) 서비스
-	int moveToTrash(int mailNo);
+	int moveToTrash(int mNo, int tNo);
+	// 휴지통 리스트 서비스
+	int selectTrashListCount(int userNo);
+	ArrayList<MailTo> selectTrashList(int userNo, PageInfo pi);
 	
 	// 메일 영구삭제용 서비스
 	int deleteMail(int mailNo);
 	
 	// 메일 읽음 처리용 서비스
 	int updateReadDate(int mNo);
+	
+	// 메일 읽음||안읽음 처리용 서비스
+	int changeReadStatus(int status, int mNo);
+	
+	
+	
 	
 
 	

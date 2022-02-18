@@ -116,6 +116,10 @@
 					
 					$(".pagination").html(piValue);
 					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$("#webMail-sidebar").css('height', $len + 22);
+					
 				},error:function(){
 					console.log("임시보관함 목록 조회용 ajax 통신 실패");
 				}
@@ -129,13 +133,6 @@
 			$(document).on("click", "tr", function(){
 				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
 			})
-		})
-	</script>
-	
-	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$("#webMail-sidebar").css('height', $len + 22);
 		})
 	</script>
 	

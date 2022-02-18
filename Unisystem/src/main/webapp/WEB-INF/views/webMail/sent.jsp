@@ -25,8 +25,8 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 10px;"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                        <input type="checkbox" id="checkAll">
+                        <button style="margin-left: 10px;" id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button>전달</button>
                         <button style="margin-left: -4px;">다시보내기</button>
                     </div>
@@ -53,7 +53,7 @@
                       
                     </ul>
                   </div>
-
+				<input type="hidden" id="cPage">
             </article>
         </section>
     </div>
@@ -74,7 +74,7 @@
 					let value = "";
 					for(let i in result.list){
 						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailToNo + "'>"
+							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
                     		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
                     	if(result.list[i].fileName != null){
@@ -116,6 +116,12 @@
 					
 					$(".pagination").html(piValue);
 					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$("#webMail-sidebar").css('height', $len + 22);
+					
+					$("#cPage").val(result.pi.currentPage);
+					
 				},error:function(){
 					console.log("보낸메일함 목록 조회용 ajax 통신 실패");
 				}
@@ -127,18 +133,55 @@
 	<script>
 		$(function(){
 			$(document).on("click", ".title", function(){
-				location.href="webMail.detailView?mNo=" + $(this).siblings("input").val();
+				location.href="webMail.detailMfView?mNo=" + $(this).siblings("input").val();
 			});		
 		})
 	</script>
 	
+	<!-- 전체 선택/해제 -->
 	<script>
-		$(document).on('click', '#mail-boxes > div', function(){
-			let $len = $("section").height();
-			console.log($len);
-			$("#webMail-sidebar").css('height', $len + 22);
-		})
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
 	</script>
+	
+	<!-- 메일 휴지통으로 이동 -->
+	<script>
+		$(document).on("click", "#trash", function(){
+			let checkValue = [];
+			
+			let mNo;
+
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input").val();
+				checkValue.push(mNo);
+			});
+			
+			for(let i in checkValue){
+				moveToTrash(checkValue[i]);
+			}
+		})
+		
+		function moveToTrash(mNo){
+			$.ajax({
+				url:"webMail.moveToTrash",
+				data:{mNo:mNo, tNo:1},
+				success:function(){
+					$("#deleteCompleted").modal('show');
+					selectSentList($("#cPage").val());
+				},error:function(){
+					console.log("휴지통 이동 ajax통신 실패");
+				}
+			
+			})
+		}
+		
+	</script>
+	
 	
 </body>
 </html>

@@ -26,8 +26,8 @@
                 <div id="tools">
                     <div id="tools-left">
                         <input type="checkbox" id="checkAll">
-                        <button style="margin-left: 10px;">읽음</button>
-                        <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+                        <button style="margin-left: 10px;" id="read">읽음</button>
+                        <button id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button style="margin-left: -5px;">스팸등록</button>
                         <button>답장</button>
                         <button style="margin-left: -4px;">전달</button>
@@ -54,8 +54,10 @@
                     <ul class="pagination justify-content-center">
                       
                     </ul>
-                  </div>
+                </div>
 
+				<input type="hidden" id="cPage">
+				
             </article>
         </section>
     </div>
@@ -134,6 +136,12 @@
 					
 					$(".pagination").html(piValue);
 					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$("#webMail-sidebar").css('height', $len + 22);
+					
+					$("#cPage").val(result.pi.currentPage);
+					
 				},error:function(){
 					console.log("안읽은 메일함 목록 조회용 ajax 통신 실패");
 				}
@@ -162,12 +170,84 @@
 		});		
 	</script>
 	
+	<!-- 읽음처리 -->
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			console.log($len);
-			$("#webMail-sidebar").css('height', $len + 22);
+		$(document).on("click", "#read", function(){
+			let checkValue = [];
+			let mNoList = [];
+			
+			let value;
+			let mNo;
+			
+			$(".checkbox:checked").each(function(){
+				value = $(this).parent().siblings("input[name=read-date]").val();
+				checkValue.push(value);
+				
+				mNo = $(this).parent().siblings("input[name=mNo]").val();
+				mNoList.push(mNo);
+			});
+			
+			let status;
+			for(let i in checkValue){
+				
+				if(checkValue[i] == 'undefined'){
+					status = 0;
+				}else{
+					status = 1;
+				}
+
+				changeReadStatus(status, mNoList[i]);
+			}
 		})
+		
+		function changeReadStatus(status, mNo){
+			$.ajax({
+				url:"webMail.changeReadStatus",
+				data:{status:status, mNo:mNo},
+				success:function(result){
+					if(result > 0){
+					selectUnreadList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("읽음처리용 ajax통신 실패");
+				}
+			
+			})
+		}
+		
+	</script>
+	
+	<!-- 메일 휴지통으로 이동 -->
+	<script>
+		$(document).on("click", "#trash", function(){
+			let checkValue = [];
+			
+			let mNo;
+
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input[name=mNo]").val();
+				checkValue.push(mNo);
+			});
+			
+			for(let i in checkValue){
+				moveToTrash(checkValue[i]);
+			}
+		})
+		
+		function moveToTrash(mNo){
+			$.ajax({
+				url:"webMail.moveToTrash",
+				data:{mNo:mNo,tNo:2},
+				success:function(){
+					$("#deleteCompleted").modal('show');
+					selectUnreadList($("#cPage").val());
+				},error:function(){
+					console.log("휴지통 이동 ajax통신 실패");
+				}
+			
+			})
+		}
+		
 	</script>
 	
 </body>

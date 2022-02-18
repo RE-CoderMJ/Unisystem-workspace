@@ -23,4 +23,6 @@ public class MailFrom {
 	private String saveStatus;
 	private String fileName;
 	private String important;
+	private String fromName;
+	private String userToName;
 }

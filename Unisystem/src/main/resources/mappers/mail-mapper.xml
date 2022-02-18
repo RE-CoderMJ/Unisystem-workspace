@@ -16,6 +16,8 @@
 		<result column="to_user" property="userToNo" />
 		<result column="file_name" property="fileName" />
 		<result column="important" property="important" />
+		<result column="from_name" property="fromName" />
+		<result column="to_name" property="userToName" />
 	</resultMap>
 	
 	<resultMap type="MailTo" id="toResult">
@@ -36,6 +38,7 @@
 		<result column="from_add" property="userFromAdd" />
 		<result column="from_name" property="userFromName" />
 		<result column="to_name" property="userToName" />
+		<result column="type" property="type" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -105,6 +108,7 @@
 		  from mail_from
 		 where from_user = #{userNo}
 		   and save_status = 'Y'
+		   and status = 'N'
 	</select>
 	
 	<select id="selectDraftList" resultMap="fromResult">
@@ -117,6 +121,7 @@
 	      from mail_from
 		 where from_user = #{userNo}
 		   and save_status = 'Y'
+		   and status = 'N'
 		 order
 		    by mail_from_no desc
 	</select>
@@ -169,6 +174,7 @@
 		  )
 	</insert>
 	
+	<!-- 내게쓰기 작성 -->
 	<insert id="insertMailToMeFrom">
 		insert
 		  into mail_from
@@ -269,6 +275,7 @@
 		  )
 	</insert>
 	
+	<!-- 첨부파일 작성 -->
 	<insert id="insertAttachment">
 		insert
 		  into attachment
@@ -320,15 +327,14 @@
 		  from mail_from
 		 where from_user = #{userNo}
 		   and save_status = 'N'
+		   and status = 'N'
 	</select>
 	
 	<select id="selectSentList" resultMap="fromResult">
 		select
-			   f.mail_from_no
-			 , mail_to_no
-			 , f.to_user
+			  mail_from_no
+			 , to_user
 			 , title
-			 , content
 			 , send_date
              , (select
                        origin_name
@@ -337,9 +343,10 @@
                    and ref_type = 'M'
                    and rownum = 1) "file_name"
 	      from mail_from f
-	      join mail_to t on(f.mail_from_no = t.mail_from_no)
 		 where from_user = #{userNo}
 		   and save_status = 'N'
+           and to_me = 'N'
+           and status = 'N'
 		 order
 		    by mail_from_no desc
 	</select>
@@ -360,7 +367,6 @@
 			 , from_add
 			 , t.important
 			 , title
-			 , from_add
 			 , send_date
 			 , read_date
 			 , cc_status
@@ -373,7 +379,7 @@
 		  from mail_to t
 		  join mail_from f on (t.mail_from_no = f.mail_from_no)
 		 where t.to_user = #{userNo}
-		   and status = 'N'
+		   and t.status = 'N'
 		   and spam_status = 'N'
 		 order
 		 	by mail_to_no desc
@@ -385,15 +391,16 @@
 			   count(*)
 		  from mail_from
 		 where from_user = #{userNo}
+	       and save_status = 'N'
 		   and to_me = 'Y'
+		   and status = 'N'
 	</select>
 	
 	<select id="selectToMeList" resultMap="fromResult">
 		select
-			   f.mail_from_no
-			 , mail_to_no
+			   mail_from_no
 			 , from_add
-			 , f.important
+			 , important
 			 , title
 			 , content
 			 , send_date
@@ -404,10 +411,10 @@
                    and ref_type = 'M'
                    and rownum = 1) "file_name"
 	      from mail_from f
-	      join mail_to t on (f.mail_from_no = t.mail_from_no)
 		 where from_user = #{userNo}
 		   and save_status = 'N'
 		   and to_me = 'Y'
+		   and status = 'N'
 		 order
 		    by mail_from_no desc
 	</select>
@@ -430,6 +437,7 @@
 		                     where t.to_user = #{userNo}
 		                       and t.status = 'N'
 		                       and spam_status = 'N'
+		                       and t.status = 'N'
 		                    )
 		             left join attachment a on (ref_no = mail_from_no)
 		               where ref_type = 'M'
@@ -437,6 +445,7 @@
 		        )
 	</select>
 	
+	<!-- 첨부파일이 있는 메일함 조회 -->
 	<select id="selectAttachMailList" resultMap="toResult">
 		select 
 		       distinct mail_to_no
@@ -475,6 +484,7 @@
 		      by mail_to_no desc
 	</select>
 	
+	<!-- 전체 첨부파일 조회 -->
 	<select id="selectAllAttachmentList" resultMap="attResult">
 		select
 		       attach_no
@@ -491,6 +501,7 @@
 		    by mail_from_no desc
 	</select>
 	
+	<!-- 읽음 처리 -->
 	<update id="updateReadDate">
 		update 
 			   mail_to
@@ -498,6 +509,7 @@
 		 where mail_to_no = #{mNo}
 	</update>
 	
+	<!-- 메일 상세조회 -->
 	<select id="selectMail" resultMap="toResult">
 		select
 			   mail_to_no
@@ -517,6 +529,45 @@
 		 where mail_to_no = #{mNo}
 	</select>
 	
+	<!-- 메일 상세조회 -->
+	<select id="selectMfMail" resultMap="fromResult">
+		select
+			   u.kor_name "from_name"
+             , s.kor_name "to_name"
+			 , f.mail_from_no
+			 , f.to_user
+			 , from_add
+             , title
+             , content
+			 , f.important
+		  from mail_from f
+          join mail_to t on (t.mail_from_no = f.mail_from_no)
+          join users u on (from_user = u.user_no)
+          join users s on (t.to_user = s.user_no)
+		 where f.mail_from_no = #{mNo}
+		   and f.status = 'N'
+		   and save_status = 'N'
+           and rownum = 1
+	</select>
+	
+	<!-- 내게쓴 메일 상세조회 -->
+	<select id="selectToMeMail" resultMap="fromResult">
+		select
+			   u.kor_name "from_name"
+			 , mail_from_no
+			 , to_user
+			 , from_add
+             , title
+             , content
+			 , important
+		  from mail_from f
+          join users u on (from_user = u.user_no)
+		 where f.mail_from_no = 55
+		   and f.status = 'N'
+		   and save_status = 'N'
+	</select>
+	
+	<!-- 상세조회용 첨부파일 조회 -->
 	<select id="selectAttachmentList" resultMap="attResult">
 		select
 		       attach_no
@@ -532,12 +583,30 @@
 		    by attach_no desc
 	</select>
 	
+	<!-- 상세조회용 첨부파일 조회 -->
+	<select id="selectMfAttachmentList" resultMap="attResult">
+		select
+		       attach_no
+		     , ref_no
+		     , origin_name
+		     , change_name
+		     , path
+		  from attachment
+          join mail_from on (mail_from_no = ref_no)
+		 where ref_type = 'M'
+		   and ref_no = #{mNo}
+		 order
+		    by attach_no desc
+	</select>
+	
+	<!-- 안읽은 메일함 리스트 조회 -->
 	<select id="selectUnreadListCount" resultType="_int">
 		select
 		       count(*)
 		  from mail_to
 		 where to_user = #{userNo}
 		   and read_date is null
+		   and status = 'N'
 	</select>
 	
 	<select id="selectUnreadList" resultMap="toResult">
@@ -559,13 +628,14 @@
 		  from mail_to t
 		  join mail_from f on (t.mail_from_no = f.mail_from_no)
 		 where t.to_user = #{userNo}
-		   and status = 'N'
+		   and t.status = 'N'
 		   and spam_status = 'N'
 		   and read_date is null
 		 order
 		 	by mail_to_no desc
 	</select>
 	
+	<!-- 수신확인 -->
 	<select id="selectReadReceiptListCount" resultType="_int">
 		select
 		       count(*)
@@ -575,30 +645,150 @@
 				  from mail_to t
 				  join mail_from f on(t.mail_from_no = f.mail_from_no)
 				 where from_user = #{userNo}
+				   and t.status = 'N'
 		  		)
 	</select>
 	
-	<select id="selectReadReceiptList" resultMap="toResult">
-		select
-		       mail_to_no
-		     , t.mail_from_no
-		     , t.to_user
-		     , to_add
-		     , read_date
-		     , send_date
-		     , cc_status
-		     , title
-		     , content
-		     , (select
-		               origin_name
-		          from attachment
-		         where ref_no = f.mail_from_no
-		           and ref_type = 'M'
-		           and rownum = 1) "file_name"
-		  from mail_to t
-		  join mail_from f on(t.mail_from_no = f.mail_from_no)
-		 where from_user = #{userNo}
-		 order
-		    by mail_to_no desc
+	<select id="selectReadReceiptList" resultMap="fromResult">
+		 select
+             mail_from_no
+           , from_user
+           , title
+           , content
+           , send_date
+           , to_user
+           , important
+             , (select
+                       read_date
+                  from mail_to
+                 where mail_from_no = f.mail_from_no
+                   and rownum = 1) "read_date"
+           , (select
+                     origin_name
+                from attachment
+               where ref_no = mail_from_no
+                 and ref_type = 'M'
+                 and rownum = 1) "file_name"
+        from mail_from f
+       where from_user = #{userNo}
+         and status = 'N'
+         and save_status = 'N'
+       order
+          by mail_from_no desc
+	</select>
+	
+	<update id="changeReadStatus">
+		update 
+			   mail_to
+		   set read_date = null
+		 where mail_to_no = #{mNo}
+	</update>
+	
+	<update id="moveToTrash">
+		update
+			   mail_to
+		   set status = 'Y'
+		 where mail_to_no = #{mNo}
+	</update>
+	
+	<update id="moveToTrashF">
+		update
+			   mail_from
+		   set status = 'Y'
+		 where mail_from_no = #{mNo}
+	</update>
+	
+	<select id="selectTrashListCount", resultType="_int">
+		select count(*) 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user
+		             , important
+		             , title
+		             , send_date
+		             , null as read_date
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where status = 'Y'
+		           and from_user = #{userNo}
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+		             , send_date
+		             , read_date
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.status = 'Y'
+		       )
+	</select>
+	
+	<select id="selectTrashList", resultMap="toResult">
+		select * 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user
+		             , important
+		             , title
+		             , send_date
+		             , null as read_date
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where status = 'Y'
+		           and from_user = #{userNo}
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+		             , send_date
+		             , read_date
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.status = 'Y'
+		       )
+		 order 
+		    by mail_from_no desc
 	</select>
 </mapper>

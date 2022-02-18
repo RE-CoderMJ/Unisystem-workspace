@@ -106,6 +106,7 @@ public class MailServiceImpl implements MailService {
 		
 		// 임시저장 메일일 경우 update, 아닐경우 insert
 		Integer mNo = new Integer (mf.getMailNo());
+		
 		int result = mDao.insertUpdateMailFrom(sqlSession, mf);
 		
 		int result2 = 0;
@@ -152,6 +153,28 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
+	public int sendToMeMail(MailFrom mf, ArrayList<Attachment> attList) {
+		
+		// 임시저장 메일일 경우 update, 아닐경우 insert
+		Integer mNo = new Integer (mf.getMailNo());
+		int result = mDao.insertMailToMeFrom(sqlSession, mf);
+				
+		int result2 = 1;
+		// 첨부파일이 있을 경우
+		if(!attList.isEmpty()) {
+				for(Attachment att : attList) {
+					// 임시저장 메일일 경우
+					if(mNo != null) {
+						att.setRefNo(mf.getMailNo());
+					}	
+					result2 = mDao.insertAttachment(sqlSession, att);
+				}
+		}
+		
+		return result * result2;
+	}
+	
+	@Override
 	public int selectAttachMailListCount(int userNo) {
 		int result = mDao.selectAttachMailListCount(sqlSession, userNo);
 		return result;
@@ -176,9 +199,26 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
+	public int changeReadStatus(int status, int mNo) {
+		return mDao.changeReadStatus(sqlSession, status, mNo);
+	}
+	
+	@Override
 	public MailTo selectMail(int mNo) {
 		MailTo mt = mDao.selectMail(sqlSession, mNo);
 		return mt;
+	}
+	
+	@Override
+	public MailFrom selectMfMail(int mNo) {
+		MailFrom mf = mDao.selectMfMail(sqlSession, mNo);
+		return mf;
+	}
+	
+	@Override
+	public MailFrom selectToMeMail(int mNo) {
+		MailFrom mf = mDao.selectToMeMail(sqlSession, mNo);
+		return mf;
 	}
 	
 	@Override
@@ -186,6 +226,13 @@ public class MailServiceImpl implements MailService {
 		ArrayList<Attachment> attList = mDao.selectAttachmentList(sqlSession, mNo);
 		return attList;
 	}
+	
+	@Override
+	public ArrayList<Attachment> selectMfAttachmentList(int mNo) {
+		ArrayList<Attachment> attList = mDao.selectMfAttachmentList(sqlSession, mNo);
+		return attList;
+	}
+
 
 	@Override
 	public int selectUnreadListCount(int userNo) {
@@ -200,9 +247,20 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public int moveToTrash(int mailNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int moveToTrash(int mNo, int tNo) {
+		int result = mDao.moveToTrash(sqlSession, mNo, tNo);
+		return result;
+	}
+	@Override
+	public int selectTrashListCount(int userNo) {
+		int result = mDao.selectTrashListCount(sqlSession, userNo);
+		return result;
+	}
+	
+	@Override
+	public ArrayList<MailTo> selectTrashList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectTrashList(sqlSession, userNo, pi);
+		return list;
 	}
 
 	@Override
@@ -210,6 +268,9 @@ public class MailServiceImpl implements MailService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
+	
 
 
 }

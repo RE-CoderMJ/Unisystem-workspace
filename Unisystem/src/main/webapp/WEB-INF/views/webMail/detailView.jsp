@@ -22,9 +22,9 @@
                 <div id="tools">
 	                <button id="send-btn" type="submit"><i class="fas fa-arrow-right"></i>&nbsp;답장</button>
 	                <button style="margin-left: -4px;">전달</button>
-	                <button><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
+	                <button onclick="moveToTrash(${mt.mailNo})"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
 	                <button style="margin-left: -5px;">스팸등록</button>
-	                <button>목록</button>                
+	                <button onclick="history.back()">목록</button>                
                 </div>
                 <hr class="detail-lines">
                 <div id="title-area">
@@ -71,6 +71,25 @@
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		function moveToTrash(mNo){
+			$.ajax({
+				url:"webMail.moveToTrash",
+				data:{mNo:mNo,tNo:2},
+				success:function(){
+					$("#deleteCompleted").modal('show');
+				},error:function(){
+					console.log("휴지통 이동 ajax통신 실패");
+				}
+			
+			})
+		}
+		
+		$(document).on("click", "#deleteCompletedClosebtn", function(){
+			history.back();
+		})
+	</script>
 	
 	<script>
 		$(document).ready(function(){
