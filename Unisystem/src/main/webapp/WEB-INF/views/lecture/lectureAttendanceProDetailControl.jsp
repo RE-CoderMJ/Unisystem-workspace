@@ -196,11 +196,17 @@
 		                        </tr>
 	                        </thead>
 	                        
-	                        <form action="lectureNotice.stu" method="">
+	                        <form action="insertAtt.lec" method="">
 	                        
 		                        <tbody>
 		                        	<c:forEach var="l" items="${ list }">
 		                        	
+		                        	<input type="hidden" id="studNo" name="studNo" value="${ l.studNo }" />
+		                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
+		                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
+		                        	<input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ l.attendanceDateB }" />
+		                        	<input type="hidden" id="classTitle" name="classTitle" value="${ l.classTitle }" />
+				                       
 				                        <tr>
 				                            <td>${ l.rownum }</td>
 				                            <td>
@@ -219,7 +225,7 @@
 				                            </td>
 				                            <td>${ l.studNo }</td>
 				                            <td>${ l.korName }</td>
-				                            <td class="status"></td>
+				                            <td class="status" name="attendanceStatus"></td>
 				                            <td>
 				                                <button class="attend" id="statusBtnA" type="button" name="attend">출석</button>
 				                                <button class="absence" id="statusBtnB" type="button" name="absence">결석</button>

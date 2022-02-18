@@ -75,6 +75,17 @@
     #attendance_table th:nth-child(4){width: 90px;}
     #attendance_table th, #attendance_table td{padding: 2px 0;}
     
+    #createAtt{
+    	float:right;
+    	margin-right:10px;
+    	border:none;
+    	border-radius:5px;
+    	background-color:rgb(15, 43, 80);
+    	color:white;
+    	padding:3px 10px;
+    }
+    #createAtt:focus{outline:none;}
+    
     /*페이징바*/
     .container{
         margin-top: 50px;
@@ -126,7 +137,49 @@
                     </table>
                 </div>
 
-                <div>
+                <div>  	
+                	<form action="insertAtt.lec" method="post" id="modalForm">
+						
+						<!-- 폼 모달창 영역 -->
+						<div id="contact">
+						<button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" style="float:right; margin-right:10px; background:rgb(15, 43, 80); border:none">강의 생성</button></div>
+						<div id="contact-modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<a class="close" data-dismiss="modal">×</a>
+										<h3></h3>
+									</div>
+									<form id="contactForm" name="contact" role="form">
+										<div class="modal-body">				
+											<div class="form-group">
+												<label for="classTitle">강의제목</label>
+												<input type="text" name="classTitle" class="form-control">
+											</div>
+											<div class="form-group">
+												<label for="attendanceDateB">강의일</label>
+												<input type="date" id="attendanceDateB" name="attendanceDateB" min="${ classInfo.classYear }-01-01" max="${ classInfo.classYear }-12-31" required class="form-control"/>
+											</div>
+											<div id="modalForm_studNo">
+											</div>				
+											<div id="modalForm_korName">
+											</div>
+										</div>
+										<div class="modal-footer">					
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<input type="submit" class="btn btn-success" id="submit">
+										</div>
+										
+										
+			                        	<input type="hidden" id="classCode" name="classCode" value="${ classInfo.classCode }" />
+			                        	<input type="hidden" id="classNo" name="classNo" value="${ classInfo.classNo }" />
+									</form>
+								</div>
+							</div>
+						</div>                	
+						                	
+                	</form>
+                	
                     <div style="font-size: 15px;">*출석 요건 : 기간 내 출석 인정 요구 시간 이상을 학습할 경우</div>
                     <div style="margin-bottom: 10px; font-size: 15px;">출석-[○], 지각=[▲], 결석-[X]</div>
                     <table id="attendance_table">
@@ -144,10 +197,13 @@
 	                            <td>${ pl.attendanceDateA }</td>
 	                            <td><a href="lectureAttDetailControl.stu?lno=${ pl.classCode }&lDate=${ pl.attendanceDateB }">바로가기</a></td>
 	                        </tr>
+	                        
 						</c:forEach>
 						
                     </table>
 
+	                <input type="hidden" id="classCode" name="classCode" value="${ classInfo.classCode }" />
+	                
                     <div class="container">
                         <ul class="pagination justify-content-center">
                         
@@ -175,6 +231,70 @@
                     		
                         </ul>
                      </div>
+                     
+                     <script>
+                     	
+                     	$(function(){
+                     		selectAttStuList();
+                     	})
+                     	
+                     		function selectAttStuList(){
+                     		
+                     		var classCode = $("#classCode").val();
+                     		
+                     		$.ajax({
+                     			url:"AttStuList.lec",
+                     			data:{classCode:classCode},
+                     			success:function(stuList){
+                     				
+                     				let valueA="";
+                     				let valueB="";
+                    				for(let i in stuList){
+                                    	valueA += "<input type='hidden' class='studNo" + [i] + "' name='studNo' value=" + stuList[i].studNo + " />";                                
+                    					console.log(stuList[i].studNo);
+                    				}                   		
+                    				for(let i in stuList){
+                    					valueB += "<input type='hidden' class='korName" + [i] + "' name='korName' value='" + stuList[i].korName + "'/>";
+                    				}
+                    				                  
+                    				$("#modalForm_studNo").html(valueA);
+                    				$("#modalForm_korName").html(valueB);
+                     			}, error:function(){
+                     				console.log("해당 수강중인 학생의 리스트 조회용 ajax 통신 실패");
+                     			}
+                     		
+                     		})
+                     		
+                     		
+                     		
+                     	}
+                     	
+                     	$(document).ready(function(){	
+                     		$("#contactForm").submit(function(event){
+                     			submitForm();
+                     			return false;
+                     		});
+                     	});
+						
+                     	function submitForm(){
+                     		 $.ajax({
+                     			type: "POST",
+                     			url: "saveContact.php",
+                     			cache:false,
+                     			data: $('form#contactForm').serialize(),
+                     			success: function(response){
+                     				$("#contact").html(response)
+                     				$("#contact-modal").modal('hide');
+                     			},
+                     			error: function(){
+                     				alert("Error");
+                     			}
+                     		});
+                     	}
+                     </script>
+                     
+                     
+                     
                 </div>
 
             </div>

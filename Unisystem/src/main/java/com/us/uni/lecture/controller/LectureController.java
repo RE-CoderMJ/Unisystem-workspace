@@ -209,6 +209,16 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 교수 - 출결관리 - 해당 강의를 듣는 학생 목록을 가져오는 컨트롤러*/
+	@ResponseBody
+	@RequestMapping(value="AttStuList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectselectAttStuList(int classCode) {
+		
+		ArrayList<Lecture> list = lService.AjaxSelectselectAttStuList(classCode);
+		
+		return new Gson().toJson(list);
+	}
+	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
 	public ModelAndView selectLectureAttDetailControl(int lno, String lDate, ModelAndView mv) {
@@ -223,7 +233,20 @@ public class LectureController {
 		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
 		return mv;
 	}
-
+	
+	/* 교수 - 출결관리상세(출결등록창)에서 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
+	@RequestMapping("insertAtt.lec")
+	public void insertAtt(Lecture l) {
+		
+		System.out.println(l);
+		
+		int result = lService.insertAtt(l);
+		
+	}
+	
+	
+	
+	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureNotice.stu")
 	public String selectLectureNotice() {
