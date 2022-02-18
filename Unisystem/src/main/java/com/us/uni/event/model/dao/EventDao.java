@@ -25,4 +25,9 @@ public class EventDao {
 		return (ArrayList)sqlSession.selectList("eventMapper.userSelectList", euserNo);
 	}
 
+	public int deleteSchedule(SqlSessionTemplate sqlSession, int eventNo) {
+		
+		return sqlSession.delete("eventMapper.deleteSchedule", eventNo);
+	}
+
 }

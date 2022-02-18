@@ -80,9 +80,6 @@
 
 </style>
 
-
- 
- 
 <body>
 
 	<div id="outer">
@@ -142,8 +139,7 @@
 	    	window.open(url,name,option);
 	    }
 		
-		
-		
+
 		
 		
 		$(function(){
@@ -155,15 +151,17 @@
 			       dataType:'json',
 			       success:function(data){
 		    	       console.log(data);
-						
+		    	      
 		    	       let eventArr = []; // [{title:xxx, start:xxxx, end:xxx}, {}]
 		    	       for(let i in data){
-		    	    	   let obj = {title:data[i].eventTitle,
+		    	    	   let obj = {
+		    	    			  	 groupId:data[i].eventNo,
+		    	    			   	 title:data[i].eventTitle,
 		    	    			   	  start:data[i].startDate,
-		    	    			   	  end:data[i].endDate};
+		    	    			   	  end:data[i].endDate
+		    	    			   	  };
 		    	    	   eventArr.push(obj);
 		    	       }
-		    	       
 		    	       
 			    	    // calendar element 취득
 			  		     var calendarEl = $('#calendar')[0];
@@ -181,7 +179,7 @@
 			  		        },
 			  		        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
 			  		        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-			  		        editable: true, // 수정 가능?
+			  		        editable: true, // 수정 가능 
 			  		        selectable: true, // 달력 일자 드래그 설정가능
 			  		        nowIndicator: true, // 현재 시간 마크
 			  		        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
@@ -195,7 +193,8 @@
 			  		        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
 			  		          console.log(obj);
 			  		        },
-			  		        select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+			  		        select:
+			  		          function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 			  		          var title = prompt('Event Title:');
 			  		          if (title) {
 			  		            calendar.addEvent({
@@ -206,7 +205,32 @@
 			  		            })
 			  		          }
 			  		          calendar.unselect()
-			  		        }, events: eventArr
+			  		        }, 
+			  		       events: eventArr,
+			  		       eventClick: function(data, jsEvent, view) {
+			  		    	   console.log(data);
+			 				if(!confirm("일정 '"+ data.event._def.title+"'을 삭제하시겠습니까?"))
+			 				{
+			 					return false;
+			 				}else{
+			 					
+			 				$.ajax({
+			 				  type: 'POST',  
+			 				  dataType:'json',
+			 				  url: "deleteSchedule",
+			 				  data: {eventNo: data.event._def.groupId},
+			 				  success:
+			 					function(result){
+			 					   if(result == 1){
+			 						alert('삭제되었습니다.');
+			 						location.reload();
+			 						}
+			 				  }
+			 				});
+			 				}
+			 			  }
+			  		        
+			  		        
 			  		      });
 			  		      // 캘린더 랜더링
 			  		      calendar.render();

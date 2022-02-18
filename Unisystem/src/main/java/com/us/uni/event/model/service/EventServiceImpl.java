@@ -36,4 +36,10 @@ public class EventServiceImpl implements EventService{
 		return eDao.userSelectList(sqlSession,euserNo);
 	}
 
+	@Override
+	public int deleteSchedule(int eventNo) {
+		
+		return eDao.deleteSchedule(sqlSession,eventNo);
+	}
+
 }

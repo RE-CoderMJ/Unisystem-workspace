@@ -48,16 +48,14 @@ public class EventController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
-	public Map<Object,Object> InsertSchedule(Event ev, HttpSession session, Model model){
+	public int InsertSchedule(Event ev, HttpSession session, Model model){
 		 
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		//System.out.println(map);
 		
-		
-		eService.insertSchedule(ev);
-		
+		int result = eService.insertSchedule(ev);
 		 
-		return map;
+		return result;		
 	}
 	
 	
@@ -66,14 +64,21 @@ public class EventController {
 	public String getevent(int euserNo, ModelAndView mv) {
 		
 		ArrayList<Event> list = eService.userSelectList(euserNo);
-		
-		for(int i=0;i<=list.size();i++) {
-			System.out.println(i);
-			
-		}
+		 
 		return new Gson().toJson(list);
 	}
 	
+
+	@ResponseBody
+	@RequestMapping(value="deleteSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	public int deleteSchedule(int eventNo) {
+		
+		System.out.println(eventNo);
+		
+		int result = eService.deleteSchedule(eventNo);
+		 
+		return result;
+	}
 	
 	
 }

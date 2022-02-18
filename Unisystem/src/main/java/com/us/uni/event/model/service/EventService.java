@@ -12,4 +12,7 @@ public interface EventService {
 
 	ArrayList<Event> userSelectList(int euserNo);
 
+	int deleteSchedule(int eventNo);
+
+
 }

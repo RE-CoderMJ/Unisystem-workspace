@@ -112,7 +112,7 @@ resize:none;
 	      	</div>
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
-	        <button type="submit" class="moBtn" id="sendModal">보내기</button>
+	        <button type="button" class="moBtn" id="sendModal" onclick="click_ok();">보내기</button>
 	      </div>
 	
 	</div>
@@ -185,32 +185,35 @@ function saveSchedule()
 		return false;
 	}
 
-	var scheduleData = JSON.stringify($('#calendar').serializeObject());
+	 
+}
+
+function click_ok(){
+
+	var scheduleData = JSON.stringify($('form #scheduleData').serializeObject());
 	
 	$.ajax({
-		
-	  data: scheduleData,
+	  data: {
+		  euserNo:'${loginUser.userNo}',
+		  eventTitle:$("#eventTitle").val(),
+		  eventContent:$("#eventContent").val(),
+		  startDate:$("#startDate").val(),
+		  endDate:$("#endDate").val()
+		  },
 	  url: "insertSchedule",
 	  type:"POST",
 	  dataType:"JSON",
 	  success:function(map){
-		  if(map="{}"){
-		  window.close();
-		  }
+		  	 alert('등록이 완료되었습니다!');
+			  	opener.parent.location.reload();
+			  	window.close();
 		  },
-	  error:function(){
-		  console.log("통신실패");
-	  window.close();
-	  },
-	  cache: false,
-	  async: false
-	})
-	;
-	 
-}
-
-
-
+	  error:function(data){
+		  opener.parent.location.reload();
+		  window.close();
+	  }
+	});
+};
 
 </script>
 </body>
