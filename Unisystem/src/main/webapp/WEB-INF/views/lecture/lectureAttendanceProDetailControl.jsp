@@ -196,7 +196,7 @@
 		                        </tr>
 	                        </thead>
 	                        
-	                        <form action="" method="">
+	                        <form action="lectureNotice.stu" method="">
 	                        
 		                        <tbody>
 		                        	<c:forEach var="l" items="${ list }">
@@ -221,9 +221,9 @@
 				                            <td>${ l.korName }</td>
 				                            <td class="status"></td>
 				                            <td>
-				                                <button class="attend" type="button" name="attend" onclick="btnFunction(1);">출석</button>
-				                                <button class="absence" type="button" name="absence" onclick="btnFunction(2);">결석</button>
-				                                <button class="tardiness" type="button" name="tardiness" onclick="btnFunction(3);">지각</button>
+				                                <button class="attend" id="statusBtnA" type="button" name="attend">출석</button>
+				                                <button class="absence" id="statusBtnB" type="button" name="absence">결석</button>
+				                                <button class="tardiness" id="statusBtnC" type="button" name="tardiness">지각</button>
 				                            </td>
 				                        </tr>
 				                        
@@ -237,10 +237,56 @@
 
 			                    <div id="cancle_submit_button">
 			                        <button>초기화</button>
-			                        <button type="submit">제출</button>
+			                        <button type="submit" id="submitBtn" onclick="return checkAlltd();">제출</button>
 			                    </div>
 
 	                        </form>
+
+
+    <script>      
+    	$(function(){
+    		
+    		
+
+	        $(document).on("click", "#statusBtnA", function btnFunctionA(){ // 출석
+	        	$(this).parent().siblings(".status").text("출석");
+	        })
+	        
+	        $(document).on("click", "#statusBtnB", function btnFunctionB(){ // 결석
+	        	$(this).parent().siblings(".status").text("결석");
+	        })
+	        
+	        $(document).on("click", "#statusBtnC", function btnFunctionC(){ // 지각
+	        	$(this).parent().siblings(".status").text("지각");
+	        })
+	          		
+    	});
+    	
+	    	// 모든 학생의 출결값이 작성되어있지 않을경우 alert창 알림, 아닐경우 제출 버튼의 disabled 속성 제거하는 함수
+	    	function checkAlltd(){
+	    		
+	    		const status = $(".status").text();
+
+	    		if(status == ""){
+	    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
+	    			
+	    			return false;
+	    		} 
+	    		
+	    	}
+	    	
+   
+    	/*
+    	function checkAlltd(){ 
+    		if($(".status").text('')){
+    			console.log("왜안돼!!");
+    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
+    		} else{
+    			$("#submitBtn").attr("disabled", false);
+    		}
+    	}
+    	*/
+    </script>
                 </div>
 
             </div>
@@ -253,38 +299,5 @@
     <jsp:include page="../common/footer.jsp" />
 </body>
 
-    <script>      
-    	$(function(){
-    		
-    		function btnFunction(num){
-	            if(num == 1){         // 출석 버튼 클릭
-	                $(".status").html("출석");
-	            } else if (num == 2){ // 결석 버튼 클릭
-	                $(".status").html("결석");
-	            } else {              // 지각버튼 클릭
-	                $(".status").html("지각");
-	            }
-    		}
-    		
-    		/*
-	        $(document).on("click", function btnFunction(num){
-	            if(num == 1){         // 출석 버튼 클릭
-	                $(this).parent().siblings(".status").text("출석");
-	            } else if (num == 2){ // 결석 버튼 클릭
-	                $(this).parent().siblings(".status").text("결석");
-	            } else {              // 지각버튼 클릭
-	                $(this).parent().siblings(".status").text("지각");
-	            }
-	        })
-	        */
-	        /*
-	        $(document).on("click"), function btnFunction(){
-    			
-    			$.ajax
-    		}
-    		*/
-    		
-    	});
-    </script>
     
 </html>
