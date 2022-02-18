@@ -82,7 +82,21 @@ public class FacilityController {
 	}
 	
 	
-	
+	@ResponseBody
+	@RequestMapping(value="selectStudy", produces="application/json; charset=UTF-8")
+	public String reservedStudy() {
 		
+		ArrayList<Facility> rsvdList = fService.reservedStudy();
+		return new Gson().toJson(rsvdList); 
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectTime", produces="application/json; charset=UTF-8")
+	public String ableTime(String room) {
+		
+		ArrayList<Facility> ableTime = fService.ableTime(room);
+		return new Gson().toJson(ableTime);
+	}
 
 }

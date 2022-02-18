@@ -43,5 +43,15 @@ public class FacilityServiceImpl implements FacilityService {
 		return fDao.cancelReading(sqlSession, fa);
 	}
 
+	@Override
+	public ArrayList<Facility> reservedStudy() {
+		return fDao.reservedStudy(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Facility> ableTime(String room) {
+		return fDao.ableTime(sqlSession, room);
+	}
+
 	
 }
