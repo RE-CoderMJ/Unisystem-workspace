@@ -20,22 +20,27 @@
 	padding-bottom: 50px;
 	float:right;
 }
-
+.moBtn{
+	background-color: rgb(15, 43, 80);
+	color: white;
+	height: 40px;
+	width: 80px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
+	border:none;
+}
 .page_title {
 	color: rgb(15, 43, 80);
-	font-size: 40px;
-	font-weight: 800;
-	margin-top: 50px;
-	margin-bottom: 10px;
-	margin-left: 92px;
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 37px;
+    margin-bottom: 10px;
+    margin-left: 53px;
 }
 
-.msg_division {
-	font-size: 20px;
-	margin-left: 100px;
-	font-weight: 700;
-	margin-top: 35px;
-}
 
 #searchForm>* {
 	float: left;
@@ -47,12 +52,6 @@
 	border: 1px solid lightgray;
 	height: 25px;
 	border-radius: 3px;
-}
-
-.search_wrap {
-	margin-left: 654px;
-	margin-top: 0px;
-	margin-bottom: 15px
 }
 
 .search_wrap .btn {
@@ -73,8 +72,14 @@
 	margin-left: 0px;
 }
 
+.search_wrap {
+	margin-left: 728px;
+	margin-top: 10px;
+	margin-bottom: 15px
+}
+
 .head_count {
-	margin-left: 100px;
+	margin-left: 55px;
 }
 
 .bo_content table {
@@ -120,7 +125,7 @@ li {
 	margin-bottom: 20px;
 	float: left;
 	margin-right: 100px;
-	margin-left: 96px;
+	margin-left: 188px;
 }
 
 .ctg-area button {
@@ -134,63 +139,26 @@ li {
 	font-weight: 700;
 }
 
-.btn-area{
-	float: right;
-    margin-right: 100px;
-}
- 
 .b_write {
 	border: none;
 	float: right;
 	margin-right: 98px
 }
 
-.ltgt {
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	margin-left: 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
-	background-color: lightgray;
-	color: #fff;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
+/*페이징바*/
+.container{
+    margin-top: 50px;
 }
-.modal-title{
-	margin: auto;
-    font-size: 30px;
-    font-weight: 600;
-    margin-right: -10px;
+.page-link{
+    color:rgb(21, 62, 115)!important;
+    border: none!important;
+    border-radius: 200px!important;
 }
-.modal-body{margin:auto;}
-.modalText{
-	width: 383px;
-    resize: none;
-    height: 400px;
+.page-item.active .page-link {
+    color: #fff !important;
+    background: black!important;
 }
-#sendModal{
-	margin:auto;
-}
-.moBtn{
-	background-color: rgb(15, 43, 80);
-	color: white;
-	height: 40px;
-	width: 80px;
-	border-radius: 3px;
-	font-size: 14px;
-	cursor: pointer;
-	position: relative;
-	right: 0px;
-	border:none;
-}
-#close{
-	position: relative;
-    top: 10px;
-    right: 20px;
-}
+
 </style>
 <body>
 
@@ -212,11 +180,11 @@ li {
 			<!-- title -->
 
 
-			<div class="page_title">보낸 메시지</div>
+			<div class="page_title">받은 메시지</div>
 			
 			<hr width="1000px;">
 
-			<div class="head_count msg_division">보낸 메시지 목록</div>
+			<div class="head_count msg_division">받은 메시지 목록</div>
 
 			<br>
 
@@ -238,7 +206,7 @@ li {
 				<tr>
 					<th width="20px"></th>
 					<th width="70px">번호</th>
-					<th width="100px">받는사람</th>
+					<th width="100px">보낸사람</th>
 					<th width="200px">내용</th>
 					<th width="100px">상태</th>
 				</tr>
@@ -317,7 +285,7 @@ li {
 
 	</div>
 
-	
+
 	<!-- msg 모달 영역  -->
 
 	<div class="modal" id="msgModal">
@@ -344,35 +312,7 @@ li {
 	    </div>
 	  </div>
 	</div>
-	
-	<!-- msg 모달 영역  -->
-
-	<div class="modal" id="msgModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content" style="border-radius: 80px;">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">메시지 보내기</h4>
-	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      	<p><b>받는이:</b> 곰돌이(201901234) </p>
-	      	<textarea class="modalText"></textarea>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
-	
-	</div>
+	 
 
 </body>
 </html>

@@ -100,9 +100,10 @@ public class BoardController {
 	@RequestMapping("insert.bo")
 	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
 		
+		
 		Attachment at = new Attachment();
+		
 		if(!upfile.getOriginalFilename().equals("")) {
-			
 			String changeName = saveFile(upfile, session);
 			// 원본명, 서버업로드된경로를 Attatchment 에 이어서 담기
 			at.setOriginName(upfile.getOriginalFilename());
@@ -208,42 +209,21 @@ public class BoardController {
 
 		@RequestMapping("updateForm.bo")
 		public String updateForm(int bno, Model model) {
+			
 			model.addAttribute("b", bService.selectBoard(bno));
+			model.addAttribute("at", bService.selectAttachBoard(bno));
+			
 			return "board/boardUpdateView";
 		}
 		
 		
 		@RequestMapping("update.bo")
-		public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+		public String updateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+		
+			int newAtInsert = 1;
 			
-			Attachment at = new Attachment();
-			HashMap<String, Object> map = new HashMap<>();
-
 			// 새로 넘어온 첨부파일이 있을 경우 
 			if(!reupfile.getOriginalFilename().equals("")) {
-				
-				// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
-				if(at.getOriginName() != null) {
-					new File(session.getServletContext().getRealPath(at.getPath())).delete();
-					
-					System.out.println(session.getServletContext().getRealPath(at.getPath()));
-					
-					
-					// 새로넘어온 첨부파일 서버 업로드 시키기 
-					String changeName = saveFile(reupfile, session);
-					// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-					at.setOriginName(reupfile.getOriginalFilename());
-					at.setChangeName(changeName);
-					at.setPath("resources/uploadFiles/board/" + changeName);
-					
-					map.put("originName", at.getOriginName());
-					map.put("changeName",at.getChangeName());
-					map.put("path",at.getPath());
-					map.put("boardNo", b.getBoardNo());
-					
-					int atUpdate = bService.updateAttachBoard(map);
-					System.out.println(atUpdate);
-				}
 				
 				// 새로넘어온 첨부파일 서버 업로드 시키기 
 				String changeName = saveFile(reupfile, session);
@@ -252,20 +232,20 @@ public class BoardController {
 				at.setChangeName(changeName);
 				at.setPath("resources/uploadFiles/board/" + changeName);
 				
-				map.put("originName", at.getOriginName());
-				map.put("changeName",at.getChangeName());
-				map.put("path",at.getPath());
-				map.put("boardNo", b.getBoardNo());
-				
-				int newAtInsert = bService.newUpdateAttachBoard(map);
-				
-				
+				// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
+				if(at.getOriginName() != null) {
+					new File(session.getServletContext().getRealPath(at.getPath())).delete();
+					newAtInsert = bService.updateAttachBoard(at);
+				}else {
+					at.setRefNo(b.getBoardNo());
+					newAtInsert = bService.newUpdateAttachBoard(at);
+				}
+								
 			}
 			
-			 
 			int result = bService.updateBoard(b);
 			
-			if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
+			if(result * newAtInsert > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
 				session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 				return "redirect:detail.bo?bno=" + b.getBoardNo();
 				
@@ -416,6 +396,48 @@ public class BoardController {
 					return mv;
 				}
 	
+				
+			
+				@RequestMapping("update.nbo")
+				public String nupdateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+				
+					int newAtInsert = 1;
+					
+					// 새로 넘어온 첨부파일이 있을 경우 
+					if(!reupfile.getOriginalFilename().equals("")) {
+						
+						// 새로넘어온 첨부파일 서버 업로드 시키기 
+						String changeName = saveFile(reupfile, session);
+						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
+						at.setOriginName(reupfile.getOriginalFilename());
+						at.setChangeName(changeName);
+						at.setPath("resources/uploadFiles/board/" + changeName);
+						
+						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
+						if(at.getOriginName() != null) {
+							new File(session.getServletContext().getRealPath(at.getPath())).delete();
+							newAtInsert = bService.updateAttachBoard(at);
+						}else {
+							at.setRefNo(b.getBoardNo());
+							newAtInsert = bService.newUpdateAttachBoard(at);
+						}
+										
+					}
+					
+					int result = bService.nupdateBoard(b);
+					
+					if(result * newAtInsert > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
+						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+						return "redirect:detail.nbo?bno=" + b.getBoardNo();
+						
+					}else { // 수정 실패 => 에러페이지
+						model.addAttribute("errorMsg", "게시글 수정 실패");
+						return "notice/noticeListView";
+					}
+					
+				}
+				
+				
 				/*대외활동*/
 				
 				//대외활동 등록
@@ -460,9 +482,6 @@ public class BoardController {
 							mv.addObject("b", b)
 							  .addObject("at",at)
 							  .setViewName("volunteer/volSelectForm");
-							
-						//System.out.println("상세ctr:"+ at);
-						
 					}else {
 					
 						mv.addObject("errorMsg", "상세조회 실패").setViewName("volunteer/volListView");
@@ -470,10 +489,48 @@ public class BoardController {
 					
 					return mv;
 				}
-
+				
+				@RequestMapping("update.vbo")
+				public String vupdateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+				
+					int newAtInsert = 1;
+					
+					// 새로 넘어온 첨부파일이 있을 경우 
+					if(!reupfile.getOriginalFilename().equals("")) {
+						
+						// 새로넘어온 첨부파일 서버 업로드 시키기 
+						String changeName = saveFile(reupfile, session);
+						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
+						at.setOriginName(reupfile.getOriginalFilename());
+						at.setChangeName(changeName);
+						at.setPath("resources/uploadFiles/board/" + changeName);
+						
+						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
+						if(at.getOriginName() != null) {
+							new File(session.getServletContext().getRealPath(at.getPath())).delete();
+							newAtInsert = bService.updateAttachBoard(at);
+						}else {
+							at.setRefNo(b.getBoardNo());
+							newAtInsert = bService.newUpdateAttachBoard(at);
+						}
+										
+					}
+					
+					int result = bService.updateBoard(b);
+					
+					if(result * newAtInsert > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
+						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+						return "redirect:detail.vbo?bno=" + b.getBoardNo();
+						
+					}else { // 수정 실패 => 에러페이지
+						model.addAttribute("errorMsg", "게시글 수정 실패");
+						return "volunteer/volListView";
+					}
+					
+				}
+				
 				
 				/*동아리*/
-				
 				//동아리 등록
 				@RequestMapping("enrollForm.cbo")
 				public String cenrollForm() {
@@ -494,7 +551,6 @@ public class BoardController {
 						model.addAttribute("errorMsg", "게시글 등록 실패");
 						return "volunteer/circleListView";
 					}
-					
 				}
 	
 				
@@ -528,7 +584,6 @@ public class BoardController {
 				}
 
 				// 공지 수정 삭제
-				
 				@RequestMapping("delete.nbo")
 				public String ndeleteBoard(int bno, String filePath, HttpSession session, Model model) {
 
@@ -555,81 +610,18 @@ public class BoardController {
 				
 			}
 
+			
 				@RequestMapping("updateForm.nbo")
 				public String nupdateForm(int bno, Model model) {
 					
 					model.addAttribute("b", bService.selectBoard(bno));
+					model.addAttribute("at", bService.selectAttachBoard(bno));
 					
 					return "notice/noticeUpdateForm";
 				}
-				
-				
-				@RequestMapping("update.nbo")
-				public String nupdateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
-					System.out.println(b);
-					
-					Attachment at = new Attachment();
-					HashMap<String, Object> map = new HashMap<>();
 
-					// 새로 넘어온 첨부파일이 있을 경우 
-					if(!reupfile.getOriginalFilename().equals("")) {
-						
-						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
-						if(at.getOriginName() != null) {
-							new File(session.getServletContext().getRealPath(at.getPath())).delete();
-							
-							System.out.println(session.getServletContext().getRealPath(at.getPath()));
-							
-							
-							// 새로넘어온 첨부파일 서버 업로드 시키기 
-							String changeName = saveFile(reupfile, session);
-							// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-							at.setOriginName(reupfile.getOriginalFilename());
-							at.setChangeName(changeName);
-							at.setPath("resources/uploadFiles/board/" + changeName);
-							
-							map.put("originName", at.getOriginName());
-							map.put("changeName",at.getChangeName());
-							map.put("path",at.getPath());
-							map.put("boardNo", b.getBoardNo());
-							
-							int atUpdate = bService.updateAttachBoard(map);
-							System.out.println(atUpdate);
-						}
-						
-						// 새로넘어온 첨부파일 서버 업로드 시키기 
-						String changeName = saveFile(reupfile, session);
-						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-						at.setOriginName(reupfile.getOriginalFilename());
-						at.setChangeName(changeName);
-						at.setPath("resources/uploadFiles/board/" + changeName);
-						
-						map.put("originName", at.getOriginName());
-						map.put("changeName",at.getChangeName());
-						map.put("path",at.getPath());
-						map.put("boardNo", b.getBoardNo());
-						
-						int newAtInsert = bService.newUpdateAttachBoard(map);
-						
-						
-					}
-				 
-					int result = bService.nupdateBoard(b);
-					
-					if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
-						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-						return "redirect:detail.nbo?bno=" + b.getBoardNo();
-						
-					}else { // 수정 실패 => 에러페이지
-						model.addAttribute("errorMsg", "게시글 수정 실패");
-						return "notice/noticeListView";
-					}
-					
-					
-				}
 				
 				//대외 수정삭제
-		
 				@RequestMapping("delete.vbo")
 				public String vdeleteBoard(int bno, String filePath, HttpSession session, Model model) {
 
@@ -653,83 +645,19 @@ public class BoardController {
 					return "redirect:/";
 				}
 				
-				
 			}
 
 				@RequestMapping("updateForm.vbo")
 				public String vupdateForm(int bno, Model model) {
 					
 					model.addAttribute("b", bService.selectBoard(bno));
+					model.addAttribute("at", bService.selectAttachBoard(bno));
 					
 					return "volunteer/volUpdateView";
 				}
-				
-				
-				@RequestMapping("update.vbo")
-				public String vupdateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
-					Attachment at = new Attachment();
-					HashMap<String, Object> map = new HashMap<>();
 
-					// 새로 넘어온 첨부파일이 있을 경우 
-					if(!reupfile.getOriginalFilename().equals("")) {
-						
-						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
-						if(at.getOriginName() != null) {
-							new File(session.getServletContext().getRealPath(at.getPath())).delete();
-							
-							System.out.println(session.getServletContext().getRealPath(at.getPath()));
-							
-							
-							// 새로넘어온 첨부파일 서버 업로드 시키기 
-							String changeName = saveFile(reupfile, session);
-							// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-							at.setOriginName(reupfile.getOriginalFilename());
-							at.setChangeName(changeName);
-							at.setPath("resources/uploadFiles/board/" + changeName);
-							
-							map.put("originName", at.getOriginName());
-							map.put("changeName",at.getChangeName());
-							map.put("path",at.getPath());
-							map.put("boardNo", b.getBoardNo());
-							
-							int atUpdate = bService.updateAttachBoard(map);
-							System.out.println(atUpdate);
-						}
-						
-						// 새로넘어온 첨부파일 서버 업로드 시키기 
-						String changeName = saveFile(reupfile, session);
-						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-						at.setOriginName(reupfile.getOriginalFilename());
-						at.setChangeName(changeName);
-						at.setPath("resources/uploadFiles/board/" + changeName);
-						
-						map.put("originName", at.getOriginName());
-						map.put("changeName",at.getChangeName());
-						map.put("path",at.getPath());
-						map.put("boardNo", b.getBoardNo());
-						
-						int newAtInsert = bService.newUpdateAttachBoard(map);
-						
-						
-					}
-				 
-					int result = bService.updateBoard(b);
-					
-					if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
-						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-						return "redirect:detail.vbo?bno=" + b.getBoardNo();
-						
-					}else { // 수정 실패 => 에러페이지
-						model.addAttribute("errorMsg", "게시글 수정 실패");
-						return "volunteer/volListView";
-					}
-					
-					
-				}
 				
 				//동아리 수정삭제
-				
-		
 				@RequestMapping("delete.cbo")
 				public String cdeleteBoard(int bno, String filePath, HttpSession session, Model model) {
 
@@ -750,43 +678,20 @@ public class BoardController {
 
 				@RequestMapping("updateForm.cbo")
 				public String cupdateForm(int bno, Model model) {
+					
 					model.addAttribute("b", bService.selectBoard(bno));
+					model.addAttribute("at", bService.selectAttachBoard(bno));
+					
 					return "volunteer/cirUpdateView";
 				}
 				
-				
 				@RequestMapping("update.cbo")
-				public String cupdateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
-
-					Attachment at = new Attachment();
-					HashMap<String, Object> map = new HashMap<>();
-
+				public String cupdateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+				
+					int newAtInsert = 1;
+					
 					// 새로 넘어온 첨부파일이 있을 경우 
 					if(!reupfile.getOriginalFilename().equals("")) {
-						
-						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
-						if(at.getOriginName() != null) {
-							new File(session.getServletContext().getRealPath(at.getPath())).delete();
-							
-							System.out.println(session.getServletContext().getRealPath(at.getPath()));
-							
-							
-							// 새로넘어온 첨부파일 서버 업로드 시키기 
-							String changeName = saveFile(reupfile, session);
-							// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-							at.setOriginName(reupfile.getOriginalFilename());
-							at.setChangeName(changeName);
-							at.setPath("resources/uploadFiles/board/" + changeName);
-							
-							map.put("originName", at.getOriginName());
-							map.put("changeName",at.getChangeName());
-							map.put("path",at.getPath());
-							map.put("boardNo", b.getBoardNo());
-							
-							int atUpdate = bService.updateAttachBoard(map);
-							System.out.println(atUpdate);
-						}
-						
 						// 새로넘어온 첨부파일 서버 업로드 시키기 
 						String changeName = saveFile(reupfile, session);
 						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
@@ -794,19 +699,20 @@ public class BoardController {
 						at.setChangeName(changeName);
 						at.setPath("resources/uploadFiles/board/" + changeName);
 						
-						map.put("originName", at.getOriginName());
-						map.put("changeName",at.getChangeName());
-						map.put("path",at.getPath());
-						map.put("boardNo", b.getBoardNo());
-						
-						int newAtInsert = bService.newUpdateAttachBoard(map);
-						
-						
+						// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
+						if(at.getOriginName() != null) {
+							new File(session.getServletContext().getRealPath(at.getPath())).delete();
+							newAtInsert = bService.updateAttachBoard(at);
+						}else {
+							at.setRefNo(b.getBoardNo());
+							newAtInsert = bService.newUpdateAttachBoard(at);
+						}
+										
 					}
-				 
+					
 					int result = bService.updateBoard(b);
 					
-					if(result > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
+					if(result * newAtInsert > 0) { // 수정 성공 => 상세페이지   detail.bo?bno=해당게시글번호    url재요청
 						session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 						return "redirect:detail.cbo?bno=" + b.getBoardNo();
 						
@@ -816,28 +722,9 @@ public class BoardController {
 					}
 					
 				}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+				
+				
 		
 	}
 	

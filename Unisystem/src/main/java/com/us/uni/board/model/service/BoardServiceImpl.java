@@ -123,15 +123,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int updateAttachBoard(HashMap<String,Object> map) {
+	public int updateAttachBoard(Attachment at) {
 		
-		return bDao.updateAttachBoard(sqlSession, map);
+		return bDao.updateAttachBoard(sqlSession, at);
 	}
 
 	@Override
-	public int newUpdateAttachBoard(HashMap<String, Object> map) {
+	public int newUpdateAttachBoard(Attachment at) {
 		
-		return bDao.newUpdateAttachBoard(sqlSession, map);
+		return bDao.newUpdateAttachBoard(sqlSession, at);
 	}
 
 	

@@ -257,13 +257,13 @@
 		where board_no = #{boardNo}
 	</update>
 	
-	<update id="updateAttachBoard" parameterType="hashMap">
+	<update id="updateAttachBoard">
 		update 
 			attachment
 		set origin_name = #{originName}
 			,change_name = #{changeName}
 			,path = #{path}
-			where ref_no = #{boardNo}
+			where ref_no = #{refNo}
 	</update>
 	
 	<update id="nupdateBoard">
@@ -293,7 +293,7 @@
 		  (
 		    seq_attno.nextval
 		  , 'B'
-		  , #{boardNo}
+		  , #{refNo}
 		  , #{originName}
 		  , #{changeName}
 		  , #{path}

@@ -178,7 +178,7 @@ margin-top: 10px;
 			<div class="page_title">공지사항</div>
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
 				
-				<c:if test="${ loginUser != null || loginUser.userDiv == 3 }">
+				<c:if test="${ loginUser != null && loginUser.userNo == 9999 }">
 				<div class="updel">
 				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>

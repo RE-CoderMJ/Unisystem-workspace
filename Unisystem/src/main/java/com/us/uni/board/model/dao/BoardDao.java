@@ -106,16 +106,15 @@ public class BoardDao {
 			return sqlSession.update("boardMapper.nupdateBoard", b);
 		}
 
-		public int updateAttachBoard(SqlSessionTemplate sqlSession, HashMap<String,Object> map){
-			System.out.println(map);
+		public int updateAttachBoard(SqlSessionTemplate sqlSession, Attachment at){
 			
-			return sqlSession.update("boardMapper.updateAttachBoard", map);
+			return sqlSession.update("boardMapper.updateAttachBoard", at);
 			
 		}
 		
-		public int newUpdateAttachBoard(SqlSessionTemplate sqlSession, HashMap<String,Object> map) {
+		public int newUpdateAttachBoard(SqlSessionTemplate sqlSession, Attachment at) {
 			
-			return sqlSession.insert("boardMapper.newUpdateAttachBoard", map);
+			return sqlSession.insert("boardMapper.newUpdateAttachBoard", at);
 		}
 
 		public int volselectListCount(SqlSessionTemplate sqlSession) {

@@ -176,13 +176,15 @@ margin-top: 10px;
 		<div class="bo_content">
 			<!-- title -->
 			<div class="page_title">대외활동</div>
+			
 				 <!-- 글 작성자만 수정할 수 있도록 (관리자)-->
-				
-				<div class="updel">
+				 
+				<c:if test="${ loginUser != null || loginUser.userNo == 9999 }">
+	          	<div class="updel">
 				<a onclick="postFormSubmit(1);">수정</a> 
 				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
-				 
+				</c:if>
 				
 				<div class="grayWrap">
 					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
