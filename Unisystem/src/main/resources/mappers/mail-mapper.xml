@@ -31,6 +31,7 @@
 		<result column="status" property="status" />
 		<result column="spam_status" property="spam_status" />
 		<result column="cc_status" property="ccStatus" />
+		<result column="save_status" property="saveStatus" />
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="file_name" property="fileName" />
@@ -39,6 +40,7 @@
 		<result column="from_name" property="userFromName" />
 		<result column="to_name" property="userToName" />
 		<result column="type" property="type" />
+		<result column="to_me" property="toMe" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -545,7 +547,6 @@
           join users u on (from_user = u.user_no)
           join users s on (t.to_user = s.user_no)
 		 where f.mail_from_no = #{mNo}
-		   and f.status = 'N'
 		   and save_status = 'N'
            and rownum = 1
 	</select>
@@ -563,7 +564,6 @@
 		  from mail_from f
           join users u on (from_user = u.user_no)
 		 where f.mail_from_no = 55
-		   and f.status = 'N'
 		   and save_status = 'N'
 	</select>
 	
@@ -698,7 +698,7 @@
 		 where mail_from_no = #{mNo}
 	</update>
 	
-	<select id="selectTrashListCount", resultType="_int">
+	<select id="selectTrashListCount" resultType="_int">
 		select count(*) 
 		  from (
 		         select 
@@ -706,7 +706,8 @@
 		             , to_user
 		             , important
 		             , title
-		             , send_date
+		             , to_me
+                     , send_date
 		             , null as read_date
 		             , 'N' as cc_status
 		             , (select
@@ -727,6 +728,7 @@
 		             , from_add
 		             , t.important
 		             , title
+                     , null as to_me
 		             , send_date
 		             , read_date
 		             , cc_status
@@ -744,16 +746,18 @@
 		       )
 	</select>
 	
-	<select id="selectTrashList", resultMap="toResult">
+	<select id="selectTrashList" resultMap="toResult">
 		select * 
 		  from (
 		         select 
 		               mail_from_no
-		             , to_user
+		             , to_user "to_add"
 		             , important
 		             , title
-		             , send_date
+		             , to_me
+                     , send_date
 		             , null as read_date
+		             , save_status
 		             , 'N' as cc_status
 		             , (select
 		                       origin_name
@@ -773,8 +777,10 @@
 		             , from_add
 		             , t.important
 		             , title
+                     , 'n' as "to_me"
 		             , send_date
 		             , read_date
+		             , null as "save_status"
 		             , cc_status
 		             , (select
 		                       origin_name
@@ -791,4 +797,18 @@
 		 order 
 		    by mail_from_no desc
 	</select>
+	
+	<update id="recoverMailF">
+		update
+		       mail_from
+		   set status = 'N'
+		 where mail_from_no = #{mNo}
+	</update>
+	
+	<update id="recoverMailT">
+		update
+		       mail_to
+		   set status = 'N'
+		 where mail_to_no = #{mNo}
+	</update>
 </mapper>

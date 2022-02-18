@@ -24,7 +24,7 @@
 	                <button style="margin-left: -4px;">전달</button>
 	                <button onclick="moveToTrash(${mf.mailNo});"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
 	                <button style="margin-left: -5px;">스팸등록</button>
-	                <buttononclick="history.back()">목록</button>                
+	                <button onclick="history.back()">목록</button>                
                 </div>
                 <hr class="detail-lines">
                 <div id="title-area">

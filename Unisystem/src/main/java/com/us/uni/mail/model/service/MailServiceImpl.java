@@ -269,6 +269,12 @@ public class MailServiceImpl implements MailService {
 		return 0;
 	}
 
+	@Override
+	public int recoverMail(int mNo, String type) {
+		int result = mDao.recoverMail(sqlSession, mNo, type);
+		return result;
+	}
+
 
 	
 

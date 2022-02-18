@@ -21,6 +21,7 @@ public class MailTo {
 	private String readDate;
 	private String sendDate;
 	private String status;
+	private String saveStatus;
 	private String spamStatus;
 	private String ccStatus;
 	private String title;
@@ -29,4 +30,5 @@ public class MailTo {
 	private String userFromName;
 	private String userToName;
 	private String type;
+	private String toMe;
 }

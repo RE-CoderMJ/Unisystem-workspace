@@ -223,6 +223,16 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashList", userNo, rowBounds);
 	}
 
+	public int recoverMail(SqlSessionTemplate sqlSession, int mNo, String type) {
+		
+		if(type.equals("f")) {
+			return sqlSession.update("mailMapper.recoverMailF", mNo);
+		}else {
+			return sqlSession.update("mailMapper.recoverMailT", mNo);
+		}
+		
+	}
+
 
 
 }

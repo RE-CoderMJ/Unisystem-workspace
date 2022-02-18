@@ -26,8 +26,8 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 2px;">복구</button>
+                        <input type="checkbox" id="checkAll">
+                        <button style="margin-left: 2px;" id="recover">복구</button>
                         <button data-toggle="modal" data-target="#deleteTrashModal"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>영구삭제</button>
                         <button style="margin-left: 2px;">스팸등록</button>
                     </div>
@@ -54,7 +54,7 @@
                       
                     </ul>
                   </div>
-
+				<input type="hidden" id="cPage">
             </article>
         </section>
     </div>
@@ -77,6 +77,9 @@
 						value += "<tr>"
 							   + 	"<input type='hidden' name='mNo' value='" + result.list[i].mailFromNo + "'>"
 							   + 	"<input type='hidden' name='read-date' value='" + result.list[i].readDate + "'>"
+							   +	"<input type='hidden' name='type' value='" + result.list[i].type + "'>"
+							   +	"<input type='hidden' name='to-me' value='" + result.list[i].toMe + "'>"
+							   +	"<input type='hidden' name='save-status' value='" + result.list[i].saveStatus + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 							   
 						if(result.list[i].important == "N"){
@@ -85,7 +88,7 @@
 							value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
 						}
 						
-						if(result.list[i].readDate != null){
+						if(result.list[i].readDate != null || result.list[i].type == 'f'){
                     		value += "<td class='read-status'><i class='far fa-envelope-open'></i></td>";
 						}else{
 							value += "<td class='read-status'><i class='far fa-envelope'></i></td>";
@@ -98,15 +101,15 @@
                     	}
                     	
                     	
-                    	if(result.list[i].readDate != null){
-	                    	value += "<td class='from overflow'>" + result.list[i].userFromAdd + "</td>";
+                    	if(result.list[i].readDate != null || result.list[i].type == 'f'){
+	                    	value += "<td class='from overflow'>" + result.list[i].address + "</td>";
 	                    	if(result.list[i].ccStatus == "N"){
 	 							value += "<td class='title'>" + result.list[i].title + "</td>";                    		
 	                    	}else{
 	                    		value += "<td class='title'>cc : " + result.list[i].title + "</td>";
 	                    	}
                     	}else{
-                    		value += "<td class='from overflow unread'>" + result.list[i].userFromAdd + "</td>";
+                    		value += "<td class='from overflow unread'>" + result.list[i].address + "</td>";
 	                    	if(result.list[i].ccStatus == "N"){
 	 							value += "<td class='title unread'>" + result.list[i].title + "</td>";                    		
 	                    	}else{
@@ -116,7 +119,9 @@
 
 	 					value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
 	 					   	   + "</tr>";
+	 					   	   
 					}
+					
 				
 					$("#list").html(value);
 					
@@ -164,7 +169,23 @@
 	<script>
 		$(function(){
 			$(document).on("click", ".title", function(){
-				location.href="webMail.detailView?mNo=" + $(this).siblings("input[name=mNo]").val();
+				
+				// 임시저장용일 경우
+				if($(this).siblings("input[name=save-status]").val() == 'Y'){
+					location.href="webMail.writeForm?mNo=" + $(this).siblings("input[name=mNo]").val();
+				}else{
+					// 내게쓴 메일일 경우
+					if($(this).siblings("input[name=to-me]").val() == 'y'){
+						location.href="webMail.detailToMeView?mNo=" + $(this).siblings("input[name=mNo]").val();
+					}else{
+						//보낸메일일 경우
+						if($(this).siblings("input[name=type]").val() == 'f'){
+							location.href="webMail.detailMfView?mNo=" + $(this).siblings("input[name=mNo]").val();
+						}else{
+							location.href="webMail.detailView?mNo=" + $(this).siblings("input[name=mNo]").val();					
+						}
+					}					
+				}
 			});		
 		})
 	</script>
@@ -178,6 +199,40 @@
 				$(".checkbox").prop("checked", false);
 			}
 		});		
+	</script>
+	
+	<!-- 복구하기 -->
+	<script>
+		$(document).on("click", "#recover", function(){
+
+			let mNo;
+			let type;
+			
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input[name=mNo]").val();
+				type = $(this).parent().siblings("input[name=type]").val();
+				console.log(mNo);
+				console.log(type);
+				recover(mNo, type);
+			});
+			
+		})
+		
+		function recover(mNo, type){
+			$.ajax({
+				url:"webMail.recover",
+				data:{mNo:mNo, type:type},
+				success:function(result){
+					if(result>0){
+						selectTrashList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("메일 복구 ajax통신 실패");
+				}
+			
+			})
+		}
+		
 	</script>
 	
 	

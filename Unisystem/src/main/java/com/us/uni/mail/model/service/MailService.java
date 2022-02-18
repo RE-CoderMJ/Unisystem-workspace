@@ -73,19 +73,14 @@ public interface MailService {
 	// 메일 읽음||안읽음 처리용 서비스
 	int changeReadStatus(int status, int mNo);
 	
-	
-	
-	
+	// 메일 복구 서비스
+	int recoverMail(int mNo, String type);
 
-	
-		
 	// 중요메일
 	
 	// 전달
 	
 	// 답장
-	
-	// 읽음처리
 	
 	// 첨부파일 리스트 조회용 서비스
 	

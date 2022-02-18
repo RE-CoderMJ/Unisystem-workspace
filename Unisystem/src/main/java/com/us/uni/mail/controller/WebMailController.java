@@ -472,7 +472,7 @@ public class WebMailController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="webMail.trashList", produces="application/json; charset=utf-8")
+	@RequestMapping(value="webMail.selectTrashList", produces="application/json; charset=utf-8")
 	public Map<String, Object> selectTrashList(int currentPage, int userNo) {
 		
 		Map<String, Object> map = new HashMap();
@@ -496,6 +496,19 @@ public class WebMailController {
 	@RequestMapping(value="webMail.moveToTrash", produces="application/json; charset=utf-8")
 	public int moveToTrash(int mNo, int tNo) {
 		int result = mService.moveToTrash(mNo, tNo);
+		return result;
+	}
+	
+	/**
+	 * 메일 복구 컨트롤러
+	 * @param mNo
+	 * @param type
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.recover", produces="application/json; charset=utf-8")
+	public int recoverMail(int mNo, String type) {
+		int result = mService.recoverMail(mNo, type);
 		return result;
 	}
 	
