@@ -199,20 +199,24 @@
         <div id="classHeader">
 
             <div id="classHeader_info">
+            
+            	<form id="postForm" action="" method="post">
+               	   <input type="hidden" name="userNo" value="${loginUser.userNo}" id="userNo"/>
+               	   <input type="hidden" name="classCode" value="${classInfo.classCode}" id="classCode"/>
+            	</form>
 
                 <div id="classHeader_info_left">
-                    <div>IT미디어와미래역량</div>
+                    <div>${classInfo.classKorName }</div>
                     <div id="classHeader_info_left_pro">
                         <div><i class="fas fa-user-circle"></i></div>
-                        <div id="classHeader_info_left_pro_name">김말똥 교수</div>
+                        <div id="classHeader_info_left_pro_name">${ classInfo.korName } 교수</div>
                     </div>
                 </div>
 
                 <div id="classHeader_info_middle">
-                    <select name="" id="" style="float: left; padding: 5px 4px; width: 220px; border-radius: 5px;">
-                        <option value="">IT미디어와미래역량</option>
-                        <option value="">헌법</option>
-                        <option value="">테니스</option>
+                    <select name="classList" id="classList" style="float: left; padding: 5px 4px; width: 220px; border-radius: 5px;">
+                        <option value="">현재 진행중인 강의</option>
+
                     </select>
                     <div style="float: left;"></div>
                 </div>
@@ -229,7 +233,49 @@
 
             
         </div>
-        
+
+        <script>
+	    	$(function(){
+	    		// 페이지상에 모든 요소들이 다 만들어지고 년도리스트 조회해오는 함수 호출
+	     		selectClassList();
+
+	    	})
+	    	
+            	// 진행중인 강의 list를 가져오는 ajax
+            	function selectClassList(){ 
+	    		
+	    			var userNo = $("#userNo").val();
+    		
+            		$.ajax({
+            			url:"ProClassList.lec",
+            			data:{userNo:userNo},
+            			success:function(list){
+            		
+            				let value = "";
+            				for(let i in list){
+                            	value += "<option id="+ list[i].classCode + " value=" + list[i].classCode +">" + list[i].classKorName + "</option>";
+
+	                             $(document).on("change", "#classList", function(){
+		                             	//$("#classList").val(list[i].classCode).prop("selected", true);
+		                             	location.href='lectureProMain.stu?lno=' + $(this).val();
+		                             	if('#classList option'.selected){
+		                             		$("#classList").val(list[i].classCode).prop("selected", true);
+
+		                             		
+		                             	}
+		                             });	
+            				}
+            				$("#classList").append(value);
+            				
+            			}, error:function(){
+            				console.log("수강중인 강의리스트조회용 ajax 통신 실패");
+            			}
+            			
+            		})
+            	}	 
+	    	
+	    	
+        </script>        
         <div id="wrap">
 
             <div style="float: left;">

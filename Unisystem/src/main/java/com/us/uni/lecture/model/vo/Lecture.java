@@ -49,13 +49,16 @@ public class Lecture {
 	
 	private String korName;			  
 	private int userNo;				  // 학번 및 교번
+	private int totalSemester;        // 이수학기
 	
 	// attendance 테이블
 	private int attendanceNo;
 	private String classTitle;
-	private String attendanceDate;
+	private String attendanceDateA;  // YYYY.MM.DD
+	private String attendanceDateB;  // YYYYMMDD
 	private String attendanceStatus;
 	
 	private int rownum;
+	private int stuGrade;
 
 }
