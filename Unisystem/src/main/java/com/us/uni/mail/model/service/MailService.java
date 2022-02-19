@@ -80,6 +80,8 @@ public interface MailService {
 	int emptyTrash(HttpSession session, int userNo);
 
 	// 중요메일
+	int changeImportance(String status, int mNo, int type);
+	int changeImportanceT(String status, int mNo, String type);
 	
 	// 전달
 	

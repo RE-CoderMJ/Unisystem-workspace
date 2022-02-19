@@ -339,6 +339,7 @@
 			 , to_user
 			 , title
 			 , send_date
+			 , important
              , (select
                        origin_name
                   from attachment
@@ -544,6 +545,7 @@
              , title
              , content
 			 , f.important
+			 , send_date
 		  from mail_from f
           join mail_to t on (t.mail_from_no = f.mail_from_no)
           join users u on (from_user = u.user_no)
@@ -565,7 +567,7 @@
 			 , important
 		  from mail_from f
           join users u on (from_user = u.user_no)
-		 where f.mail_from_no = 55
+		 where f.mail_from_no = #{mNo}
 		   and save_status = 'N'
 	</select>
 	
@@ -643,11 +645,12 @@
 		       count(*)
 		  from (
 		  		 select
-				        mail_to_no
-				  from mail_to t
-				  join mail_from f on(t.mail_from_no = f.mail_from_no)
-				 where from_user = #{userNo}
-				   and t.status = 'N'
+			             mail_from_no
+			        from mail_from f
+			       where from_user = #{userNo}
+			         and to_me = 'N'
+			         and status = 'N'
+			         and save_status = 'N'
 		  		)
 	</select>
 	
@@ -673,6 +676,7 @@
                  and rownum = 1) "file_name"
         from mail_from f
        where from_user = #{userNo}
+         and to_me = 'N'
          and status = 'N'
          and save_status = 'N'
        order
@@ -843,4 +847,19 @@
 		       attachment
 		 where ref_no = #{mailNo}
 	</delete>
+	
+	<!-- 중요처리 -->
+	<update id="changeImportance">
+		update
+			   mail_to
+		   set important = #{status}
+		 where mail_to_no = #{mailNo}
+	</update>
+	
+	<update id="changeImportanceF">
+		update
+			   mail_from
+		   set important = #{status}
+		 where mail_from_no = #{mailNo}
+	</update>
 </mapper>

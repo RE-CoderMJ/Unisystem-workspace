@@ -21,7 +21,7 @@
             <header id="mail-boxes-header">
                 <div id="tools">
 	                <button id="send-btn" type="submit" class="reply"><i class="fas fa-arrow-right"></i>&nbsp;답장</button>
-	                <button style="margin-left: -4px;">전달</button>
+	                <button style="margin-left: -4px;" id="forward">전달</button>
 	                <button onclick="moveToTrash(${mt.mailNo})"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
 	                <button style="margin-left: -5px;">스팸등록</button>
 	                <button onclick="history.back()">목록</button>                
@@ -96,8 +96,18 @@
 		$(document).on("click", ".reply", function(){
 			
 			let mNo = ${mt.mailNo};
-			location.href= "webMail.writeReplyForm?mNo=" + mNo;
-			console.log(mNo);
+			location.href= "webMail.writeReplyForwardForm?mNo=" + mNo + "&tNo=1";
+						
+		})
+		
+	</script>
+	
+	<!-- 전달 기능 -->
+	<script>
+		$(document).on("click", "#forward", function(){
+			
+			let mNo = ${mt.mailNo};
+			location.href= "webMail.writeReplyForwardForm?mNo=" + mNo + "&tNo=2";
 						
 		})
 		

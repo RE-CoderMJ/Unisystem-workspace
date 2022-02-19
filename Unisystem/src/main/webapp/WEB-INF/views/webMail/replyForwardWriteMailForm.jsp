@@ -77,13 +77,13 @@
 	               		<input type="hidden" name="userNo" value="${ loginUser.userNo }">
 	               		<input type="hidden" name="mNo" value="">
 	                    <span>받는 사람</span>
-	                    <input id="write-to" type="text" name="userToNo" required value="${mt.userFromAdd}" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+	                    <input id="write-to" type="text" name="userToNo" required value="${tNo == 1 ? mt.userFromAdd : ''}" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
 	                    <br><br> 
 	                    <span>참조</span>
 	                    <input id="write-cc" type="text" name="cc" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
 	                    <br><br>
 	                    <span>제목</span>
-	                    <input id="write-title" type="text" name="title" value="RE: ${mt.title}">
+	                    <input id="write-title" type="text" name="title" value="${tNo == 1 ? 'RE: ': 'FW: '} ${mt.title}">
 	                    <div id="contents-area">
 	                    	<textarea id="summernote" name="content" style="margin-left:100px">
 	                    		<br><br><br><br>

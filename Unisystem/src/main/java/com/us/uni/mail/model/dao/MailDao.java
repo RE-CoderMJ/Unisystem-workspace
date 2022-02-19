@@ -285,6 +285,29 @@ public class MailDao {
 		return result;
 	}
 
+	public int changeImportance(SqlSessionTemplate sqlSession, int mNo, String status, int type) {
+		MailTo mt = new MailTo();
+		mt.setMailNo(mNo);
+		mt.setStatus(status);
+		
+		if(type == 1) {
+			return sqlSession.update("mailMapper.changeImportance", mt);			
+		}else {
+			return sqlSession.update("mailMapper.changeImportanceF", mt);
+		}
+	}
+
+	public int changeImportanceT(SqlSessionTemplate sqlSession, int mNo, String status, String type) {
+		MailTo mt = new MailTo();
+		mt.setMailNo(mNo);
+		mt.setStatus(status);
+		
+		if(type.equals("t")) {
+			return sqlSession.update("mailMapper.changeImportance", mt);			
+		}else {
+			return sqlSession.update("mailMapper.changeImportanceF", mt);
+		}
+	}
 
 
 }

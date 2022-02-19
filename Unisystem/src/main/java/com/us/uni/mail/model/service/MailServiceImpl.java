@@ -281,6 +281,16 @@ public class MailServiceImpl implements MailService {
 		return mDao.emptyTrash(sqlSession, session, userNo);
 	}
 
+	@Override
+	public int changeImportance(String status, int mNo, int type) {
+		return mDao.changeImportance(sqlSession, mNo, status, type);
+	}
+
+	@Override
+	public int changeImportanceT(String status, int mNo, String type) {
+		return mDao.changeImportanceT(sqlSession, mNo, status, type);
+	}
+
 
 	
 

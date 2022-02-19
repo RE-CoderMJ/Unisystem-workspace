@@ -25,10 +25,10 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
+                        <input type="checkbox" id="checkAll">
                         <button style="margin-left: 10px;" id="read">읽음</button>
                         <button id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button style="margin-left: -4px;">전달</button>
+                        <button style="margin-left: -4px;" id="forward">전달</button>
                     </div>
                     <div id="tools-right" align="right">
                         <select name="" id="search-option">
@@ -82,7 +82,7 @@
 								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 								   
 							if(result.list[i].important == "N"){
-								value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
+								value += "<td class='important'><i class='fa fa-star fa-xs unimportant' aria-hidden='true'></i></td>"
 							}else{
 								value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
 							}
@@ -194,6 +194,59 @@
 			})
 		}
 		
+	</script>
+	
+	<!-- 전달 기능 -->
+	<script>
+		$(document).on("click", "#forward", function(){
+			
+			let count = 0;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count > 1){
+				alert("전달은 1개의 메일만 선택이 가능합니다.");
+			}else{
+				let mNo = $(".checkbox:checked").parent().siblings("input").val();
+				location.href= "webMail.writeForwardForm?mNo=" + mNo + "&tNo=2";
+			}
+						
+		})
+		
+	</script>
+	
+	<!-- 중요처리 -->
+	<script>
+		$(document).on("click", ".important", function(){
+			
+			let status;
+			if($(this).children("i").hasClass("unimportant")){
+				$(this).children("i").removeClass("unimportant");
+				status = 'Y';
+			}else{
+				$(this).children("i").addClass("unimportant");
+				status = 'N';
+			}
+			
+			changeImportance($(this).siblings("input").val(), status);
+	
+		})
+		
+		function changeImportance(mNo,status){
+			$.ajax({
+				url:"webMail.changeImportance",
+				data:{mNo:mNo, status:status, type:2},
+				success:function(result){
+					if(result > 0){
+						selectToMeList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("중요처리 ajax통신 실패");
+				}
+			})
+		}
 	</script>
 	
 </body>

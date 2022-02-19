@@ -87,7 +87,7 @@
 								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 								   
 							if(result.list[i].important == "N"){
-								value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
+								value += "<td class='important'><i class='fa fa-star fa-xs unimportant' aria-hidden='true'></i></td>"
 							}else{
 								value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
 							}
@@ -298,6 +298,39 @@
 			
 		})
 		
+	</script>
+	
+	<!-- 중요처리 -->
+	<script>
+		$(document).on("click", ".important", function(){
+			
+			let status;
+			if($(this).children("i").hasClass("unimportant")){
+				$(this).children("i").removeClass("unimportant");
+				status = 'Y';
+			}else{
+				$(this).children("i").addClass("unimportant");
+				status = 'N';
+			}
+			
+			type = $(this).siblings("input[name=type]").val();
+			changeImportanceT($(this).siblings("input[name=mNo]").val(), status, type);
+	
+		})
+		
+		function changeImportanceT(mNo,status, type){
+			$.ajax({
+				url:"webMail.changeImportanceT",
+				data:{mNo:mNo, status:status, type:type},
+				success:function(result){
+					if(result > 0){
+						selectTrashList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("중요처리 ajax통신 실패");
+				}
+			})
+		}
 	</script>
 	
 	

@@ -27,7 +27,6 @@
                     <div id="tools-left">
                         <input type="checkbox" id="checkAll">
                         <button style="margin-left: 10px;" id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button>전달</button>
                     </div>
                     <div id="tools-right" align="right">
                         <select name="" id="search-option">

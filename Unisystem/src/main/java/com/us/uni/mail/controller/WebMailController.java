@@ -258,11 +258,30 @@ public class WebMailController {
 	 * @param mNo 임시저장한 메일을 불러올 시의 키값
 	 * @return 작성폼 화면
 	 */
-	@RequestMapping("webMail.writeReplyForm")
-	public ModelAndView writeMailForm(int mNo, ModelAndView mv){
+	@RequestMapping("webMail.writeReplyForwardForm")
+	public ModelAndView writeMailForm(int mNo, int tNo, ModelAndView mv){
 		
 		mv = selectMail(mNo, mv);
-		mv.setViewName("webMail/replyWriteMailForm");
+		mv.addObject("tNo", tNo);
+		mv.setViewName("webMail/replyForwardWriteMailForm");
+		
+		return mv;		
+	}
+	
+	/**
+	 * 전달 작성폼 컨트롤러
+	 * @param mNo 임시저장한 메일을 불러올 시의 키값
+	 * @return 작성폼 화면
+	 */
+	@RequestMapping("webMail.writeForwardForm")
+	public ModelAndView writeForwardForm(int mNo, int tNo, ModelAndView mv){
+		
+		if(tNo == 1) {
+			mv = selectMfMail(mNo, mv);			
+		}else {
+			mv = selectToMeMail(mNo, mv);
+		}
+		mv.setViewName("webMail/forwardWriteMailForm");
 		
 		return mv;		
 	}
@@ -464,7 +483,7 @@ public class WebMailController {
 		
 		MailFrom mf = mService.selectToMeMail(mNo);
 		ArrayList<Attachment> attList = mService.selectMfAttachmentList(mNo);
-		
+		System.out.println(mf);
 		mv.addObject("mf", mf)
 		  .addObject("attList", attList)
 		  .setViewName("webMail/mfDetailView");
@@ -558,6 +577,30 @@ public class WebMailController {
 	@RequestMapping(value="webMail.changeReadStatus", produces="application/json; charset=UTF-8")
 	public int changeReadStatus(int status, int mNo) {
 		return mService.changeReadStatus(status, mNo);
+	}
+	
+	/**
+	 * 중요처리
+	 * @param mNo
+	 * @param status
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.changeImportance", produces="application/json; charset=UTF-8")
+	public int changeImportance(int mNo, String status, int type) {
+		return mService.changeImportance(status, mNo, type);
+	}
+	
+	/**
+	 * 중요처리 휴지통
+	 * @param mNo
+	 * @param status
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.changeImportanceT", produces="application/json; charset=UTF-8")
+	public int changeImportanceT(int mNo, String status, String type) {
+		return mService.changeImportanceT(status, mNo, type);
 	}
 	
 	@RequestMapping("webMail.contact")
