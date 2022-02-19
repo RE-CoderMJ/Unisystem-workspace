@@ -92,6 +92,44 @@ public class LectureServiceImpl implements LectureService{
 		return lDao.selectProfessorClassList(sqlSession, userNo);
 	}
 
+	// 교수 - 마이페이지 - 진행강의조회 : 원하는 년도, 학기에 따라 강의 리스트 조회
+	@Override
+	public ArrayList<Lecture> SelectProfessorSearchClassList(Lecture l) {
+		return lDao.SelectProfessorSearchClassList(sqlSession, l);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 총 개수 조회
+	@Override
+	public int selectProAttListCount(Lecture l) {
+		return lDao.selectProAttListCount(sqlSession, l);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 리스트 조회
+	@Override
+	public ArrayList<Lecture> selectProAttList(PageInfo pi, Lecture l) {
+		return lDao.selectProAttList(sqlSession, pi, l);
+	}
+
+	// 교수 - 강의페이지 - 출결관리 - 출결관리 상세
+	@Override
+	public ArrayList<Lecture> selectAttDetail(Lecture l) {
+		return lDao.selectAttDetail(sqlSession, l);
+	}
+
+	// 교수 - 출결관리 - 해당 강의를 듣는 학생 목록 조회
+	@Override
+	public ArrayList<Lecture> AjaxSelectselectAttStuList(int classCode) {
+		return lDao.AjaxSelectselectAttStuList(sqlSession, classCode);
+	}
+
+	// 교수 - 출결관리상세(출결등록창)에서 학생 출결을 등록
+	@Override
+	public int insertAtt(Lecture l) {
+		return lDao.insertAtt(sqlSession, l);
+	}
+
+
+
 
 	
 

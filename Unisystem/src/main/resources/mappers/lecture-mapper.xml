@@ -22,13 +22,17 @@
 		<result column="curr_stud" property="currStud" />
 						
 		<result column="rownum" property="rownum" />	
+		<result column="stud_no" property="studNo" />
 		<result column="class_stud_no" property="classStudNo" />
 		<result column="kor_name" property="korName" />
 		<result column="attendance_no" property="attendanceNo" />
 		<result column="class_title" property="classTitle" />
-		<result column="attDate" property="attendanceDate" />
+		<result column="attDate" property="attendanceDateA" />
+		<result column="attendance_date" property="attendanceDateB" />
+		
 		<result column="attendance_status" property="attendanceStatus" />
-
+		<result column="학번" property="stuGrade" />
+		<result column="total_semester" property="totalSemester" />
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -124,9 +128,7 @@
 		   and class_code = #{classCode}
 		   and attendance_status = 'A'	
 	</select>
-	
-	
-	
+		
 	<!-- 학생 - 온라인 출석부 : 로그인한 학생 정보를 가져오는 sql문 -->
 	<select id="selectLoginStuInfo" resultMap="usersResult">
 		select
@@ -161,7 +163,7 @@
 		   and attendance_status = 'C'	
 	</select>
 			
-	<!-- 학생 - 온라인출석부 : 현재 진행된 강의 총 개수를 구하는 sql문 -->
+	<!--학생 - 온라인출석부  : 현재 진행된 강의 총 개수를 구하는 sql문 -->
 	<select id="selectAttListCount" resultType="_int">
 		select 
 		       count(*)
@@ -173,7 +175,21 @@
 		   and class_code = #{classCode} 
 	</select>
 	
-	<!-- 학생 - 온라인출석부 : 선택한 강의의 현재까지 진행한 강의리스트 조회 -->
+	<!--교수 - 출결관리 : 현재 진행된 강의 총 개수를 구하는 sql문 -->
+	<select id="selectProAttListCount" resultType="_int">
+		select 
+               count(
+               distinct
+               attendance_date)
+		  from attendance
+		  join class using(class_no)
+          join professor using(prof_no)
+          join users on (prof_no = user_no)
+		 where user_no  = #{userNo}
+		   and class_code = #{classCode}
+	</select>
+
+	<!-- 학생 - 온라인출석부  : 선택한 강의의 현재까지 진행한 강의리스트 조회 -->
 	<select id="selectAttList" resultMap="lectureResult">
         select
                rownum
@@ -214,14 +230,115 @@
 		   and status = 'Y'
 	</select>
 	
+	<!-- 교수 - 진행강의조회 : 원하는 년도, 학기에 따라 강의를 불러오는 sql -->
+	<select id="SelectProfessorSearchClassList" resultMap="lectureResult">
+        select
+               distinct
+               class_code
+		     , class_no
+		     , class_kor_name
+		     , class_category
+		     , kor_name
+		     , curr_stud
+		  from class
+		  join professor using(prof_no)
+		  join users on(prof_no = user_no)
+          join class_stud using(class_no)
+		  where prof_no = #{userNo}
+            and class_year = #{classYear}
+            and class_semester = #{classSemester}
+          order
+             by class_code asc	
+	</select>
 	
+	<!-- 교수 - 강의페이지 - 출결관리 : 진행한 강의 리스트 조회 -->
+	<select id="selectProAttList" resultMap="lectureResult">
+		select 
+		       rownum
+		     , a.*
+		 from (
+		        select 
+		               distinct
+		               class_no
+		             , class_code
+		             , class_title
+		             , to_char(to_date(attendance_date, 'YYYY-MM-DD'), 'YYYY.MM.DD') "attDate"
+		             , attendance_date
+		          from attendance
+		          join class using(class_no)
+		          join student using(stud_no)
+		          join users on (stud_no = user_no)
+		         where class_code = #{classCode}
+		         order
+		            by "attDate" desc           
+		         ) a
+	</select>
 	
+	<!-- 교수 - 강의페이지 - 출결관리 - 출결관리 상세 -->
+	<select id="selectAttDetail" resultMap="lectureResult">
+		select
+               rownum
+             , a.*
+          from 
+              (
+               select
+                      class_code
+                    , class_no
+                    , class_title 
+                    , substr(stud_no,3,2) "학번"
+                    , attendance_date
+                    , stud_no
+                    , kor_name
+                    , total_semester
+                from attendance  
+                join student using(stud_no)
+                join users on (stud_no = user_no)
+                join class using(class_no)
+               where class_code = #{classCode}
+                 and attendance_date = #{attendanceDateB}
+                order
+                   by stud_no desc	
+              ) a
+	</select>
 	
+	<!-- 교수 - 출결관리 - 해당 강의를 듣는 학생 목록 조회 -->
+	<select id="AjaxSelectselectAttStuList" resultMap="lectureResult">
+		 select 
+		         class_no
+		       , class_code
+		       , stud_no
+		       , kor_name
+		    from class_stud
+		    join student using(stud_no)
+		    join users on (stud_no = user_no)
+		    join class using(class_no)
+		   where class_code = #{classCode}
+		   order
+		      by stud_no desc	
+	</select>
 	
-	
-	
-	
-	
+	<!-- 교수 - 출결관리 - 새로운 강의 등록 -->
+	<select id="insertAtt" resultMap="lectureResult">
+		insert
+		  into attendance
+		  (
+		    attendance_no
+		  , class_no
+		  , stud_no
+		  , attendance_date
+		  , attendance_status
+		  , class_title
+		  )
+		  values
+		  (
+		    seq_attendance.nextval
+		  , 강의번호
+		  , 학번
+		  , 날짜
+		  , null
+		  , 강의제목
+		  )	
+	</select>
 	
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->

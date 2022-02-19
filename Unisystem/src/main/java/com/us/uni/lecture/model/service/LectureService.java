@@ -44,4 +44,25 @@ public interface LectureService {
 	
 	// 교수 - 마이페이지 - 진행강의 조회 리스트 조회
 	ArrayList<Lecture> selectProfessorClassList(int userNo);
+	
+	// 교수 - 마이페이지 - 진행강의조회 : 원하는 년도, 학기에 따라 강의 리스트 조회
+	ArrayList<Lecture> SelectProfessorSearchClassList(Lecture l);
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 총 개수 조회
+	int selectProAttListCount(Lecture l);
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 리스트 조회
+	ArrayList<Lecture> selectProAttList(PageInfo pi, Lecture l);
+	
+	// 교수 - 강의페이지 - 출결관리 - 출결관리 상세
+	ArrayList<Lecture> selectAttDetail(Lecture l);
+	
+	// 교수 - 출결관리 - 해당 강의를 듣는 학생 목록 조회
+	ArrayList<Lecture> AjaxSelectselectAttStuList(int classCode);
+	
+	// 교수 - 출결관리상세(출결등록창)에서 학생 출결을 등록
+	int insertAtt(Lecture l);
+
 }
+
+

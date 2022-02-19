@@ -215,16 +215,20 @@ margin-top: 10px;
 		</div>
 		
 		<div class="upload-area">
+								
 							<input type="file" id="upfile" class="form-control-file border" name="reupfile" style="width:300px;">
 							
                     		
 	                    	 <c:if test="${ not empty at.originName }">
-	                    		현재파일 :
-	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>
 	                        	<input type="hidden" name="originName" value="${ at.originName }">
                             	<input type="hidden" name="changeName" value="${ at.changeName }">
+                            	<input type="hidden" name="path" value="${ at.path }">
+                            	<input type="hidden" name="refNo" value="${ at.refNo }">
                         	</c:if>
                        		
+                       		<script>
+                       		$("#upfile").hide();
+                       		</script>
 	            
 				<button type="submit" class="b_write">수정하기</button>
 				</form>

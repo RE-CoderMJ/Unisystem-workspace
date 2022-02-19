@@ -75,4 +75,39 @@ public class LectureDao {
 	public ArrayList<Lecture> selectProfessorClassList(SqlSessionTemplate sqlSession, int userNo){
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectProfessorClassList", userNo);
 	}
+	
+	// 교수 - 마이페이지 - 진행강의조회 : 원하는 년도, 학기에 따라 강의 리스트 조회
+	public ArrayList<Lecture> SelectProfessorSearchClassList(SqlSessionTemplate sqlSession, Lecture l){
+		return (ArrayList)sqlSession.selectList("lectureMapper.SelectProfessorSearchClassList", l);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 총 개수 조회
+	public int selectProAttListCount(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.selectOne("lectureMapper.selectProAttListCount", l);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 진행한 강의 리스트 조회
+	public ArrayList<Lecture> selectProAttList(SqlSessionTemplate sqlSession, PageInfo pi, Lecture l){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProAttList", l, rowBounds);
+	}
+	
+	// 교수 - 강의페이지 - 출결관리 - 출결관리 상세
+	public ArrayList<Lecture> selectAttDetail(SqlSessionTemplate sqlSession, Lecture l){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectAttDetail", l);
+	}
+	
+	// 교수 - 출결관리 - 해당 강의를 듣는 학생 목록 조회
+	public ArrayList<Lecture> AjaxSelectselectAttStuList(SqlSessionTemplate sqlSession, int classCode){
+		return (ArrayList)sqlSession.selectList("lectureMapper.AjaxSelectselectAttStuList", classCode);
+	}
+	
+	// 교수 - 출결관리상세(출결등록창)에서 학생 출결을 등록
+	public int insertAtt(SqlSessionTemplate sqlSession, Lecture l) {
+		return sqlSession.insert("lectureMapper.insertAtt", l);
+	}
 }

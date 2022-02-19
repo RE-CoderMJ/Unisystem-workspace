@@ -1,16 +1,12 @@
 package com.us.uni.lecture.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,9 +53,9 @@ public class LectureController {
 		return new Gson().toJson(searchList);
 	}
 	
-	/* 학생 - 마이페이지 - 내가수강중인강의 페이지에서 년도값을 가져오는 컨트롤러 */
+	/* 학생, 교수 - 마이페이지 - 내가수강중인강의 페이지(학생) or 진행강의 조회(교수) 에서 년도값을 가져오는 컨트롤러 */
 	@ResponseBody
-	@RequestMapping(value="studentYearList.me", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="YearList.me", produces="application/json; charset=UTF-8")
 	public String AjaxSelectYearList() {
 		ArrayList<Lecture> list = lService.selectYearList();
 		return new Gson().toJson(list);
@@ -162,31 +158,94 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 교수 - 마이페이지 - 진행강의 조회 페이지에서 년도별, 학기 별 조회 시 강의목록을 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="professorSearchList.me", produces="application/json; charset=UTF-8")
+	public String AjaxSelectProfessorSearchClassList(int userNo, String classYear, int classSemester) {
+		
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassYear(classYear);
+		l.setClassSemester(classSemester);
+
+		ArrayList<Lecture> proSearchList = lService.SelectProfessorSearchClassList(l);
+		return new Gson().toJson(proSearchList);
+	}
 	
+	/* 교수 - 강의홈에서 강의정보(강의명, 교수명)을 띄워주는 컨트롤러 */
+	@RequestMapping("lectureProMain.stu")
+	public ModelAndView selectLectureProMainPage(int lno, HttpSession session, ModelAndView mv) {
+		Lecture l = lService.selectLectureMainPage(lno);
+		session.setAttribute("classInfo", l);
+		
+		mv.addObject("lec", l).setViewName("lecture/lectureProMainPage");
+		return mv;
+	}
 	
-	
-	
-	
-	
-	
+	/* 학생 - 강의홈에서 드롭박스에 수강중인 강의 리스트를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="ProClassList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectProClassList(int userNo) {
+		
+		ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
+		return new Gson().toJson(list);
+	}
 	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
-	public String selectLectureAttControl() {
-		return "lecture/lectureAttendanceControl";
+	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+		Lecture l = new Lecture();
+		l.setUserNo(userNo);
+		l.setClassCode(classCode);
+				
+		int currentPage = lno;
+		int listCount = lService.selectProAttListCount(l); // 진행한 강좌 총 개수
+	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Lecture> list = lService.selectProAttList(pi, l);
+
+		mv.addObject("pi", pi).addObject("plist", list).setViewName("lecture/lectureAttendanceProControl");
+		
+		return mv;
+	}
+	
+	/* 교수 - 출결관리 - 해당 강의를 듣는 학생 목록을 가져오는 컨트롤러*/
+	@ResponseBody
+	@RequestMapping(value="AttStuList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectselectAttStuList(int classCode) {
+		
+		ArrayList<Lecture> list = lService.AjaxSelectselectAttStuList(classCode);
+		
+		return new Gson().toJson(list);
 	}
 	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
-	public String selectLectureAttDetailControl() {
-		return "lecture/lectureAttendanceDetailControl";
+	public ModelAndView selectLectureAttDetailControl(int lno, String lDate, ModelAndView mv) {
+		
+		Lecture l = new Lecture();
+		l.setClassCode(lno);
+		l.setAttendanceDateB(lDate);
+		
+		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		String Title = list.get(0).getClassTitle();
+		
+		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
+		return mv;
 	}
 	
-	/* 교수 - 강의홈을 띄워주는 컨트롤러 */
-	@RequestMapping("lectureProMain.stu")
-	public String selectLectureProMainPage() {
-		return "lecture/lectureProMainPage";
+	/* 교수 - 출결관리상세(출결등록창)에서 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
+	@RequestMapping("insertAtt.lec")
+	public void insertAtt(Lecture l) {
+		
+		System.out.println(l);
+		
+		int result = lService.insertAtt(l);
+		
 	}
+	
+	
+	
 	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureNotice.stu")

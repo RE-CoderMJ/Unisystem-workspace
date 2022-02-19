@@ -38,8 +38,8 @@ public interface BoardService {
 		
 		
 		int updateBoard(Board b);
-		int updateAttachBoard(HashMap<String,Object> map);
-		int newUpdateAttachBoard(HashMap<String,Object> map);
+		int updateAttachBoard(Attachment at);
+		int newUpdateAttachBoard(Attachment at);
 		
 		
 		int volselectListCount();

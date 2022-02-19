@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+
+	<resultMap id="eventResult" type="Event">
+	   <result column="EVENT_NO" property="eventNo"/>
+	   <result column="USER_NO" property="euserNo"/>
+	   <result column="EVENT_TITLE" property="eventTitle"/>
+	   <result column="EVENT_CONTENT" property="eventContent"/>
+	   <result column="START_DATE" property="startDate"/>
+	   <result column="END_DATE" property="endDate"/>
+	   <result column="ALLDAY_YN" property="alldayYN"/>
+	   <result column="DELETE_YN" property="deleteYN"/>
+    </resultMap>
+	
+	
+	<select id="selectList" resultMap="eventResult">
+	select 
+		event_no
+		,user_no
+		,event_title
+		,event_content
+		,start_date
+		,end_date
+		,allday_yn
+		,delete_yn
+		from event
+		where delete_yn ='N'
+	</select>
+	
+	<insert id="insertSchedule">
+	insert
+	into event
+	(
+	event_no
+	,user_no
+	,event_title
+	,event_content
+	,start_date
+	,end_date
+	,allday_yn
+	,delete_yn
+	)
+	values
+	(
+	SEQ_EVENTNO.NEXTVAL
+	,#{euserNo}
+	,#{eventTitle}
+	,#{eventContent}
+	,#{startDate}
+	,#{endDate}
+	,'N'
+	,'N'
+	)
+	</insert>
+	
+	<select id="userSelectList" resultMap="eventResult">
+	select 
+		event_no
+		,user_no
+		,event_title
+		,event_content
+		,start_date
+		,end_date
+		,allday_yn
+		,delete_yn
+		from event
+		where delete_yn ='N'
+		and user_no =#{euserNo}
+	</select>
+	
+</mapper>
