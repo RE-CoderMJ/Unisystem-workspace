@@ -16,4 +16,5 @@ public interface FacilityService {
 	ArrayList<Facility> reservedStudy();
 	// 스터디룸별 예약 가능한 시간 조회
 	ArrayList<Facility> ableTime(String room);
+	int insertStudy(Facility fa);
 }

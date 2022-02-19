@@ -53,5 +53,10 @@ public class FacilityServiceImpl implements FacilityService {
 		return fDao.ableTime(sqlSession, room);
 	}
 
+	@Override
+	public int insertStudy(Facility fa) {
+		return fDao.insertStudy(sqlSession, fa);
+	}
+
 	
 }

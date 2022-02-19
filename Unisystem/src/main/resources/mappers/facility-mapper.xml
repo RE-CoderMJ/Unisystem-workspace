@@ -95,10 +95,10 @@
 	         , #{studNo}
 	         , #{rsvdSpace}
 	         , #{rsvdNum}
-	         , #{rsvdDate}
+	         , TO_CHAR(SYSDATE, 'YYYY.MM.DD')
 	         , TO_CHAR(TO_DATE(#{rsvdStart}, 'HH24:MI:SS'), 'HH24:MI:SS')
          	 , TO_CHAR(TO_DATE(#{rsvdEnd}, 'HH24:MI:SS'), 'HH24:MI:SS')
-	         , #{rsvdStatus}
+	         , 1
 	         )
 	</insert>
 	

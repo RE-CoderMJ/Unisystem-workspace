@@ -28,6 +28,10 @@ public class FacilityController {
 	/**
 	 * 현재 열람실 예약 현황을 조회해오는 ajax
 	 */
+	/**
+	 * @param room
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="selectReading", produces="application/json; charset=UTF-8")
 	public String reservedReading() {
@@ -82,6 +86,9 @@ public class FacilityController {
 	}
 	
 	
+	/**
+	 * 스터디룸 예약 현황 시간표에 보여지는 당일 예약된 데이터를 조회하기 위함
+	 */
 	@ResponseBody
 	@RequestMapping(value="selectStudy", produces="application/json; charset=UTF-8")
 	public String reservedStudy() {
@@ -91,12 +98,28 @@ public class FacilityController {
 		
 	}
 	
+	/**
+	 * 사용 공간에 따라 바뀌는 사용 가능 시간을 조회하기 위함
+	 */
 	@ResponseBody
 	@RequestMapping(value="selectTime", produces="application/json; charset=UTF-8")
 	public String ableTime(String room) {
 		
 		ArrayList<Facility> ableTime = fService.ableTime(room);
 		return new Gson().toJson(ableTime);
+	}
+	
+	@RequestMapping("insert.sr")
+	public String insertStudy(Facility fa, HttpSession session) {
+		
+		int result = fService.insertStudy(fa);
+		
+		if(result < 0) {
+			
+			session.setAttribute("alertMsg", "열람실 예약 실패했습니다.");
+		}
+			
+			return "redirect:rsvdStudy";
 	}
 
 }

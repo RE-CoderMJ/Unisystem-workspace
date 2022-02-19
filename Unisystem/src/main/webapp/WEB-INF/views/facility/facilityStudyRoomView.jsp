@@ -112,8 +112,9 @@
 		color:black;
 	}
 	#today{
-		text-align:left;
-		padding-left:25px !important; 
+		width:100px;
+		border:none;
+		margin-left:10px;
 	}
 </style>
 </head>
@@ -137,14 +138,14 @@
 					<div id="map">
 						<img src="resources/images/studyRoom.png">
 					</div>
-		 			<form>
+		 			<form action="insert.sr">
 					<div id="rsvdInfo">			
 						<div class="blueLabel"></div>	
 						<table class="table table-bordered">
 							<tr>
 								<th width="100">사용인원</th>
 								<td width="150">
-									<select name="pno" class="select">
+									<select name="rsvdNum" class="select">
 										<option value="1">1명</option>
 										<option value="2">2명</option>
 										<option value="3">3명</option>
@@ -154,12 +155,12 @@
 							</tr>
 							<tr>
 								<th>사용일자</th>
-								<td id="today" style="text-align:left">오늘 날짜</td>
+								<td style="text-align:left"><input id="today" type="text" disabled></td>
 							</tr>
 							<tr>
 								<th>사용공간</th>
 								<td> 
-									<select id="room" name="rno" class="select">
+									<select id="room" name="rsvdSpace" class="select">
 										<option value="A">A Room</option>
 										<option value="B">B Room</option>
 										<option value="C">C Room</option>
@@ -170,28 +171,27 @@
 							<tr>
 								<th rowspan="2">사용시간</th>
 								<td>
-									<select id="useTime" name="tno" class="select">
-									
-										<!-- 실시간으로 예약 가능한 시간을 select해와야 함-->
-										
+									<select id="useTime" name="rsvdStart" class="select">
+										<!-- 동적으로 생성되는 사용 가능 시간 -->
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input id="1" type="radio" name="time"><label for="1">&nbsp;1시간</label>
+									<input type="hidden" name="rsvdEnd">
+									<input id="1" type="radio" name="time" value="1"><label for="1">&nbsp;1시간</label>
 									&nbsp;&nbsp;
-									<input id="2" type="radio" name="time"><label for="2">&nbsp;2시간</label>
+									<input id="2" type="radio" name="time" value="2"><label for="2">&nbsp;2시간</label>
 								
 								</td>
 							</tr>
 						</table>
 					</div>
 					
-					<input type="hidden" name="rsvdNo">
+					<input type="hidden" name="rsvdNo" value="0">
 					<input type="hidden" name="studNo" value="${ loginUser.studNo }">
 					<div class="btnBox">
-					<button type="submit" class="submitBtn">
+					<button type="submit" class="submitBtn" onclick="return checkRadio();">
 						<p>스터디룸 예약</p>
 					</button>
 				</div>
@@ -350,7 +350,52 @@
 				ableTime(room);
 			})
 			
+			// 오늘의 날짜
+			var today = new Date();
+			
+			var year = today.getFullYear();
+			var month = ('0' + (today.getMonth() + 1)).slice(-2);
+			var day = ('0' + today.getDate()).slice(-2);
+
+			var todate = year + '-' + month + '-' + day;
+			// 화면에 날짜 보여주기	
+			$("#today").val(todate);
+			
+			// 스터디룸 사용 가능 시간이 2시일 때는 1시간만 예약할 수 있게 설정
+			$("#useTime").on("change", function(){
+				// 원하는 사용 시작 시간이 바뀔 때는 기존에 체크해둔 사용시간이 해제되도록
+				$("input[name=time]").prop("checked", false);
+				
+				if($(this).val() == '22'){
+					$("#2").attr("disabled", true);
+				}else{
+					$("#2").attr("disabled", false);
+				}
+			})
+			
+			
+			// 라디오 버튼으로 스터디룸 사용 시간을 체크했을 때 끝날 시간을 계산해서 hidden rsvdEnd에 담음
+			$("input[name=time]").click(function(){
+				let startTime = $("#useTime").val();
+				let endTime = Number(startTime) + Number($(this).val())
+				$("input[name=rsvdEnd]").val(endTime);
+				
+			})
+			
+			
+			
 		})
+		// 라디오 버튼으로 사용 시간을 체크하지 않으면 리턴
+		function checkRadio(){
+			let checkTime = $("input[name=time]:checked").val();
+			
+			if(checkTime == undefined){
+				alert("사용할 시간을 선택해 주세요!");
+				return false;
+			}
+		}
+			
+		
 		
 		// 사이드바 길이 조절
 		function sidebar(){
@@ -406,10 +451,12 @@
 									startMore = Number(data[i].rsvdStart) + 1;
 										if(startMore < 10){
 											startMore = "0" + startMore;
+											
 										}
+									
 									cells = space + startMore;
 									// 예약자 본인의 좌석은 노란색으로 표시됨	
-									$("input[value="+(cells+1)+"]").closest('td').css("background", "#fc6");
+									$("input[value="+cells+"]").closest('td').css("background", "#fc6");
 									
 									$(".submitBtn>p").text("퇴 실");
 								 }
@@ -430,9 +477,6 @@
 						 }
 						 
 					})
-					
-					var today = $(data)[0].rsvdDate;
-					$("#today").text(today);
 					
 				},error: () => {
 					console.log("스터디룸 예약 시간표 조회 실패!");

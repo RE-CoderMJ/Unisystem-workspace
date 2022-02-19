@@ -33,7 +33,9 @@ public class FacilityDao {
 		return (ArrayList)sqlSession.selectList("facilityMapper.ableTime", room);
 	}
 	
-	
+	public int insertStudy(SqlSessionTemplate sqlSession, Facility fa) {
+		return sqlSession.insert("facilityMapper.insertStudy", fa);
+	}
 	
 	
 }
