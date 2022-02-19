@@ -28,7 +28,7 @@
                     <div id="tools-left">
                         <input type="checkbox" id="checkAll">
                         <button style="margin-left: 2px;" id="recover">복구</button>
-                        <button data-toggle="modal" data-target="#deleteTrashModal"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>영구삭제</button>
+                        <button id="pDelete" data-toggle="modal" data-target="#deleteTrashModal"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>영구삭제</button>
                         <button style="margin-left: 2px;">스팸등록</button>
                     </div>
                     <div id="tools-right" align="right">
@@ -80,6 +80,7 @@
 							   +	"<input type='hidden' name='type' value='" + result.list[i].type + "'>"
 							   +	"<input type='hidden' name='to-me' value='" + result.list[i].toMe + "'>"
 							   +	"<input type='hidden' name='save-status' value='" + result.list[i].saveStatus + "'>"
+							   +	"<input type='hidden' name='file-name' value='" + result.list[i].fileName + "'>"
 							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
 							   
 						if(result.list[i].important == "N"){
@@ -211,8 +212,7 @@
 			$(".checkbox:checked").each(function(){
 				mNo = $(this).parent().siblings("input[name=mNo]").val();
 				type = $(this).parent().siblings("input[name=type]").val();
-				console.log(mNo);
-				console.log(type);
+
 				recover(mNo, type);
 			});
 			
@@ -228,6 +228,90 @@
 					}
 				},error:function(){
 					console.log("메일 복구 ajax통신 실패");
+				}
+			
+			})
+		}
+		
+	</script>
+	
+	<!-- 영구삭제 -->
+	<script>
+		$(document).on("click", "#trash-delete-confirm-btn", function(){
+
+			let mNo;
+			let type;
+			
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input[name=mNo]").val();
+				type = $(this).parent().siblings("input[name=type]").val();
+				saveStatus = $(this).parent().siblings("input[name=save-status]").val();
+				toMe = $(this).parent().siblings("input[name=to-me]").val();
+				fileName = $(this).parent().siblings("input[name=file-name]").val();
+
+				deletePermanently(mNo, type, saveStatus, toMe, fileName);
+			});
+			
+		})
+		
+		function deletePermanently(mNo, type, saveStatus, toMe, fileName){
+			$.ajax({
+				url:"webMail.deletePermanently",
+				data:{
+					mailNo:mNo, 
+					type:type, 
+					saveStatus:saveStatus, 
+					toMe:toMe, 
+					fileName:fileName
+				},
+				success:function(result){
+					if(result>0){
+						selectTrashList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("영구삭제 ajax통신 실패");
+				}
+			
+			})
+		}
+		
+	</script>
+	
+	<!-- 휴지통 비우기 -->
+	<script>
+		$(document).on("click", "#trash-delete-confirm-btn", function(){
+
+			let mNo;
+			let type;
+			
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input[name=mNo]").val();
+				type = $(this).parent().siblings("input[name=type]").val();
+				saveStatus = $(this).parent().siblings("input[name=save-status]").val();
+				toMe = $(this).parent().siblings("input[name=to-me]").val();
+				fileName = $(this).parent().siblings("input[name=file-name]").val();
+
+				deletePermanently(mNo, type, saveStatus, toMe, fileName);
+			});
+			
+		})
+		
+		function deletePermanently(mNo, type, saveStatus, toMe, fileName){
+			$.ajax({
+				url:"webMail.deletePermanently",
+				data:{
+					mailNo:mNo, 
+					type:type, 
+					saveStatus:saveStatus, 
+					toMe:toMe, 
+					fileName:fileName
+				},
+				success:function(result){
+					if(result>0){
+						selectTrashList($("#cPage").val());						
+					}
+				},error:function(){
+					console.log("영구삭제 ajax통신 실패");
 				}
 			
 			})

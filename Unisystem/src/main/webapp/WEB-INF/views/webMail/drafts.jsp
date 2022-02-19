@@ -132,8 +132,8 @@
 	
 	<script>
 		$(function(){
-			$(document).on("click", "tr", function(){
-				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
+			$(document).on("click", ".title", function(){
+				location.href = "webMail.writeForm?mNo=" + $(this).siblings("input").val();
 			})
 		})
 	</script>

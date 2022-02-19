@@ -2,6 +2,8 @@ package com.us.uni.mail.model.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -264,15 +266,14 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int deleteMail(int mailNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int recoverMail(int mNo, String type) {
 		int result = mDao.recoverMail(sqlSession, mNo, type);
 		return result;
+	}
+
+	@Override
+	public int deletePermanently(HttpSession session, MailTo mt) {
+		return mDao.deletePermanently(sqlSession, session, mt);
 	}
 
 

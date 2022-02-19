@@ -1,6 +1,9 @@
 package com.us.uni.mail.model.dao;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -231,6 +234,42 @@ public class MailDao {
 			return sqlSession.update("mailMapper.recoverMailT", mNo);
 		}
 		
+	}
+
+	public int deletePermanently(SqlSessionTemplate sqlSession, HttpSession session, MailTo mt) {
+		
+		if(mt.getType().equals("f")) {
+			
+			// 임시저장 메일이거나 내게 쓴 메일일 경우
+			if(mt.getSaveStatus().equals("Y") || mt.getToMe().equals("Y")) {
+
+				int result = 1;
+				
+				// 내게 쓴 메일의 경우 첨부파일이 있을 때
+				if(mt.getFileName() != null) {
+					int mNo = mt.getMailNo();
+					ArrayList<Attachment> attList = (ArrayList)sqlSession.selectList("mailMapper.selectMfAttachmentList", mNo);
+					
+					// 서버에서 파일 삭제
+					for(Attachment att : attList) {
+						String filePath = att.getPath() + att.getChangeName();
+						new File(session.getServletContext().getRealPath(filePath)).delete();
+					}
+					
+					// db에서 첨부파일 정보 삭제
+					result = sqlSession.delete("mailMapper.deleteAttachment", mt);
+				}
+				
+				//db에서 메일 정보 삭제
+				int result2 = sqlSession.delete("mailMapper.deletePermanentlyD", mt);
+				
+				return result * result2;
+			}else {
+				return sqlSession.update("mailMapper.deletePermanentlyF", mt);				
+			}
+		}else {
+			return sqlSession.delete("mailMapper.deletePermanentlyT", mt);
+		}
 	}
 
 

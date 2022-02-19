@@ -798,6 +798,7 @@
 		    by mail_from_no desc
 	</select>
 	
+	<!-- 메일 복구 -->
 	<update id="recoverMailF">
 		update
 		       mail_from
@@ -811,4 +812,33 @@
 		   set status = 'N'
 		 where mail_to_no = #{mNo}
 	</update>
+	
+	<!-- 영구삭제 -->
+	<update id="deletePermanentlyF">
+		update
+			   mail_from
+		   set status = 'P'
+		 where mail_from_no = #{mailNo}
+		   and status = 'Y'
+	</update>
+	
+	<delete id="deletePermanentlyD">
+		delete
+		       mail_from
+		 where mail_from_no = #{mailNo}
+		   and status = 'Y'
+	</delete>
+	
+	<delete id="deletePermanentlyT">
+		delete
+		       mail_to
+		 where mail_to_no = #{mailNo}
+		   and status = 'Y'
+	</delete>
+	
+	<delete id="deleteAttachment">
+		delete
+		       attachment
+		 where ref_no = #{mailNo}
+	</delete>
 </mapper>

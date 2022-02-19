@@ -513,6 +513,17 @@ public class WebMailController {
 	}
 	
 	/**
+	 * 영구삭제 컨트롤러
+	 * @param mt
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.deletePermanently", produces="application/json; charset=utf-8")
+	public int deletePermanently(HttpSession session, MailTo mt) {
+		return mService.deletePermanently(session, mt);
+	}
+	
+	/**
 	 * 읽음처리||안읽음처리용 컨트롤러
 	 * @param status
 	 * @param mNo
