@@ -279,43 +279,23 @@
 	
 	<!-- 휴지통 비우기 -->
 	<script>
-		$(document).on("click", "#trash-delete-confirm-btn", function(){
+		$(document).on("click", "#trash-confirm-btn", function(){
 
-			let mNo;
-			let type;
-			
-			$(".checkbox:checked").each(function(){
-				mNo = $(this).parent().siblings("input[name=mNo]").val();
-				type = $(this).parent().siblings("input[name=type]").val();
-				saveStatus = $(this).parent().siblings("input[name=save-status]").val();
-				toMe = $(this).parent().siblings("input[name=to-me]").val();
-				fileName = $(this).parent().siblings("input[name=file-name]").val();
-
-				deletePermanently(mNo, type, saveStatus, toMe, fileName);
-			});
-			
-		})
-		
-		function deletePermanently(mNo, type, saveStatus, toMe, fileName){
 			$.ajax({
-				url:"webMail.deletePermanently",
-				data:{
-					mailNo:mNo, 
-					type:type, 
-					saveStatus:saveStatus, 
-					toMe:toMe, 
-					fileName:fileName
-				},
+				url:"webMail.emptyTrash",
+				data:{userNo:'${loginUser.userNo}'},
 				success:function(result){
+					console.log(result);
 					if(result>0){
-						selectTrashList($("#cPage").val());						
+						selectTrashList(1);						
 					}
 				},error:function(){
-					console.log("영구삭제 ajax통신 실패");
+					console.log("휴지통 비우기 ajax통신 실패");
 				}
 			
 			})
-		}
+			
+		})
 		
 	</script>
 	

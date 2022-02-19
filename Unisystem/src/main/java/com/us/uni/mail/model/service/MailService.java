@@ -46,8 +46,6 @@ public interface MailService {
 	int selectUnreadListCount(int userNo);
 	ArrayList<MailTo> selectUnreadList(int userNo, PageInfo pi);
 	
-	// 첨부파일 조회용 서비스
-	
 	// 메일 작성하기 서비스
 	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);
 	// 내게쓰기 서비스
@@ -77,6 +75,9 @@ public interface MailService {
 	
 	// 메일 영구삭제 서비스
 	int deletePermanently(HttpSession session, MailTo mt);
+	
+	// 휴지통 비우기 서비스
+	int emptyTrash(HttpSession session, int userNo);
 
 	// 중요메일
 	
@@ -84,7 +85,5 @@ public interface MailService {
 	
 	// 답장
 	
-	// 첨부파일 리스트 조회용 서비스
-	
-	
+	// 주소록
 }

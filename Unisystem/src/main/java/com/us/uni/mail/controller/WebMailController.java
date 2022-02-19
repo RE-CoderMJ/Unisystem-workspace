@@ -524,6 +524,18 @@ public class WebMailController {
 	}
 	
 	/**
+	 * 휴지통 비우기 컨트롤러
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.emptyTrash", produces="application/json; charset=utf-8")
+	public int emptyTrash(HttpSession session, int userNo) {
+		return mService.emptyTrash(session, userNo);
+	}
+	
+	/**
 	 * 읽음처리||안읽음처리용 컨트롤러
 	 * @param status
 	 * @param mNo
@@ -564,4 +576,5 @@ public class WebMailController {
 		
 		return changeName;
 	}
+	
 }

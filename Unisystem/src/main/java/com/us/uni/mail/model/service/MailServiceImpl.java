@@ -276,6 +276,11 @@ public class MailServiceImpl implements MailService {
 		return mDao.deletePermanently(sqlSession, session, mt);
 	}
 
+	@Override
+	public int emptyTrash(HttpSession session, int userNo) {
+		return mDao.emptyTrash(sqlSession, session, userNo);
+	}
+
 
 	
 

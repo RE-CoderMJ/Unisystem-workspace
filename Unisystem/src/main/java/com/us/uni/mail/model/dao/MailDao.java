@@ -272,6 +272,19 @@ public class MailDao {
 		}
 	}
 
+	public int emptyTrash(SqlSessionTemplate sqlSession, HttpSession session, int userNo) {
+
+		ArrayList<MailTo> list = (ArrayList)sqlSession.selectList("mailMapper.selectTrashList", userNo);
+		System.out.println(list);
+		int result = 0;
+		for(MailTo mt : list) {
+			mt.setMailNo(mt.getMailFromNo());
+			result = deletePermanently(sqlSession, session, mt);
+		}
+		
+		return result;
+	}
+
 
 
 }
