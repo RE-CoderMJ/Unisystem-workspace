@@ -29,7 +29,7 @@
                         <button style="margin-left: 10px;" id="read">읽음</button>
                         <button id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button style="margin-left: -5px;">스팸등록</button>
-                        <button>답장</button>
+                        <button id="reply">답장</button>
                         <button style="margin-left: -4px;">전달</button>
                     </div>
                     <div id="tools-right" align="right">
@@ -76,71 +76,77 @@
 				success:function(result){
 					
 					let value = "";
-					for(let i in result.list){
-						value += "<tr>"
-							   + 	"<input type='hidden' name='mNo' value='" + result.list[i].mailNo + "'>"
-							   + 	"<input type='hidden' name='read-date' value='" + result.list[i].readDate + "'>"
-							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
-							   
-						if(result.list[i].important == "N"){
-							value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
-						}else{
-							value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
-						}			
-
-						value += "<td class='read-status'><i class='far fa-envelope'></i></td>";
-						
-						if(result.list[i].fileName != null){
-                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
-                    	}else{
-	                    	value += "<td class='att'></td>";                    		
-                    	}
-                    	
-                    	value += "<td class='from overflow unread'>" + result.list[i].userFromAdd + "</td>";
-                    	
-	                    if(result.list[i].ccStatus == "N"){
-	 						value += "<td class='title unread'>" + result.list[i].title + "</td>";                    		
-	                    }else{
-	                    	value += "<td class='title unread'>cc : " + result.list[i].title + "</td>";
-	                    }
-                    	
-	 					value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
-	 					   	   + "</tr>";
-					}
-				
-					$("#list").html(value);
 					
-					let piValue = "";
-					
-					if(result.pi.currentPage == 1){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					if(result.list.length === 0){
+						value = "<tr><td style='text-align:center;'>메일함이 비어있습니다.</td></tr>"
 					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
-					}
-                    
-					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
 						
-						if(p == result.pi.currentPage){
-							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
-						}else{
-							piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
+						for(let i in result.list){
+							value += "<tr>"
+								   + 	"<input type='hidden' name='mNo' value='" + result.list[i].mailNo + "'>"
+								   + 	"<input type='hidden' name='read-date' value='" + result.list[i].readDate + "'>"
+								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
+								   
+							if(result.list[i].important == "N"){
+								value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
+							}else{
+								value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
+							}			
+	
+							value += "<td class='read-status'><i class='far fa-envelope'></i></td>";
+							
+							if(result.list[i].fileName != null){
+	                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
+	                    	}else{
+		                    	value += "<td class='att'></td>";                    		
+	                    	}
+	                    	
+	                    	value += "<td class='from overflow unread'>" + result.list[i].userFromAdd + "</td>";
+	                    	
+		                    if(result.list[i].ccStatus == "N"){
+		 						value += "<td class='title unread'>" + result.list[i].title + "</td>";                    		
+		                    }else{
+		                    	value += "<td class='title unread'>cc : " + result.list[i].title + "</td>";
+		                    }
+	                    	
+		 					value += 	"<td class='date'>" + result.list[i].sendDate + "</td>"
+		 					   	   + "</tr>";
 						}
 						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
 					}
-	            	
-					if(result.pi.currentPage == result.pi.maxPage){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
-					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectUnreadList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
-					}
 					
-					$(".pagination").html(piValue);
-					
-					// 사이드바와 컨텐츠영역 길이 맞춤
-					let $len = $("section").height();
-					$("#webMail-sidebar").css('height', $len + 22);
-					
-					$("#cPage").val(result.pi.currentPage);
+					$("#list").html(value);
 					
 				},error:function(){
 					console.log("안읽은 메일함 목록 조회용 ajax 통신 실패");
@@ -247,6 +253,27 @@
 			
 			})
 		}
+		
+	</script>
+	
+	<!-- 답장 기능 -->
+	<script>
+		$(document).on("click", "#reply", function(){
+			
+			let count = 0;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count > 1){
+				alert("답장은 1개의 메일만 선택이 가능합니다.");
+			}else{
+				let mNo = $(".checkbox:checked").parent().siblings("input[name=mNo]").val();
+				location.href= "webMail.writeReplyForm?mNo=" + mNo;
+			}
+						
+		})
 		
 	</script>
 	

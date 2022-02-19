@@ -253,6 +253,20 @@ public class WebMailController {
 		return "webMail/writeMailForm";		
 	}
 	
+	/**
+	 * 답장 작성폼 컨트롤러
+	 * @param mNo 임시저장한 메일을 불러올 시의 키값
+	 * @return 작성폼 화면
+	 */
+	@RequestMapping("webMail.writeReplyForm")
+	public ModelAndView writeMailForm(int mNo, ModelAndView mv){
+		
+		mv = selectMail(mNo, mv);
+		mv.setViewName("webMail/replyWriteMailForm");
+		
+		return mv;		
+	}
+	
 
 	/**
 	 * 내게쓰기 작성폼 컨트롤러

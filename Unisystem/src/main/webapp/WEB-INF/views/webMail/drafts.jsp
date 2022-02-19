@@ -71,56 +71,61 @@
 				success:function(result){
 					
 					let value = "";
-					for(let i in result.list){
-						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
-							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
-                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
-                    		   
-                    	if(result.list[i].userToNo == " "){
-                    		value += "<td class='from overflow'>(받는이 없음)</td>"; 
-                    	}else{
-                    		value += "<td class='from overflow'>" + result.list[i].userToNo + "</td>";
-                    	}
-                    		   
- 						value +=	"<td class='title'>" + result.list[i].title + "</td>"
- 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
- 							   + "</tr>";
-					}
-				
-					$("#list > tbody").html(value);
-					
-					let piValue = "";
-					
-					if(result.pi.currentPage == 1){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					if(result.list.length === 0){
+						value = "<tr><td style='text-align:center;'>메일함이 비어있습니다.</td></tr>"
 					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
-					}
-                    
-					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
 						
-						if(p == result.pi.currentPage){
-							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
-						}else{
-							piValue += "<li class='page-item'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+						for(let i in result.list){
+							value += "<tr>"
+								   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
+	                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
+	                    		   
+	                    	if(result.list[i].userToNo == " "){
+	                    		value += "<td class='from overflow'>(받는이 없음)</td>"; 
+	                    	}else{
+	                    		value += "<td class='from overflow'>" + result.list[i].userToNo + "</td>";
+	                    	}
+	                    		   
+	 						value +=	"<td class='title'>" + result.list[i].title + "</td>"
+	 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
+	 							   + "</tr>";
 						}
 						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
 					}
-	            	
-					if(result.pi.currentPage == result.pi.maxPage){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
-					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
-					}
 					
-					$(".pagination").html(piValue);
-					
-					// 사이드바와 컨텐츠영역 길이 맞춤
-					let $len = $("section").height();
-					$("#webMail-sidebar").css('height', $len + 22);
-					
-					$("#cPage").val(result.pi.currentPage);
+					$("#list > tbody").html(value);
 					
 				},error:function(){
 					console.log("임시보관함 목록 조회용 ajax 통신 실패");

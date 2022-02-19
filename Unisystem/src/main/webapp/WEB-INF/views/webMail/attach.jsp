@@ -30,7 +30,7 @@
                         <button style="margin-left: 10px;" id="read">읽음</button>
                         <button id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                         <button style="margin-left: -5px;">스팸등록</button>
-                        <button>답장</button>
+                        <button id="reply">답장</button>
                         <button style="margin-left: -4px;">전달</button>
                     </div>
                     <div id="tools-right" align="right">
@@ -261,6 +261,27 @@
 			
 			})
 		}
+		
+	</script>
+	
+	<!-- 답장 기능 -->
+	<script>
+		$(document).on("click", "#reply", function(){
+			
+			let count = 0;
+			
+			$(".checkbox-att:checked").each(function(){
+				count++;
+			});
+			
+			if(count > 1){
+				alert("답장은 1개의 메일만 선택이 가능합니다.");
+			}else{
+				let mNo = $(".checkbox-att:checked").siblings("input[name=mNo]").val();
+				location.href= "webMail.writeReplyForm?mNo=" + mNo;
+			}
+						
+		})
 		
 	</script>
 	

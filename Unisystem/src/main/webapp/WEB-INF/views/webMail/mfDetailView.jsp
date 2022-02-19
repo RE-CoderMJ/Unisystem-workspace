@@ -20,7 +20,6 @@
         <section>
             <header id="mail-boxes-header">
                 <div id="tools">
-	                <button id="send-btn" type="submit"><i class="fas fa-arrow-right"></i>&nbsp;답장</button>
 	                <button style="margin-left: -4px;">전달</button>
 	                <button onclick="moveToTrash(${mf.mailNo});"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
 	                <button style="margin-left: -5px;">스팸등록</button>

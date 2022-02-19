@@ -18,6 +18,7 @@
 		<result column="important" property="important" />
 		<result column="from_name" property="fromName" />
 		<result column="to_name" property="userToName" />
+		<result column="read_date" property="readDate" />
 	</resultMap>
 	
 	<resultMap type="MailTo" id="toResult">
@@ -524,6 +525,7 @@
              , content
 			 , t.important
 			 , cc_status
+			 , send_date
 		  from mail_to t
 		  join mail_from f on (t.mail_from_no = f.mail_from_no)
           join users u on (from_user = u.user_no)

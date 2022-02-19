@@ -72,64 +72,69 @@
 				success:function(result){
 					
 					let value = "";
-					for(let i in result.list){
-						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
-							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
-							   
-						if(result.list[i].important == "N"){
-							value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
-						}else{
-							value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
+					if(result.list.length === 0){
+						value = "<tr><td style='text-align:center;'>메일함이 비어있습니다.</td></tr>"
+					}else{
+						
+						for(let i in result.list){
+							value += "<tr>"
+								   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>";
+								   
+							if(result.list[i].important == "N"){
+								value += "<td class='important'><i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i></td>"
+							}else{
+								value += "<td class='important'><i class='fa fa-star fa-xs' aria-hidden='true'></i></td>"
+							}
+	
+	                    	value += "<td class='read-status'><i class='far fa-envelope-open'></i></td>";
+	
+							if(result.list[i].fileName != null){
+	                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
+	                    	}else{
+		                    	value += "<td class='att'></td>";                    		
+	                    	}
+	                    	
+		                    value += "<td class='from overflow'>" + result.list[i].address + "</td>"
+		                           + "<td class='title'>" + result.list[i].title + "</td>"   
+	                    		   + "<td class='date'>" + result.list[i].sendDate + "</td>"
+		 					  	   + "</tr>";
 						}
-
-                    	value += "<td class='read-status'><i class='far fa-envelope-open'></i></td>";
-
-						if(result.list[i].fileName != null){
-                    		value += "<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
-                    	}else{
-	                    	value += "<td class='att'></td>";                    		
-                    	}
-                    	
-	                    value += "<td class='from overflow'>" + result.list[i].address + "</td>"
-	                           + "<td class='title'>" + result.list[i].title + "</td>"   
-                    		   + "<td class='date'>" + result.list[i].sendDate + "</td>"
-	 					  	   + "</tr>";
+					
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectToMeList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
 					}
-				
+					
 					$("#list").html(value);
-					
-					let piValue = "";
-					
-					if(result.pi.currentPage == 1){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
-					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
-					}
-                    
-					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
-						
-						if(p == result.pi.currentPage){
-							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectToMeList(" + p + ")'>" + p + "</a></li>";
-						}else{
-							piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + p + ")'>" + p + "</a></li>";
-						}
-						
-					}
-	            	
-					if(result.pi.currentPage == result.pi.maxPage){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
-					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectToMeList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
-					}
-					
-					$(".pagination").html(piValue);
-					
-					// 사이드바와 컨텐츠영역 길이 맞춤
-					let $len = $("section").height();
-					$("#webMail-sidebar").css('height', $len + 22);
-					
-					$("#cPage").val(result.pi.currentPage);
 					
 				},error:function(){
 					console.log("받은 메일함 목록 조회용 ajax 통신 실패");
