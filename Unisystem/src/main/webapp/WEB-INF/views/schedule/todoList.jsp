@@ -7,8 +7,6 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 </head>
-   <link rel="stylesheet" href="reset.css"> 
-   <link rel="stylesheet" href="style.css">
 <style>
 
 .page_title {
@@ -41,15 +39,10 @@ margin-left: 66px;
 }
 
 .bo_content {
-	margin-top: 51px;
 	width: 1000px;
-	float: left;
 	background-color: white;
-	margin-left: 150px;
 	padding-bottom: 50px;
-	position: relative;
-    top: -1120px;
-    left: 100px;
+	min-height: 700px;
 }
 
 
@@ -163,6 +156,7 @@ input {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 0;
+  border:none;
 }
 
 .addBtn:hover {
@@ -171,8 +165,8 @@ input {
 </style>
 <body>
 
-	<div id="todoOuter">
-
+	
+	
 		<div>
 		<!-- header.jsp 영역 -->
 		<jsp:include page="../common/header.jsp" />
@@ -180,32 +174,30 @@ input {
 		<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
-
+		<div id="todoOuter" style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">  
 		<br clear="both">
-			<div class="sidewrap">
 				<jsp:include page="../student/smySidebar.jsp" />
-			</div>
+			 <jsp:include page="../common/links.jsp"/>
 
-
-			<div class="bo_content" style="width:1000px;">
+			<div class="bo_content"  >
 			
 				<!-- title -->
 			<div class="page_title">투두리스트</div>
 			<p>오늘 <b style="color:rgb(231, 76, 60);">해야할 일</b>은 무엇인가요?</p>
-			<hr width="850px;" align="center;">
+			<hr width="1200px;" align="center;">
 			<div class="updel">
-			<a href="">캘린더</a>
+			<a href="calendar">캘린더</a>
 			</div>
 			
 			<div style="width:860px; margin:auto;">
 			<div id="todoWrap">
-				   
+				   <input type="hidden" name="tuserNo" id="tuserNo" value="${loginUser.userNo}" />
+				 
 				<div id="myDIV" class="header">
 				  <h2 style="margin:5px; margin-bottom:15px;"">My To Do List</h2>
-				  <input type="text" id="myInput" placeholder="To Do 리스트 내용">
-				  <span onclick="newElement()" class="addBtn">할 일 추가</span>
+				  <input type="text" id="myInput" name="todoContent" placeholder="To Do 리스트 내용">
+				  <button onclick="addTodo();" class="addBtn">할 일 추가</button>
 				</div>
-				
 				<ul id="myUL">
 				  <li>오늘 할일을 입력하세요</li>
 				  <li class="checked">완료한 항목</li>
@@ -215,6 +207,101 @@ input {
     	</div>
  
 	<script>
+	
+	$(function(){
+		todoSelect();
+		
+		$(document).on("click", ".close", function(){
+			console.log("클릭되나?");
+			todoDelete();
+		})
+		
+		$(document).on("click", ".checked", function(){
+			todoCheck();
+		})
+	})
+	
+	//todo입력 ajax
+	function addTodo(){
+		$.ajax({
+			  type: 'POST',  
+			  dataType:'json',
+			  url: "todoInsert",
+			  data: {
+				  tuserNo : $('#tuserNo').val(),
+				  todoContent: $('#myInput').val()
+					},
+			  success:
+				function(result){
+				   if(result == 1){
+					alert('등록이 완료되었습니다 :)');
+					todoSelect();
+					$("#myInput").val("");
+					}
+			 	 }
+			});
+	}
+	
+	function todoSelect(){
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:"todoSelect",
+			data : {
+				tuserNo : $('#tuserNo').val()
+			},
+		 	success:function(data){
+		 		 console.log(data);
+		 		 let value="";
+		 		 
+		 		 for(let i in data){
+		 			 value +=  "<li>"+ '<input type="hidden" name="todoNo" id="todoNo" value="'+data[i].todoNo+'"/>'
+							 + data[i].todoContent + "<span class='close'>x</span> </li>";
+		 		 }
+		 		 $('#myUL').html(value);
+		 		 console.log(value);
+		 	}
+		});
+	}
+	
+	
+		function todoDelete(){
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:"todoDelete",
+				data : {
+					todoNo : $('#todoNo').val(),
+					tuserNo : $('#tuserNo').val()
+				},
+			 	success:function(){
+			 	 	alert('일정이 삭제되었습니다!');
+			 	 	location.reload();
+			 		}
+			 	
+			});
+		}
+		
+		function todoCheck(){
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:"todoCheck",
+				data : {
+					todoNo : $('#todoNo').val(),
+					tuserNo : $('#tuserNo').val()
+				},
+			 	success:function(){
+			 	 	 
+			 		}
+			 	
+			});
+		}
+	
+	
+	
+	
+	
 	// Create a "close" button and append it to each list item
 	var myNodelist = document.getElementsByTagName("LI");
 	var i;
@@ -276,12 +363,13 @@ input {
 		
 			
 
-	<!-- footer.jsp-->
-	<jsp:include page="../common/footer.jsp" />
+	
 	
 	 
      		
 	</div>
+	<!-- footer.jsp-->
+	<jsp:include page="../common/footer.jsp" />
 	<script>
 	
 

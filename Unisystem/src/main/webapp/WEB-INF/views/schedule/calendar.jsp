@@ -104,7 +104,8 @@
 			<div id="result1"></div>
 				<!-- title -->
 				<div class="page_title">캘린더</div>
-				<p>캘린더를 이용하여 <b style="color:rgb(231, 76, 60);">일정을</b> 등록해보세요</p>
+				<p>캘린더를 이용하여 <b style="color:rgb(231, 76, 60);">일정을</b> 등록해보세요 <br>
+				      등록된 일정을 클릭하시면  <b style="color:rgb(231, 76, 60);">삭제</b>할 수 있습니다. </p>
 				
 
 				<div class="updel">
@@ -187,27 +188,36 @@
 			  		        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
 			  		          console.log(obj);
 			  		        },
-			  		        eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
-			  		          console.log(obj);
-			  		        },
+			  		        
+			  		      /* 	eventDrop: function(data, delta, revertFunc) { //이벤트 수정
+			  				$.ajax({
+			  				  type: 'POST',  
+			  				  dataType:'json',
+			  				  url: "updateSchedule",
+			  				  data: {
+			  					  eventNo:data.event._def.groupId, 
+			  					  eventTitle:data.event._def.title, 
+			  					  startDate:data.event._instance.range.start, //날짜 포맷변경해줘야함 
+			  					  endDate:data.event._instance.range.end},
+			  				  success:function( result ) {
+			  					  if(result == 1){
+			  						alert('일정이 변경되었습니다.');
+			  						location.reload();
+			  					  }
+			  				  }
+			  				  });
+			  			  } ,*/
 			  		        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
 			  		          console.log(obj);
 			  		        },
+			  		        
 			  		        select:
-			  		          function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-			  		          var title = prompt('Event Title:');
-			  		          if (title) {
-			  		            calendar.addEvent({
-			  		              title: title,
-			  		              start: arg.start,
-			  		              end: arg.end,
-			  		              allDay: arg.allDay
-			  		            })
-			  		          }
+			  		         function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 			  		          calendar.unselect()
 			  		        }, 
-			  		       events: eventArr,
-			  		       eventClick: function(data, jsEvent, view) {
+			  		       events: eventArr, //이벤트 조회
+			  		       
+			  		       eventClick: function(data, jsEvent, view) { //이벤트 삭제
 			  		    	   console.log(data);
 			 				if(!confirm("일정 '"+ data.event._def.title+"'을 삭제하시겠습니까?"))
 			 				{

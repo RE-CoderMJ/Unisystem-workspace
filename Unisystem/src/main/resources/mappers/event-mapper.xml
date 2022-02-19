@@ -79,7 +79,6 @@
 		event
 	set 
 	event_title =#{eventTitle},
-	event_content=#{eventContent},
 	start_date=#{startDate},
 	end_date=#{endDate}
 	where event_no =#{eventNo} 

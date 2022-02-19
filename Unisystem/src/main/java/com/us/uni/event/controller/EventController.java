@@ -80,5 +80,24 @@ public class EventController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="updateSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	public int updateSchedule(Event ev) {
+		
+		System.out.println(ev);
+		
+		int result = eService.updateSchedule(ev);
+		 
+		return result;
+	}
+	
+
+	@RequestMapping("todoList")
+	public String todoList() {
+		
+		return "schedule/todoList";
+		
+	}
+	
 	
 }

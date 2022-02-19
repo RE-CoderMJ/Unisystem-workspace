@@ -30,4 +30,9 @@ public class EventDao {
 		return sqlSession.delete("eventMapper.deleteSchedule", eventNo);
 	}
 
+	public int updateSchedule(SqlSessionTemplate sqlSession, Event ev) {
+		
+	return sqlSession.update("eventMapper.updateSchedule",ev);
+	}
 }
+

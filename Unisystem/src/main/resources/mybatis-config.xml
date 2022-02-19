@@ -25,6 +25,7 @@
 			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />
 			<typeAlias type="com.us.uni.lecture.model.vo.Lecture" alias="Lecture" />
 			<typeAlias type="com.us.uni.event.model.vo.Event" alias="Event" />
+			<typeAlias type="com.us.uni.todo.model.vo.Todo" alias="Todo" />
 		</typeAliases>
 		
 		<mappers>
@@ -35,6 +36,7 @@
 			<mapper resource="/mappers/mail-mapper.xml" />			
 			<mapper resource="/mappers/lecture-mapper.xml" />
 			<mapper resource="/mappers/event-mapper.xml" />
+			<mapper resource="/mappers/todo-mapper.xml" />
 		</mappers>
 		
 </configuration>

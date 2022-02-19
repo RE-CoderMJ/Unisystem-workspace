@@ -42,4 +42,10 @@ public class EventServiceImpl implements EventService{
 		return eDao.deleteSchedule(sqlSession,eventNo);
 	}
 
+	@Override
+	public int updateSchedule(Event ev) {
+		
+		return eDao.updateSchedule(sqlSession,ev);
+	}
+
 }

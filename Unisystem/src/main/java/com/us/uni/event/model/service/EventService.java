@@ -14,5 +14,7 @@ public interface EventService {
 
 	int deleteSchedule(int eventNo);
 
+	int updateSchedule(Event ev);
+
 
 }
