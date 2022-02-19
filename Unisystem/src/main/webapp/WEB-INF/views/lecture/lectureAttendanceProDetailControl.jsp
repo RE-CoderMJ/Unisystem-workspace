@@ -196,11 +196,12 @@
 		                        </tr>
 	                        </thead>
 	                        
-	                        <form action="insertAtt.lec" method="">
+	                        <form action="insertAttDetail.lec" method="post">
 	                        
 		                        <tbody>
 		                        	<c:forEach var="l" items="${ list }">
 		                        	
+		                        	<input type="hidden" id="userNo" name="userNo" value="${ loginUser.userNo }" />
 		                        	<input type="hidden" id="studNo" name="studNo" value="${ l.studNo }" />
 		                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
 		                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
@@ -225,11 +226,16 @@
 				                            </td>
 				                            <td>${ l.studNo }</td>
 				                            <td>${ l.korName }</td>
-				                            <td class="status" name="attendanceStatus"></td>
+				                            <td class="status" name="attendanceStatus">											
+			                            	<!-- <input id="statusInput" type="text" name="attStatusList[]" value="" />	 -->
+			                            	<c:set var="i" value="-1" scope="request">		 
+			                            	</c:set>           	
+			                            		<input id="statusInput" type="text" name="attStatusList[${i+1}].attendanceStatus" value=" "/>	              
+				                           	</td>
 				                            <td>
-				                                <button class="attend" id="statusBtnA" type="button" name="attend">출석</button>
-				                                <button class="absence" id="statusBtnB" type="button" name="absence">결석</button>
-				                                <button class="tardiness" id="statusBtnC" type="button" name="tardiness">지각</button>
+				                                <button class="attend" id="statusBtnA" type="button" name="attend" onclick="insertStuAtt(1);">출석</button>
+				                                <button class="absence" id="statusBtnB" type="button" name="absence" onclick="insertStuAtt(2);">결석</button>
+				                                <button class="tardiness" id="statusBtnC" type="button" name="tardiness" onclick="insertStuAtt(3);">지각</button>
 				                            </td>
 				                        </tr>
 				                        
@@ -252,28 +258,44 @@
     <script>      
     	$(function(){
     		
-    		
-
 	        $(document).on("click", "#statusBtnA", function btnFunctionA(){ // 출석
-	        	$(this).parent().siblings(".status").text("출석");
+	        	$(this).parent().siblings(".status").children("#statusInput").val("출석");
 	        })
 	        
 	        $(document).on("click", "#statusBtnB", function btnFunctionB(){ // 결석
-	        	$(this).parent().siblings(".status").text("결석");
+	        	$(this).parent().siblings(".status").children("#statusInput").val("결석");
 	        })
 	        
 	        $(document).on("click", "#statusBtnC", function btnFunctionC(){ // 지각
-	        	$(this).parent().siblings(".status").text("지각");
+	        	$(this).parent().siblings(".status").children("#statusInput").val("지각");
 	        })
-	          		
-    	});
-    	
+
+	    	//insertStuAtt();
+    	});	
+    		
+    	/*
+    		function insertStuAtt(num){
+    			
+    			
+    			
+    			$.ajax({
+    				url:"",
+    				data:{},
+    				success:function(){
+    					
+    				}, error:function(){
+    					
+    				}
+    			})
+    		}
+    		
+   */ 	
 	    	// 모든 학생의 출결값이 작성되어있지 않을경우 alert창 알림, 아닐경우 제출 버튼의 disabled 속성 제거하는 함수
 	    	function checkAlltd(){
 	    		
 	    		const status = $(".status").text();
 
-	    		if(status == ""){
+	    		if(status == " "){
 	    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
 	    			
 	    			return false;

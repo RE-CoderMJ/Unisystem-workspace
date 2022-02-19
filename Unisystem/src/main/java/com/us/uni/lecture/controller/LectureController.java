@@ -1,12 +1,12 @@
 package com.us.uni.lecture.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -194,6 +194,7 @@ public class LectureController {
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
 	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+				
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
@@ -219,6 +220,25 @@ public class LectureController {
 		return new Gson().toJson(list);
 	}
 	
+	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
+	@RequestMapping("insertAtt.lec")
+	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
+		
+		ArrayList<Lecture> studNoList = l.getStudsNo();						
+		//l.getStudsNo().get(0).getStudNo();
+		
+		int result = lService.insertAtt(l, studNoList);
+		
+		if(result == l.getStudsNo().size()) { // 성공
+			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
+		} else { // 실패
+			model.addAttribute("errorMsg", "강의 생성 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
 	public ModelAndView selectLectureAttDetailControl(int lno, String lDate, ModelAndView mv) {
@@ -233,15 +253,35 @@ public class LectureController {
 		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
 		return mv;
 	}
-	
-	/* 교수 - 출결관리상세(출결등록창)에서 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
-	@RequestMapping("insertAtt.lec")
-	public void insertAtt(Lecture l) {
+		
+	@RequestMapping("insertAttDetail.lec")
+	public String insertAttStatus(Lecture l, HttpSession session, Model model) {
 		
 		System.out.println(l);
+	
+		ArrayList<Lecture> attStatusList = l.getAttStatusList();
+
+		String[] arr = attStatusList.get(0).getAttendanceStatus().split(",");
 		
-		int result = lService.insertAtt(l);
+		int result = 0;
+				
+		for(int i=0; i<arr.length; i++) {
+			//l.setAttendanceStatus(arr[i]);
+			String status = arr[i];
+			System.out.println(status);
+			
+			result += lService.insertAttStatus(status);
+		}
 		
+		if(result == l.getAttendanceStatus().length()) {
+			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&lno=1";
+		} else { // 실패
+			model.addAttribute("errorMsg", "강의 생성 실패");
+			return "common/errorPage";
+		}
+		
+	
 	}
 	
 	

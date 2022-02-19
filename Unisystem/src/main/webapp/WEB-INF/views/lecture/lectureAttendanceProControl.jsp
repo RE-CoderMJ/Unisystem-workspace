@@ -158,21 +158,22 @@
 											</div>
 											<div class="form-group">
 												<label for="attendanceDateB">강의일</label>
-												<input type="date" id="attendanceDateB" name="attendanceDateB" min="${ classInfo.classYear }-01-01" max="${ classInfo.classYear }-12-31" required class="form-control"/>
+												<input type="date" id="attendanceDateA" name="attendanceDateA" min="${ classInfo.classYear }-01-01" max="${ classInfo.classYear }-12-31" required class="form-control"/>
 											</div>
 											<div id="modalForm_studNo">
+											
 											</div>				
 											<div id="modalForm_korName">
+											
 											</div>
 										</div>
 										<div class="modal-footer">					
 											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 											<input type="submit" class="btn btn-success" id="submit">
-										</div>
-										
-										
+										</div>						
 			                        	<input type="hidden" id="classCode" name="classCode" value="${ classInfo.classCode }" />
 			                        	<input type="hidden" id="classNo" name="classNo" value="${ classInfo.classNo }" />
+			                        	<input type="hidden" id="userNo" name="userNo" value="${ loginUser.userNo }" />
 									</form>
 								</div>
 							</div>
@@ -201,9 +202,7 @@
 						</c:forEach>
 						
                     </table>
-
-	                <input type="hidden" id="classCode" name="classCode" value="${ classInfo.classCode }" />
-	                
+	          
                     <div class="container">
                         <ul class="pagination justify-content-center">
                         
@@ -232,10 +231,11 @@
                         </ul>
                      </div>
                      
-                     <script>
-                     	
+                     <script>                                    
                      	$(function(){
                      		selectAttStuList();
+                     		
+                     		
                      	})
                      	
                      		function selectAttStuList(){
@@ -248,25 +248,18 @@
                      			success:function(stuList){
                      				
                      				let valueA="";
-                     				let valueB="";
-                    				for(let i in stuList){
-                                    	valueA += "<input type='hidden' class='studNo" + [i] + "' name='studNo' value=" + stuList[i].studNo + " />";                                
-                    					console.log(stuList[i].studNo);
+                     				
+                    				for(i=0; i<stuList.length; i++){ 
+                                   		valueA += "<input type='hidden' class='studNo" + [i] + "' name='studsNo[" + i + "].studNo' + value='" + stuList[i].studNo + "' />";
+                   					
                     				}                   		
-                    				for(let i in stuList){
-                    					valueB += "<input type='hidden' class='korName" + [i] + "' name='korName' value='" + stuList[i].korName + "'/>";
-                    				}
-                    				                  
                     				$("#modalForm_studNo").html(valueA);
-                    				$("#modalForm_korName").html(valueB);
+                    				
                      			}, error:function(){
                      				console.log("해당 수강중인 학생의 리스트 조회용 ajax 통신 실패");
                      			}
                      		
-                     		})
-                     		
-                     		
-                     		
+                     		})	
                      	}
                      	
                      	$(document).ready(function(){	
