@@ -105,9 +105,9 @@
 	<!-- 스터디룸 예약 취소 -->
 	<update id="cancelStudy">
 		UPDATE 
-           RESERVED
-       SET RSVD_STATUS = 2 
-     WHERE RSVD_NO = #{rsvdNo}
+	           RESERVED
+	       SET RSVD_STATUS = 2 
+	     WHERE RSVD_NO = #{rsvdNo}
 	</update>
 	
 	<select id="ableTime" resultMap="facilityResult">

@@ -37,5 +37,8 @@ public class FacilityDao {
 		return sqlSession.insert("facilityMapper.insertStudy", fa);
 	}
 	
+	public int cancelStudy(SqlSessionTemplate sqlSession, int rsvdNo) {
+		return sqlSession.update("facilityMapper.cancelStudy", rsvdNo);
+	}
 	
 }

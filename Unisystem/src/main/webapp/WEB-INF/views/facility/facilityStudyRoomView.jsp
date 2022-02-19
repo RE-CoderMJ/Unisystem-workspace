@@ -138,7 +138,7 @@
 					<div id="map">
 						<img src="resources/images/studyRoom.png">
 					</div>
-		 			<form action="insert.sr">
+		 			<form id="studyForm" action="insert.sr">
 					<div id="rsvdInfo">			
 						<div class="blueLabel"></div>	
 						<table class="table table-bordered">
@@ -177,7 +177,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>
+								<td style="">
 									<input type="hidden" name="rsvdEnd">
 									<input id="1" type="radio" name="time" value="1"><label for="1">&nbsp;1시간</label>
 									&nbsp;&nbsp;
@@ -371,9 +371,9 @@
 				}else{
 					$("#2").attr("disabled", false);
 				}
+				
 			})
-			
-			
+				
 			// 라디오 버튼으로 스터디룸 사용 시간을 체크했을 때 끝날 시간을 계산해서 hidden rsvdEnd에 담음
 			$("input[name=time]").click(function(){
 				let startTime = $("#useTime").val();
@@ -382,20 +382,29 @@
 				
 			})
 			
-			
-			
 		})
-		// 라디오 버튼으로 사용 시간을 체크하지 않으면 리턴
-		function checkRadio(){
-			let checkTime = $("input[name=time]:checked").val();
-			
-			if(checkTime == undefined){
-				alert("사용할 시간을 선택해 주세요!");
-				return false;
-			}
-		}
-			
 		
+		
+		// 라디오 버튼으로 사용 시간을 체크하지 않으면 리턴 && 예약된 상태라면 예약 취소되도록 설정
+		function checkRadio(){
+				let studyForm = document.getElementById('studyForm');
+				let checkTime = $("input[name=time]:checked").val();
+				let status = $(".submitBtn>p").text();
+				console.log(status);
+				
+				if(status == "예약 취소"){
+					studyForm.action = "cancel.sr";
+					
+				}else if(checkTime == undefined){
+					if($("input[name=rsvdNo]").val() == 0){
+						alert("사용할 시간을 선택해 주세요!");
+						return false;
+					}
+				}
+				
+				// 이미 예약되어 있는 시간
+			}
+				
 		
 		// 사이드바 길이 조절
 		function sidebar(){
@@ -408,7 +417,6 @@
 					$(".wrap_sidebar").css('height', 270);
 					document.getElementById("content").style.marginBottom = "280px";
 				}
-
 			}
 		
 		
@@ -451,16 +459,22 @@
 									startMore = Number(data[i].rsvdStart) + 1;
 										if(startMore < 10){
 											startMore = "0" + startMore;
-											
 										}
 									
 									cells = space + startMore;
 									// 예약자 본인의 좌석은 노란색으로 표시됨	
 									$("input[value="+cells+"]").closest('td').css("background", "#fc6");
-									
-									$(".submitBtn>p").text("퇴 실");
 								 }
-										
+							 	
+								$(".submitBtn>p").text("예약 취소");
+									
+							 	
+							 	// 내가 예약한 시간과 현재 시간이 일치하면 취소 불가로 이름이 바뀜
+							 	let hours = new Date().getHours()
+							 	if(hours > start){
+							 		$(".submitBtn>p").text("내일 예약 가능");
+							 	}
+							 	
 						 }else{
 							 // 다른 사용자의 예약 내역 
 							 $("input[value="+cells+"]").closest('td').css("background", "rgb(235, 235, 235)"); 
@@ -519,8 +533,7 @@
 						  }else{
 							  // PM
 							  options += "<option value="+t+">" + t + ":00 PM </option>";
-						  }
-							  
+						  }  
 					  }
 				  }
 				  
@@ -533,6 +546,7 @@
 			})
 			
 		}
+			
 	</script>
 
 </body>

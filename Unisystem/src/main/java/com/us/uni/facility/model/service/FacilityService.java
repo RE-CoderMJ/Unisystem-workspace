@@ -12,9 +12,9 @@ public interface FacilityService {
 	int cancelReading(Facility fa);
 
 	// 2. 스터디룸 예약
-	int insertStudy();
+	int insertStudy(Facility fa);
 	ArrayList<Facility> reservedStudy();
 	// 스터디룸별 예약 가능한 시간 조회
 	ArrayList<Facility> ableTime(String room);
-	int insertStudy(Facility fa);
+	int cancelStudy(int rsvdNo);
 }

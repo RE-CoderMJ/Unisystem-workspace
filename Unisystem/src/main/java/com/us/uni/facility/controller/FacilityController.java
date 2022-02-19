@@ -121,5 +121,22 @@ public class FacilityController {
 			
 			return "redirect:rsvdStudy";
 	}
+	
+	@RequestMapping("cancel.sr")
+	public String cancelStudy(int rsvdNo, HttpSession session) {
+	
+		int result = fService.cancelStudy(rsvdNo);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "예약 취소되었습니다.");
+			
+		} else{
+		
+			session.setAttribute("alertMsg", "예약 취소를 실패했습니다.");
+		}
+		
+		return "redirect:rsvdStudy";
+	}
 
 }
