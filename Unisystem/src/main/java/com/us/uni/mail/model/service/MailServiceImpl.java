@@ -253,6 +253,12 @@ public class MailServiceImpl implements MailService {
 		int result = mDao.moveToTrash(sqlSession, mNo, tNo);
 		return result;
 	}
+	
+	@Override
+	public int moveToTrashI(HttpSession session, MailTo mt) {
+		return mDao.moveToTrashI(sqlSession, session, mt);
+	}
+
 	@Override
 	public int selectTrashListCount(int userNo) {
 		int result = mDao.selectTrashListCount(sqlSession, userNo);
@@ -291,7 +297,17 @@ public class MailServiceImpl implements MailService {
 		return mDao.changeImportanceT(sqlSession, mNo, status, type);
 	}
 
+	@Override
+	public int selectImportantListCount(int userNo) {
+		int result = mDao.selectImportantListCount(sqlSession, userNo);
+		return result;
+	}
 
+	@Override
+	public ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectImportantList(sqlSession, userNo, pi);
+		return list;
+	}
 	
 
 

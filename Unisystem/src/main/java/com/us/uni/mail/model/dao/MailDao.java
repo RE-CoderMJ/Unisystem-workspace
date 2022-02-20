@@ -212,6 +212,17 @@ public class MailDao {
 			return sqlSession.update("mailMapper.moveToTrash", mNo);			
 		}
 	}
+	
+	public int moveToTrashI(SqlSessionTemplate sqlSession, HttpSession session, MailTo mt) {
+		
+		int mNo = mt.getMailNo();
+		
+		if(mt.getType().equals("f")) {
+			return sqlSession.update("mailMapper.moveToTrashF", mNo);
+		}else {
+			return sqlSession.delete("mailMapper.moveToTrash", mNo);
+		}
+	}
 
 	public int selectTrashListCount(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("mailMapper.selectTrashListCount", userNo);
@@ -309,5 +320,18 @@ public class MailDao {
 		}
 	}
 
+	public int selectImportantListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectImportantListCount", userNo);
+	}
 
+	public ArrayList<MailTo> selectImportantList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectImportantList", userNo, rowBounds);
+	}
+
+	
 }

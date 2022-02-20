@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 <link href="resources/css/webMail/mailboxes.css" rel="stylesheet">
 <link href="resources/css/webMail/detailView.css" rel="stylesheet">
+<style>
+	.fa-star{
+		cursor:pointer!important;
+	}
+</style>
 </head>
 <body>
 	<jsp:include page="../common/links.jsp"/>
@@ -32,9 +37,10 @@
                 		<i class="fa fa-star fa-xs" aria-hidden="true"></i>
                 	</c:when>
                 	<c:otherwise>
-                		<i class='fa fa-star fa-xs' style='color:lightgray;' aria-hidden='true'></i>
+                		<i class='fa fa-star fa-xs unimportant' aria-hidden='true'></i>
                 	</c:otherwise>
                 </c:choose>
+                &nbsp;
                 	<span id="title">${mf.title}</span>
                 </div>
                 <div id="info-area">
@@ -81,7 +87,6 @@
 	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
-			console.log($len);
 			$("#webMail-sidebar").css('height', $len + 22);
 		})
 	</script>
@@ -103,6 +108,39 @@
 		$(document).on("click", "#deleteCompletedClosebtn", function(){
 			history.back();
 		})
+	</script>
+	
+	<!-- 중요처리 -->
+	<script>
+		$(document).on("click", ".fa-star", function(){
+			
+			let status;
+			if($(this).hasClass("unimportant")){
+				$(this).removeClass("unimportant");
+				status = 'Y';
+			}else{
+				$(this).addClass("unimportant");
+				status = 'N';
+			}
+			
+			changeImportance(${mf.mailNo}, status);
+	
+		})
+		
+		function changeImportance(mNo,status){
+			$.ajax({
+				url:"webMail.changeImportance",
+				data:{mNo:mNo, status:status, type:2},
+				success:function(result){
+					if(result > 0){
+						location.reload();					
+					}
+				},error:function(){
+					console.log("중요처리 ajax통신 실패");
+				}
+			})
+		}
+		
 	</script>
 	
 </body>

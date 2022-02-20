@@ -196,11 +196,6 @@ public class WebMailController {
 		return map;
 	}
 	
-	@RequestMapping("webMail.important")
-	public String selectImportantMails(){
-		return "webMail/important";
-	}
-	
 	/**
 	 * 첨부파일 메일함 페이지 컨트롤러
 	 * @return
@@ -533,6 +528,17 @@ public class WebMailController {
 	}
 	
 	/**
+	 * 중요메일함 휴지통으로 이동 컨트롤러
+	 * @param mt
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.moveToTrashI", produces="application/json; charset=utf-8")
+	public int moveToTrashI(HttpSession session, MailTo mt) {
+		return mService.moveToTrashI(session, mt);
+	}
+	
+	/**
 	 * 메일 복구 컨트롤러
 	 * @param mNo
 	 * @param type
@@ -577,6 +583,37 @@ public class WebMailController {
 	@RequestMapping(value="webMail.changeReadStatus", produces="application/json; charset=UTF-8")
 	public int changeReadStatus(int status, int mNo) {
 		return mService.changeReadStatus(status, mNo);
+	}
+	
+	/**
+	 * 중요메일함 페이지 컨트롤러
+	 * @return
+	 */
+	@RequestMapping("webMail.important")
+	public String selectImportantMails(){
+		return "webMail/important";
+	}
+	
+	/**
+	 * 중요메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectImportantList", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectImportantList(int currentPage, int userNo) {
+			
+			Map<String, Object> map = new HashMap();
+			
+			int listCount = mService.selectImportantListCount(userNo);
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+			ArrayList<MailTo> list = mService.selectImportantList(userNo, pi);
+			
+			map.put("pi", pi);
+			map.put("list", list);
+			return map;
 	}
 	
 	/**

@@ -66,6 +66,9 @@ public interface MailService {
 	
 	// 메일 삭제용(휴지통) 서비스
 	int moveToTrash(int mNo, int tNo);
+	// 메일 삭제용(중요메일함) 서비스
+	int moveToTrashI(HttpSession session, MailTo mt);
+	
 	// 휴지통 리스트 서비스
 	int selectTrashListCount(int userNo);
 	ArrayList<MailTo> selectTrashList(int userNo, PageInfo pi);
@@ -79,13 +82,13 @@ public interface MailService {
 	// 휴지통 비우기 서비스
 	int emptyTrash(HttpSession session, int userNo);
 
-	// 중요메일
+	// 중요처리
 	int changeImportance(String status, int mNo, int type);
 	int changeImportanceT(String status, int mNo, String type);
 	
-	// 전달
-	
-	// 답장
+	// 중요 메일함 리스트 페이지 서비스
+	int selectImportantListCount(int userNo);
+	ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi);
 	
 	// 주소록
 }

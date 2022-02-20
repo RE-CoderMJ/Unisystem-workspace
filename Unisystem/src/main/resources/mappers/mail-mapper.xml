@@ -690,6 +690,110 @@
 		 where mail_to_no = #{mNo}
 	</update>
 	
+	<select id="selectImportantListCount" resultType="_int">
+		select count(*) 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user
+		             , important
+		             , title
+		             , to_me
+                     , send_date
+		             , null as read_date
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where important = 'Y'
+		           and from_user = #{userNo}
+		           and status = 'N'
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+                     , null as to_me
+		             , send_date
+		             , read_date
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.important = 'Y'
+		           and t.status = 'N'
+		       )
+	</select>
+	
+	<select id="selectImportantList" resultMap="toResult">
+		select * 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user "to_add"
+		             , important
+		             , title
+		             , to_me
+                     , send_date
+		             , null as read_date
+		             , save_status
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where important = 'Y'
+		           and from_user = #{userNo}
+		            and status = 'N'
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+                     , 'n' as "to_me"
+		             , send_date
+		             , read_date
+		             , null as "save_status"
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.important = 'Y'
+		           and t.status = 'N'
+		       )
+		 order 
+		    by mail_from_no desc
+	</select>
+	
 	<update id="moveToTrash">
 		update
 			   mail_to
