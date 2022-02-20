@@ -290,6 +290,7 @@
                     , stud_no
                     , kor_name
                     , total_semester
+                    , attendance_status
                 from attendance  
                 join student using(stud_no)
                 join users on (stud_no = user_no)
@@ -344,9 +345,16 @@
 	<insert id="insertAttStatus">
 		update
 		       attendance
-		   set attendance_status = #{status}
-		 where attendance_date = '20220107'
+		   set attendance_status = 출결상태
+		 where attendance_date = 출결일
+		   and class_no = 강의번호
+		   and stud_no = 학번
 	</insert>
+	
+	
+	
+	
+	
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->
 	<select id="selectHomeworkListCount" resultType="_int">

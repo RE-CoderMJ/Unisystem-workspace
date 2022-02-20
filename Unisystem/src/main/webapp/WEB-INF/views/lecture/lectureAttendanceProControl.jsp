@@ -250,7 +250,7 @@
                      				let valueA="";
                      				
                     				for(i=0; i<stuList.length; i++){ 
-                                   		valueA += "<input type='hidden' class='studNo" + [i] + "' name='studsNo[" + i + "].studNo' + value='" + stuList[i].studNo + "' />";
+                                   		valueA += "<input type='hidden' class='studNo" + [i] + "' name='studsNo[" + i + "].studNo' value='" + stuList[i].studNo + "' />";
                    					
                     				}                   		
                     				$("#modalForm_studNo").html(valueA);

@@ -196,50 +196,17 @@
 		                        </tr>
 	                        </thead>
 	                        
-	                        <form action="insertAttDetail.lec" method="post">
+	                        <!-- <form id="insertAttForm"> -->
 	                        
+                        	<c:forEach var="l" items="${ list }">
+                        	
+	                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
+	                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
+	                        	<input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ l.attendanceDateB }" />
+		                       		                        
+                        	</c:forEach> 
+                        	                
 		                        <tbody>
-		                        	<c:forEach var="l" items="${ list }">
-		                        	
-		                        	<input type="hidden" id="userNo" name="userNo" value="${ loginUser.userNo }" />
-		                        	<input type="hidden" id="studNo" name="studNo" value="${ l.studNo }" />
-		                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
-		                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
-		                        	<input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ l.attendanceDateB }" />
-		                        	<input type="hidden" id="classTitle" name="classTitle" value="${ l.classTitle }" />
-				                       
-				                        <tr>
-				                            <td>${ l.rownum }</td>
-				                            <td>
-				                            	<c:if test="${ l.totalSemester eq 0 and l.totalSemester < 1}">
-				                            		1학년
-				                            	</c:if>
-				                            	<c:if test="${ l.totalSemester eq 2 and l.totalSemester < 3}">
-				                            		2학년
-				                            	</c:if>
-				                            	<c:if test="${ l.totalSemester eq 3 and l.totalSemester < 4}">
-				                            		3학년
-				                            	</c:if>
-				                            	<c:if test="${ l.totalSemester ge 4}">
-				                            		4학년
-				                            	</c:if>		                            			                            			                            	
-				                            </td>
-				                            <td>${ l.studNo }</td>
-				                            <td>${ l.korName }</td>
-				                            <td class="status" name="attendanceStatus">											
-			                            	<!-- <input id="statusInput" type="text" name="attStatusList[]" value="" />	 -->
-			                            	<c:set var="i" value="-1" scope="request">		 
-			                            	</c:set>           	
-			                            		<input id="statusInput" type="text" name="attStatusList[${i+1}].attendanceStatus" value=" "/>	              
-				                           	</td>
-				                            <td>
-				                                <button class="attend" id="statusBtnA" type="button" name="attend" onclick="insertStuAtt(1);">출석</button>
-				                                <button class="absence" id="statusBtnB" type="button" name="absence" onclick="insertStuAtt(2);">결석</button>
-				                                <button class="tardiness" id="statusBtnC" type="button" name="tardiness" onclick="insertStuAtt(3);">지각</button>
-				                            </td>
-				                        </tr>
-				                        
-		                        	</c:forEach>                 
 			                        
 		                        </tbody>
 	
@@ -249,53 +216,139 @@
 
 			                    <div id="cancle_submit_button">
 			                        <button>초기화</button>
-			                        <button type="submit" id="submitBtn" onclick="return checkAlltd();">제출</button>
+			                        <button type="button" id="submitBtn">제출</button>
 			                    </div>
 
-	                        </form>
-
+	                        <!-- </form> -->
 
     <script>      
     	$(function(){
     		
 	        $(document).on("click", "#statusBtnA", function btnFunctionA(){ // 출석
-	        	$(this).parent().siblings(".status").children("#statusInput").val("출석");
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "출석");
 	        })
 	        
 	        $(document).on("click", "#statusBtnB", function btnFunctionB(){ // 결석
-	        	$(this).parent().siblings(".status").children("#statusInput").val("결석");
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "결석");
 	        })
 	        
 	        $(document).on("click", "#statusBtnC", function btnFunctionC(){ // 지각
-	        	$(this).parent().siblings(".status").children("#statusInput").val("지각");
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "지각");
 	        })
-
-	    	//insertStuAtt();
+	        
+	        
+	        inputAttList();
+	        
     	});	
-    		
-    	/*
-    		function insertStuAtt(num){
-    			
-    			
-    			
-    			$.ajax({
-    				url:"",
-    				data:{},
-    				success:function(){
-    					
-    				}, error:function(){
-    					
-    				}
-    			})
-    		}
-    		
-   */ 	
+    	
+	    	//$(document).on("click", "#submitBtn", function(){
+	    		//console.log($("input[name='ggg']").val());
+	    		//console.log($("input[name='attStatusList']").val());
+	   		//})
+    	
+	 		function inputAttList(){
+	     		
+	     		var classCode = $("#classCode").val();
+	     		var attendanceDateB = $("#attendanceDateB").val();
+	     		
+	     		$.ajax({
+	     			url:"selectStuList.lec",
+	     			data:{
+	     				  classCode:classCode,
+	     				  attendanceDateB:attendanceDateB
+	     			},
+	     			success:function(list){
+	     				
+	     				let value="";
+	     				let totalSemester="";
+	     				let status="";
+	     				
+	    				for(let i in list){
+	    					
+	    					if(list[i].totalSemester == 0 || list[i].totalSemester == 1){
+	    						totalSemester = "1학년";
+	    					} else if(list[i].totalSemester == 2 || list[i].totalSemester == 3){
+	    						totalSemester = "2학년";
+	    					} else if(list[i].totalSemester == 3 || list[i].totalSemester == 4){
+	    						totalSemester = "3학년";
+	    					} else {
+	    						totalSemester = "4학년";
+	    					}
+	    					
+	    					if(list[i].attendanceStatus == null || list[i].attendanceStatus == 'undefined'){
+	    						status = "";
+	    					} else{
+	    						status = list[i].attendanceStatus;
+	    					}
+	    					
+	                   		value += "<input type='hidden' class='studNo' name='studsNo' value='" + list[i].studNo + "' />"
+	                   			   + "<tr>"
+			                       +    "<td>" + list[i].rownum + "</td>"
+			                       +    "<td>" + totalSemester + "</td>"
+			                       +    "<td>" + list[i].studNo + "</td>"
+			                       +    "<td>" + list[i].korName + "</td>"
+			                       +    "<td class='status'>"											          	
+			                       + 		"<input type='text' class='statusInput' name='attendanceStatus' value='" + status + "' />"          
+			                       +    "</td>"
+			                       +    "<td>"
+			                       +       "<button class='attend' id='statusBtnA' type='button' name='attend'>출석</button>"
+			                       +       "<button class='absence' id='statusBtnB' type='button' name='absence'>결석</button>"
+			                       +       "<button class='tardiness' id='statusBtnC' type='button' name='tardiness'>지각</button>"
+			                       +     "</td>"
+			                       +  "</tr>";
+	                   			
+	                   			//"<input type='text' name='attStatusList[" + i + "].attendanceStatus' + value='' />";	   					
+	    				}                   		
+	    				$("#attendance_table>tbody").html(value);
+	    				
+	     			}, error:function(){
+	     				console.log("해당 수강중인 학생의 리스트 조회용 ajax 통신 실패");
+	     			}
+	     		
+	     		})	
+	     	}
+	    	
+	 		$(document).on("click", "#submitBtn", function(){
+	    		
+	    		let status = $("input[name=attendanceStatus]").val();
+	    		let studNo = $("input[name=studsNo]").val();
+	     		let classCode = $("#classCode").val();
+	     		let attendanceDateB = $("#attendanceDateB").val();
+	    		
+	     		console.log(status);
+	    		console.log(studNo);
+	    		
+	    		
+	    		$.ajax({
+	    			
+	    			url:"insertAttDetail.lec",
+	    			data:{
+	    				status:status,
+	    				studNo:studNo,
+	    				classCode:classCode,
+	    				attendanceDateB:attendanceDateB
+	    			},
+	    			success:function(data){
+	    				alert("success");
+	    				console.log(data);
+	    			}, error:function(){
+	    				console.log("ajax 데이터 전송 실패")
+	    			}
+	    		})
+	    	
+	    })
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 	    	// 모든 학생의 출결값이 작성되어있지 않을경우 alert창 알림, 아닐경우 제출 버튼의 disabled 속성 제거하는 함수
 	    	function checkAlltd(){
 	    		
-	    		const status = $(".status").text();
+	    		const status = $(".statusInput").val();
 
-	    		if(status == " "){
+	    		if(status.length == 0){
 	    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
 	    			
 	    			return false;
@@ -303,17 +356,6 @@
 	    		
 	    	}
 	    	
-   
-    	/*
-    	function checkAlltd(){ 
-    		if($(".status").text('')){
-    			console.log("왜안돼!!");
-    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
-    		} else{
-    			$("#submitBtn").attr("disabled", false);
-    		}
-    	}
-    	*/
     </script>
                 </div>
 

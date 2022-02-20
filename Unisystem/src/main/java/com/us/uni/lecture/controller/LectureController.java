@@ -220,24 +220,6 @@ public class LectureController {
 		return new Gson().toJson(list);
 	}
 	
-	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
-	@RequestMapping("insertAtt.lec")
-	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
-		
-		ArrayList<Lecture> studNoList = l.getStudsNo();						
-		//l.getStudsNo().get(0).getStudNo();
-		
-		int result = lService.insertAtt(l, studNoList);
-		
-		if(result == l.getStudsNo().size()) { // 성공
-			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
-		} else { // 실패
-			model.addAttribute("errorMsg", "강의 생성 실패");
-			return "common/errorPage";
-		}
-		
-	}
 	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
@@ -253,26 +235,69 @@ public class LectureController {
 		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
 		return mv;
 	}
-		
-	@RequestMapping("insertAttDetail.lec")
-	public String insertAttStatus(Lecture l, HttpSession session, Model model) {
-		
-		System.out.println(l);
 	
-		ArrayList<Lecture> attStatusList = l.getAttStatusList();
-
-		String[] arr = attStatusList.get(0).getAttendanceStatus().split(",");
+	/* 교수 - 출결관리상세(출결등록창)에서 학생정보를 ajax로 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="selectStuList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectStuList(int classCode, String attendanceDateB) {
 		
+		Lecture l = new Lecture();
+		l.setClassCode(classCode);
+		l.setAttendanceDateB(attendanceDateB);
+		
+		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		return new Gson().toJson(list);
+	}
+		
+	
+		
+	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
+	@RequestMapping("insertAtt.lec")
+	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
+			
+		ArrayList<Lecture> studNoList = l.getStudsNo();						
+		//l.getStudsNo().get(0).getStudNo();
+		
+		int result = lService.insertAtt(l, studNoList);
+		
+		if(result == l.getStudsNo().size()) { // 성공
+			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
+		} else { // 실패
+			model.addAttribute("errorMsg", "강의 생성 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("insertAttDetail.lec")
+	public void insertAttStatus(String[] status, String[] studNo, int classCode, String attendanceDateB, HttpSession session, Model model) {
+		
+		for(int i=0; i<status.length; i++) {
+			System.out.println(status[i]);
+		}
+		for(int i=0; i<studNo.length; i++) {
+			System.out.println(studNo[i]);
+		}
+
+
+		//System.out.println(attStatusList);
+		
+		//ArrayList<Lecture> attStatusList = l.getAttStatusList();
+
+		//String[] statusArr = attStatusList.get(0).getAttendanceStatus().split(",");
+		//String[] attDateArr = l.getAttendanceDateB().split(",");
+
+		/*
 		int result = 0;
 				
-		for(int i=0; i<arr.length; i++) {
+		for(int i=0; i<statusArr.length; i++) {
 			//l.setAttendanceStatus(arr[i]);
-			String status = arr[i];
-			System.out.println(status);
+			String status = statusArr[i];
+
 			
 			result += lService.insertAttStatus(status);
 		}
-		
 		if(result == l.getAttendanceStatus().length()) {
 			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
 			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&lno=1";
@@ -280,7 +305,7 @@ public class LectureController {
 			model.addAttribute("errorMsg", "강의 생성 실패");
 			return "common/errorPage";
 		}
-		
+		*/
 	
 	}
 	
