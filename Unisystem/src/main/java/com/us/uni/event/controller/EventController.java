@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.us.uni.board.model.vo.Board;
 import com.us.uni.event.model.service.EventService;
 import com.us.uni.event.model.vo.Event;
+import com.us.uni.todo.model.vo.Todo;
 
 
 @Controller
@@ -48,32 +50,64 @@ public class EventController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
-	public Map<Object,Object> InsertSchedule(Event ev, HttpSession session, Model model){
+	public int InsertSchedule(Event ev, HttpSession session, Model model){
 		 
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		//System.out.println(map);
 		
-		
-		eService.insertSchedule(ev);
-		
+		int result = eService.insertSchedule(ev);
 		 
-		return map;
+		return result;		
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value="getevent",method = RequestMethod.POST, produces="application/json; charset=utf-8")
-	public String getevent(int euserNo, ModelAndView mv) {
+	public Map<String,Object> getevent(int euserNo, int tuserNo, ModelAndView mv) {
 		
-		ArrayList<Event> list = eService.userSelectList(euserNo);
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		for(int i=0;i<=list.size();i++) {
-			System.out.println(i);
-			
-		}
-		return new Gson().toJson(list);
+		ArrayList<Event> eventList = eService.userSelectList(euserNo);
+		ArrayList<Todo> todoList = eService.getTodoCal(tuserNo);
+		
+		map.put("eventList",eventList);
+		map.put("todoList",todoList);
+		
+		//System.out.println(eventList);
+		//System.out.println(todoList);
+		
+		return map;
+	}
+ 
+	@ResponseBody
+	@RequestMapping(value="deleteSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	public int deleteSchedule(int eventNo) {
+		
+		System.out.println(eventNo);
+		
+		int result = eService.deleteSchedule(eventNo);
+		 
+		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="updateSchedule",method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	public int updateSchedule(Event ev) {
+		
+		System.out.println(ev);
+		
+		int result = eService.updateSchedule(ev);
+		 
+		return result;
+	}
+	
+
+	@RequestMapping("todoList")
+	public String todoList() {
+		
+		return "schedule/todoList";
+		
+	}
 	
 	
 }

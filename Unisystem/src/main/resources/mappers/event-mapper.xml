@@ -68,5 +68,21 @@
 		where delete_yn ='N'
 		and user_no =#{euserNo}
 	</select>
-	
+
+	<delete id="deleteSchedule">
+	DELETE FROM event
+	where event_no =#{eventNo}
+	</delete>
+
+	<update id="updateEvent">
+	update
+		event
+	set 
+	event_title =#{eventTitle},
+	start_date=#{startDate},
+	end_date=#{endDate}
+	where event_no =#{eventNo} 
+	</update>
+
+
 </mapper>

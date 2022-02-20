@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="todoMapper">
+	
+	<resultMap id="todoResult" type="Todo">
+		<result column="TODO_NO" property="todoNo" />
+		<result column="USER_NO" property="tuserNo" />
+		<result column="TODO_CONTENT" property="todoContent" />
+		<result column="TODO_DEL" property="todoDel" />
+		<result column="TODO_DATE" property="todoDate" />
+		<result column="TODO_CHECK" property="todoCheck" />
+	</resultMap>
+	
+	
+	<select id="todoSelect" resultMap="todoResult">
+	select 
+	 todo_no
+	 ,user_no
+	 ,todo_content
+	 ,todo_del
+	 ,TO_CHAR(to_DATE(TODO_DATE,'RRRR-MM-DD'),'RRRR-MM-DD') AS TODO_DATE
+	 ,todo_check
+	 from TODO
+	 where user_no = #{tuserNo}
+	 and todo_del = 'N'
+	</select>
+	
+	
+	<insert id="todoInsert">
+	insert 
+		into TODO
+		(
+		todo_no,
+		user_no,
+		todo_content
+		)
+		values
+		(
+		SEQ_TODONO.NEXTVAL,
+		#{tuserNo},
+		#{todoContent}
+		)
+	</insert>
+	
+	<update id="todoDelete">
+	update
+		  TODO
+		   set todo_del = 'Y'
+		 where todo_no = #{todoNo}
+		 and user_no = #{tuserNo}
+	
+	</update>
+	
+	<update id="todoCheckY">
+	 
+	update
+		  TODO
+		   set TODO_CHECK = 'Y'
+		 where todo_no = #{todoNo}
+		 and user_no = #{tuserNo}
+	 
+	</update>
+	
+	<update id="todoCheckN">
+	 
+	update
+		  TODO
+		   set TODO_CHECK = 'N'
+		 where todo_no = #{todoNo}
+		 and user_no = #{tuserNo}
+	 
+	</update>
+	
+</mapper>
