@@ -48,34 +48,12 @@
                 <table class="table table-hover" id="list">
                     <tbody>
                     	<tr style="background:rgb(232, 232, 232);">
-                    		<th><input type="checkbox" class="checkbox"></th>
+                    		<th><input type="checkbox" id="checkAll"></th>
                     		<th>No.</th>
                     		<th>이름</th>
                     		<th>이메일 주소</th>
                     		<th>연락처</th>
                     	</tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>1</td>
-                            <td>김땡땡 교수님</td> 
-                            <td>39201939@unisystem.com</td>
-                            <td>010-1234-5678</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>1</td>
-                            <td>김땡땡 교수님</td> 
-                            <td>39201939@unisystem.com</td>
-                            <td>010-1234-5678</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>1</td>
-                            <td>김땡땡 교수님</td> 
-                            <td>39201939@unisystem.com</td>
-                            <td>010-1234-5678</td>
-                        </tr>
-                        
                     </tbody>
                 </table>
                 
@@ -93,7 +71,7 @@
 	
 	<script>
 		$(function(){
-			//selectContactList(1);
+			selectContactList(1);
 		});
 		
 		function selectContactList(cPageNo){
@@ -108,7 +86,14 @@
 						value = "<tr><td style='text-align:center;'>주소록이 비어있습니다.</td></tr>"
 					}else{
 						
-						
+						for(let i in result.list){
+							value += "<tr><td><input type='checkbox' class='checkbox'></td>"
+								   + "<td>" + result.list[i].contactNo + "</td>"
+	                        	   + "<td>" + result.list[i].name + "</td>"
+	                        	   + "<td>" + result.list[i].email + "</td>"
+	                        	   + "<td>" + result.list[i].phone + "</td>"
+	                        	   + "</tr>";
+						}
 						
 						let piValue = "";
 						
@@ -143,7 +128,7 @@
 						$("#cPage").val(result.pi.currentPage);
 					}
 					
-					$("#list").html(value);
+					$("#list").append(value);
 					
 				},error:function(){
 					console.log("주소록 목록 조회용 ajax 통신 실패");

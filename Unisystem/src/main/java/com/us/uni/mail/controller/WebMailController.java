@@ -417,7 +417,7 @@ public class WebMailController {
 		
 		int listCount = mService.selectDraftListCount(userNo);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<MailFrom> list = mService.selectDraftList(userNo, pi);
 		
 		map.put("pi", pi);
@@ -508,7 +508,7 @@ public class WebMailController {
 		
 		int listCount = mService.selectTrashListCount(userNo);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<MailTo> list = mService.selectTrashList(userNo, pi);
 		
 		map.put("pi", pi);
@@ -609,7 +609,7 @@ public class WebMailController {
 			
 			int listCount = mService.selectImportantListCount(userNo);
 			
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 			ArrayList<MailTo> list = mService.selectImportantList(userNo, pi);
 			
 			map.put("pi", pi);
@@ -646,10 +646,36 @@ public class WebMailController {
 	 * @return
 	 */
 	@RequestMapping("webMail.contact")
-	public String selectContactList(){
+	public String contactPage(){
 		return "webMail/contact";
 	}
 	
+	/**
+	 * 주소록 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectContactList", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectContactList(int currentPage, int userNo) {
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectContactListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailTo> list = mService.selectContactList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		return map;
+	}
+	
+	/**
+	 * 주소록 추가 컨트롤러
+	 * @param c
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="webMail.addContact", produces="application/json; charset=utf-8")
 	public int addContact(Contact c) {

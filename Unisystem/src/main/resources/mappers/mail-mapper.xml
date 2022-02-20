@@ -52,6 +52,14 @@
 		<result column="path" property="path" />
 	</resultMap>
 	
+	<resultMap type="Contact" id="conResult">
+		<result column="contact_no" property="contactNo" />
+		<result column="user_no" property="userNo" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+	</resultMap>
+	
 	<!-- 임시저장 -->
 	<insert id="saveDraft">
 		insert
@@ -987,4 +995,24 @@
 		  , #{phone}
 		  )
 	</insert>
+	
+	<select id="selectContactListCount" resultType="_int">
+		select
+		       count(*)
+		  from contact
+		 where user_no = #{userNo}
+	</select>
+	
+	<select id="selectContactList" resultMap="conResult">
+		select
+		       contact_no
+		     , user_no
+		     , name
+		     , email
+		     , phone
+		  from contact
+		 where user_no = #{userNo}
+		 order
+		    by contact_no desc
+	</select>
 </mapper>

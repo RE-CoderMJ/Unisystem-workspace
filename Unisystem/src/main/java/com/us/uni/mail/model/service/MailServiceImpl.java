@@ -315,6 +315,17 @@ public class MailServiceImpl implements MailService {
 		int result = mDao.addContact(sqlSession, c);
 		return result;
 	}
+
+	@Override
+	public int selectContactListCount(int userNo) {
+		return mDao.selectContactListCount(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<MailTo> selectContactList(int userNo, PageInfo pi) {
+		
+		return mDao.selectContactListCount(sqlSession, userNo, pi);
+	}
 	
 
 

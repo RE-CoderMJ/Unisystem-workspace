@@ -338,5 +338,18 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.addContact", c);
 	}
 
+	public int selectContactListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectContactListCount", userNo);
+	}
+
+	public ArrayList<MailTo> selectContactListCount(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectContactList", userNo, rowBounds);
+	}
+
 	
 }
