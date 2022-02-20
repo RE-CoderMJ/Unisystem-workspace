@@ -29,8 +29,8 @@
                 <div id="tools">
                     <div id="tools-left">
                         <button data-toggle="modal" data-target="#addContact"><span style="color:navy">+</span>&nbsp;추가</button>
-                        <button data-toggle="modal" data-target="#deleteContact"><span style="color:red">-</span>&nbsp;삭제</button>
-                        <button id="edit" data-toggle="modal" data-target="#editContact">수정</button>
+                        <button id="delete"><span style="color:red">-</span>&nbsp;삭제</button>
+                        <button id="edit">수정</button>
                         <button style="margin-left: -4px;">메일쓰기</button>
                     </div>
                     <div id="tools-right" align="right">
@@ -188,6 +188,8 @@
 			
 			if(count > 1){
 				alert("수정은 1개의 연락처만 선택이 가능합니다.");
+			}else if(count == 0){
+				alert("수정하실 연락처를 선택해주세요.");
 			}else{
 				let contactNo = $(".checkbox:checked").parent().siblings(".contact-number").text();
 				selectContact(contactNo);
@@ -214,6 +216,7 @@
 			
 		})
 		
+		// 주소록 수정
 		$(document).on("click", "#editContact-btn", function(){
 			
 			$.ajax({
@@ -234,6 +237,55 @@
 				}
 			});
 			
+		})
+		
+		
+		$(function(){
+			
+			let count = 0;
+			let checkedValue = [];
+			let value;
+			
+			// 주소록 삭제
+			$(document).on("click", "#delete", function(){
+				
+				
+				$(".checkbox:checked").each(function(){
+					count++;
+					value = $(".checkbox:checked").parent().siblings(".contact-number").text();
+					checkedValue.push(value);
+				});
+				
+				if(count == 0){
+					alert("삭제하실 연락처를 선택해주세요.");
+				}else{
+					$("#deleteContact").modal("show");
+					$("#contact-delete-confirm-btn").on("click", function(){
+						for(let i in checkedValue){
+							deleteContact(checkedValue[i]);
+						}
+					});
+				}
+				
+			})
+			
+			function deleteContact(contactNo){
+						
+				$.ajax({
+					url:"webMail.deleteContact",
+					data:{
+						contactNo:contactNo
+					},
+					success:function(result){
+						if(result>0){
+							selectContactList(1);
+						}
+					},error:function(){
+						
+					}
+				});
+				
+			}
 		})
 	</script>
 	

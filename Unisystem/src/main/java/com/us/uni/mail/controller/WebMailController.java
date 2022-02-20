@@ -705,10 +705,19 @@ public class WebMailController {
 	@ResponseBody
 	@RequestMapping(value="webMail.editContact", produces="application/json; charset=utf-8")
 	public int editContact(Contact c) {
-		System.out.println("zzz");
 		int result = mService.editContact(c);
-		System.out.println(c);
-		System.out.println(result);
+		return result;
+	}
+	
+	/**
+	 * 연락처 삭제 컨트롤러
+	 * @param contactNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.deleteContact", produces="application/json; charset=utf-8")
+	public int deleteContact(int contactNo) {
+		int result = mService.deleteContact(contactNo);
 		return result;
 	}
 	

@@ -102,4 +102,7 @@ public interface MailService {
 	Contact selectContact(int contactNo);
 	// 주소록 수정 컨트롤러
 	int editContact(Contact c);
+	
+	// 주소록 삭제 컨트롤러
+	int deleteContact(int contactNo);
 }

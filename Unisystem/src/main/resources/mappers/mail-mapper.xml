@@ -1035,4 +1035,10 @@
 		     , phone = #{phone}
 		 where contact_no = #{contactNo}
 	</update>
+	
+	<update id="deleteContact">
+		delete
+		       contact
+		 where contact_no = #{contactNo}
+	</update>
 </mapper>

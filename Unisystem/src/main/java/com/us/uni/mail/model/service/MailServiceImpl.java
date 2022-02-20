@@ -337,6 +337,12 @@ public class MailServiceImpl implements MailService {
 		int result = mDao.editContact(sqlSession, c);
 		return result;
 	}
+
+	@Override
+	public int deleteContact(int contactNo) {
+		int result = mDao.deleteContact(sqlSession, contactNo);
+		return result;
+	}
 	
 
 

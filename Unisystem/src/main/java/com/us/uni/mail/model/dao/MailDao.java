@@ -359,5 +359,8 @@ public class MailDao {
 		return sqlSession.update("mailMapper.editContact", c);
 	}
 
+	public int deleteContact(SqlSessionTemplate sqlSession, int contactNo) {
+		return sqlSession.delete("mailMapper.deleteContact", contactNo);
+	}
 	
 }
