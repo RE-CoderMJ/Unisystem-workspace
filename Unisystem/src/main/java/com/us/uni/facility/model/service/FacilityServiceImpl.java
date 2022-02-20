@@ -21,15 +21,7 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public int insertReading(Facility fa) {
 		
-		int result = fDao.insertReading(sqlSession, fa);
-		
-		return result;
-	}
-
-	@Override
-	public int insertStudy() {
-		
-		return 0;
+		return fDao.insertReading(sqlSession, fa);
 	}
 
 	@Override
@@ -43,5 +35,27 @@ public class FacilityServiceImpl implements FacilityService {
 		return fDao.cancelReading(sqlSession, fa);
 	}
 
+	@Override
+	public ArrayList<Facility> reservedStudy() {
+		return fDao.reservedStudy(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Facility> ableTime(String room) {
+		return fDao.ableTime(sqlSession, room);
+	}
+
+	@Override
+	public int insertStudy(Facility fa) {
+		return fDao.insertStudy(sqlSession, fa);
+	}
+
+	@Override
+	public int cancelStudy(int rsvdNo) {
+		return fDao.cancelStudy(sqlSession, rsvdNo);
+	}
+
+
+	
 	
 }

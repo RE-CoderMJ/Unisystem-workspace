@@ -124,11 +124,15 @@ public class LectureServiceImpl implements LectureService{
 
 	// 교수 - 출결관리상세(출결등록창)에서 학생 출결을 등록
 	@Override
-	public int insertAtt(Lecture l) {
-		return lDao.insertAtt(sqlSession, l);
+	public int insertAtt(Lecture l, ArrayList<Lecture> studNoList) {
+		return lDao.insertAtt(sqlSession, l, studNoList);
 	}
 
-
+	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러
+	@Override
+	public int insertAttStatus(String status) {
+		return lDao.insertAttStatus(sqlSession, status);
+	}
 
 
 	

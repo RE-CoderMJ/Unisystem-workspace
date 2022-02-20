@@ -53,7 +53,8 @@
 		border-radius:7px !important;
 		font-size:13px;
 		padding-left:2px;
-		
+		/* 아래 항목으로 인해 색깔이 다르게 보여짐*/
+		background-image: none;
 	}
 	.container, .row, .col{
 		width:480px;
@@ -137,10 +138,10 @@
 					<label>1시간 이상 자리를 비우면 적발 시 강제 퇴실</label>
 				</div>
 				
-				<input type="hidden" name="rsvdNo">
+				<input type="hidden" name="rsvdNo" value="0">
 				<input type="hidden" name="studNo" value="${ loginUser.studNo }">
 				<div class="btnBox">
-					<button type="submit" class="submitBtn">
+					<button type="submit" class="submitBtn" onclick="return no();">
 						<p>자리 예약</p>
 					</button>
 				</div>
@@ -154,16 +155,36 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
+	
+	function no(){
+		let space = $("input[name=rsvdSpace]:checked").val();
+		
+		if($(".submitBtn>p").text() == "자리 예약")
+				if(space == undefined){
+					
+					alert("좌석을 선택해주세요!");
+				
+				return false;
+				
+			}else{
+				console.log("선택됨");
+			}
+				
+				return true;
+	}
 
 	$(function(){
 
 		var readingForm = document.getElementById('readingForm');
+		
 		sidebar();
 		reserved();
 		
 		$(".submitBtn").on("click", function(){
 			cancel();
 		})
+		
+		
 		
 	})
 		
@@ -198,28 +219,24 @@
 						 // 예약된 자리
 						 let space = data[i].rsvdSpace;
 						 
-						 // 예약번호 hidden
-						 $("input[name=rsvdNo]").val(data[i].rsvdNo);
 						if(login == sno) {
+						 // 예약번호 hidden => 퇴실을 위해 예약번호를 넘기기 위해 가져온 값 (로그인한 회원의 예약번호)
+						 $("input[name=rsvdNo]").val(data[i].rsvdNo);
 						// 예약자 본인의 좌석은 노란색으로 표시됨	
-						$("input[value='"+space+"']").parent().css("background", "#fc6").css("color", "white");
+						$("input[value='"+space+"']").closest('label').css("background", "#fc6").css("color", "white");
 						$("input[value='"+space+"']").attr("disabled", true);
 							
-						console.log(data[i].rsvdNo);
 						$(".submitBtn>p").text("퇴 실");
 						
 						}else{
 						// 다른 사용자가 예약한 좌석
-						$("input[value='"+space+"']").parent().css("background", "RGB(21,62,115)").css("color", "white");
+						$("input[value='"+space+"']").closest('label').css("background", "RGB(21,62,115)").css("color", "white");
 						$("input[value='"+space+"']").attr("disabled", true);
 							
 						}
 						 
 					})			
 						
-					
-			
-					
 				},error: () => {
 					console.log("좌석 실패");
 				}
@@ -239,8 +256,8 @@
 				
 			}
 			
-			
 		}
+			
 					
 				
 		
