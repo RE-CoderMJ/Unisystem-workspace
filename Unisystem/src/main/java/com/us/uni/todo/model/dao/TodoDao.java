@@ -27,9 +27,13 @@ public class TodoDao {
 		return sqlSession.update("todoMapper.todoDelete",a);
 	}
 
-	public int todoCheck(SqlSessionTemplate sqlSession, Todo a) {
+	public int todoCheck(SqlSessionTemplate sqlSession, Todo a, String type) {
 		
-		return sqlSession.update("todoMapper.todoCheck",a);
+		if(type.equals("Y")) {
+			return sqlSession.update("todoMapper.todoCheckY",a);			
+		}else {
+			return sqlSession.update("todoMapper.todoCheckN",a);
+		}
 	}
 
 }

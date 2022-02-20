@@ -216,8 +216,15 @@ input {
 			todoDelete();
 		})
 		
-		$(document).on("click", ".checked", function(){
-			todoCheck();
+		
+		$(document).on("click", ".list", function(){
+			let todoNo = $(this).children("input[name=todoNo]").val();
+			if($(this).hasClass("checked")){
+				todoCheck(todoNo, 'Y');
+			}else{
+				todoCheck(todoNo, 'N');
+			}
+		 	
 		})
 	})
 	
@@ -252,13 +259,27 @@ input {
 			},
 		 	success:function(data){
 		 		 console.log(data);
+		 		 
+		 		 
 		 		 let value="";
 		 		 
 		 		 for(let i in data){
-		 			 value +=  "<li>"+ '<input type="hidden" name="todoNo" id="todoNo" value="'+data[i].todoNo+'"/>'
-							 + data[i].todoContent + "<span class='close'>x</span> </li>";
+		 			 if(data[i].todoCheck == 'Y'){
+		 				value +=  "<li class='list checked'>";
+		 			 }else{
+		 				value +=  "<li class='list'>";
+		 			 }
+		 			 
+			 			 value += '<input type="hidden" name="todoNo" class="todoNo" value="'+data[i].todoNo+'"/>'
+								 + data[i].todoContent + "<span class='close'>x</span> </li>"
+			 			 	     + "<input type='hidden' name='todoCheck' id='todoCheck' value='"+data[i].todoCheck+"'/>"
+			 			         + "</li>";
 		 		 }
+		 		 
+		 		 
 		 		 $('#myUL').html(value);
+		 		 
+		 		 
 		 		 console.log(value);
 		 	}
 		});
@@ -271,7 +292,7 @@ input {
 				dataType:'json',
 				url:"todoDelete",
 				data : {
-					todoNo : $('#todoNo').val(),
+					todoNo : $('.todoNo').val(),
 					tuserNo : $('#tuserNo').val()
 				},
 			 	success:function(){
@@ -282,21 +303,23 @@ input {
 			});
 		}
 		
-		function todoCheck(){
+		function todoCheck(todoNo,type){
 			$.ajax({
 				type:'POST',
 				dataType:'json',
 				url:"todoCheck",
 				data : {
-					todoNo : $('#todoNo').val(),
-					tuserNo : $('#tuserNo').val()
+					todoNo : todoNo,
+					tuserNo : $('#tuserNo').val(),
+					type:type
 				},
 			 	success:function(){
-			 	 	 
-			 		}
 			 	
+			 		
+			 		}
 			});
 		}
+			 			
 	
 	
 	
@@ -322,15 +345,15 @@ input {
 	    div.style.display = "none";
 	  }
 	}
-
+	
 	// Add a "checked" symbol when clicking on a list item
-	var list = document.querySelector('ul');
-	list.addEventListener('click', function(ev) {
-	  if (ev.target.tagName === 'LI') {
-	    ev.target.classList.toggle('checked');
-	  }
-	}, false);
-
+		let list = document.querySelector('ul');
+		list.addEventListener('click', function(ev) {
+		  if (ev.target.tagName === 'LI') {
+		    ev.target.classList.toggle('checked');  
+		  }
+		}, false);
+		
 	// Create a new list item when clicking on the "Add" button
 	function newElement() {
 	  var li = document.createElement("li");

@@ -49,10 +49,11 @@ public class TodoController {
 	
 	@ResponseBody
 	@RequestMapping(value="todoCheck", produces="application/json; charset=utf-8")
-	public int ajaxTodoCheck(Todo a) {
+	public int ajaxTodoCheck(Todo a, String type) {
 		
 		//System.out.println(a);
-		int result = tService.todoCheck(a);
+		//System.out.println(type);
+		int result = tService.todoCheck(a, type);
 		
 		return result;
 	}

@@ -42,9 +42,9 @@ public class TodoServiceImpl implements TodoService{
 
 
 	@Override
-	public int todoCheck(Todo a) {
+	public int todoCheck(Todo a, String type) {
 		
-		return tDao.todoCheck(sqlSession,a);
+		return tDao.todoCheck(sqlSession,a, type);
 	}
 
 }

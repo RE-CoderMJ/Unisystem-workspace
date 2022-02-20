@@ -9,6 +9,6 @@ public interface TodoService {
 	int todoInsert(Todo a);
 	ArrayList<Todo> todoSelect(int tuserNo);
 	int todoDelete(Todo a);
-	int todoCheck(Todo a);
+	int todoCheck(Todo a, String type);
 
 }

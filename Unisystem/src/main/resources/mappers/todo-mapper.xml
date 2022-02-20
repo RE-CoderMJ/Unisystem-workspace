@@ -23,7 +23,6 @@
 	 from TODO
 	 where user_no = #{tuserNo}
 	 and todo_del = 'N'
-	 and TODO_CHECK = 'N'
 	</select>
 	
 	
@@ -52,12 +51,24 @@
 	
 	</update>
 	
-	<update id="todoCheck">
+	<update id="todoCheckY">
+	 
 	update
 		  TODO
 		   set TODO_CHECK = 'Y'
 		 where todo_no = #{todoNo}
 		 and user_no = #{tuserNo}
+	 
+	</update>
+	
+	<update id="todoCheckN">
+	 
+	update
+		  TODO
+		   set TODO_CHECK = 'N'
+		 where todo_no = #{todoNo}
+		 and user_no = #{tuserNo}
+	 
 	</update>
 	
 </mapper>
