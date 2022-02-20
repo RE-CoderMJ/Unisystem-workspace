@@ -81,21 +81,101 @@
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                   </div>
-
+				<input type="hidden" id="cPage">
             </article>
         </section>
     </div>
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		$(function(){
+			//selectContactList(1);
+		});
+		
+		function selectContactList(cPageNo){
+			$.ajax({
+				url:"webMail.selectContactList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					
+					if(result.list.length === 0){
+						value = "<tr><td style='text-align:center;'>주소록이 비어있습니다.</td></tr>"
+					}else{
+						
+						
+						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectContactList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectContactList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectContactList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectContactList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
+					}
+					
+					$("#list").html(value);
+					
+				},error:function(){
+					console.log("주소록 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
+	
+	<script>
+		$(document).on("click", "#addContact-btn", function(){
+			$.ajax({
+				url:"webMail.addContact",
+				data:{
+					userNo:'${loginUser.userNo}',
+					name:$("input[name=name]").val(),
+					email:$("input[name=email]").val(),
+					phone:$("input[name=phone]").val()
+				},
+				success:function(result){
+					if(result>0){
+						$("input[name=name]").val("");
+						$("input[name=email]").val("");
+						$("input[name=phone]").val("");
+						//selectContactList(1);
+					}
+				},error:function(){
+					
+				}
+			});
+		})
+	</script>
 	
 	<script>
 		$(document).ready(function(){

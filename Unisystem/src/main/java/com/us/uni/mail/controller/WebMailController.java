@@ -22,6 +22,7 @@ import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.mail.model.service.MailService;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -640,9 +641,21 @@ public class WebMailController {
 		return mService.changeImportanceT(status, mNo, type);
 	}
 	
+	/**
+	 * 주소록 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.contact")
-	public String selectContacts(){
+	public String selectContactList(){
 		return "webMail/contact";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="webMail.addContact", produces="application/json; charset=utf-8")
+	public int addContact(Contact c) {
+		int result = mService.addContact(c);
+		
+		return result;
 	}
 	
 	/**

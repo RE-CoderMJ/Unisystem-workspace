@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -90,5 +91,6 @@ public interface MailService {
 	int selectImportantListCount(int userNo);
 	ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi);
 	
-	// 주소록
+	// 주소록 추가
+	int addContact(Contact c);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -331,6 +332,10 @@ public class MailDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectImportantList", userNo, rowBounds);
+	}
+
+	public int addContact(SqlSessionTemplate sqlSession, Contact c) {
+		return sqlSession.insert("mailMapper.addContact", c);
 	}
 
 	

@@ -192,7 +192,7 @@
                 </div>
             </div>
             <hr class="sidebar-lines">
-            <div id="contact">
+            <div id="contact" onclick="location.href='webMail.contact'">
                 <i class="fa fa-address-book fa-2x" aria-hidden="true"></i>
                 <span>주소록</span>
             </div>

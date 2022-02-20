@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.mail.model.dao.MailDao;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -307,6 +308,12 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi) {
 		ArrayList<MailTo> list = mDao.selectImportantList(sqlSession, userNo, pi);
 		return list;
+	}
+
+	@Override
+	public int addContact(Contact c) {
+		int result = mDao.addContact(sqlSession, c);
+		return result;
 	}
 	
 

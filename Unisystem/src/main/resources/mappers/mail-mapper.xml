@@ -966,4 +966,25 @@
 		   set important = #{status}
 		 where mail_from_no = #{mailNo}
 	</update>
+	
+	<!-- 주소록 추가 -->
+	<insert id="addContact">
+		insert
+		  into contact
+		  (
+		    contact_no
+		  , user_no
+		  , name
+		  , email
+		  , phone
+		  )
+		  values
+		  (
+		    seq_contact.nextval
+		  , #{userNo}
+		  , #{name}
+		  , #{email}
+		  , #{phone}
+		  )
+	</insert>
 </mapper>
