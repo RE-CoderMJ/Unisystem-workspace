@@ -53,7 +53,8 @@
 		border-radius:7px !important;
 		font-size:13px;
 		padding-left:2px;
-		
+		/* 아래 항목으로 인해 색깔이 다르게 보여짐*/
+		background-image: none;
 	}
 	.container, .row, .col{
 		width:480px;
