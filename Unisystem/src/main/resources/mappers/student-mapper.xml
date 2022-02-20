@@ -64,21 +64,23 @@
 			   COUNT(*)
 		  FROM STUDENT
 		  JOIN USERS ON(STUD_NO = USER_NO)
-		    <!-- 대학과 학과에 대해서만 검색한다면?-->
-		  <if test="keyword.equals('')">
-	  	  WHERE STUD_UNIV = #{univ}
-	  	    AND STUD_DEPARTMENT = #{depart}  
-		  </if>		  
-		  <!-- 이름만 검색한다면? -->
-  		  <if test="univ.equals('')">
-  		    WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
-		  </if>
-  		 <!-- 대학, 학과, 이름을 전부 검색한다면? -->
-  		  <if test="!univ.equals('') and !keyword.equals('')">
-		  WHERE STUD_UNIV = #{univ}
-   		    AND STUD_DEPARTMENT = #{depart}  
-   	     	AND KOR_NAME LIKE '%'||#{keyword}||'%'
-  		  </if>
+		<choose>
+		 	<when test="univ.equals('')">
+		 	 	WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</when>
+		 	<when test="!univ.equals('') and depart.equals('')">
+		 		WHERE STUD_UNIV = #{univ}
+		 	</when>
+		 	<when test="keyword.equals('')">
+			 	WHERE STUD_UNIV = #{univ}
+		  	      AND STUD_DEPARTMENT = #{depart} 
+		 	</when>
+		 	<otherwise>
+		 		WHERE STUD_UNIV = #{univ}
+   		   	      AND STUD_DEPARTMENT = #{depart}  
+   	     	      AND KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</otherwise>
+		 </choose>
 	</select>
 	
 	<select id="searchStudent" resultMap="usersResult">
@@ -91,25 +93,23 @@
 		     , STUD_STATUS
 		  FROM STUDENT
 		  JOIN USERS ON(STUD_NO = USER_NO)
-		  <!-- 대학에 대해서만 검색한다면? -->
-		   <if test="depart.equals('') and keyword.equals('')">
-		     WHERE STUD_UNIV = #{univ}
-		   </if>
-	  	  <!-- 대학과 학과에 대해서만 검색한다면?-->
-		  <if test="keyword.equals('')">
-	  	  WHERE STUD_UNIV = #{univ}
-	  	    AND STUD_DEPARTMENT = #{depart}  
-		  </if>		  
-		  <!-- 이름만 검색한다면? -->
-  		  <if test="univ.equals('')">
-  		     WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
-		  </if>
-  		 <!-- 대학, 학과, 이름을 전부 검색한다면? -->
-  		  <if test="!univ.equals('') and !keyword.equals('')">
-		  WHERE STUD_UNIV = #{univ}
-   		    AND STUD_DEPARTMENT = #{depart}  
-   	     	AND KOR_NAME LIKE '%'||#{keyword}||'%'
-  		  </if>
+		 <choose>
+		 	<when test="univ.equals('')">
+		 	 	WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</when>
+		 	<when test="!univ.equals('') and depart.equals('')">
+		 		WHERE STUD_UNIV = #{univ}
+		 	</when>
+		 	<when test="keyword.equals('')">
+			 	WHERE STUD_UNIV = #{univ}
+		  	      AND STUD_DEPARTMENT = #{depart} 
+		 	</when>
+		 	<otherwise>
+		 		WHERE STUD_UNIV = #{univ}
+   		   	      AND STUD_DEPARTMENT = #{depart}  
+   	     	      AND KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</otherwise>
+		 </choose>
 		  ORDER
 		     BY KOR_NAME
 	</select>

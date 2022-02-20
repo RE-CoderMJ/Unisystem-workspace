@@ -1,6 +1,7 @@
 package com.us.uni.professor.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,5 +27,17 @@ public class ProfessorDao {
 	
 	public ArrayList<Users> selectDepartment(SqlSessionTemplate sqlSession, String profUniv) {
 		return (ArrayList)sqlSession.selectList("professorMapper.selectDepartment", profUniv);
+	}
+	
+	public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("professorMapper.selectSearchCount", map);
+	}
+	
+	public ArrayList<Users> searchProfessor(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi) {
+		int offset = ((pi.getCurrentPage()-1) * pi.getBoardLimit());
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("professorMapper.searchProfessor", map, rowBounds);
 	}
 }

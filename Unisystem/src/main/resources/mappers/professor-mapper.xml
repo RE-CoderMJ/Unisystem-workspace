@@ -61,5 +61,60 @@
 		 WHERE PROF_UNIV = #{profUniv}
 	</select>
 	
+	<select id="selectSearchCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM PROFESSOR
+		  JOIN USERS ON(PROF_NO = USER_NO)
+		  <choose>
+		 	<when test="univ.equals('')">
+		 	 	WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</when>
+		 	<when test="!univ.equals('') and depart.equals('')">
+		 		WHERE PROF_UNIV = #{univ}
+		 	</when>
+		 	<when test="keyword.equals('')">
+			 	WHERE PROF_UNIV = #{univ}
+		  	      AND PROF_DEPARTMENT = #{depart} 
+		 	</when>
+		 	<otherwise>
+		 		WHERE PROF_UNIV = #{univ}
+   		   	      AND PROF_DEPARTMENT = #{depart}  
+   	     	      AND KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</otherwise>
+		 </choose>
+		   ORDER
+		     BY KOR_NAME
+	</select>
+		<select id="searchProfessor" resultMap="usersResult">
+		SELECT 
+		       PROF_NO
+		     , KOR_NAME
+		     , PROF_UNIV
+		     , PROF_DEPARTMENT
+		     , PROF_MAJOR
+		     , PROF_RANK
+		  FROM PROFESSOR
+		  JOIN USERS ON(PROF_NO = USER_NO)
+		 <choose>
+		 	<when test="univ.equals('')">
+		 	 	WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</when>
+		 	<when test="!univ.equals('') and depart.equals('')">
+		 		WHERE PROF_UNIV = #{univ}
+		 	</when>
+		 	<when test="keyword.equals('')">
+			 	WHERE PROF_UNIV = #{univ}
+		  	      AND PROF_DEPARTMENT = #{depart} 
+		 	</when>
+		 	<otherwise>
+		 		WHERE PROF_UNIV = #{univ}
+   		   	      AND PROF_DEPARTMENT = #{depart}  
+   	     	      AND KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	</otherwise>
+		 </choose>
+		  ORDER
+		     BY KOR_NAME
+	</select>
 
 </mapper>

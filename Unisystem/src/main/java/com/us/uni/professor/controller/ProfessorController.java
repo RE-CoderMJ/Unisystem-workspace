@@ -1,7 +1,9 @@
 package com.us.uni.professor.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,33 @@ public class ProfessorController {
 		ArrayList<Users> depart = pService.selectDepartment(profUniv);
 		System.out.println(depart);
 		return new Gson().toJson(depart);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="search.pr", produces="application/json; charset=UTF-8")
+	public String searchProfessor(@RequestParam(value="cpage", defaultValue="1") String currentPage, String univ, String depart, String keyword) {
+
+		HashMap map = new HashMap();
+		map.put("univ", univ);
+		map.put("depart", depart);
+		map.put("keyword", keyword);
+		
+		System.out.println(map);
+		
+		int listCount = pService.selectSearchCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, Integer.parseInt(currentPage), 10, 10);
+		ArrayList<Users> searchList = pService.searchProfessor(map, pi);	
+		
+		JSONObject jobj = new JSONObject();
+		jobj.put("searchList", searchList);
+		jobj.put("pi", pi);
+		jobj.put("univ", univ);
+		jobj.put("depart", depart);
+		jobj.put("keyword", keyword);
+		
+		return new Gson().toJson(jobj);
+		
 	}
 	
 	@RequestMapping("list.pr")

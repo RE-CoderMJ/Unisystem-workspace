@@ -324,11 +324,6 @@
     			// search 기능
 				function pagination(i){
     				
-					if (!$("#univList").val().length==0 && $("#departList").val().length==0) {
-					  alert("학부를 선택해 주세요!");
-					  return;
-					}
-					
 					let list = "";
 					let status = "";
 					let page = "";
@@ -346,13 +341,13 @@
 						success:data => {
 							
 							// 검색 결과 리스트
-							$(data.searchList).each(function(index, value){
+							$(data.searchList).each(function(index, obj){
 	   						
-							if(value.studStatus == 1){
+							if(obj.studStatus == 1){
 								status = "재학";
-							}else if(value.studStatus == 2){
+							}else if(obj.studStatus == 2){
 								status = "휴학"
-							}else if(value.studStatus == 3){
+							}else if(obj.studStatus == 3){
 								status = "졸업";
 							}else{
 								status = "자퇴";
@@ -360,11 +355,11 @@
 								
 	    						list += "<tr>" 
 			    							+ "<td><input type='checkbox'></td>"
-	    									+ "<td>" + value.studNo + "</td>"
-	    									+ "<td>" + value.korName + "</td>"
-	    									+ "<td>" + value.studUniv + "</td>"
-	    									+ "<td>" + value.studDepartment + "</td>"
-	    									+ "<td>" + value.studMajor + "</td>"
+	    									+ "<td>" + obj.studNo + "</td>"
+	    									+ "<td>" + obj.korName + "</td>"
+	    									+ "<td>" + obj.studUniv + "</td>"
+	    									+ "<td>" + obj.studDepartment + "</td>"
+	    									+ "<td>" + obj.studMajor + "</td>"
 	    									+ "<td>" + status + "</td>"
 	  								 + "</tr>";
 								})

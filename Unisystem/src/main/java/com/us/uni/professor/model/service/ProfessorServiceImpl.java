@@ -1,6 +1,7 @@
 package com.us.uni.professor.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public ArrayList<Users> selectDepartment(String profUniv) {
 		return pDao.selectDepartment(sqlSession, profUniv);
+	}
+	@Override
+	public int selectSearchCount(HashMap map) {
+		return pDao.selectSearchCount(sqlSession, map);
+	}
+	@Override
+	public ArrayList<Users> searchProfessor(HashMap map, PageInfo pi) {
+		return pDao.searchProfessor(sqlSession, map, pi);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.us.uni.professor.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.users.model.vo.Users;
@@ -13,6 +14,8 @@ public interface ProfessorService {
 	// 대학별 학부별 조회
 	ArrayList<Users> selectDepartment(String profUniv);
 	// 교수 검색
+	int selectSearchCount(HashMap map);
+	ArrayList<Users> searchProfessor(HashMap map, PageInfo pi);
 	// 교수 삭제
 	// 교수 등록
 	
