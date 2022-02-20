@@ -236,40 +236,36 @@
 	
     <!-- 주소록 수정 Modal -->
 	<div class="modal" id="editContact">
-		<form id="" action="" method="post">
-		          <div class="modal-dialog modal-sm modal-dialog-centered">
-		              <div class="modal-content">
-		                  <!-- Modal Header -->
-		                  <div class="modal-header">
-		                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-		                  </div>
-		                  <!-- Modal body -->
-		                  <div class="modal-body">
-		                      <div class="md-box">
-		                          <p>이름</p>
-		                          <input type="text" id="memName" name="name">
-		                          <!-- <input type="hidden" name="name"> -->
-		                      </div>
-		                      <div class="md-box">
-		                          <p>이메일 주소</p>
-		                          <input type="text" id="memEmail" name="email">
-		                          <!-- <input type="hidden" name="email"> -->
-		                      </div>
-		                      <div class="md-box">
-		                          <p>연락처</p>
-		                          <input type="text" id="memTel" name="phone" >
-		                          <!-- <input type="hidden" name="tel"> -->
-		                      </div>
-		                  </div>
-		              
-		              <!-- Modal footer -->
-		               <div id="editContact-btnArea">
-		                   <button type="button" id="editContactClose-btn" class="btn" data-dismiss="modal">취소</button>
-		                   <button type="submit" id="editContact-btn" class="btn" data-toggle="modal">수정하기</button>
-		               </div>
-		           </div>
-		       </div>
-		</form>
+	    <div class="modal-dialog modal-sm modal-dialog-centered">
+	        <div class="modal-content">
+	            <!-- Modal Header -->
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            </div>
+	            <!-- Modal body -->
+	            <div class="modal-body">
+	                <div class="md-box">
+	                    <p>이름</p>
+	                    <input type="text" id="memName" name="name">
+	                </div>
+	                <div class="md-box">
+	                    <p>이메일 주소</p>
+	                    <input type="text" id="memEmail" name="email">
+	                </div>
+	                <div class="md-box">
+	                    <p>연락처</p>
+	                    <input type="text" id="memTel" name="phone" >
+	                </div>
+	                <input type="hidden" name="contactNo">
+	            </div>
+	        
+	        <!-- Modal footer -->
+	         <div id="editContact-btnArea">
+	             <button type="button" id="editContactClose-btn" class="btn" data-dismiss="modal">취소</button>
+	             <button type="button" id="editContact-btn" class="btn" data-dismiss="modal">수정하기</button>
+	         </div>
+	     </div>
+	 </div>
 	</div>
 	
 </body>

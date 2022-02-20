@@ -351,5 +351,13 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectContactList", userNo, rowBounds);
 	}
 
+	public Contact selectContact(SqlSessionTemplate sqlSession, int contactNo) {
+		return sqlSession.selectOne("mailMapper.selectContact",contactNo);
+	}
+
+	public int editContact(SqlSessionTemplate sqlSession, Contact c) {
+		return sqlSession.update("mailMapper.editContact", c);
+	}
+
 	
 }

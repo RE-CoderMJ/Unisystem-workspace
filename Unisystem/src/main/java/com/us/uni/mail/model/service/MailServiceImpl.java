@@ -326,6 +326,17 @@ public class MailServiceImpl implements MailService {
 		
 		return mDao.selectContactListCount(sqlSession, userNo, pi);
 	}
+
+	@Override
+	public Contact selectContact(int contactNo) {
+		return mDao.selectContact(sqlSession, contactNo);
+	}
+
+	@Override
+	public int editContact(Contact c) {
+		int result = mDao.editContact(sqlSession, c);
+		return result;
+	}
 	
 
 

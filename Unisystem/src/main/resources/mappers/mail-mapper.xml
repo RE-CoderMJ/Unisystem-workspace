@@ -1015,4 +1015,24 @@
 		 order
 		    by contact_no desc
 	</select>
+	
+	<select id="selectContact" resultMap="conResult">
+		select
+		       contact_no
+		     , user_no
+		     , name
+		     , email
+		     , phone
+		  from contact
+		 where contact_no = #{contactNo}
+	</select>
+	
+	<update id="editContact">
+		update
+		       contact
+		   set name = #{name}
+		     , email = #{email}
+		     , phone = #{phone}
+		 where contact_no = #{contactNo}
+	</update>
 </mapper>

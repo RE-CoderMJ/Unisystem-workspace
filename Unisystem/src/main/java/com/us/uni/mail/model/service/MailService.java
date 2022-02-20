@@ -97,4 +97,9 @@ public interface MailService {
 	// 주소록 리스트 조회
 	int selectContactListCount(int userNo);
 	ArrayList<MailTo> selectContactList(int userNo, PageInfo pi);
+	
+	// 주소록 수정시 조회 컨트롤러
+	Contact selectContact(int contactNo);
+	// 주소록 수정 컨트롤러
+	int editContact(Contact c);
 }
