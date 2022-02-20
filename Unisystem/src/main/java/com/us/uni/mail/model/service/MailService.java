@@ -2,6 +2,8 @@ package com.us.uni.mail.model.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.mail.model.vo.MailFrom;
@@ -44,36 +46,46 @@ public interface MailService {
 	int selectUnreadListCount(int userNo);
 	ArrayList<MailTo> selectUnreadList(int userNo, PageInfo pi);
 	
-	// 첨부파일 조회용 서비스
-	
 	// 메일 작성하기 서비스
 	int sendMail(MailFrom mf, String[] userToNoArr, String[] ccNoArr, ArrayList<Attachment> attList);
+	// 내게쓰기 서비스
+	int sendToMeMail(MailFrom mf, ArrayList<Attachment> attList);
 	
 	// 메일 상세조회용 서비스
 	MailTo selectMail(int mNo);
+	MailFrom selectMfMail(int mNo);
+	MailFrom selectToMeMail(int mNo);
 	ArrayList<Attachment> selectAttachmentList(int mNo);
-	
-	// 메일 삭제용(휴지통) 서비스
-	int moveToTrash(int mailNo);
-	
-	// 메일 영구삭제용 서비스
-	int deleteMail(int mailNo);
+	ArrayList<Attachment> selectMfAttachmentList(int mNo);
 	
 	// 메일 읽음 처리용 서비스
 	int updateReadDate(int mNo);
 	
-
+	// 메일 읽음||안읽음 처리용 서비스
+	int changeReadStatus(int status, int mNo);
 	
-		
+	// 메일 삭제용(휴지통) 서비스
+	int moveToTrash(int mNo, int tNo);
+	// 휴지통 리스트 서비스
+	int selectTrashListCount(int userNo);
+	ArrayList<MailTo> selectTrashList(int userNo, PageInfo pi);
+	
+	// 메일 복구 서비스
+	int recoverMail(int mNo, String type);
+	
+	// 메일 영구삭제 서비스
+	int deletePermanently(HttpSession session, MailTo mt);
+	
+	// 휴지통 비우기 서비스
+	int emptyTrash(HttpSession session, int userNo);
+
 	// 중요메일
+	int changeImportance(String status, int mNo, int type);
+	int changeImportanceT(String status, int mNo, String type);
 	
 	// 전달
 	
 	// 답장
 	
-	// 읽음처리
-	
-	// 첨부파일 리스트 조회용 서비스
-	
-	
+	// 주소록
 }

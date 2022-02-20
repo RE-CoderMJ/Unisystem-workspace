@@ -66,14 +66,16 @@
         padding-left: 15px;
     }
     #attendance_table{width: 1195px;text-align: center;}
-    #attendance_table tr:first-child{border-top: 2px solid lightgray;background-color: #eeeeee; width: 200px;}
+    #attendance_table thead tr:first-child{border-top: 2px solid lightgray;background-color: #eeeeee; width: 200px;}
     #attendance_table tr{border-bottom: 1px solid lightgray;}
+    #attendance_table thead tr{border-bottom: 1px solid lightgray;}
     #attendance_table tr:last-child{border-bottom: 2px solid lightgray;}
     #attendance_table th:first-child{width: 30px;}
     #attendance_table th:nth-child(2){width: 50px;}
-    #attendance_table th:nth-child(3){width: 140px;}
-    #attendance_table th:nth-child(4){width: 90px;}
-    #attendance_table th:nth-child(5){width: 300px;}
+    #attendance_table th:nth-child(3){width: 80px;}
+    #attendance_table th:nth-child(4){width: 60px;}
+    #attendance_table th:nth-child(5){width: 60px;}
+    #attendance_table th:nth-child(6){width: 200px;}
     #attendance_table th, #attendance_table td{padding: 4px 0;}
     .attend, .absence, .tardiness{
         border: none;
@@ -99,9 +101,41 @@
         font-size: 25px;
         font-weight: 900;
         margin-left: 450px;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
     #StudentCount>span{color: #F39C12; font-weight: 900;}
+    
+    /* 스크롤바 */
+	.flex{
+	  display:flex;
+	}	
+	.scroll{
+	    width: 1200;
+	    padding: 0px 13px 0px 13px;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    height: 400px;
+	    box-sizing: border-box;
+	    color: black;
+	    font-family: 'Nanum Gothic';
+	    background-color: white;
+	    margin-right: 50px;
+	}
+	/* 스크롤바 설정*/
+	.type2::-webkit-scrollbar{
+	    width: 6px;
+	}	
+	/* 스크롤바 막대 설정*/
+	.type2::-webkit-scrollbar-thumb{
+	    height: 17%;
+	    background-color: rgb(21, 62, 115);
+	    border-radius: 10px;  
+	}	
+	/* 스크롤바 뒷 배경 설정*/
+	.type2::-webkit-scrollbar-track{
+	    background-color: #d1d9ff;
+	}
+	.type2{width:1190px}
 </style>
 </head>
 <body>
@@ -131,11 +165,11 @@
                     <table id="stu_info">
                         <tr>
                             <th>강의명</th>
-                            <td>IT미디어와미래역량</td>
+                            <td>${ classInfo.classKorName }</td>
                         </tr>
                         <tr>
                             <th>수강인원</th>
-                            <td>74명</td>
+                            <td>${ classInfo.currStud }명</td>
                         </tr>
                     </table>
                 </div>
@@ -144,143 +178,196 @@
                     <div style="font-size: 15px;">*출석 요건 : 기간 내 출석 인정 요구 시간 이상을 학습할 경우</div>
                     <div style="margin-bottom: 10px; font-size: 15px;">출석-[○], 지각=[▲], 결석-[X]</div>
 
-                    <div id="class_title">2022.01.01강의 출결관리</div>
+                    <div id="class_title">${ title }</div>
                     <div id="StudentCount">
-                        총 <span>74</span>명
+                        총 <span>${ classInfo.currStud }</span>명
                     </div>
-                    <table id="attendance_table">
-                        <tr>
-                            <th>번호</th>
-                            <th>학년</th>
-                            <th>학번</th>
-                            <th>이름</th>
-                            <th>출결</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>20161111</td>
-                            <td>김영숙</td>
-                            <td>
-                                <button class="attend">출석</button>
-                                <button class="absence ">결석</button>
-                                <button class="tardiness">지각</button>
-                            </td>
-                        </tr>
-                    </table>
+                    
+                    <div class="scroll type2">
+	                    <table id="attendance_table">
+	                    	<thead>
+		                        <tr>
+		                            <th>번호</th>
+		                            <th>학년</th>
+		                            <th>학번</th>
+		                            <th>이름</th>
+		                            <th>구분</th>
+		                            <th>출결</th>
+		                        </tr>
+	                        </thead>
+	                        
+	                        <!-- <form id="insertAttForm"> -->
+	                        
+                        	<c:forEach var="l" items="${ list }">
+                        	
+	                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
+	                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
+	                        	<input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ l.attendanceDateB }" />
+		                       		                        
+                        	</c:forEach> 
+                        	                
+		                        <tbody>
+			                        
+		                        </tbody>
+	
+	                    </table>
 
-                    <div id="cancle_submit_button">
-                        <button>취소</button>
-                        <button>제출</button>
                     </div>
 
+			                    <div id="cancle_submit_button">
+			                        <button>초기화</button>
+			                        <button type="button" id="submitBtn">제출</button>
+			                    </div>
+
+	                        <!-- </form> -->
+
+    <script>      
+    	$(function(){
+    		
+	        $(document).on("click", "#statusBtnA", function btnFunctionA(){ // 출석
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "출석");
+	        })
+	        
+	        $(document).on("click", "#statusBtnB", function btnFunctionB(){ // 결석
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "결석");
+	        })
+	        
+	        $(document).on("click", "#statusBtnC", function btnFunctionC(){ // 지각
+	        	$(this).parent().siblings(".status").children(".statusInput").attr("value", "지각");
+	        })
+	        
+	        
+	        inputAttList();
+	        
+    	});	
+    	
+	    	//$(document).on("click", "#submitBtn", function(){
+	    		//console.log($("input[name='ggg']").val());
+	    		//console.log($("input[name='attStatusList']").val());
+	   		//})
+    	
+	 		function inputAttList(){
+	     		
+	     		var classCode = $("#classCode").val();
+	     		var attendanceDateB = $("#attendanceDateB").val();
+	     		
+	     		$.ajax({
+	     			url:"selectStuList.lec",
+	     			data:{
+	     				  classCode:classCode,
+	     				  attendanceDateB:attendanceDateB
+	     			},
+	     			success:function(list){
+	     				
+	     				let value="";
+	     				let totalSemester="";
+	     				let status="";
+	     				
+	    				for(let i in list){
+	    					
+	    					if(list[i].totalSemester == 0 || list[i].totalSemester == 1){
+	    						totalSemester = "1학년";
+	    					} else if(list[i].totalSemester == 2 || list[i].totalSemester == 3){
+	    						totalSemester = "2학년";
+	    					} else if(list[i].totalSemester == 3 || list[i].totalSemester == 4){
+	    						totalSemester = "3학년";
+	    					} else {
+	    						totalSemester = "4학년";
+	    					}
+	    					
+	    					if(list[i].attendanceStatus == null || list[i].attendanceStatus == 'undefined'){
+	    						status = "";
+	    					} else{
+	    						status = list[i].attendanceStatus;
+	    					}
+	    					
+	                   		value += "<input type='hidden' class='studNo' name='studsNo' value='" + list[i].studNo + "' />"
+	                   			   + "<tr>"
+			                       +    "<td>" + list[i].rownum + "</td>"
+			                       +    "<td>" + totalSemester + "</td>"
+			                       +    "<td>" + list[i].studNo + "</td>"
+			                       +    "<td>" + list[i].korName + "</td>"
+			                       +    "<td class='status'>"											          	
+			                       + 		"<input type='text' class='statusInput' name='attendanceStatus' value='" + status + "' />"          
+			                       +    "</td>"
+			                       +    "<td>"
+			                       +       "<button class='attend' id='statusBtnA' type='button' name='attend'>출석</button>"
+			                       +       "<button class='absence' id='statusBtnB' type='button' name='absence'>결석</button>"
+			                       +       "<button class='tardiness' id='statusBtnC' type='button' name='tardiness'>지각</button>"
+			                       +     "</td>"
+			                       +  "</tr>";
+	                   			
+	                   			//"<input type='text' name='attStatusList[" + i + "].attendanceStatus' + value='' />";	   					
+	    				}                   		
+	    				$("#attendance_table>tbody").html(value);
+	    				
+	     			}, error:function(){
+	     				console.log("해당 수강중인 학생의 리스트 조회용 ajax 통신 실패");
+	     			}
+	     		
+	     		})	
+	     	}
+	    	
+	 		$(document).on("click", "#submitBtn", function(){
+	    		
+	    		let status = $("input[name=attendanceStatus]").val();
+	    		let studNo = $("input[name=studsNo]").val();
+	     		let classCode = $("#classCode").val();
+	     		let attendanceDateB = $("#attendanceDateB").val();
+	    		
+	     		console.log(status);
+	    		console.log(studNo);
+	    		
+	    		
+	    		$.ajax({
+	    			
+	    			url:"insertAttDetail.lec",
+	    			data:{
+	    				status:status,
+	    				studNo:studNo,
+	    				classCode:classCode,
+	    				attendanceDateB:attendanceDateB
+	    			},
+	    			success:function(data){
+	    				alert("success");
+	    				console.log(data);
+	    			}, error:function(){
+	    				console.log("ajax 데이터 전송 실패")
+	    			}
+	    		})
+	    	
+	    })
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	// 모든 학생의 출결값이 작성되어있지 않을경우 alert창 알림, 아닐경우 제출 버튼의 disabled 속성 제거하는 함수
+	    	function checkAlltd(){
+	    		
+	    		const status = $(".statusInput").val();
+
+	    		if(status.length == 0){
+	    			alertify.alert("모든 학생의 출결상태값을 입력해야합니다.");
+	    			
+	    			return false;
+	    		} 
+	    		
+	    	}
+	    	
+    </script>
                 </div>
 
             </div>
 
         </div>
     </div>
+    
 
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
 </body>
+
+    
 </html>

@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-</head>
 <style>
 body {
 	width: 1500px;
@@ -185,6 +184,7 @@ height:none;
 
 }
 </style>
+</head>
 <body>
 	<c:if test="${ not empty alertMsg }">
 		<script>

@@ -183,7 +183,7 @@
                     </a>
                 </div>
                 <div>
-                   	 휴지통
+                   	 <a href="webMail.trash" style="text-decoration:none; color:black;">휴지통</a>
                     <span>32</span>
                     <a type="button" id="emptyTrash" data-dismiss="modal" data-toggle="modal" href="#emptyTrashAskModal">
                     	<i class="fa fa-trash fa-sm" id="trash-icon" aria-hidden="true" style="margin-left: 55px;"></i>

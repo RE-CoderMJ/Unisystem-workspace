@@ -149,7 +149,7 @@
                     	휴지통을 비우시겠습니까?
                     </div>
                     <div id="emptyTrashbtn-area">
-                      <button type="button" class="btn" id="trash-confirm-btn" data-dismiss="modal" data-toggle="modal" onclick="deleteContent();">확인</a>
+                      <button type="button" class="btn" id="trash-confirm-btn" data-dismiss="modal" data-toggle="modal">확인</a>
                       <button type="button" class="btn" data-dismiss="modal" id="trash-closebtn">닫기</button>
                     </div>              
                 </div>
@@ -173,7 +173,7 @@
                     	메일을 삭제하시겠습니까?
                     </div>
                     <div id="deleteTrashbtn-area">
-                      <button type="button" class="btn" id="trash-delete-confirm-btn" data-dismiss="modal" data-toggle="modal" onclick="deleteContent();">확인</a>
+                      <button type="button" class="btn" id="trash-delete-confirm-btn" data-dismiss="modal" data-toggle="modal">확인</a>
                       <button type="button" class="btn" data-dismiss="modal" id="trash-delete-closebtn">닫기</button>
                     </div>              
                 </div>

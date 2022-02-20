@@ -19,8 +19,11 @@ public class MailFrom {
 	private String title;
 	private String content;
 	private String sendDate;
+	private String readDate;
 	private String toMe;
 	private String saveStatus;
 	private String fileName;
 	private String important;
+	private String fromName;
+	private String userToName;
 }

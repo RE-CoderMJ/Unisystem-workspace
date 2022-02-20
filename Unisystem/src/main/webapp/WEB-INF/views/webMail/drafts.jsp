@@ -25,9 +25,8 @@
                 <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
-                        <input type="checkbox" class="checkbox">
-                        <button style="margin-left: 10px;"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
-                        <button>전달</button>
+                        <input type="checkbox" id="checkAll">
+                        <button style="margin-left: 10px;" id="trash"><i class="fa fa-trash fa-sm" aria-hidden="true"></i>삭제</button>
                     </div>
                     <div id="tools-right" align="right">
                         <select name="" id="search-option">
@@ -52,7 +51,7 @@
 
                     </ul>
                   </div>
-
+			<input type="hidden" id="cPage">
             </article>
         </section>
     </div>
@@ -71,50 +70,61 @@
 				success:function(result){
 					
 					let value = "";
-					for(let i in result.list){
-						value += "<tr>"
-							   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
-							   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
-                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>"
-                    		   +	"<td class='att'><i class='fa fa-paperclip fa-sm' aria-hidden='true'></i></td>";
-                    	if(result.list[i].userToNo == " "){
-                    		value += "<td class='from overflow'>(받는이 없음)</td>"; 
-                    	}else{
-                    		value += "<td class='from overflow'>" + result.list[i].userToNo + "</td>";
-                    	}
-                    		   
- 						value +=	"<td class='title'>" + result.list[i].title + "</td>"
- 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
- 							   + "</tr>";
-					}
-				
-					$("#list > tbody").html(value);
-					
-					let piValue = "";
-					
-					if(result.pi.currentPage == 1){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					if(result.list.length === 0){
+						value = "<tr><td style='text-align:center;'>메일함이 비어있습니다.</td></tr>"
 					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
-					}
-                    
-					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
 						
-						if(p == result.pi.currentPage){
-							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
-						}else{
-							piValue += "<li class='page-item'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+						for(let i in result.list){
+							value += "<tr>"
+								   + 	"<input type='hidden' value='" + result.list[i].mailNo + "'>"
+								   +	"<td class='check-area'><input type='checkbox' class='checkbox'></td>"
+	                    		   +	"<td class='read-status'><i class='far fa-envelope-open'></i></td>";
+	                    		   
+	                    	if(result.list[i].userToNo == " "){
+	                    		value += "<td class='from overflow'>(받는이 없음)</td>"; 
+	                    	}else{
+	                    		value += "<td class='from overflow'>" + result.list[i].userToNo + "</td>";
+	                    	}
+	                    		   
+	 						value +=	"<td class='title'>" + result.list[i].title + "</td>"
+	 							   +	"<td class='date'>" + result.list[i].sendDate + "</td>"
+	 							   + "</tr>";
 						}
 						
-					}
-	            	
-					if(result.pi.currentPage == result.pi.maxPage){
-						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
-					}else{
-						piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectDraftList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectDrafttList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
 					}
 					
-					$(".pagination").html(piValue);
+					$("#list > tbody").html(value);
 					
 				},error:function(){
 					console.log("임시보관함 목록 조회용 ajax 통신 실패");
@@ -126,17 +136,54 @@
 	
 	<script>
 		$(function(){
-			$(document).on("click", "tr", function(){
-				location.href = "webMail.writeForm?mNo=" + $(this).children("input").val();
+			$(document).on("click", ".title", function(){
+				location.href = "webMail.writeForm?mNo=" + $(this).siblings("input").val();
 			})
 		})
 	</script>
 	
+	<!-- 전체 선택/해제 -->
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$("#webMail-sidebar").css('height', $len + 22);
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 메일 휴지통으로 이동 -->
+	<script>
+		$(document).on("click", "#trash", function(){
+			let checkValue = [];
+			
+			let mNo;
+
+			$(".checkbox:checked").each(function(){
+				mNo = $(this).parent().siblings("input").val();
+				checkValue.push(mNo);
+			});
+			
+			for(let i in checkValue){
+				moveToTrash(checkValue[i]);
+			}
 		})
+		
+		function moveToTrash(mNo){
+			$.ajax({
+				url:"webMail.moveToTrash",
+				data:{mNo:mNo, tNo:1},
+				success:function(){
+					$("#deleteCompleted").modal('show');
+					selectDraftList($("#cPage").val());
+				},error:function(){
+					console.log("휴지통 이동 ajax통신 실패");
+				}
+			
+			})
+		}
+		
 	</script>
 	
 </body>

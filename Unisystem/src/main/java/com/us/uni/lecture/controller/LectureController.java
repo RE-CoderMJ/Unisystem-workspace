@@ -1,11 +1,7 @@
 package com.us.uni.lecture.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,35 +182,136 @@ public class LectureController {
 		return mv;
 	}
 	
+	/* 학생 - 강의홈에서 드롭박스에 수강중인 강의 리스트를 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="ProClassList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectProClassList(int userNo) {
+		
+		ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
+		return new Gson().toJson(list);
+	}
+	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
 	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+				
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
-		
+				
 		int currentPage = lno;
-
-		int listCount = lService.selectAttListCount(l); // 진행한 강좌 총 개수
-		
+		int listCount = lService.selectProAttListCount(l); // 진행한 강좌 총 개수
+	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Lecture> list = lService.selectAttList(pi, l);
-		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureAttendanceProControl");
+		ArrayList<Lecture> list = lService.selectProAttList(pi, l);
+
+		mv.addObject("pi", pi).addObject("plist", list).setViewName("lecture/lectureAttendanceProControl");
 		
 		return mv;
 	}
 	
-	
-	
+	/* 교수 - 출결관리 - 해당 강의를 듣는 학생 목록을 가져오는 컨트롤러*/
+	@ResponseBody
+	@RequestMapping(value="AttStuList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectselectAttStuList(int classCode) {
+		
+		ArrayList<Lecture> list = lService.AjaxSelectselectAttStuList(classCode);
+		
+		return new Gson().toJson(list);
+	}
 	
 	
 	/* 교수 - 출결관리상세(출결등록창)를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttDetailControl.stu")
-	public String selectLectureAttDetailControl() {
-		return "lecture/lectureAttendanceDetailProControl";
+	public ModelAndView selectLectureAttDetailControl(int lno, String lDate, ModelAndView mv) {
+		
+		Lecture l = new Lecture();
+		l.setClassCode(lno);
+		l.setAttendanceDateB(lDate);
+		
+		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		String Title = list.get(0).getClassTitle();
+		
+		mv.addObject("list", list).addObject("title", Title).setViewName("lecture/lectureAttendanceProDetailControl");
+		return mv;
 	}
+	
+	/* 교수 - 출결관리상세(출결등록창)에서 학생정보를 ajax로 띄워주는 컨트롤러 */
+	@ResponseBody
+	@RequestMapping(value="selectStuList.lec", produces="application/json; charset=UTF-8")
+	public String AjaxSelectStuList(int classCode, String attendanceDateB) {
+		
+		Lecture l = new Lecture();
+		l.setClassCode(classCode);
+		l.setAttendanceDateB(attendanceDateB);
+		
+		ArrayList<Lecture> list = lService.selectAttDetail(l);
+		return new Gson().toJson(list);
+	}
+		
+	
+		
+	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
+	@RequestMapping("insertAtt.lec")
+	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
+			
+		ArrayList<Lecture> studNoList = l.getStudsNo();						
+		//l.getStudsNo().get(0).getStudNo();
+		
+		int result = lService.insertAtt(l, studNoList);
+		
+		if(result == l.getStudsNo().size()) { // 성공
+			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
+		} else { // 실패
+			model.addAttribute("errorMsg", "강의 생성 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("insertAttDetail.lec")
+	public void insertAttStatus(String[] status, String[] studNo, int classCode, String attendanceDateB, HttpSession session, Model model) {
+		
+		for(int i=0; i<status.length; i++) {
+			System.out.println(status[i]);
+		}
+		for(int i=0; i<studNo.length; i++) {
+			System.out.println(studNo[i]);
+		}
 
+
+		//System.out.println(attStatusList);
+		
+		//ArrayList<Lecture> attStatusList = l.getAttStatusList();
+
+		//String[] statusArr = attStatusList.get(0).getAttendanceStatus().split(",");
+		//String[] attDateArr = l.getAttendanceDateB().split(",");
+
+		/*
+		int result = 0;
+				
+		for(int i=0; i<statusArr.length; i++) {
+			//l.setAttendanceStatus(arr[i]);
+			String status = statusArr[i];
+
+			
+			result += lService.insertAttStatus(status);
+		}
+		if(result == l.getAttendanceStatus().length()) {
+			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&lno=1";
+		} else { // 실패
+			model.addAttribute("errorMsg", "강의 생성 실패");
+			return "common/errorPage";
+		}
+		*/
+	
+	}
+	
+	
+	
+	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureNotice.stu")
 	public String selectLectureNotice() {
