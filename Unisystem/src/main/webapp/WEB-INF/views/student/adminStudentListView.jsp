@@ -186,10 +186,8 @@
 						</tbody>
 					</table>
 					
-					<!-- $(".page-link).val(""); -->
 					<div class="container">
                     <ul class="pagination justify-content-center">
-                    
 		                   <c:choose>
 		    				<c:when test="${ pi.currentPage eq 1 }">            
 			                    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
@@ -219,7 +217,6 @@
 							<li class="page-item"><a class="page-link" href="student.ad?cpage=${ pi.currentPage+1 }">&gt;</a></li>
 						</c:otherwise>						
 						</c:choose>	
-                 
                     </ul>
                  </div>
 						
@@ -289,7 +286,7 @@
 							$(".wrap_sidebar").css('height', $len);
 						}else{
 							$(".wrap_sidebar").css('height', 270);
-							document.getElementById("content").style.marginBottom = "280px";
+							document.getElementById("content").style.marginBottom = "300px";
 						}
 				}
 				

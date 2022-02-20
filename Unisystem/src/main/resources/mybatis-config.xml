@@ -31,6 +31,7 @@
 			<mapper resource="/mappers/users-mapper.xml" />
 			<mapper resource="/mappers/board-mapper.xml" />
 			<mapper resource="/mappers/student-mapper.xml" />
+			<mapper resource="/mappers/professor-mapper.xml" />
 			<mapper resource="/mappers/facility-mapper.xml" />
 			<mapper resource="/mappers/mail-mapper.xml" />			
 			<mapper resource="/mappers/lecture-mapper.xml" />

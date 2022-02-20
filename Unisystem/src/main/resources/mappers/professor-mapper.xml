@@ -1,4 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="professor">
+<mapper namespace="professorMapper">
+
+	<resultMap id="usersResult" type="Users">
+		<result column="user_no" property="userNo" />
+		<result column="password" property="userPwd" />
+		<result column="kor_name" property="korName" />
+		<result column="eng_name" property="engName" />
+		<result column="birthday" property="birthday" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="nation" property="nation" />
+		<result column="webmail" property="webMail" />
+		<result column="user_div" property="userDiv" />
+		<result column="profile_img" property="profileImg" />
+		
+		<!-- PROFESSOR -->
+		<result column="prof_no" property="profNo" />
+		<result column="prof_rank" property="profRank" />
+		<result column="rank_change" property="rankChange" />
+		<result column="prof_univ" property="profUniv" />
+		<result column="prof_department" property="profDepartment" />
+		<result column="prof_major" property="profMajor" />
+		<result column="prof_into" property="profInto" />
+		<result column="prof_resign" property="profResign" />
+		<result column="prof_location" property="profLocation" />
+		<result column="prof_tel" property="profTel" />
+		<result column="prof_status" property="profStatus" />
+		<result column="prof_app_day" property="profAppDay" />
+		<result column="prof_app_time" property="profAppTime" />
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM PROFESSOR
+	</select>
+	
+	<select id="selectProfessorList" resultMap="usersResult">
+		SELECT 
+		       PROF_NO
+		     , KOR_NAME
+		     , PROF_UNIV
+		     , PROF_DEPARTMENT
+		     , PROF_MAJOR
+		     , PROF_RANK
+		  FROM PROFESSOR
+		  JOIN USERS ON(PROF_NO = USER_NO)
+		 WHERE PROF_STATUS = 'Y'
+		 ORDER
+	        BY PROF_NO DESC
+	</select>
+	
+	<select id="selectDepartment" resultMap="usersResult">
+		SELECT DISTINCT 
+		       PROF_DEPARTMENT
+		  FROM PROFESSOR
+		 WHERE PROF_UNIV = #{profUniv}
+	</select>
+	
+
 </mapper>
