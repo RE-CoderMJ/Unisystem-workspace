@@ -8,12 +8,12 @@
 		<result column="RSVD_SPACE" property="rsvdSpace" />
 		<result column="RSVD_NUM" property="rsvdNum" />
 		<result column="RSVD_DATE" property="rsvdDate" />
+		<result column="RSVD_END" property="rsvdEnd" />
 		<result column="RSVD_START" property="rsvdStart" />
-		<result column="RSVD_EMD" property="rsvdEnd" />
 		<result column="RSVD_STATUS" property="rsvdStatus" />
 	</resultMap>
 
-
+	<!-- 열람실 현황 조회 -->
 	<select id="reservedReading" resultMap="facilityResult">
 		SELECT 
 			   RSVD_NO
@@ -24,6 +24,7 @@
 		   AND RSVD_END IS NULL
 	</select>
 
+	<!-- 열람실 예약  -->
 	<insert id="insertReading">
 	INSERT 
       INTO RESERVED
@@ -50,6 +51,7 @@
          )
 	</insert>
 	
+	<!-- 열람실 예약 취소 -->
 	<update id="cancelReading">
 		UPDATE 
            RESERVED 
@@ -57,8 +59,64 @@
          , RSVD_STATUS = 2 
      WHERE RSVD_NO = #{rsvdNo}
 	</update>
-		  
-		  	
+		 
+		 
+	<!-- 오늘의 스터디룸 예약 현황-->	 
+	<select id="reservedStudy" resultMap="facilityResult">
+		SELECT 
+			   RSVD_NO
+		     , STUD_NO
+	         , RSVD_SPACE
+	         , TO_CHAR(SYSDATE, 'YYYY.MM.DD') AS "RSVD_DATE"
+	         , TO_CHAR(TO_DATE(RSVD_START, 'HH24:MI:SS'), 'HH24') AS "RSVD_START"
+	         , TO_CHAR(TO_DATE(RSVD_END, 'HH24:MI:SS'), 'HH24') AS "RSVD_END"
+	      FROM RESERVED
+	     WHERE REGEXP_INSTR(RSVD_SPACE,'[^0-9]') = 1
+	       AND RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+	       AND RSVD_STATUS = 1
+	</select>
 	
+	<!-- 스터디룸 예약 -->
+	<insert id="insertStudy">
+		INSERT
+	      INTO RESERVED
+	         ( RSVD_NO
+	         , STUD_NO
+	         , RSVD_SPACE
+	         , RSVD_NUM
+	         , RSVD_DATE
+	         , RSVD_START
+	         , RSVD_END
+	         , RSVD_STATUS
+	         )
+	           VALUES
+	         (
+	           SEQ_RESERVED.NEXTVAL
+	         , #{studNo}
+	         , #{rsvdSpace}
+	         , #{rsvdNum}
+	         , TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+	         , TO_CHAR(TO_DATE(#{rsvdStart}, 'HH24:MI:SS'), 'HH24:MI:SS')
+         	 , TO_CHAR(TO_DATE(#{rsvdEnd}, 'HH24:MI:SS'), 'HH24:MI:SS')
+	         , 1
+	         )
+	</insert>
+	
+	<!-- 스터디룸 예약 취소 -->
+	<update id="cancelStudy">
+		UPDATE 
+	           RESERVED
+	       SET RSVD_STATUS = 2 
+	     WHERE RSVD_NO = #{rsvdNo}
+	</update>
+	
+	<select id="ableTime" resultMap="facilityResult">
+		 SELECT
+	           TO_CHAR(TO_DATE(RSVD_START, 'HH24:MI:SS'), 'HH24') AS "RSVD_START"
+	          , TO_CHAR(TO_DATE(RSVD_END, 'HH24:MI:SS'), 'HH24') AS "RSVD_END"
+		   FROM RESERVED
+		  WHERE RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+		    AND RSVD_SPACE = #{room}
+	</select>
 	
 </mapper>

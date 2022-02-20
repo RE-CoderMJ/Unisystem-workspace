@@ -25,8 +25,20 @@ public class FacilityDao {
 		return sqlSession.update("facilityMapper.cancelReading", fa);
 	}
 	
+	public ArrayList<Facility> reservedStudy(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("facilityMapper.reservedStudy");
+	}
 	
+	public ArrayList<Facility> ableTime(SqlSessionTemplate sqlSession, String room){
+		return (ArrayList)sqlSession.selectList("facilityMapper.ableTime", room);
+	}
 	
+	public int insertStudy(SqlSessionTemplate sqlSession, Facility fa) {
+		return sqlSession.insert("facilityMapper.insertStudy", fa);
+	}
 	
+	public int cancelStudy(SqlSessionTemplate sqlSession, int rsvdNo) {
+		return sqlSession.update("facilityMapper.cancelStudy", rsvdNo);
+	}
 	
 }
