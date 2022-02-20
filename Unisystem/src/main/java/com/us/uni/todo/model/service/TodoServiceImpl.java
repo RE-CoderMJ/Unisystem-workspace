@@ -47,4 +47,5 @@ public class TodoServiceImpl implements TodoService{
 		return tDao.todoCheck(sqlSession,a, type);
 	}
 
+ 
 }

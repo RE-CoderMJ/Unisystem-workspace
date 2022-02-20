@@ -101,6 +101,10 @@ text-decoration:none;
 .notice {
 	grid-area: notice;
 }
+.notice li{
+	list-style-type:none;
+	font:15px;
+}
 
 .dust {
 	grid-area: dust;
@@ -199,6 +203,12 @@ text-decoration:none;
 		<!-- 공지사항 -->
 		<div class="notice">
 		<h4>공지사항</h4>
+		<ul>
+			<li><a></a></li>
+			<li><a></a></li>
+			<li><a></a></li>	 
+		</ul>
+		
 		
 		</div>
 		

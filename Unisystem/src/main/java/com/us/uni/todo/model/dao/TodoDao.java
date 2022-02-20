@@ -36,4 +36,9 @@ public class TodoDao {
 		}
 	}
 
+	public ArrayList<Todo> getTodoCal(SqlSessionTemplate sqlSession,int tuserNo) {
+		
+		return (ArrayList)sqlSession.selectList("todoMapper.todoSelect",tuserNo);
+	}
+
 }

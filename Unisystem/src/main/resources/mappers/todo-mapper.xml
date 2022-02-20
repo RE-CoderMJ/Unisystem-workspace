@@ -18,7 +18,7 @@
 	 ,user_no
 	 ,todo_content
 	 ,todo_del
-	 ,todo_date
+	 ,TO_CHAR(to_DATE(TODO_DATE,'RRRR-MM-DD'),'RRRR-MM-DD') AS TODO_DATE
 	 ,todo_check
 	 from TODO
 	 where user_no = #{tuserNo}

@@ -10,5 +10,6 @@ public interface TodoService {
 	ArrayList<Todo> todoSelect(int tuserNo);
 	int todoDelete(Todo a);
 	int todoCheck(Todo a, String type);
+	
 
 }

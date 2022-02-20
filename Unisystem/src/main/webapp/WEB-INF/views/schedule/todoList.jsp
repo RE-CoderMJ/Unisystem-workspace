@@ -212,7 +212,7 @@ input {
 		todoSelect();
 		
 		$(document).on("click", ".close", function(){
-			console.log("클릭되나?");
+			let todoNo = $(this).children("span[name=close]").val();
 			todoDelete();
 		})
 		
@@ -241,7 +241,6 @@ input {
 			  success:
 				function(result){
 				   if(result == 1){
-					alert('등록이 완료되었습니다 :)');
 					todoSelect();
 					$("#myInput").val("");
 					}
@@ -271,12 +270,10 @@ input {
 		 			 }
 		 			 
 			 			 value += '<input type="hidden" name="todoNo" class="todoNo" value="'+data[i].todoNo+'"/>'
-								 + data[i].todoContent + "<span class='close'>x</span> </li>"
+								 + data[i].todoContent + "<span name='close' class='close'>x</span> </li>"
 			 			 	     + "<input type='hidden' name='todoCheck' id='todoCheck' value='"+data[i].todoCheck+"'/>"
 			 			         + "</li>";
 		 		 }
-		 		 
-		 		 
 		 		 $('#myUL').html(value);
 		 		 
 		 		 
@@ -284,7 +281,6 @@ input {
 		 	}
 		});
 	}
-	
 	
 		function todoDelete(){
 			$.ajax({
@@ -296,7 +292,6 @@ input {
 					tuserNo : $('#tuserNo').val()
 				},
 			 	success:function(){
-			 	 	alert('일정이 삭제되었습니다!');
 			 	 	location.reload();
 			 		}
 			 	
@@ -314,16 +309,10 @@ input {
 					type:type
 				},
 			 	success:function(){
-			 	
-			 		
+ 
 			 		}
 			});
 		}
-			 			
-	
-	
-	
-	
 	
 	// Create a "close" button and append it to each list item
 	var myNodelist = document.getElementsByTagName("LI");
