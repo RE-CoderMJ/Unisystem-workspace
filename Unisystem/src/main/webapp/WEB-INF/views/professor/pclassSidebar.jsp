@@ -124,7 +124,7 @@ a:hover {
 	    function urlSubmit(num){
 	 	   if(num == 2){ // 출결관리 클릭 시 
 	 		   // #sideBarForm 요쇼의 action이라는 속성의 값을 lectureAtt.stu로 변경
-	 		   $("#sideBarForm").attr("action", "lectureAttControl.stu").submit();
+	 		   $("#sideBarForm").attr("action", "lectureAttControl.stu?cpage=1").submit();
 	 	   } 
 	    }
 	</script>

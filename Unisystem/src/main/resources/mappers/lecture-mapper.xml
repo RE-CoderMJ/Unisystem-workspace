@@ -290,6 +290,7 @@
                     , stud_no
                     , kor_name
                     , total_semester
+                    , attendance_status
                 from attendance  
                 join student using(stud_no)
                 join users on (stud_no = user_no)
@@ -318,7 +319,7 @@
 	</select>
 	
 	<!-- 교수 - 출결관리 - 새로운 강의 등록 -->
-	<select id="insertAtt" resultMap="lectureResult">
+	<insert id="insertAtt">
 		insert
 		  into attendance
 		  (
@@ -332,13 +333,27 @@
 		  values
 		  (
 		    seq_attendance.nextval
-		  , 강의번호
-		  , 학번
-		  , 날짜
+		  , #{classNo}
+		  , #{studNo}
+		  , #{attendanceDateA}
 		  , null
-		  , 강의제목
+		  , #{classTitle}
 		  )	
-	</select>
+	</insert>
+	
+	<!-- 교수 - 출결관리 - 학생들의 출결상태를 insert -->
+	<insert id="insertAttStatus">
+		update
+		       attendance
+		   set attendance_status = 출결상태
+		 where attendance_date = 출결일
+		   and class_no = 강의번호
+		   and stud_no = 학번
+	</insert>
+	
+	
+	
+	
 	
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->

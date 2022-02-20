@@ -107,7 +107,30 @@ public class LectureDao {
 	}
 	
 	// 교수 - 출결관리상세(출결등록창)에서 학생 출결을 등록
-	public int insertAtt(SqlSessionTemplate sqlSession, Lecture l) {
-		return sqlSession.insert("lectureMapper.insertAtt", l);
+	public int insertAtt(SqlSessionTemplate sqlSession, Lecture l, ArrayList<Lecture> studNoList) {
+	      
+	      int result = 0;
+	      for(int i=0; i<studNoList.size(); i++) {
+	         
+	         l.setStudNo(studNoList.get(i).getStudNo());
+	        
+	         result += sqlSession.insert("lectureMapper.insertAtt", l);
+	         
+	      }
+
+	      return result;  
+	 }
+
+
+	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러	
+	public int insertAttStatus(SqlSessionTemplate sqlSession, String status) {
+		return sqlSession.insert("lectureMapper.insertAttStatus", status);
 	}
+	
+	
+	
+	
+	
+	
+	
 }

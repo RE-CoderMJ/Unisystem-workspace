@@ -1,5 +1,7 @@
 package com.us.uni.lecture.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -60,5 +62,8 @@ public class Lecture {
 	
 	private int rownum;
 	private int stuGrade;
+	
+	private ArrayList<Lecture> studsNo;
+	private ArrayList<Lecture> attStatusList;
 
 }
