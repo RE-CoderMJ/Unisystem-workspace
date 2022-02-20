@@ -21,6 +21,7 @@
 		     , RSVD_SPACE
 		  FROM RESERVED
 		 WHERE RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+           AND REGEXP_INSTR(RSVD_SPACE,'[^0-9]') = 0
 		   AND RSVD_END IS NULL
 	</select>
 

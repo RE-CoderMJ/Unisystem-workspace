@@ -395,14 +395,15 @@
 				if(status == "예약 취소"){
 					studyForm.action = "cancel.sr";
 					
+				}else if(status = "내일 예약 가능"){
+					alertify.alert("스터디룸은 하루에 한번만 사용할 수 있습니다.");
+						return false;
 				}else if(checkTime == undefined){
 					if($("input[name=rsvdNo]").val() == 0){
 						alert("사용할 시간을 선택해 주세요!");
 						return false;
 					}
 				}
-				
-				// 이미 예약되어 있는 시간
 			}
 				
 		
