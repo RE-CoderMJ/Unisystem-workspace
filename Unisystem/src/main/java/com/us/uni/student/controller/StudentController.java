@@ -89,7 +89,6 @@ public class StudentController {
 	
 	@RequestMapping("delete.st")
 	public String studentDelete(String[] dno, HttpSession session) {
-		
 		int result = 0;
 		for(int i=0; i<dno.length; i++) {
 			result = sService.studentDelete(dno[i]);

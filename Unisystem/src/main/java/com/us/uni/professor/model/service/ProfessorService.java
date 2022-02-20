@@ -17,6 +17,7 @@ public interface ProfessorService {
 	int selectSearchCount(HashMap map);
 	ArrayList<Users> searchProfessor(HashMap map, PageInfo pi);
 	// 교수 삭제
+	int professorDelete(String dno);
 	// 교수 등록
 	
 	

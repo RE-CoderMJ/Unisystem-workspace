@@ -3,6 +3,8 @@ package com.us.uni.professor.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +46,6 @@ public class ProfessorController {
 	@RequestMapping(value="department.pr", produces="application/json; charset=UTF-8")
 	public String selectDepartment(String profUniv) {
 		ArrayList<Users> depart = pService.selectDepartment(profUniv);
-		System.out.println(depart);
 		return new Gson().toJson(depart);
 	}
 	
@@ -56,8 +57,6 @@ public class ProfessorController {
 		map.put("univ", univ);
 		map.put("depart", depart);
 		map.put("keyword", keyword);
-		
-		System.out.println(map);
 		
 		int listCount = pService.selectSearchCount(map);
 		
@@ -73,6 +72,23 @@ public class ProfessorController {
 		
 		return new Gson().toJson(jobj);
 		
+	}
+	
+	@RequestMapping("delete.pr")
+	public String professorDelete(String[] dno, HttpSession session) {
+		int result = 0;
+		for(int i=0; i<dno.length; i++) {
+			result = pService.professorDelete(dno[i]);
+		}
+		
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "삭제되었습니다!");
+		}else {
+			session.setAttribute("alertMsg", "교수 삭제를 실패했습니다.");
+		}
+		
+		return "redirect:professor.ad";
 	}
 	
 	@RequestMapping("list.pr")

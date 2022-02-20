@@ -40,4 +40,16 @@ public class ProfessorDao {
 		
 		return (ArrayList)sqlSession.selectList("professorMapper.searchProfessor", map, rowBounds);
 	}
+	
+	public int professorDelete(SqlSessionTemplate sqlSession, String dno) {
+		int result = 0;
+		int result1 = sqlSession.delete("professorMapper.professorDelete1", dno);
+		int result2 = sqlSession.delete("professorMapper.professorDelete2", dno);
+		
+		result = result1 * result2;
+		if(result > 0) {
+			return result;
+		}
+		return 0;
+	}
 }

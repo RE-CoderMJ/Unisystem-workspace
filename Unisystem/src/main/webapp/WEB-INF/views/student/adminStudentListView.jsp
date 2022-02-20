@@ -103,7 +103,6 @@
 				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;기본정보&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;학생 관리</p></div>
 			</div>
 			
-			
 			<div class="searchList">
 				<div class="searchBox">
 					<span class="nameTag">학생 목록</span>
@@ -125,7 +124,7 @@
 				</div>
 				
 				
-			<form id="studDelete">
+			  <form id="studDelete">
 				<div class="btnBox">
 					<div class="switchBox">
 						<label class="switch">
@@ -138,9 +137,43 @@
 					
 					<div class="btnDiv">
 						<a class="btn btn-sm btn-outline-secondary" href="enrollForm.st">새로 등록</a>
-						<button onclick="studentDelete();" class="btn btn-sm btn-outline-secondary">삭제</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#delete">삭제</button>
 					</div>
 				</div>
+
+
+
+		
+			  <!-- The Modal -->
+			  <div class="modal" id="delete">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4 class="modal-title">삭제하시겠습니까?</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			      	
+			        <!-- Modal body -->
+			        <div class="modal-body">
+					 	<input type="hidden" id="adminPwd" value="${loginUser.userPwd}"> 
+					        삭제 시 다시 복구하실 수 없습니다.<br>
+			          	관리자의 승인이 필요합니다. <br><br>
+			          	* 비밀번호 : 
+			          	<input type="password" name="userPwd">
+			        </div>
+			        
+			        <!-- Modal footer -->
+			        <div class="modal-footer">
+			          <button type="submit" onclick="studentDelete();" class="btn btn-danger" data-dismiss="modal">삭제</button>
+			        </div>
+			      
+			        
+			      </div>
+			    </div>
+			  </div>
+
 
 
 					<div class="appList">
@@ -185,7 +218,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					
+				  
 					<div class="container">
                     <ul class="pagination justify-content-center">
 		                   <c:choose>
@@ -229,6 +262,7 @@
 	</div> <!-- wrap -->
 	<jsp:include page="../common/footer.jsp" />
 			
+			  
 			
 			<script>
 			
@@ -249,11 +283,11 @@
 				
 				// 선택 회원 삭제
 				function studentDelete(){
-					
 					const checkboxes = document.getElementsByClassName('deleteNo');
 					var checkNum = 0;
 					var delForm = document.getElementById('studDelete');
-					
+					let checkPwd = $("input[name=userPwd]").val();
+					let adminPwd = $("#adminPwd").val();
 					
 					for(var i=0; i<checkboxes.length; i++) {
 						if(checkboxes[i].checked == true) {
@@ -264,18 +298,21 @@
 					}
 
 					if(checkNum == 0) {
-						alert("삭제할 게시글을 선택해주세요.");
+						alertify.alert("삭제할 학생을 선택해주세요.");
 					} else if(checkNum > 0) {
-						if(confirm("정말 삭제하시겠습니까?")){
-							// 관리자의 비밀번호를 입력받기
-							 
+						if(checkPwd == adminPwd){
+							
 							// 삭제 요청
 							delForm.action = "delete.st";
 							delForm.submit();
+						}else{
+							alertify.alert("비밀번호를 잘못 입력하셨습니다.");
+							return false;
 						}
 					}
 
 				}
+				
 				
 				// 사이드바 길이 조절
 				function sidebar(){

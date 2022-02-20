@@ -39,5 +39,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public ArrayList<Users> searchProfessor(HashMap map, PageInfo pi) {
 		return pDao.searchProfessor(sqlSession, map, pi);
 	}
+	@Override
+	public int professorDelete(String dno) {
+		return pDao.professorDelete(sqlSession, dno);
+	}
 
 }
