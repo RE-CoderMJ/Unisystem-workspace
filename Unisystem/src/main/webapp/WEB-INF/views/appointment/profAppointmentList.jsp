@@ -171,20 +171,28 @@
 	</div>
 	
 	<script>
-		$(function(){
-			let appDay = ${day};
-			let appTime = ${time};
-			console.log(day);
-			console.log(time);
+		$(document).on("click", "#availableTime", function(){
+			let appDay = '${day}'.split(",");
+			let appTime = '${time}'.split(",");
+			
+			for(let t in appTime){
+				$("input[name=profAppTime]").each(function(){
+					if($(this).val() == appTime[t]){
+						$(this).attr("checked", true);
+					}
+				})	
+			}
+			
+			for(let d in appDay){
+				$("input[name=profAppDay]").each(function(){
+					if($(this).val() == appDay[d]){
+						$(this).attr("checked", true);
+					}
+				})
+			}
+			
 		})
 	</script>
-	<!-- 
-	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$("#webMail-sidebar").css('height', $len + 22);
-		})
-	</script>
-	 -->
+	
 </body>
 </html>
