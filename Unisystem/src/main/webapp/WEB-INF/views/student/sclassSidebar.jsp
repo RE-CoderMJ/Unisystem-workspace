@@ -88,7 +88,7 @@ a:hover {
 				 <b>성적/출석관리</b> 
 			</div>
 			<div style="margin-left: 3px;">
-				<a onclick="urlSubmit(2);">- 온라인 출석부</a>
+				<a onclick="urlSubmit(1);">- 온라인 출석부</a>
 			</div>
 			<div style="margin-left: 3px;">
 				<a href="">- 성적 조회</a>
@@ -104,7 +104,7 @@ a:hover {
 				<a href="lectureVideoMat.stu">- 영상자료실</a>
 			</div>
 			<div style="margin-left: 3px;">
-				<a href="homeworkList.lec">- 과제 업로드</a>
+				<a  onclick="urlSubmit(2);">- 과제 업로드</a>
 			</div>
 		</div>
 	</div>
@@ -112,15 +112,19 @@ a:hover {
     <form id="sideBarForm" action="" method="post">
         <input type="hidden" name="userNo" value="${ loginUser.userNo }" />
         <input type="hidden" name="classCode" value="${ classInfo.classCode }" />
+        <input type="hidden" name="classNo" value="${ classInfo.classNo }" />
         <input type="hidden" name="lno" value="1" />
     </form>
 	
 	<script>
 	    function urlSubmit(num){
-	 	   if(num == 2){ // 온라인 출석부 클릭 시 
+	 	   if(num == 1){ // 온라인 출석부 클릭 시 
 	 		   // #sideBarForm 요쇼의 action이라는 속성의 값을 lectureAtt.stu로 변경
 	 		   $("#sideBarForm").attr("action", "lectureAtt.stu").submit();
-	 	   } 
+	 	   
+	 	   } else if(num == 2){ // 과제 클릭 시
+	 		  $("#sideBarForm").attr("action", "homeworkEndList.lec").submit();
+	 	   }
 	    }
 	</script>
 </body>

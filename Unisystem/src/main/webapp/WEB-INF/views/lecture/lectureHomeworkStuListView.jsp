@@ -31,7 +31,7 @@
     }
     #contentBox>div{padding-left: 30px;}
     #impossible_box{margin-top: 80px;}
-    #possible_box>div:first-child, #impossible_box>div:first-child{
+    #possible_box div:nth-child(2), #impossible_box div:first-child{
         font-size: 20px; 
         font-weight: 900;
         margin-bottom: 15px;
@@ -55,6 +55,18 @@
 	    color: #fff !important;
 	    background: RGB(26,86,162)!important;
 	}
+	
+	#hwInsertBtn{
+		border-radius:5px;
+		border:none;
+		background-color: rgb(21, 62, 115);
+		color:white;
+		font-size:15px;
+		padding:3px 12px;
+		float:right;
+		margin-right:30px;
+		margin-bottom:20px;
+	}
 </style>
 </head>
 <body>
@@ -76,7 +88,11 @@
             <div id="contentBox">
 
                 <div id="possible_box">
+                	<c:if test="${ loginUser.userDiv eq 2 }">
+	                	<div><button type="button" id="hwInsertBtn">과제 등록</button></div>
+                	</c:if>
                     <div>제출가능한 과제</div>
+                    
                     <table>
                         <tr>
                             <th style="width: 70px;">번호</th>
@@ -114,53 +130,25 @@
                             <th style="width: 120px;">채점 상황</th>
                             <th style="width: 120px;">점수</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[7주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출</td>
-                            <td>미채점</td>
-                            <td><span>/ 100</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[7주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출</td>
-                            <td>채점됨</td>
-                            <td><span>100 / 100</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[7주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출</td>
-                            <td>채점됨</td>
-                            <td><span>100 / 100</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[7주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출</td>
-                            <td>채점됨</td>
-                            <td><span>100 / 100</span></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[7주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출</td>
-                            <td>채점됨</td>
-                            <td><span>100 / 100</span></td>
-                        </tr>
-                    </table>
-
+                        
+                        <c:forEach var="l" items="${ list }" >
+	                        <tr>
+	                            <td>${ l.rownum }</td>
+	                            <td>${ l.homeworkpName }</td>
+	                            <td>${ l.korName }</td>
+	                            <td>${ l.homeworkpEndDateTime }</td>
+	                            <td>
+		                            <c:if test="${ l.homeworkpCategory eq 'I' }">
+		                        		제출마감
+		                        	</c:if>
+		                        	<c:if test="${ l.classCategory eq 2 }">
+		                        		비대면강의
+		                        	</c:if>
+	                            </td>
+	                            <td>미채점</td>
+	                            <td><span>/ 100</span></td>
+	                        </tr>
+						</c:forEach>
                     <div class="container">
                         <ul class="pagination justify-content-center">
                             <li class="page-item"><a class="page-link" href="#">&lt;</a></li>

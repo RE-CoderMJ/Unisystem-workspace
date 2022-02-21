@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
-import com.us.uni.lecture.model.service.HomeworkService;
 import com.us.uni.lecture.model.service.LectureService;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -26,8 +25,6 @@ public class LectureController {
 	@Autowired
 	private LectureService lService;
 	
-	@Autowired
-	private HomeworkService hService;
 	
 	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("studentClassList.me")
@@ -120,6 +117,8 @@ public class LectureController {
 		return new Gson().toJson(lec);
 	}
 	
+	// 출석 =============================================================================================
+	
 	/* 학생 - 온라인출석부에서 학생 정보를 가져오는 컨트롤러 */
 	@ResponseBody
 	@RequestMapping(value="LoginStuInfo.stu", produces="application/json; charset=UTF-8")
@@ -193,13 +192,13 @@ public class LectureController {
 	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
-	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+	public ModelAndView selectLectureAttControl(int userNo, int classCode, int cpage, ModelAndView mv) {
 				
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
 				
-		int currentPage = lno;
+		int currentPage = cpage;
 		int listCount = lService.selectProAttListCount(l); // 진행한 강좌 총 개수
 	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
@@ -254,7 +253,8 @@ public class LectureController {
 	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
 	@RequestMapping("insertAtt.lec")
 	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
-			
+		
+		// 
 		ArrayList<Lecture> studNoList = l.getStudsNo();						
 		//l.getStudsNo().get(0).getStudNo();
 		
@@ -262,7 +262,7 @@ public class LectureController {
 		
 		if(result == l.getStudsNo().size()) { // 성공
 			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&cPage=1";
 		} else { // 실패
 			model.addAttribute("errorMsg", "강의 생성 실패");
 			return "common/errorPage";
@@ -270,46 +270,69 @@ public class LectureController {
 		
 	}
 	
+	/* 교수 - 출결관리 - 학생 출결상태를 등록하는(update)하는 컨트롤러 */
 	@RequestMapping("insertAttDetail.lec")
-	public void insertAttStatus(String[] status, String[] studNo, int classCode, String attendanceDateB, HttpSession session, Model model) {
+	public String insertAttStatus(Lecture l, HttpSession session) {
 		
-		for(int i=0; i<status.length; i++) {
-			System.out.println(status[i]);
-		}
-		for(int i=0; i<studNo.length; i++) {
-			System.out.println(studNo[i]);
-		}
-
-
-		//System.out.println(attStatusList);
-		
-		//ArrayList<Lecture> attStatusList = l.getAttStatusList();
-
-		//String[] statusArr = attStatusList.get(0).getAttendanceStatus().split(",");
-		//String[] attDateArr = l.getAttendanceDateB().split(",");
-
-		/*
-		int result = 0;
-				
-		for(int i=0; i<statusArr.length; i++) {
-			//l.setAttendanceStatus(arr[i]);
-			String status = statusArr[i];
-
+		// 강의 정보 : l.getClassNo(), l.getClassCode() , ..
+		// 학생 정보 : l.getStudsNo().get(0).getStudNo() / .getAttendanceStatus()
 			
-			result += lService.insertAttStatus(status);
-		}
-		if(result == l.getAttendanceStatus().length()) {
-			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&lno=1";
+		ArrayList<Lecture> studInfo = l.getStudsNo();
+			
+		int result = lService.insertAttStatus(l, studInfo);
+
+		if(result == l.getStudsNo().size()) {
+			session.setAttribute("alertMsg", "학생 출결정보 작성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&cpage=1";
 		} else { // 실패
-			model.addAttribute("errorMsg", "강의 생성 실패");
-			return "common/errorPage";
+			session.setAttribute("alertMsg", "학생 출결정보 작성 실패");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&cpage=1";
+
 		}
-		*/
+		
 	
 	}
 	
+	// 과제 =============================================================================================
 	
+	/* 학생 - 마감된 과제 리스트를 띄워주는 컨트롤러 */
+	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
+	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
+	/*
+	@RequestMapping("homeworkEndList.lec")
+	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="classNo") int classNo, ModelAndView mv) { 
+		// @RequestParam => request.getParameter를 대신함
+		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
+		
+		int listCount = lService.selectHomeworkListCount(classNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, classNo);
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkListView");
+		
+		return mv; 
+	}
+	*/
+	
+	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkDetail.stu")
+	public String selectLectureHomeworkDetial() {
+		return "lecture/lectureHomeworkEnrollForm";
+	}
+	
+	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkUpdate.stu")
+	public String selectLectureHomeworkUpdate() {
+		return "lecture/lectureHomeworkUpdateForm";
+	}
+	
+	/* 학생 - 과제업로드 결과페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkResult.stu")
+	public String selectLectureHomeworkResult() {
+		return "lecture/lectureHomeworkResult";
+	}
 	
 	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
@@ -372,41 +395,6 @@ public class LectureController {
 		return "lecture/lectureVideoMaterialDetailView";
 	}
 	
-	/* 학생 - 메뉴바에서 과제업로드 클릭 시  마감된 과제 리스트를 띄워주는 컨트롤러 */
-	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
-	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
-	@RequestMapping("homeworkList.lec")
-	public String selectHomeworkList(@RequestParam(value="cpage", defaultValue="1") int currentPage) { 
-		// @RequestParam => request.getParameter를 대신함
-		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
-		
-		int listCount = hService.selectHomeworkListCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-		
-		/*
-		ArrayList<HomeworkP> list = hService.selectHomeworkpList(pi);
-		*/
-		
-		return "lecture/lectureHomeworkListView";
-	}
-	
-	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkDetail.stu")
-	public String selectLectureHomeworkDetial() {
-		return "lecture/lectureHomeworkEnrollForm";
-	}
-	
-	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkUpdate.stu")
-	public String selectLectureHomeworkUpdate() {
-		return "lecture/lectureHomeworkUpdateForm";
-	}
-	
-	/* 학생 - 과제업로드 결과페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkResult.stu")
-	public String selectLectureHomeworkResult() {
-		return "lecture/lectureHomeworkResult";
-	}
+
 	
 }
