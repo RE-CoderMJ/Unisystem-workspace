@@ -115,7 +115,7 @@ a:hover {
 				 <b>상담</b> 
 			</div>
 			<div>
-				<a href="">- 상담관리</a>
+				<a href="myProf.appList">- 상담관리</a>
 			</div>
 
 			<div class="side_title">

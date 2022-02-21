@@ -41,8 +41,8 @@ public class Users {
 	 private String profLocation;  
 	 private String profTel; 
 	 private String profStatus; 
-	 private int profAppDay; 
-	 private int profAppTime; 
+	 private String profAppDay; 
+	 private String profAppTime; 
 	 
 	 public Users() {}
 
@@ -51,8 +51,8 @@ public class Users {
 			int studNo, int sprofNo, String studUniv, String studDepartment, String studMajor, String studMinor,
 			String studInto, String studGrad, int studDivision, int studStatus, int studSemester, int profNo,
 			int profRank, String rankChange, String profUniv, String profDepartment, String profMajor, String profInto,
-			String profResign, String profLocation, String profTel, String profStatus, int profAppDay,
-			int profAppTime) {
+			String profResign, String profLocation, String profTel, String profStatus, String profAppDay,
+			String profAppTime) {
 		super();
 		this.userNo = userNo;
 		this.userPwd = userPwd;
@@ -373,19 +373,19 @@ public class Users {
 		this.profStatus = profStatus;
 	}
 
-	public int getProfAppDay() {
+	public String getProfAppDay() {
 		return profAppDay;
 	}
 
-	public void setProfAppDay(int profAppDay) {
+	public void setProfAppDay(String profAppDay) {
 		this.profAppDay = profAppDay;
 	}
 
-	public int getProfAppTime() {
+	public String getProfAppTime() {
 		return profAppTime;
 	}
 
-	public void setProfAppTime(int profAppTime) {
+	public void setProfAppTime(String profAppTime) {
 		this.profAppTime = profAppTime;
 	}
 

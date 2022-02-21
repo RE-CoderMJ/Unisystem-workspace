@@ -3,8 +3,8 @@ package com.us.uni.professor.vo;
 public class Professor {
 	
 	 private int profNo;
-	 private int profAppTime;
-	 private int profAppDay;
+	 private String profAppTime;
+	 private String profAppDay;
 	 private String profInto;
 	 private String profLocation;
 	 private String profMajor;
@@ -18,7 +18,7 @@ public class Professor {
 	 
 	 public Professor() {}
 	 
-	 public Professor(int profNo, int profAppTime, int profAppDay, String profInto, String profLocation,
+	 public Professor(int profNo, String profAppTime, String profAppDay, String profInto, String profLocation,
 			String profMajor, String profRank, int profResign, String profStatus, String profTel, String profUniv,
 			String rankChange, String profDepartment) {
 		super();
@@ -45,19 +45,19 @@ public class Professor {
 		this.profNo = profNo;
 	}
 
-	public int getProfAppTime() {
+	public String getProfAppTime() {
 		return profAppTime;
 	}
 
-	public void setProfAppTime(int profAppTime) {
+	public void setProfAppTime(String profAppTime) {
 		this.profAppTime = profAppTime;
 	}
 
-	public int getProfAppDay() {
+	public String getProfAppDay() {
 		return profAppDay;
 	}
 
-	public void setProfAppDay(int profAppDay) {
+	public void setProfAppDay(String profAppDay) {
 		this.profAppDay = profAppDay;
 	}
 

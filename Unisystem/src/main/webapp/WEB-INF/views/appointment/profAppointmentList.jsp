@@ -14,7 +14,7 @@
 	<jsp:include page="../common/header.jsp" />	
 	
 	<div id="wrapper">
-		<jsp:include page="../student/smySidebar.jsp" />
+		<jsp:include page="../professor/pmySidebar.jsp" />
 		<section>
 			<header id="app-header">
 				<div id="pageName-area">
@@ -22,7 +22,13 @@
 					<br><br>
 					<div id="pageName" style="flaot:left;">상담신청 내역</div><br>
 					<a class="badge badge-pill" id="availableTime" data-toggle="modal" href="#setTime">상담 가능 시간 설정</a>
-					<span>매주 </span>
+					<c:if test="${ day != null }">
+						<span>매주 ${ day }요일&nbsp;&nbsp;</span>
+					</c:if>
+					<c:if test="${ time != null }">
+						<span>${ time }&nbsp;시</span>
+						<span>(한시간 단위로 신청 가능)</span>
+					</c:if>
 	                <br>
 	            </div>
 	          	<div id="tools" align="right">
@@ -111,57 +117,67 @@
 	
 	<!-- 상담 가능 시간 설정 Modal -->
     <div class="modal" id="setTime">
-		<form id="" action="" method="post">
-		          <div class="modal-dialog modal-sm modal-dialog-centered">
-		              <div class="modal-content">
-		                  <!-- Modal body -->
-		                  <div class="modal-body" style="text-align:center; font-weight:900;">
-		                                      상담 가능 시간을 선택해주세요.
-		                      <div class="md-box"  style="margin-top:20px;">
-		                          <p style="text-align:left;">* 요일</p>
-		                          <input type="checkbox" id="mon" name="day" value="1">
-        						  <label for="mon">월</label>
-        						  <input type="checkbox" id="tue" name="day" value="2">
-        						  <label for="tue">화</label>
-        						  <input type="checkbox" id="wed" name="day" value="3">
-        						  <label for="wed">수</label>
-        						  <input type="checkbox" id="thu" name="day" value="4">
-        						  <label for="thu">목</label>
-        						  <input type="checkbox" id="fri" name="day" value="5">
-        						  <label for="fri">금</label>
-		                      </div>
-		                      <div class="md-box">
-		                          <p style="text-align:left;">* 시간(한 시간 단위)</p>
-		                          <input type="checkbox" id="nine" name="day" value="9">
-        						  <label for="nine">9</label>
-        						  <input type="checkbox" id="ten" name="day" value="10">
-        						  <label for="ten">10</label>
-        						  <input type="checkbox" id="ele" name="day" value="11">
-        						  <label for="ele">11</label>
-        						  <input type="checkbox" id="twe" name="day" value="12">
-        						  <label for="twe">12</label>
-        						  <input type="checkbox" id="thir" name="day" value="13">
-        						  <label for="thir">13</label><br>
-        						  <input type="checkbox" id="four" name="day" value="14">
-        						  <label for="four">14</label>
-        						  <input type="checkbox" id="fif" name="day" value="15">
-        						  <label for="fif">15</label>
-        						  <input type="checkbox" id="sixt" name="day" value="16">
-        						  <label for="sixt">16</label>
-        						  <input type="checkbox" id="sevent" name="day" value="17">
-        						  <label for="sevent">17</label>
-		                      </div>
-		                  </div>
-		              
-		              <!-- Modal footer -->
-		               <div id="timeSet-btnArea">
-		                   <button type="button" id="timeSetClose-btn" class="btn" data-dismiss="modal">취소</button>
-		                   <button type="submit" id="timeSet-btn" class="btn" data-toggle="modal">등록하기</button>
-		               </div>
-		           </div>
-		       </div>
+		<form id="" action="myProf.updateAvailableTime" method="post">
+	        <div class="modal-dialog modal-sm modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal body -->
+	                <div class="modal-body" style="text-align:center; font-weight:900;">
+	                                    상담 가능 시간을 선택해주세요.
+	                    <div class="md-box"  style="margin-top:20px;">
+	                        <p style="text-align:left;">* 요일</p>
+	                        <input type="hidden" name="profNo" value="${loginUser.userNo }">
+	                        <input type="checkbox" id="mon" name="profAppDay" value="월">
+	    						  <label for="mon">월</label>
+	    						  <input type="checkbox" id="tue" name="profAppDay" value="화">
+	    						  <label for="tue">화</label>
+	    						  <input type="checkbox" id="wed" name="profAppDay" value="수">
+	    						  <label for="wed">수</label>
+	    						  <input type="checkbox" id="thu" name="profAppDay" value="목">
+	    						  <label for="thu">목</label>
+	    						  <input type="checkbox" id="fri" name="profAppDay" value="금">
+	    						  <label for="fri">금</label>
+	                    </div>
+	                    <div class="md-box">
+	                        <p style="text-align:left;">* 시간(한 시간 단위)</p>
+	                        <input type="checkbox" id="nine" name="profAppTime" value="9">
+	    						  <label for="nine">9</label>
+	    						  <input type="checkbox" id="ten" name="profAppTime" value="10">
+	    						  <label for="ten">10</label>
+	    						  <input type="checkbox" id="ele" name="profAppTime" value="11">
+	    						  <label for="ele">11</label>
+	    						  <input type="checkbox" id="twe" name="profAppTime" value="12">
+	    						  <label for="twe">12</label>
+	    						  <input type="checkbox" id="thir" name="profAppTime" value="13">
+	    						  <label for="thir">13</label><br>
+	    						  <input type="checkbox" id="four" name="profAppTime" value="14">
+	    						  <label for="four">14</label>
+	    						  <input type="checkbox" id="fif" name="profAppTime" value="15">
+	    						  <label for="fif">15</label>
+	    						  <input type="checkbox" id="sixt" name="profAppTime" value="16">
+	    						  <label for="sixt">16</label>
+	    						  <input type="checkbox" id="sevent" name="profAppTime" value="17">
+	    						  <label for="sevent">17</label>
+	                    </div>
+	                </div>
+	            
+		            <!-- Modal footer -->
+		             <div id="timeSet-btnArea">
+		                 <button type="button" id="timeSetClose-btn" class="btn" data-dismiss="modal">취소</button>
+		                 <button type="submit" id="timeSet-btn" class="btn" data-toggle="modal">등록하기</button>
+		             </div>
+		         </div>
+		     </div>
 		</form>
 	</div>
+	
+	<script>
+		$(function(){
+			let appDay = ${day};
+			let appTime = ${time};
+			console.log(day);
+			console.log(time);
+		})
+	</script>
 	<!-- 
 	<script>
 		$(document).ready(function(){
