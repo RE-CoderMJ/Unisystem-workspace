@@ -64,7 +64,7 @@ public interface LectureService {
 	int insertAtt(Lecture l, ArrayList<Lecture> studNoList);
 	
 	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러
-	int insertAttStatus(String status);
+	int insertAttStatus(Lecture l,  ArrayList<Lecture> studInfo);
 
 }
 

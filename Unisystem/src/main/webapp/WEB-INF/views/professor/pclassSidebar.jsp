@@ -117,7 +117,7 @@ a:hover {
 	<form id="sideBarForm" action="" method="post">
         <input type="hidden" name="userNo" value="${ loginUser.userNo }" />
         <input type="hidden" name="classCode" value="${ classInfo.classCode }" />
-        <input type="hidden" name="lno" value="1" />
+        <input type="hidden" name="cpage" value="1" />
     </form>
     
     <script>

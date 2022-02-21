@@ -123,8 +123,17 @@ public class LectureDao {
 
 
 	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러	
-	public int insertAttStatus(SqlSessionTemplate sqlSession, String status) {
-		return sqlSession.insert("lectureMapper.insertAttStatus", status);
+	public int insertAttStatus(SqlSessionTemplate sqlSession, Lecture l, ArrayList<Lecture> studInfo) {
+	
+		int result = 0;
+		for(int i=0; i<studInfo.size(); i++) {
+
+			l.setStudNo(studInfo.get(i).getStudNo());
+			l.setAttendanceStatus(studInfo.get(i).getAttendanceStatus());
+			result += sqlSession.update("lectureMapper.insertAttStatus", l);
+		}
+		
+		return result;
 	}
 	
 	

@@ -342,14 +342,14 @@
 	</insert>
 	
 	<!-- 교수 - 출결관리 - 학생들의 출결상태를 insert -->
-	<insert id="insertAttStatus">
+	<update id="insertAttStatus">
 		update
 		       attendance
-		   set attendance_status = 출결상태
-		 where attendance_date = 출결일
-		   and class_no = 강의번호
-		   and stud_no = 학번
-	</insert>
+		   set attendance_status = #{attendanceStatus}
+		 where attendance_date = #{attendanceDateB}
+		   and class_no = #{classNo}
+		   and stud_no = #{studNo}
+	</update>
 	
 	
 	

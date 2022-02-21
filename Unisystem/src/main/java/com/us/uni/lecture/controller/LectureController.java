@@ -193,13 +193,13 @@ public class LectureController {
 	
 	/* 교수 - 출결관리를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureAttControl.stu")
-	public ModelAndView selectLectureAttControl(int userNo, int classCode, int lno, ModelAndView mv) {
+	public ModelAndView selectLectureAttControl(int userNo, int classCode, int cpage, ModelAndView mv) {
 				
 		Lecture l = new Lecture();
 		l.setUserNo(userNo);
 		l.setClassCode(classCode);
 				
-		int currentPage = lno;
+		int currentPage = cpage;
 		int listCount = lService.selectProAttListCount(l); // 진행한 강좌 총 개수
 	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
@@ -254,7 +254,8 @@ public class LectureController {
 	/* 교수 - 출결관리 - 강의생성 버튼으로 새로운 학생 강의일을 등록하는 컨트롤러 */
 	@RequestMapping("insertAtt.lec")
 	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
-			
+		
+		// 
 		ArrayList<Lecture> studNoList = l.getStudsNo();						
 		//l.getStudsNo().get(0).getStudNo();
 		
@@ -262,7 +263,7 @@ public class LectureController {
 		
 		if(result == l.getStudsNo().size()) { // 성공
 			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&lno=1";
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&cPage=1";
 		} else { // 실패
 			model.addAttribute("errorMsg", "강의 생성 실패");
 			return "common/errorPage";
@@ -271,41 +272,24 @@ public class LectureController {
 	}
 	
 	@RequestMapping("insertAttDetail.lec")
-	public void insertAttStatus(String[] status, String[] studNo, int classCode, String attendanceDateB, HttpSession session, Model model) {
+	public String insertAttStatus(Lecture l, HttpSession session) {
 		
-		for(int i=0; i<status.length; i++) {
-			System.out.println(status[i]);
-		}
-		for(int i=0; i<studNo.length; i++) {
-			System.out.println(studNo[i]);
-		}
-
-
-		//System.out.println(attStatusList);
-		
-		//ArrayList<Lecture> attStatusList = l.getAttStatusList();
-
-		//String[] statusArr = attStatusList.get(0).getAttendanceStatus().split(",");
-		//String[] attDateArr = l.getAttendanceDateB().split(",");
-
-		/*
-		int result = 0;
-				
-		for(int i=0; i<statusArr.length; i++) {
-			//l.setAttendanceStatus(arr[i]);
-			String status = statusArr[i];
-
+		// 강의 정보 : l.getClassNo(), l.getClassCode() , ..
+		// 학생 정보 : l.getStudsNo().get(0).getStudNo() / .getAttendanceStatus()
 			
-			result += lService.insertAttStatus(status);
-		}
-		if(result == l.getAttendanceStatus().length()) {
-			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&lno=1";
+		ArrayList<Lecture> studInfo = l.getStudsNo();
+			
+		int result = lService.insertAttStatus(l, studInfo);
+
+		if(result == l.getStudsNo().size()) {
+			session.setAttribute("alertMsg", "학생 출결정보 작성 완료");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&cpage=1";
 		} else { // 실패
-			model.addAttribute("errorMsg", "강의 생성 실패");
-			return "common/errorPage";
+			session.setAttribute("alertMsg", "학생 출결정보 작성 실패");
+			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&cpage=1";
+
 		}
-		*/
+		
 	
 	}
 	
