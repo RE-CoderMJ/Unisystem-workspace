@@ -282,12 +282,7 @@
     			
     			// search 기능
 				function pagination(i){
-    				/*
-					if (!$("#univList").val().length==0 && $("#departList").val().length==0) {
-					  alert("학부를 선택해 주세요!");
-					  return;
-					}
-					*/
+    			
 					let list = "";
 					let status = "";
 					let page = "";
