@@ -33,6 +33,8 @@ public interface LectureService {
 	// 학생 - 강의홈 - 로그인한 학생의 출석상태 조회(지각)
 	int SelectAttStaListC(Lecture l);
 	
+	// 출결 -------------------------------------------------------------
+	
 	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
 	Users selectLoginStuInfo(int userNo);
 	
@@ -65,6 +67,18 @@ public interface LectureService {
 	
 	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러
 	int insertAttStatus(Lecture l,  ArrayList<Lecture> studInfo);
+	
+	
+	// 과제 -------------------------------------------------------------
+	
+	// 마감된 과제 리스트의 게시글 총 수를 조회
+	int selectHomeworkListCount(int classNo);
+	
+	// 마감된 과제 리스트 페이지 조회
+	ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo);
+	
+	
+	
 
 }
 

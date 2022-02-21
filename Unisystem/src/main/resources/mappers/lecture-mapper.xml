@@ -32,7 +32,7 @@
 		
 		<result column="attendance_status" property="attendanceStatus" />
 		<result column="학번" property="stuGrade" />
-		<result column="total_semester" property="totalSemester" />
+		<result column="total_semester" property="totalSemester" />		
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -40,6 +40,19 @@
 		<result column="kor_name" property="korName" />
 		<result column="phone" property="phone" />		
 	</resultMap>
+	
+	<resultMap type="Homework" id="homeworkResult">
+		<result column="rownum" property="rownum" />
+		<result column="homeworkp_no" property="homeworkpNo" />	
+		<result column="class_no" property="classNo" />	
+		<result column="homeworkp_name" property="homeworkpName" />	
+		<result column="homeworkp_category" property="homeworkpCategory" />	
+		<result column="마감일시" property="homeworkpEndDateTime" />	
+		<result column="status" property="pstatus" />	
+		<result column="kor_name" property="korName" />				
+	</resultMap>
+	
+	
 	
 	<!-- 학생 - 내가 수강중인 강의 조회 : 로그인한 학생의 수강중인 강의 리스트를 불러오는 sql -->
 	<select id="selectStudentClassList" resultMap="lectureResult">
@@ -351,10 +364,7 @@
 		   and stud_no = #{studNo}
 	</update>
 	
-	
-	
-	
-	
+	<!-- 과제 ================================================================= -->
 	
 	<!-- 과제업로드 : 마감상태의 총 게시글 수를 불러오는 sql -->
 	<select id="selectHomeworkListCount" resultType="_int">
@@ -363,26 +373,35 @@
 		  from homeworkp
 		 where status = 'Y'
 		   and homeworkp_category = 'I'	
+           and class_no = #{classNo}
 	</select>
 	
 
 	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
-	<!-- 
-	<select id="selectHomeworkpList" resultMap="">
+	<select id="selectHomeworkpList" resultMap="homeworkResult">
 		select 
-		       homeworkp_no
-		     , class_no
-		     , homeworkp_name
-		     , kor_name
-		     , homeworkp_enddatetime
-		  from homeworkp
-		  join class using(class_no)
-		  join professor using(prof_no)
-		  join users on (prof_no = user_no)
-		 where homeworkp_category = 'I'
-		   and status = 'Y'	
+		       rownum
+		     , a.*
+		  from
+		       (
+		        select
+		               homeworkp_no
+		             , class_no
+		             , homeworkp_name
+		             , kor_name
+		             , homeworkp_category
+		             , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		          from homeworkp
+		          join class using(class_no)
+		          join professor using(prof_no)
+		          join users on (prof_no = user_no)
+		         where homeworkp_category = 'I'
+		           and class_no = 1010
+		           and status = 'Y'
+		         order
+		            by "마감일시" desc       
+		       ) a	   
 	</select>
-	 -->
 
 
 </mapper>

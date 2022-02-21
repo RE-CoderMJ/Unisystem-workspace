@@ -138,15 +138,15 @@
 	                        <tr>
 	                            <td>${ l.rownum }</td>
 	                            <td>${ l.classTitle }</td>
-	                            <td>${ l.attendanceDate }</td>	                         
+	                            <td>${ l.attendanceDateA }</td>	                         
 	                            <td>
-	                            	<c:if test="${ l.attendanceStatus eq 'A'}">
+	                            	<c:if test="${ l.attendanceStatus eq '출석'}">
 	                            		○
 	                            	</c:if>
-	                            	<c:if test="${ l.attendanceStatus eq 'B'}">
+	                            	<c:if test="${ l.attendanceStatus eq '지각'}">
 	                            		X
 	                            	</c:if>
-	                            	<c:if test="${ l.attendanceStatus eq 'C'}">
+	                            	<c:if test="${ l.attendanceStatus eq '결석'}">
 	                            		▲
 	                            	</c:if>                           	
 	                            </td>
@@ -162,12 +162,12 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ pi.currentPage - 1 }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }">&lt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                     		
                     		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ p }">${ p }</a></li>	
+                            	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ p }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }">${ p }</a></li>	
                     		</c:forEach>
                     		
                     		<c:choose>
@@ -175,7 +175,7 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="lectureAtt.stu?cpage=${ pi.currentPage + 1 }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }">&gt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                     		

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
-import com.us.uni.lecture.model.service.HomeworkService;
 import com.us.uni.lecture.model.service.LectureService;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -26,8 +25,6 @@ public class LectureController {
 	@Autowired
 	private LectureService lService;
 	
-	@Autowired
-	private HomeworkService hService;
 	
 	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("studentClassList.me")
@@ -119,6 +116,8 @@ public class LectureController {
 		int lec = lService.SelectAttStaListC(l);
 		return new Gson().toJson(lec);
 	}
+	
+	// 출석 =============================================================================================
 	
 	/* 학생 - 온라인출석부에서 학생 정보를 가져오는 컨트롤러 */
 	@ResponseBody
@@ -271,6 +270,7 @@ public class LectureController {
 		
 	}
 	
+	/* 교수 - 출결관리 - 학생 출결상태를 등록하는(update)하는 컨트롤러 */
 	@RequestMapping("insertAttDetail.lec")
 	public String insertAttStatus(Lecture l, HttpSession session) {
 		
@@ -293,7 +293,46 @@ public class LectureController {
 	
 	}
 	
+	// 과제 =============================================================================================
 	
+	/* 학생 - 마감된 과제 리스트를 띄워주는 컨트롤러 */
+	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
+	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
+	/*
+	@RequestMapping("homeworkEndList.lec")
+	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="classNo") int classNo, ModelAndView mv) { 
+		// @RequestParam => request.getParameter를 대신함
+		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
+		
+		int listCount = lService.selectHomeworkListCount(classNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, classNo);
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkListView");
+		
+		return mv; 
+	}
+	*/
+	
+	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkDetail.stu")
+	public String selectLectureHomeworkDetial() {
+		return "lecture/lectureHomeworkEnrollForm";
+	}
+	
+	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkUpdate.stu")
+	public String selectLectureHomeworkUpdate() {
+		return "lecture/lectureHomeworkUpdateForm";
+	}
+	
+	/* 학생 - 과제업로드 결과페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureHomeworkResult.stu")
+	public String selectLectureHomeworkResult() {
+		return "lecture/lectureHomeworkResult";
+	}
 	
 	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
@@ -356,41 +395,6 @@ public class LectureController {
 		return "lecture/lectureVideoMaterialDetailView";
 	}
 	
-	/* 학생 - 메뉴바에서 과제업로드 클릭 시  마감된 과제 리스트를 띄워주는 컨트롤러 */
-	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
-	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
-	@RequestMapping("homeworkList.lec")
-	public String selectHomeworkList(@RequestParam(value="cpage", defaultValue="1") int currentPage) { 
-		// @RequestParam => request.getParameter를 대신함
-		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
-		
-		int listCount = hService.selectHomeworkListCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-		
-		/*
-		ArrayList<HomeworkP> list = hService.selectHomeworkpList(pi);
-		*/
-		
-		return "lecture/lectureHomeworkListView";
-	}
-	
-	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkDetail.stu")
-	public String selectLectureHomeworkDetial() {
-		return "lecture/lectureHomeworkEnrollForm";
-	}
-	
-	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkUpdate.stu")
-	public String selectLectureHomeworkUpdate() {
-		return "lecture/lectureHomeworkUpdateForm";
-	}
-	
-	/* 학생 - 과제업로드 결과페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureHomeworkResult.stu")
-	public String selectLectureHomeworkResult() {
-		return "lecture/lectureHomeworkResult";
-	}
+
 	
 }

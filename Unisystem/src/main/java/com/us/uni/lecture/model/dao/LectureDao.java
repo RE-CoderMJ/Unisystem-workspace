@@ -36,6 +36,8 @@ public class LectureDao {
 		return sqlSession.selectOne("lectureMapper.selectLectureMainPage", lno);
 	}
 	
+	// 출결 ----------------------------------------------------------------------------------------------------
+	
 	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
 	public Users selectLoginStuInfo(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("lectureMapper.selectLoginStuInfo", userNo);
@@ -137,9 +139,21 @@ public class LectureDao {
 	}
 	
 	
+	// 과제 ----------------------------------------------------------------------------------------------------
 	
 	
+	// 마감된 과제 리스트의 게시글 총 수를 조회
+	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, int classNo) {
+		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", classNo);
+	}
 	
-	
+	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, int classNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", classNo);
+	}
 	
 }

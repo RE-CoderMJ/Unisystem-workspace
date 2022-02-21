@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.us.uni.common.model.vo.PageInfo;
-import com.us.uni.lecture.model.dao.HomeworkDao;
 import com.us.uni.lecture.model.dao.LectureDao;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -49,6 +48,8 @@ public class LectureServiceImpl implements LectureService{
 	public Lecture selectLectureMainPage(int lno) {
 		return lDao.selectLectureMainPage(sqlSession, lno);
 	}
+	
+	// 출결 -------------------------------------------------------------
 
 	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
 	@Override
@@ -134,7 +135,21 @@ public class LectureServiceImpl implements LectureService{
 		return lDao.insertAttStatus(sqlSession, l, studInfo);
 	}
 
+	
+	// 과제 -------------------------------------------------------------
 
+	
+	// 마감된 과제 리스트의 게시글 총 수를 조회
+	@Override
+	public int selectHomeworkListCount(int classNo) {
+		return lDao.selectHomeworkListCount(sqlSession, classNo);
+	}
+
+	// 마감된 과제 리스트 페이지 조회
+	@Override
+	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo) {
+		return lDao.selectHomeworkpList(sqlSession, pi, classNo);
+	}
 	
 
 	
