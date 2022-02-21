@@ -8,6 +8,8 @@
 <title>UNI SYSTEM</title>
 </head>
 
+
+
  
 <style>
 .page_title {
@@ -131,98 +133,22 @@
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
   <!-- fullcalendar 언어 CDN -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+  <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
   	
 	<script>
+	
 		function click_add() {
 	    	var url = "schedulePopup";
 	    	var name = "schedulePopup";
 	    	var option = "width = 500, height = 600 left = 100, top=50,location=no";
 	    	window.open(url,name,option);
 	    }
-	 
+		
+		
 		
 		 
 		$(function(){
 			
-			/*
-			$.ajax({
-				url:'getTodoCal',
-				data:{},
-				type:'POST',
-				dataType:'json',
-				success:function(data){
-					console.log(data);
-					
-					let todoArr =[];
-					for(let i in data){
-						let obj = {
-								title:data[i].todoTitle,
-								start:data[i].todoDate
-						};
-						todoArr.push(obj);
-					}	
-					   
-		    	    // calendar element 취득
-		  		     var calendarEl = $('#calendar')[0];
-		  		     // full-calendar 생성하기
-		  		     var calendar = new FullCalendar.Calendar(calendarEl, {
-		  		        height: '700px', // calendar 높이 설정
-		  		        expandRows: true, // 화면에 맞게 높이 재설정
-		  		        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
-		  		        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
-		  		        // 해더에 표시할 툴바
-		  		        headerToolbar: {
-		  		          left: 'prev,next today',
-		  		          center: 'title',
-		  		          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-		  		        },
-		  		        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-		  		        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-		  		        editable: true, // 수정 가능 
-		  		        selectable: true, // 달력 일자 드래그 설정가능
-		  		        nowIndicator: true, // 현재 시간 마크
-		  		        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-		  		        locale: 'ko', // 한국어 설정
-		  		        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
-		  		          console.log(obj);
-		  		        },
-		  		        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
-		  		          console.log(obj);
-		  		        },
-		  		        
-		  		        select:
-		  		         function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-		  		          calendar.unselect()
-		  		        }, 
-		  		       events: todoArr, 
-		  		       eventClick: function(data, jsEvent, view) { //이벤트 삭제
-		  		    	   console.log(data);
-		 				if(!confirm("일정 '"+ data.event._def.title+"'을 삭제하시겠습니까?"))
-		 				{
-		 					return false;
-		 				}else{
-		 					
-		 				$.ajax({
-		 				  type: 'POST',  
-		 				  dataType:'json',
-		 				  url: "deleteSchedule",
-		 				  data: {eventNo: data.event._def.groupId},
-		 				  success:
-		 					function(result){
-		 					   if(result == 1){
-		 						alert('삭제되었습니다.');
-		 						location.reload();
-		 									}
-		 				 				 }
-		 							});
-		 						}
-		 			  		}
-		  		      });
-		  		      // 캘린더 랜더링
-		  		      calendar.render();
-					}	
-				});*/
-		  
 			$.ajax({
 				   url:'getevent',
 			       data:{euserNo : '${loginUser.userNo}'
@@ -256,6 +182,9 @@
 							todoArr.push(obj);
 						}	
 		    	       
+		    	       let arr = eventArr.concat(todoArr);
+		    	       console.log(arr);
+		    	       
 			    	    // calendar element 취득
 			  		     var calendarEl = $('#calendar')[0];
 			  		     // full-calendar 생성하기
@@ -280,16 +209,51 @@
 			  		        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
 			  		          console.log(obj);
 			  		        },
+			  		      eventDrop: function(data, delta, revertFunc) { //이벤트 수정
+			  		    	  
+			  				 let updateStartDate = data.event._instance.range.start;
+			  				 let updateStartStr =  (new Date(updateStartDate)).toISOString().slice(0, 10)
+			  			   
+			  				 let updateEndDate = data.event._instance.range.end;
+			  				 let updateEndStr = (new Date(updateEndDate)).toISOString().slice(0, 10)
+				  			 
+			  		       	 // let updateStartStr = updateStartDate.getFullYear() + "-" + (updateStartDate.getMonth() + 1) + "-" + updateStartDate.getDate();
+			  		      	 // let updateEndStr = updateEndDate.getFullYear() + "-" + (updateEndDate.getMonth() + 1) + "-" + updateEndDate.getDate();
+			  		    	  
+			  		    	 console.log(updateStartStr);
+			  		    	 
+					  			$.ajax({
+					  			  type: 'POST',  
+					  			  dataType:'json',
+					  			  url: "updateSchedule",
+					  			  data: {
+					  				  eventNo:data.event._def.groupId, 
+					  				  eventTitle:data.event._def.title, 
+					  				  startDate:updateStartStr, 
+					  				  endDate:updateEndStr
+					  				  },
+					  				  success:function( result ) {
+					  					  console.log(result)
+					  					  if(result == 1){
+					  					  }
+					  				  }
+					  				  });
+			  			  } , 
+			  			 
+			  			  
 			  		     
 			  		        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
 			  		          console.log(obj);
 			  		        },
 			  		        
-			  		        select:
-			  		         function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-			  		          calendar.unselect()
+			  		        select: function (start, end, allDay) {             
+						        var startFix= moment($.fullCalendar.formatDate(start, 'YYYY-MM-DD'));               
+						        newCalendar(startFix);           
 			  		        }, 
-			  		       events:(eventArr,todoArr),
+
+			  		       
+			  		       events:arr,
+			  		       
 			  		       eventClick: function(data, jsEvent, view) { //이벤트 삭제
 			  		    	   console.log(data);
 			 				if(!confirm("일정 '"+ data.event._def.title+"'을 삭제하시겠습니까?"))

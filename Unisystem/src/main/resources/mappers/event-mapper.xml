@@ -74,7 +74,7 @@
 	where event_no =#{eventNo}
 	</delete>
 
-	<update id="updateEvent">
+	<update id="updateSchedule">
 	update
 		event
 	set 
@@ -84,5 +84,6 @@
 	where event_no =#{eventNo} 
 	</update>
 
-
+	 
+	
 </mapper>
