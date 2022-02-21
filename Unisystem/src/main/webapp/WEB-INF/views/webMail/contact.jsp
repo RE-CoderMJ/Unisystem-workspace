@@ -31,7 +31,7 @@
                         <button data-toggle="modal" data-target="#addContact"><span style="color:navy">+</span>&nbsp;추가</button>
                         <button id="delete"><span style="color:red">-</span>&nbsp;삭제</button>
                         <button id="edit">수정</button>
-                        <button style="margin-left: -4px;">메일쓰기</button>
+                        <button id="write" style="margin-left: -4px;">메일쓰기</button>
                     </div>
                     <div id="tools-right" align="right">
                         <select name="" id="search-option">
@@ -69,6 +69,10 @@
             </article>
         </section>
     </div>
+    
+    <form action="webMail.writeForm" method="post">
+    	<input id="address" name="address" type="hidden">
+    </form>
 
 	<jsp:include page="../common/footer.jsp" />
 	
@@ -93,7 +97,7 @@
 							value += "<tr><td><input type='checkbox' class='checkbox'></td>"
 								   + "<td class='contact-number'>" + result.list[i].contactNo + "</td>"
 	                        	   + "<td>" + result.list[i].name + "</td>"
-	                        	   + "<td>" + result.list[i].email + "</td>"
+	                        	   + "<td class='email'>" + result.list[i].email + "</td>"
 	                        	   + "<td>" + result.list[i].phone + "</td>"
 	                        	   + "</tr>";
 						}
@@ -252,7 +256,7 @@
 				
 				$(".checkbox:checked").each(function(){
 					count++;
-					value = $(".checkbox:checked").parent().siblings(".contact-number").text();
+					value = $(this).parent().siblings(".contact-number").text();
 					checkedValue.push(value);
 				});
 				
@@ -287,6 +291,31 @@
 				
 			}
 		})
+	</script>
+	
+	<!-- 메일 보내기 기능 -->
+	<script>
+		$(document).on("click", "#write", function(){
+			let emailValues = [];
+			let count;
+			let value;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+				value = $(this).parent().siblings(".email").text();
+				emailValues.push(value);
+			});
+			
+			if(count == 0){
+				alert("메일을 작성할 연락처를 선택해주세요.");
+			}else{
+				let address = emailValues.join(",");
+				$("#address").val(address);
+				$("form").submit();
+			}
+			
+		})
+
 	</script>
 	
 	

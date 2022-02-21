@@ -77,7 +77,14 @@
 	               		<input type="hidden" name="userNo" value="${ loginUser.userNo }">
 	               		<input type="hidden" name="mNo" value="${mf.mailNo}">
 	                    <span>받는 사람</span>
-	                    <input id="write-to" type="text" name="userToNo" required value="${mf.userToNo > null ? ' ' : mf.userToNo }" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+	                    <c:choose>
+	                    	<c:when test="${ address eq null }">
+			                    <input id="write-to" type="text" name="userToNo" required value="${mf.userToNo > null ? ' ' : mf.userToNo }" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+							</c:when>
+							<c:otherwise>
+								<input id="write-to" type=***************"text" name="userToNo" required value="${address}" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+							</c:otherwise>	                    	                    	
+	               		</c:choose>
 	                    <br><br> 
 	                    <span>참조</span>
 	                    <input id="write-cc" type="text" name="cc" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">

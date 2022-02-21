@@ -238,14 +238,17 @@ public class WebMailController {
 	 * @return 작성폼 화면
 	 */
 	@RequestMapping("webMail.writeForm")
-	public String writeMailForm(String mNo, Model m){
+	public String writeMailForm(String mNo, String address, Model m){
 		
+		MailFrom mf = new MailFrom();
 		if(mNo != null) {
 			int mfNo = Integer.parseInt(mNo);
 			
-			MailFrom mf = mService.selectDraft(mfNo);
+			mf = mService.selectDraft(mfNo);
 			m.addAttribute("mf", mf);
-		}			
+		}
+		m.addAttribute("address", address);
+		
 		return "webMail/writeMailForm";		
 	}
 	
