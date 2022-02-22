@@ -395,7 +395,7 @@
 				if(status == "예약 취소"){
 					studyForm.action = "cancel.sr";
 					
-				}else if(status = "내일 예약 가능"){
+				}else if(status == "내일 예약 가능"){
 					alertify.alert("스터디룸은 하루에 한번만 사용할 수 있습니다.");
 						return false;
 				}else if(checkTime == undefined){
@@ -471,7 +471,7 @@
 									
 							 	
 							 	// 내가 예약한 시간과 현재 시간이 일치하면 취소 불가로 이름이 바뀜
-							 	let hours = new Date().getHours()
+							 	let hours = new Date().getHours();
 							 	if(hours > start){
 							 		$(".submitBtn>p").text("내일 예약 가능");
 							 	}
@@ -521,23 +521,29 @@
 				  })
 				  // data에 있는 시간들을 시작 시간부터 끝나는 시간 전까지 시간별로 접근해서 배열에 담기게 함! 
 				  
+				  var hours = new Date().getHours();
 				  
 				  for(let t=6; t<=22; t++){
 					  // 배열.indexOf로 해당 배열이 있는 값과 t가 일치하지 않으면 -1를 반환함!
-					  if(noTime.indexOf(t) == -1){
-						  if(t < 10){
-							  t = "0" + t;
+					  if(hours < t){
+						  
+						  
+						  if(noTime.indexOf(t) == -1){
+							  if(t < 10){
+								  t = "0" + t;
+							  }
+							  if(t < 12){
+								  // AM
+								  options += "<option value="+t+">" + t + ":00 AM </option>";
+							  }else{
+								  // PM
+								  options += "<option value="+t+">" + t + ":00 PM </option>";
+							  }  
 						  }
-						  if(t < 12){
-							  // AM
-							  options += "<option value="+t+">" + t + ":00 AM </option>";
-						  }else{
-							  // PM
-							  options += "<option value="+t+">" + t + ":00 PM </option>";
-						  }  
 					  }
+					  
 				  }
-				  
+					  
 				  $("#useTime").html(options);
 				
 			  },error:() => {
