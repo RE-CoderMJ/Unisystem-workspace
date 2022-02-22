@@ -153,6 +153,14 @@ margin-top: 10px;
 .bdel{
 	margin-right:4px;
 }
+.replyDiv{
+	width: 869px;
+    margin: auto;
+    margin-top: 36px;
+    margin-right: 195px;
+    position: relative;
+    right: 10px;
+    }
 </style>
 
 <body>
@@ -219,7 +227,7 @@ margin-top: 10px;
 	            	<input type="hidden" name="filePath" value="${at.path}">
 	            </form>
 	            
-	            <script>
+	             <script>
 	            	function postFormSubmit(num){
 	            		if(num == 1){ // 수정하기 클릭시
 	            			$("#postForm").attr("action", "updateForm.bo").submit();
@@ -230,11 +238,141 @@ margin-top: 10px;
 	            </script>
 	            
 				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
+				
+	            <!-- ajax 댓글구현 -->
+			<div class="replyDiv">
+			<table id="replyArea" class="table">
+	                <thead>
+                   <c:choose>
+                    		<c:when test="${ empty loginUser }">
+		                        <th colspan="2">
+		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <th colspan="2">
+		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button type="button" class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+                        	</c:otherwise>
+                        </c:choose>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+        
+
+	    
+	    <script>
+	    
+			$(function(){
+	    		selectReplyList();
+	    		
+	    		$(document).on("click", ".close", function(){
+					let replyNo = $(this).children("span[name=close]").val();
+					replyDelete();
+					})
+	    	})
+	     
+			
+    	
+			
+	    	function addReply(){
+				
+	    		if($("#content").val().trim().length != 0){
+	    			
+	    			$.ajax({
+	    				url:"rinsert.bo",
+	    				data:{
+	    					rboardNo : ${b.boardNo},
+	    					replyContent:$('#content').val(),
+	    					ruserNo:'${loginUser.userNo}'
+	    				},
+	    				success:function(status){
+	    					if(status =="success"){
+	    						selectReplyList();
+	    						$('#content').val("");
+	    						}
+	    					}
+	    				, error:function(){
+	    					console.log("댓글작성용 ajax 통신실패");
+	    				}
+	    			})
+	    			
+	    		}else{
+	    			alert('댓글 작성 후 등록요청해주세요!');
+	    		}
+	    	}
+	    	
+			function selectReplyList(){
+	    		$.ajax({
+	    			url:"rlist.bo",
+	    			data:{bno:${b.boardNo}},
+	    			success:function(list){
+	    				console.log(list);
+	    				let value="";
+	    				
+	    				for(let i in list){
+	    					
+	    					value += "<tr>"
+	    						  + "<th>" + list[i].replyWriter +"</th>"
+	    						  + "<td>" + list[i].replyContent + "</td>"
+	    						  + "<td>" + list[i].createDate 
+	    						  + "<span name='close' class='close'>x</span>"
+	    						  + "</td>"
+	    						  + "<input type='hidden' value='"+list[i].replyNo+"' name='replyNo' id='replyNo'/>";
+	    						  + "</tr>"
+	    						  
+	    				}
+	    				$("#replyArea tbody").html(value);
+	    				$("#rcount").text(list.length);
+	    			},
+	    			error:function(){
+	    				console.lof("댓글리스트 조회용 ajax 통신실패");
+	    			}
+	    		});
+	    	}
+			
+			
+			
+			
+			
+			function replyDelete(){
+				if(!confirm("댓글을 삭제하시겠습니까?"))
+ 				{
+ 					return false;
+ 				}else{
+ 					
+ 				$.ajax({
+ 				  type: 'POST',  
+ 				  dataType:'json',
+ 				  url: "replyDelete",
+ 				  data: {replyNo: $('#replyNo').val()},
+ 				  success:
+ 					function(result){
+ 					   if(result == 1){
+ 						alert('삭제되었습니다.');
+ 						window.location.reload();
+ 						
+ 						}
+ 				  }
+ 				});
+ 				}
+			}
+	    	
+	    	
+	    </script>        
+	           
 		</div>
 			</div>
 		</div>
 		<!--로그인한 회원에게만 보여지도록 조건처리-->
 	</div>
+	
+	
 
 	<br clear="both">
 
