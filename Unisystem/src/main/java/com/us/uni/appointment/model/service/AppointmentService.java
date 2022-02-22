@@ -23,6 +23,9 @@ public interface AppointmentService {
 	//학생 상담신청 내역 리스트 서비스
 	int selectAppListCount(int userNo);
 	ArrayList<Appointment> selectAppList(int userNo, PageInfo pi);
+
+	//학생 상담신청 내역 상세조회 서비스
+	Appointment selectApp(int appNo);
 	
 
 }

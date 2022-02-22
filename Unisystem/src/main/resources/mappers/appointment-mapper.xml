@@ -104,7 +104,7 @@
 		     , kor_name "prof_name"
 		     , title
 		     , content
-		     , enroll_date
+		     , to_char(enroll_date, 'yyyy-mm-dd') "enroll_date"
 		     , app_date
 		     , app_status
 		     , reason
@@ -114,5 +114,23 @@
 		   and status = 'Y'
 		 order
 		    by app_no desc
+	</select>
+	
+	<select id="selectApp" resultMap="appResult">
+		select
+		       app_no
+		     , stud_no
+		     , prof_no
+		     , kor_name "prof_name"
+		     , title
+		     , content
+		     , to_char(enroll_date, 'yyyy-mm-dd') "enroll_date"
+		     , app_date
+		     , app_status
+		     , reason
+		  from appointment
+		  join users on (user_no = prof_no)
+		 where app_no = #{appNo}
+		   and status = 'Y'
 	</select>
 </mapper>

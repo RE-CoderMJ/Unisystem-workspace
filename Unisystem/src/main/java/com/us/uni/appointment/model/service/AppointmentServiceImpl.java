@@ -50,4 +50,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public ArrayList<Appointment> selectAppList(int userNo, PageInfo pi) {
 		return aDao.selectAppList(sqlSession, userNo, pi);
 	}
+
+	@Override
+	public Appointment selectApp(int appNo) {
+		return aDao.selectApp(sqlSession, appNo);
+	}
 }

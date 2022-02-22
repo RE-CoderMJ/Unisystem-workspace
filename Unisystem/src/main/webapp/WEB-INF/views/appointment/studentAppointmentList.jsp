@@ -77,11 +77,11 @@
 						
 						for(let i in result.list){
 							value += "<tr><td><input type='checkbox' class='checkbox'></td>"
-								   + "<td>" + result.list[i].appNo + "</td>"
-	                        	   + "<td>" + result.list[i].profName + "</td>"
-	                        	   + "<td>" + result.list[i].enrollDate + "</td>"
-	                        	   + "<td>" + result.list[i].appDate + "</td>"
-	                        	   + "<td>" + result.list[i].title + "</td>";
+								   + "<td class='click app-no'>" + result.list[i].appNo + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].profName + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].enrollDate + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].appDate + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].title + "</td>";
 	                       if(result.list[i].appStatus == 1){
 	                       		value += "<td class='pending'>대기</td>";	                    	   
 	                       }else if(result.list[i].appStatus == 2){
@@ -135,6 +135,15 @@
 				
 			});
 		}
+	</script>
+	
+	<!-- 상세조회 -->
+	<script>
+		$(function(){
+			$(document).on("click", ".click", function(){
+				location.href="myStu.appDetail?appNo=" + $(this).siblings(".app-no").text();
+			});		
+		})
 	</script>
 	
 	

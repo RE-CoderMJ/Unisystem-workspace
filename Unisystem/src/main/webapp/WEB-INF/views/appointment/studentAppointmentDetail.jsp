@@ -25,29 +25,44 @@
 	            </div>
 	          	<div id="tools" align="right">
 	          		<button data-toggle="modal" data-target="#editContact">목록</button>
-	                <button data-toggle="modal" data-target="#addContact"><span style="color:navy">+</span>&nbsp;신청</button>
+	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
 	                <button data-toggle="modal" data-target="#deleteContact"><span style="color:red">-</span>&nbsp;삭제</button>
-	                <button data-toggle="modal" data-target="#editContact">수정</button>
+	                <c:if test=${a.appStatus eq 1 }>
+	                	<button data-toggle="modal" data-target="#editContact">수정</button>
+	                </c:if>
 				</div>
 			</header>
 			<article>
                 <div id="content-area">
 	                <span class="badge badge-pill title">담당교수</span>
-	                <span class="contents">김땡땡 교수</span><br><br>
+	                <span class="contents">${ a.profName }</span><br><br>
 	                <span class="badge badge-pill title">신청날짜</span>
-	                <span class="contents">2022-01-19</span><br><br>
+	                <span class="contents">${ a.enrollDate }</span><br><br>
 	                <span class="badge badge-pill title">상담일시</span>
-	                <span class="contents">2022-01-20 15:00</span><br><br>
+	                <span class="contents">${ a.appDate }</span><br><br>
 	                <span class="badge badge-pill title">제목</span>
-	                <span class="contents">이번학기 성적 관련 상담 신청합니다.</span><br><br>
+	                <span class="contents">${ a.title }</span><br><br>
 	                <span class="badge badge-pill title" style="float:left;">내용</span>
 	                <span class="contents" id="content">
-	                	이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다
+	                	${ a.content }
 	                </span><br><br>
 	                <span class="badge badge-pill title">상태</span>
-	                <span class="contents pending">대기</span><br><br>
+	                <c:choose>
+	                	<c:when test="${ a.appStatus eq 1}">
+			                <span class="contents pending">대기</span><br><br>
+	                	</c:when>
+	                	<c:when test="${ a.appStatus eq 2}">
+			                <span class="contents approved">승인</span><br><br>
+	                	</c:when>
+	                	<c:when test="${ a.appStatus eq 3}">
+			                <span class="contents completed">완료</span><br><br>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<span class="contents rejected">반려</span><br><br>
+	          			</c:otherwise>
+	               	</c:choose>
 	                <span class="badge badge-pill title">반려 사유</span>
-	                <span class="contents"></span>
+	                <span class="contents">${ a.profName == null ? "": a.reason }</span>
                 </div>
 			</article>
 		</section>
@@ -55,13 +70,12 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<!-- 
 	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
 			$("#webMail-sidebar").css('height', $len + 22);
 		})
 	</script>
-	 -->
+	
 </body>
 </html>

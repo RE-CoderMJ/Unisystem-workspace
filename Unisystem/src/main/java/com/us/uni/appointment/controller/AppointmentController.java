@@ -31,6 +31,12 @@ public class AppointmentController {
 		return "appointment/studentAppointmentList";
 	}
 	
+	/**
+	 * 학생 상담신청내역 조회 리스트 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("myStu.selectAppList")
 	public Map<String, Object> selectAppList(int currentPage, int userNo){
@@ -51,8 +57,18 @@ public class AppointmentController {
 	}
 	
 	
+	/**
+	 * 
+	 * @param appNo
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("myStu.appDetail")
-	public String selectApp() {
+	public String selectApp(int appNo, Model m) {
+		
+		Appointment a = aService.selectApp(appNo);
+		m.addAttribute("a", a);
+		
 		return "appointment/studentAppointmentDetail";
 	}
 	
@@ -80,7 +96,7 @@ public class AppointmentController {
 	 */
 	@RequestMapping("myStu.enrollApp")
 	public String enrollApp(Appointment a) {
-		a.setAppDate(a.getAppDate() + a.getAppTime());
+		a.setAppDate(a.getAppDate() + "   " + a.getAppTime() + ":00");
 		
 		int result = aService.enrollApp(a);
 		

@@ -45,4 +45,8 @@ public class AppointmentDao {
 		return (ArrayList)sqlSession.selectList("appMapper.selectAppList", userNo);
 	}
 
+	public Appointment selectApp(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("appMapper.selectApp", appNo);
+	}
+
 }
