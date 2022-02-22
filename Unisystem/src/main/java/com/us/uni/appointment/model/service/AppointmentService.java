@@ -1,6 +1,9 @@
 package com.us.uni.appointment.model.service;
 
+import java.util.ArrayList;
+
 import com.us.uni.appointment.model.vo.Appointment;
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.professor.vo.Professor;
 import com.us.uni.student.model.vo.Student;
 
@@ -16,5 +19,10 @@ public interface AppointmentService {
 	Student selectStuAppInfo(int userNo);
 	// 상담신청
 	int enrollApp(Appointment a);
+	
+	//학생 상담신청 내역 리스트 서비스
+	int selectAppListCount(int userNo);
+	ArrayList<Appointment> selectAppList(int userNo, PageInfo pi);
+	
 
 }

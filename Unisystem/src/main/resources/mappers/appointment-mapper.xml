@@ -16,6 +16,20 @@
 		<result column="prof_name" property="profName" />
 		<result column="sysdate" property="appDate" />
 	</resultMap>
+	
+	<resultMap type="Appointment" id="appResult">
+		<result column="app_no" property="appNo" />
+		<result column="stud_no" property="studNo" />
+		<result column="prof_no" property="profNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="app_date" property="appDate" />
+		<result column="app_status" property="appStatus" />
+		<result column="reason" property="reason" />
+		<result column="status" property="status" />
+		<result column="prof_name" property="profName" />
+	</resultMap>
 
 	<update id="updateAvailableTime">
 		update
@@ -73,4 +87,32 @@
 		  , 1
 		  )
 	</insert>
+	
+	<select id="selectAppListCount" resultType="_int">
+		select
+		       count(*)
+		  from appointment
+		 where stud_no = #{userNo}
+		   and status = 'Y'
+	</select>
+	
+	<select id="selectAppList" resultMap="appResult">
+		select
+		       app_no
+		     , stud_no
+		     , prof_no
+		     , kor_name "prof_name"
+		     , title
+		     , content
+		     , enroll_date
+		     , app_date
+		     , app_status
+		     , reason
+		  from appointment
+		  join users on (user_no = prof_no)
+		 where stud_no = #{userNo}
+		   and status = 'Y'
+		 order
+		    by app_no desc
+	</select>
 </mapper>

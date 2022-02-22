@@ -1,5 +1,7 @@
 package com.us.uni.appointment.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.us.uni.appointment.model.service.AppointmentService;
 import com.us.uni.appointment.model.vo.Appointment;
+import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.common.template.Pagination;
 import com.us.uni.professor.vo.Professor;
 import com.us.uni.student.model.vo.Student;
 import com.us.uni.users.model.vo.Users;
@@ -29,8 +33,21 @@ public class AppointmentController {
 	
 	@ResponseBody
 	@RequestMapping("myStu.selectAppList")
-	public Map<String, Object> selectAppList(){
+	public Map<String, Object> selectAppList(int currentPage, int userNo){
 		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = aService.selectAppListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Appointment> list = aService.selectAppList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		System.out.println(list);
+		
+		return map;
 	}
 	
 	
@@ -56,8 +73,14 @@ public class AppointmentController {
 		return "appointment/studentAppointmentEnrollForm";
 	}
 	
+	/**
+	 * 상담 신청 컨트롤러
+	 * @param a
+	 * @return
+	 */
 	@RequestMapping("myStu.enrollApp")
 	public String enrollApp(Appointment a) {
+		a.setAppDate(a.getAppDate() + a.getAppTime());
 		
 		int result = aService.enrollApp(a);
 		

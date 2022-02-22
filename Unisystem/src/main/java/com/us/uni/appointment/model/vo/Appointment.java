@@ -19,7 +19,9 @@ public class Appointment {
 	private String content;
 	private String enrollDate;
 	private String appDate;
-	private String appStatus;
+	private int appStatus;
 	private String reason;
 	private String status;
+	private String profName;
+	private String appTime;
 }

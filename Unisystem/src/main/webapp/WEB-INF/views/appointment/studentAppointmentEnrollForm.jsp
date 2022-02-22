@@ -45,7 +45,7 @@
 		                <span id="warn">** 상담은 최소 하루 전날 예약이 가능하며 상담 가능 시간 외 신청 시 반려될 수 있습니다.</span><br><br>
 		                <span class="badge badge-pill title">상담일자</span>
 		                <input type="text" id="datepicker" class="contents" name="appDate">
-		                <select id="time-option" style="height:30px;">
+		                <select id="time-option" name="appTime" style="height:30px;">
 	                    
 		                </select> <br><br>
 		                

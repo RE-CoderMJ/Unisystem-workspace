@@ -1,9 +1,13 @@
 package com.us.uni.appointment.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.us.uni.appointment.model.vo.Appointment;
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.professor.vo.Professor;
 import com.us.uni.student.model.vo.Student;
 
@@ -26,6 +30,19 @@ public class AppointmentDao {
 
 	public int enrollApp(SqlSessionTemplate sqlSession, Appointment a) {
 		return sqlSession.insert("appMapper.enrollApp", a);
+	}
+
+	public int selectAppListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("appMapper.selectAppListCount", userNo);
+	}
+
+	public ArrayList<Appointment> selectAppList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("appMapper.selectAppList", userNo);
 	}
 
 }

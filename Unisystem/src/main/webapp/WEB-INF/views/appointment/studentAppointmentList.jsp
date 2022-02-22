@@ -25,88 +25,117 @@
 	            </div>
 	          	<div id="tools">
 	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
-	                <button><span style="color:red">-</span>&nbsp;삭제</button>
 	                <button>수정</button>
 				</div>
 			</header>
 			<article>
 				<table class="table table-hover" id="list">
-                    <tbody>
+					<thead>
                     	<tr style="background:rgb(232, 232, 232);">
-                    		<th><input type="checkbox" class="checkbox"></th>
+                    		<th></th>
                     		<th>No.</th>
                     		<th>담당교수</th>
                     		<th>신청날짜</th>
                     		<th>상담일시</th>
                     		<th>내용</th>
                     		<th>상태</th>
-                    	</tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>5</td>
-                            <td>김땡땡 교수</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="pending">대기</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>4</td>
-                            <td>김땡땡 교수</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>3</td>
-                            <td>김땡땡 교수</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>2</td>
-                            <td>김땡땡 교수</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>1</td>
-                            <td>김땡땡 교수</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="rejected">반려</td>
-                        </tr>
+                    	</tr>						
+					</thead>
+                    <tbody>
+                        
                     </tbody>
                 </table>
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                   </div>
+                <input type="hidden" id="cPage">
 			</article>
 		</section>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	
+	<script>
+		$(function(){
+			selectAppList(1);
+		});
+		
+		function selectAppList(cPageNo){
+			$.ajax({
+				url:"myStu.selectAppList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					
+					if(result.list.length ===0){
+						value = "<tr><td style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>"
+					}else{
+						
+						for(let i in result.list){
+							value += "<tr><td><input type='checkbox' class='checkbox'></td>"
+								   + "<td>" + result.list[i].appNo + "</td>"
+	                        	   + "<td>" + result.list[i].profName + "</td>"
+	                        	   + "<td>" + result.list[i].enrollDate + "</td>"
+	                        	   + "<td>" + result.list[i].appDate + "</td>"
+	                        	   + "<td>" + result.list[i].title + "</td>";
+	                       if(result.list[i].appStatus == 1){
+	                       		value += "<td class='pending'>대기</td>";	                    	   
+	                       }else if(result.list[i].appStatus == 2){
+	                    	   value += "<td class='accepted'>승인</td>";
+	                       }else if(result.list[i].appStatus == 3){
+	                    	   value += "<td class='completed'>완료</td>";
+	                       }else{
+	                    	   value += "<td class='rejected'>반려</td>";
+	                       }
+	                        value += "</tr>";
+						}
+						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectAppList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectAppList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectAppList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectAppList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$("#webMail-sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
+					}
+					
+					$("#list>tbody").html(value);
+					
+				},error:function(){
+					console.log("상담신청내역 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
 	
 	
 	<script>
