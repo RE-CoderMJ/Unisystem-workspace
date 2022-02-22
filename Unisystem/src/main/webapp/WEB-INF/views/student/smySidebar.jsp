@@ -114,8 +114,8 @@ a:hover {
 			<div class="side_title">
 				<b>상담</b>
 			</div>
-			<p>
-				<a href="">- 상담신청</a>
+			<p id="appointment">
+				<a href="myStu.appList">- 상담신청</a>
 			</p>
 			
 			<div class="side_title">

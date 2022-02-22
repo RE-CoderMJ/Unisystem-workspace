@@ -1,14 +1,19 @@
 package com.us.uni.appointment.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.us.uni.appointment.model.service.AppointmentService;
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.professor.vo.Professor;
+import com.us.uni.student.model.vo.Student;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
@@ -18,18 +23,49 @@ public class AppointmentController {
 	private AppointmentService aService;
 	
 	@RequestMapping("myStu.appList")
-	public String selectAppList() {
+	public String appList() {
 		return "appointment/studentAppointmentList";
 	}
+	
+	@ResponseBody
+	@RequestMapping("myStu.selectAppList")
+	public Map<String, Object> selectAppList(){
+		
+	}
+	
 	
 	@RequestMapping("myStu.appDetail")
 	public String selectApp() {
 		return "appointment/studentAppointmentDetail";
 	}
 	
+	/**
+	 * 상담 신청 작성 폼 컨트롤러
+	 * @param session
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("myStu.appEnrollForm")
-	public String enrollForm() {
+	public String enrollForm(HttpSession session, Model m) {
+		
+		Users u = (Users)session.getAttribute("loginUser");
+		
+		Student s = aService.selectStuAppInfo(u.getUserNo());
+		m.addAttribute("s", s);
+		
 		return "appointment/studentAppointmentEnrollForm";
+	}
+	
+	@RequestMapping("myStu.enrollApp")
+	public String enrollApp(Appointment a) {
+		
+		int result = aService.enrollApp(a);
+		
+		if(result > 0) {
+			return "redirect:myStu.appList";			
+		}else {
+			return "";
+		}
 	}
 	
 	@RequestMapping("myProf.appDetail")
@@ -37,6 +73,12 @@ public class AppointmentController {
 		return "appointment/profAppointmentDetail";
 	}
 	
+	/**
+	 * 교수 상담신청 내역 리스트 컨트롤러
+	 * @param m
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("myProf.appList")
 	public String selectProfAppList(Model m, HttpSession session) {
 		
@@ -44,11 +86,10 @@ public class AppointmentController {
 		
 		Professor p = aService.selectAvailableTime(u.getProfNo());
 		
-		if(p !=null) {
-			String time = p.getProfAppTime();
-			String day = p.getProfAppDay();			
-			m.addAttribute("time", time);
-			m.addAttribute("day", day);
+		if(p !=null) {	
+			m.addAttribute("time", p.getProfAppTime());
+			m.addAttribute("day",  p.getProfAppDay());
+			m.addAttribute("profNo", p.getProfNo());
 		}
 		
 		

@@ -1,6 +1,8 @@
 package com.us.uni.appointment.model.service;
 
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.professor.vo.Professor;
+import com.us.uni.student.model.vo.Student;
 
 public interface AppointmentService {
 	
@@ -9,5 +11,10 @@ public interface AppointmentService {
 	
 	// 교수 상담페이지 서비스
 	Professor selectAvailableTime(int profNo);
+	
+	// 학생 상담신청 페이지 서비스
+	Student selectStuAppInfo(int userNo);
+	// 상담신청
+	int enrollApp(Appointment a);
 
 }

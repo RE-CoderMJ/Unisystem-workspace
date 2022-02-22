@@ -7,6 +7,15 @@
 		<result column="prof_app_time" property="profAppTime" />
 		<result column="prof_app_day" property="profAppDay" />
 	</resultMap>
+	
+	<resultMap type="Student" id="sResult">
+		<result column="stud_no" property="studNo" />
+		<result column="prof_no" property="profNo2" />
+		<result column="prof_app_time" property="studAppTime" />
+		<result column="prof_app_day" property="studAppDay" />
+		<result column="prof_name" property="profName" />
+		<result column="sysdate" property="appDate" />
+	</resultMap>
 
 	<update id="updateAvailableTime">
 		update
@@ -18,9 +27,50 @@
 	
 	<select id="selectAvailableTime" resultMap="pResult">
 		select 
-			   prof_app_day
+		       prof_no
+			 , prof_app_day
 			 , prof_app_time
 		  from professor
 		 where prof_no = #{profNo}
 	</select>
+	
+	<select id="selectStuAppInfo" resultMap="sResult">
+		select
+		       stud_no
+		     , prof_no
+		     , kor_name "prof_name"
+		     , prof_app_day
+		     , prof_app_time
+		     , to_char(sysdate, 'yyyy-mm-dd') "sysdate"
+		  from student
+		  join professor using (prof_no)
+		  join users on (user_no = prof_no)
+		 where stud_no = #{userNo}
+	</select>
+	
+	<insert id="enrollApp">
+		insert
+		  into appointment
+		  (
+		    app_no
+		  , stud_no
+		  , prof_no
+		  , title
+		  , content
+		  , enroll_date
+		  , app_date
+		  , app_status
+		  )
+		  values
+		  (
+		    seq_appno.nextval
+		  , #{studNo}
+		  , #{profNo}
+		  , #{title}
+		  , #{content}
+		  , sysdate
+		  , #{appDate}
+		  , 1
+		  )
+	</insert>
 </mapper>

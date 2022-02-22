@@ -24,9 +24,9 @@
 	                <br>
 	            </div>
 	          	<div id="tools">
-	                <button data-toggle="modal" data-target="#addContact"><span style="color:navy">+</span>&nbsp;신청</button>
-	                <button data-toggle="modal" data-target="#deleteContact"><span style="color:red">-</span>&nbsp;삭제</button>
-	                <button data-toggle="modal" data-target="#editContact">수정</button>
+	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
+	                <button><span style="color:red">-</span>&nbsp;삭제</button>
+	                <button>수정</button>
 				</div>
 			</header>
 			<article>
@@ -106,13 +106,13 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<!-- 
+	
+	
+	
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$("#webMail-sidebar").css('height', $len + 22);
+		$(function(){
+			$("#appointment").slideDown();
 		})
 	</script>
-	 -->
 </body>
 </html>

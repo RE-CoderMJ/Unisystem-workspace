@@ -35,5 +35,10 @@ public class Student {
 	private String studWebMail;
 	private String studUserDiv;
 	private String studProfileImg;
+	private String studAppTime;
+	private String studAppDay;
+	private String appDate;
+	private String profName;
+	private int profNo2;
 
 }
