@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
@@ -51,5 +52,13 @@ public class ProfessorDao {
 			return result;
 		}
 		return 0;
+	}
+	
+	public int classInsert(SqlSessionTemplate sqlSession, Lecture lec) {
+		return sqlSession.insert("lectureMapper.classInsert", lec);
+	}
+	
+	public int classInsertAtt(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("lectureMapper.attachmentInsert", map);
 	}
 }

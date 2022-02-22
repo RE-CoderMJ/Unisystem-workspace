@@ -31,6 +31,7 @@
 		<result column="prof_status" property="profStatus" />
 		<result column="prof_app_day" property="profAppDay" />
 		<result column="prof_app_time" property="profAppTime" />
+		
 	</resultMap>
 	
 	<select id="selectListCount" resultType="_int">

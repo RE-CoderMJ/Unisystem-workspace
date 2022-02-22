@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.professor.model.dao.ProfessorDao;
 import com.us.uni.users.model.vo.Users;
 
@@ -42,6 +44,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public int professorDelete(String dno) {
 		return pDao.professorDelete(sqlSession, dno);
+	}
+	@Override
+	public int classInsert(Lecture lec) {
+		return pDao.classInsert(sqlSession, lec);
+	}
+	@Override
+	public int classInsertAtt(HashMap map) {
+		return pDao.attachmentInsert(sqlSession, map);
 	}
 
 }

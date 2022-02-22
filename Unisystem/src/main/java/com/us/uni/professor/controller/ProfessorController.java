@@ -1,6 +1,10 @@
 package com.us.uni.professor.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -11,11 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
+import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.professor.model.service.ProfessorService;
 import com.us.uni.users.model.vo.Users;
 
@@ -91,6 +98,43 @@ public class ProfessorController {
 		return "redirect:professor.ad";
 	}
 	
+	
+	@RequestMapping("app.pr")
+	public String createClass() {
+		return "professor/professorCreateClassForm";
+	}
+	
+	/**
+	 * 교수 : 강의 개설
+	 */
+	@RequestMapping("insertClass.pr")
+	public String classInsert(Lecture lec, MultipartFile upfile, HttpSession session) {
+		
+		int result = 0;
+		result = pService.classInsert(lec);
+		
+		if(result > 0) {
+			
+			if(!upfile.getOriginalFilename().equals("")) {
+				String changeName = saveFile(upfile, session);
+				
+				lec.setClassPlan("/resources/images/uploadFiles/classPlan/" + changeName);
+
+			}
+			
+			session.setAttribute("alertMsg", "강의 개설 신청이 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "강의 개설 신청 실패했습니다.");
+		}
+		
+		return "redirect:app.pr";
+	}
+				
+	
+		
+	
+	
+	
 	@RequestMapping("list.pr")
 	public String selectProfessorInfo() {
 		return "professor/professorMyInfoView";
@@ -101,10 +145,7 @@ public class ProfessorController {
 		return "professor/professorMyStudentListView";
 	}
 	
-	@RequestMapping("app.pr")
-	public String createClass() {
-		return "professor/professorCreateClassForm";
-	}
+	
 	
 	@RequestMapping("enrollForm.pr")
 	public String professorEnrollForm() {
@@ -126,4 +167,36 @@ public class ProfessorController {
 	public String requestClassList() {
 		return "professor/adminRequestClassListView";
 	}
+	
+	
+	
+	// * 첨부파일 : 파일명 수정 작업 후 서버에 업로드
+		public String saveFile(MultipartFile upfile, HttpSession session) {
+			
+			String originName = upfile.getOriginalFilename();
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 20220118103507 (년월일시분초)
+			int ranNum = (int)(Math.random() * 90000 + 10000); // 99999까지의 5자리 랜덤값
+			String ext = originName.substring(originName.lastIndexOf("."));
+									// "."의 인덱스 값 => 처음부터 .전까지 추출됨
+			
+			String changeName = currentTime + ranNum + ext;
+
+			// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기 (session 필요함)
+			String savePath = session.getServletContext().getRealPath("/resources/images/uploadFiles/profile/"); 
+			// getRealPath : 실제 저장시킬 파일의 물리적인 경로, 해당 경로 안에 changeName이라는 이름으로 해당 파일을 업로드 시킬 예정!
+			
+			try {
+				upfile.transferTo(new File(savePath + changeName));
+				// 설정한 경로에 바뀐이름으로 새로 생성
+				
+				
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			return changeName;
+			
+			
+		}
 }

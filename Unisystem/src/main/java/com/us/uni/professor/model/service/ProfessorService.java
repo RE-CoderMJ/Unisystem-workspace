@@ -3,7 +3,10 @@ package com.us.uni.professor.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.us.uni.common.model.vo.Attachment;
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
 public interface ProfessorService {
@@ -19,6 +22,10 @@ public interface ProfessorService {
 	// 교수 삭제
 	int professorDelete(String dno);
 	// 교수 등록
+	
+	// 강의 개설
+	int classInsert(Lecture lec);
+	int classInsertAtt(HashMap map);
 	
 	
 

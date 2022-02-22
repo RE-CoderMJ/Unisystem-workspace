@@ -116,7 +116,7 @@ public class StudentController {
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
 			
-			student.setProfileImg("/resources/images/uploadFiles/profile/" + changeName);
+			student.setProfileImg("/resources/images/uploadFiles/profiles/" + changeName);
 		}
 		
 		if(result > 0) {

@@ -221,7 +221,7 @@
 				<div class="createClass">
 					<label>* 교과목 개설 신청</label>
 					
-					<form action="" method="post">
+					<form action="insertClass.pr" method="post" enctype="multipart/form-data">
 						<div align="center">
 							<table class="table1 table table-bordered" style="width:1090px">
 								<tr>
@@ -230,15 +230,15 @@
 									<th width="200px">학기</th>
 									<td width="200px" style="padding:5px 10px;">
 									<select name="classSemester">
-										<option>1학기</option>
-										<option>2학기</option>
+										<option value="1">1학기</option>
+										<option value="2">2학기</option>
 									</select>
 									</td>
 									<th width="200px">수업유형</th>
 									<td width="200px" style="padding:5px 10px;">
 									<select name="classCategory">
-										<option>대면</option>
-										<option>비대면</option>
+										<option value="1">대면</option>
+										<option value="2">비대면</option>
 									</select>
 									</td>
 								</tr>
@@ -253,23 +253,23 @@
 								<tr>
 									<th colspan="2">개요(한글)</th>
 									<td colspan="4">
-									<textarea class="textarea" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
-									<!-- <textarea class="textarea" name="" cols="95px" style="height:20px; border:none;"></textarea> 공학입문 설계 교과목의 목표는 공학문제를 설계문제로 정의하고 이를 해결하는 설계과정을 계획하고 문제의 해를 도출할 수 있는 문제해결 능력을 제공하는 데 있다. 또한 팀웍과 다양한 공학문제 해결 도구에 익숙하도록 하는데 교과목의 목표가 있다. 공학문제 해결 과정을 이해하고, 이에 대한 최선의 해를 도출하기 위한 체계적인 문제해결방법의 원리 및 이론을 공부한다. 설계문제의 정식화를 공부하며 정식화된 설계문제를 체계적으로 해결하기 위한 방법을 공부한다. -->
+									<textarea class="textarea" name="classKorOutline" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
+									<!-- 공학입문 설계 교과목의 목표는 공학문제를 설계문제로 정의하고 이를 해결하는 설계과정을 계획하고 문제의 해를 도출할 수 있는 문제해결 능력을 제공하는 데 있다. 또한 팀웍과 다양한 공학문제 해결 도구에 익숙하도록 하는데 교과목의 목표가 있다. 공학문제 해결 과정을 이해하고, 이에 대한 최선의 해를 도출하기 위한 체계적인 문제해결방법의 원리 및 이론을 공부한다. 설계문제의 정식화를 공부하며 정식화된 설계문제를 체계적으로 해결하기 위한 방법을 공부한다. -->
 								</tr>
 								<tr>
 									<th colspan="2">개요(영문)</th>
 									<td colspan="4">
-									<textarea class="textarea" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
+									<textarea class="textarea" name="classEngOutline" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
 									<!-- To provide students with the use of problem-solving skills for solving realistic engineering problems using problem-based learning techniques, including definition of problem, creative problem solving, design of experiments, and optimization. To familiarize students with experience working as a member of an engineering work team, with experience using several modern tools and techniques to solve engineering problems. This course will help you develop the skills necessary to solve the real engineering problems facing engineers today. You will learn underlying principles an master techniques to solve engineering problems. --></td>
 								</tr>
 								<tr>
 									<th colspan="2">수업목표</th>
 									<td colspan="4">
-									<textarea class="textarea" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
+									<textarea class="textarea" name="classGoal" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
 								</tr>
 								<tr>
 									<th>과목코드</th>
-									<td><input class="input" name="classCode" placeholder="입력 제외" disabled></td>
+									<td><input class="input" placeholder="입력 제외" disabled></td>
 									<th>전공</th>
 									<td><input class="input" name="profMajor" value="${ loginUser.profMajor }"></td>
 									<th>정원</th>
@@ -279,19 +279,22 @@
 									<th>이수구분</th>
 									<td style="padding:5px 5px 0px 0px;">
 										<select name="classDivision" style="margin-right:90px">
-											<option>전공필수</option>
-											<option>전공선택</option>
-											<option>교양</option>
+											<option value="1">전공필수</option>
+											<option value="2">전공선택</option>
+											<option value="3">교양</option>
 										</select>
 									</td>
 									<th>학점</th>
 									<td><input type="number" class="input" name="classCredit"></td>
 									<th>강의실</th>
-									<td><input class="input" name="classLocation" placeholder="입력 제외" disabled></td>
+									<td><input class="input" placeholder="입력 제외" disabled></td>
 								</tr>
 								<tr>
 									<th>주관교수</th>
-									<td><input class="input" name="profNo" value="${ loginUser.korName }"></td>
+									<td>
+									<input class="input" value="${ loginUser.korName }">
+									<input type="hidden" name="profNo" value="${ loginUser.profNo }">
+									</td>
 									<th>연락처</th>
 									<td><input type="tel" class="input" name="classPhone"></td>
 									<th>교수실</th>
@@ -327,7 +330,8 @@
 									<p>* 강의계획서</p>
 									
 									<label for="planPDF" class="button btn-sm btn-secondary" style="font-size:14px; margin-left:40px">파일첨부</label>
-								<div class="pdfBox"><input type="file" id="planPDF" style="padding:10px"></div>
+								<div class="pdfBox" style="padding:10px;"></div>
+								<input type="file" name="upfile" id="planPDF">
 								</div>
 							</div>
 							
@@ -352,14 +356,14 @@
 										<th>교시</th>
 										<td>
 											<select name="classStart">
-												<option value="1">1교시</option>
-												<option value="2">2교시</option>
-												<option value="3">3교시</option>
-												<option value="4">4교시</option>
-												<option value="5">5교시</option>
-												<option value="6">6교시</option>
-												<option value="7">7교시</option>
-												<option value="8">8교시</option>
+												<option>1교시</option>
+												<option>2교시</option>
+												<option>3교시</option>
+												<option>4교시</option>
+												<option>5교시</option>
+												<option>6교시</option>
+												<option>7교시</option>
+												<option>8교시</option>
 											</select>
 										</td>	
 									</tr>
@@ -419,6 +423,7 @@
 		function updateFilesDisplay(){
 			var fileValue = $("#planPDF").val().split("\\");
 			var fileName = fileValue[fileValue.length-1]; 
+			
 			
 			$(".pdfBox").text(fileName);
 		}

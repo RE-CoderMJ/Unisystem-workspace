@@ -370,4 +370,91 @@
 	 -->
 
 
+
+
+	<!-- AUTHOR DAHYUN -->
+	<insert id="classInsert">
+		INSERT
+		INTO CLASS
+		     (
+		       CLASS_NO
+		     , PROF_NO
+		     , CLASS_CODE
+		     , CLASS_KOR_NAME
+		     , CLASS_ENG_NAME
+		     , CLASS_CATEGORY
+		     , CLASS_YEAR
+		     , CLASS_SEMESTER
+		     , CLASS_CREDIT
+		     , CLASS_LOCATION
+		     , CLASS_DAY
+		     , CLASS_TIME
+		     , CLASS_START
+		     , CLASS_DIVISION
+		     , CLASS_KOR_OUTLINE
+		     , CLASS_ENG_OUTLINE
+		     , CLASS_GOAL
+		     , CLASS_STATUS
+		     , CLASS_PHONE
+		     , PROF_LOCATION
+		     , CLASS_PLAN
+		     , SCORE_ATT
+		     , SCORE_TASK
+		     , SCORE_MID
+		     , SCORE_FIN
+		     , MAX_STUD
+		     )
+		      VALUES
+		    (
+		       SEQ_CLASS.NEXTVAL
+		     , #{profNo}
+		     , SEQ_CLASSCODE.NEXTVAL
+		     , #{classKorName}
+		     , #{classEngName}
+		     , #{classCategory}
+		     , TO_CHAR(SYSDATE, 'YYYY')
+		     , #{classSemester}
+		     , #{classCredit}
+		     , #{classLocation}
+		     , #{classDay}
+		     , #{classTime}
+		     , #{classStart}
+		     , #{classDivision}
+		     , #{classKorOutline}
+		     , #{classEngOutline}
+		     , #{classGoal}
+		     , #{classStatus}
+		     , #{classPhone}
+		     , #{profLocation}
+		     , #{classPlan}
+		     , #{scoreAtt}
+		     , #{scoreTask}
+		     , #{scoreMid}
+		     , #{scoreFin}
+		     , #{maxStud}
+		    )
+	</insert>
+	
+	<insert id="classInsertAtt">
+		INSERT
+	    INTO ATTACHMENT
+	         (
+	           ATTACH_NO
+	         , REF_TYPE
+	         , REF_NO
+	         , ORIGIN_NAME
+	         , CHANGE_NAME
+	         , PATH
+	         , STATUS
+	         )
+	          VALUES
+	         (
+	           SEQ_ATTNO.NEXTVAL
+	         , 'CA'
+	         , SEQ_CLASS.CURRVAL
+	         , #{originName}
+	         , #{changeName}
+	         , #{path}
+	         )
+	</insert>
 </mapper>
