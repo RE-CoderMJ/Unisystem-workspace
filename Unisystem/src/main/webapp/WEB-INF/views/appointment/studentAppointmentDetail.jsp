@@ -73,7 +73,7 @@
 	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
-			$("#webMail-sidebar").css('height', $len + 22);
+			$(".wrap_sidebar").css('height', $len + 22);
 		})
 	</script>
 	

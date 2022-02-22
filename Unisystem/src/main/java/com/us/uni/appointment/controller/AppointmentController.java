@@ -26,6 +26,10 @@ public class AppointmentController {
 	@Autowired
 	private AppointmentService aService;
 	
+	/**
+	 * 상담신청내역 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("myStu.appList")
 	public String appList() {
 		return "appointment/studentAppointmentList";
@@ -77,7 +81,7 @@ public class AppointmentController {
 	 * @return
 	 */
 	@RequestMapping("myStu.appEnrollForm")
-	public String enrollForm(HttpSession session, int appNo, Model m) {
+	public String enrollForm(HttpSession session, Model m) {
 		
 		Users u = (Users)session.getAttribute("loginUser");
 		

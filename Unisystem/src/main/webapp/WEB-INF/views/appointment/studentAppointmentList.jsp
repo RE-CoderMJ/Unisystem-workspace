@@ -25,7 +25,7 @@
 	            </div>
 	          	<div id="tools">
 	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
-	                <button>수정</button>
+	                <button id="edit">수정</button>
 				</div>
 			</header>
 			<article>
@@ -71,7 +71,7 @@
 					
 					let value = "";
 					
-					if(result.list.length ===0){
+					if(result.list.length === 0){
 						value = "<tr><td colspan='7' style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>"
 					}else{
 						
@@ -122,7 +122,7 @@
 						
 						// 사이드바와 컨텐츠영역 길이 맞춤
 						let $len = $("section").height();
-						$("#webMail-sidebar").css('height', $len + 22);
+						$(".wrap_sidebar").css('height', $len + 22);
 						
 						$("#cPage").val(result.pi.currentPage);
 					}
@@ -146,6 +146,27 @@
 		})
 	</script>
 	
+	<script>
+		$(document).on("click", "#edit", function(){
+			
+			let count = 0;
+			let appNo;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count > 1){
+				alert("수정은 1개의 항목만 선택이 가능합니다.");
+			}else if(count == 0){
+				alert("수정하실 항목을 선택해주세요.");
+			}else{
+				appNo = $(".checkbox:checked").parent().siblings(".app-no").text();
+				location.href="myStu.editFormApp?appNo=" + appNo;
+			}
+			
+		})
+	</script>
 	
 	<script>
 		$(function(){
