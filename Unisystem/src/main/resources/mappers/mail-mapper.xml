@@ -52,6 +52,14 @@
 		<result column="path" property="path" />
 	</resultMap>
 	
+	<resultMap type="Contact" id="conResult">
+		<result column="contact_no" property="contactNo" />
+		<result column="user_no" property="userNo" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+	</resultMap>
+	
 	<!-- 임시저장 -->
 	<insert id="saveDraft">
 		insert
@@ -690,6 +698,110 @@
 		 where mail_to_no = #{mNo}
 	</update>
 	
+	<select id="selectImportantListCount" resultType="_int">
+		select count(*) 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user
+		             , important
+		             , title
+		             , to_me
+                     , send_date
+		             , null as read_date
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where important = 'Y'
+		           and from_user = #{userNo}
+		           and status = 'N'
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+                     , null as to_me
+		             , send_date
+		             , read_date
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.important = 'Y'
+		           and t.status = 'N'
+		       )
+	</select>
+	
+	<select id="selectImportantList" resultMap="toResult">
+		select * 
+		  from (
+		         select 
+		               mail_from_no
+		             , to_user "to_add"
+		             , important
+		             , title
+		             , to_me
+                     , send_date
+		             , null as read_date
+		             , save_status
+		             , 'N' as cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = f.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "file_name"
+		             , 'f' as type
+		          from mail_from f
+		         where important = 'Y'
+		           and from_user = #{userNo}
+		            and status = 'N'
+		           
+		        union
+		        
+		        select
+		               mail_to_no
+		             , from_add
+		             , t.important
+		             , title
+                     , 'n' as "to_me"
+		             , send_date
+		             , read_date
+		             , null as "save_status"
+		             , cc_status
+		             , (select
+		                       origin_name
+		                  from attachment
+		                 where ref_no = t.mail_from_no
+		                   and ref_type = 'M'
+		                   and rownum = 1) "t_file_name"
+		            , 't' as type
+		          from mail_to t
+		          join mail_from f on (t.mail_from_no = f.mail_from_no)
+		         where t.to_user = #{userNo}
+		           and t.important = 'Y'
+		           and t.status = 'N'
+		       )
+		 order 
+		    by mail_from_no desc
+	</select>
+	
 	<update id="moveToTrash">
 		update
 			   mail_to
@@ -861,5 +973,66 @@
 			   mail_from
 		   set important = #{status}
 		 where mail_from_no = #{mailNo}
+	</update>
+	
+	<!-- 주소록 추가 -->
+	<insert id="addContact">
+		insert
+		  into contact
+		  (
+		    contact_no
+		  , user_no
+		  , name
+		  , email
+		  , phone
+		  )
+		  values
+		  (
+		    seq_contact.nextval
+		  , #{userNo}
+		  , #{name}
+		  , #{email}
+		  , #{phone}
+		  )
+	</insert>
+	
+	<select id="selectContactListCount" resultType="_int">
+		select
+		       count(*)
+		  from contact
+		 where user_no = #{userNo}
+	</select>
+	
+	<select id="selectContactList" resultMap="conResult">
+		select
+		       contact_no
+		     , user_no
+		     , name
+		     , email
+		     , phone
+		  from contact
+		 where user_no = #{userNo}
+		 order
+		    by contact_no desc
+	</select>
+	
+	<select id="selectContact" resultMap="conResult">
+		select
+		       contact_no
+		     , user_no
+		     , name
+		     , email
+		     , phone
+		  from contact
+		 where contact_no = #{contactNo}
+	</select>
+	
+	<update id="editContact">
+		update
+		       contact
+		   set name = #{name}
+		     , email = #{email}
+		     , phone = #{phone}
+		 where contact_no = #{contactNo}
 	</update>
 </mapper>

@@ -36,6 +36,8 @@ public class LectureDao {
 		return sqlSession.selectOne("lectureMapper.selectLectureMainPage", lno);
 	}
 	
+	// 출결 ----------------------------------------------------------------------------------------------------
+	
 	// 6. 학생 - 강의홈 - 온라인 출석부 - 로그인한 학생 정보 조회 (학번, 이름, 휴대전화)
 	public Users selectLoginStuInfo(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("lectureMapper.selectLoginStuInfo", userNo);
@@ -123,14 +125,35 @@ public class LectureDao {
 
 
 	// 교수 - 출결관리상세 - 학생들의 출결상태를 INSERT하는 컨트롤러	
-	public int insertAttStatus(SqlSessionTemplate sqlSession, String status) {
-		return sqlSession.insert("lectureMapper.insertAttStatus", status);
+	public int insertAttStatus(SqlSessionTemplate sqlSession, Lecture l, ArrayList<Lecture> studInfo) {
+	
+		int result = 0;
+		for(int i=0; i<studInfo.size(); i++) {
+
+			l.setStudNo(studInfo.get(i).getStudNo());
+			l.setAttendanceStatus(studInfo.get(i).getAttendanceStatus());
+			result += sqlSession.update("lectureMapper.insertAttStatus", l);
+		}
+		
+		return result;
 	}
 	
 	
+	// 과제 ----------------------------------------------------------------------------------------------------
 	
 	
+	// 마감된 과제 리스트의 게시글 총 수를 조회
+	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, int classNo) {
+		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", classNo);
+	}
 	
-	
+	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, int classNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", classNo);
+	}
 	
 }

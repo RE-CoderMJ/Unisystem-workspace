@@ -22,6 +22,7 @@ import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.mail.model.service.MailService;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -194,11 +195,6 @@ public class WebMailController {
 		map.put("list", list);
 		
 		return map;
-	}
-	
-	@RequestMapping("webMail.important")
-	public String selectImportantMails(){
-		return "webMail/important";
 	}
 	
 	/**
@@ -421,7 +417,7 @@ public class WebMailController {
 		
 		int listCount = mService.selectDraftListCount(userNo);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<MailFrom> list = mService.selectDraftList(userNo, pi);
 		
 		map.put("pi", pi);
@@ -512,7 +508,7 @@ public class WebMailController {
 		
 		int listCount = mService.selectTrashListCount(userNo);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<MailTo> list = mService.selectTrashList(userNo, pi);
 		
 		map.put("pi", pi);
@@ -530,6 +526,17 @@ public class WebMailController {
 	public int moveToTrash(int mNo, int tNo) {
 		int result = mService.moveToTrash(mNo, tNo);
 		return result;
+	}
+	
+	/**
+	 * 중요메일함 휴지통으로 이동 컨트롤러
+	 * @param mt
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.moveToTrashI", produces="application/json; charset=utf-8")
+	public int moveToTrashI(HttpSession session, MailTo mt) {
+		return mService.moveToTrashI(session, mt);
 	}
 	
 	/**
@@ -580,6 +587,37 @@ public class WebMailController {
 	}
 	
 	/**
+	 * 중요메일함 페이지 컨트롤러
+	 * @return
+	 */
+	@RequestMapping("webMail.important")
+	public String selectImportantMails(){
+		return "webMail/important";
+	}
+	
+	/**
+	 * 중요메일함 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectImportantList", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectImportantList(int currentPage, int userNo) {
+			
+			Map<String, Object> map = new HashMap();
+			
+			int listCount = mService.selectImportantListCount(userNo);
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<MailTo> list = mService.selectImportantList(userNo, pi);
+			
+			map.put("pi", pi);
+			map.put("list", list);
+			return map;
+	}
+	
+	/**
 	 * 중요처리
 	 * @param mNo
 	 * @param status
@@ -603,9 +641,75 @@ public class WebMailController {
 		return mService.changeImportanceT(status, mNo, type);
 	}
 	
+	/**
+	 * 주소록 페이지 컨트롤러
+	 * @return
+	 */
 	@RequestMapping("webMail.contact")
-	public String selectContacts(){
+	public String contactPage(){
 		return "webMail/contact";
+	}
+	
+	/**
+	 * 주소록 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectContactList", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectContactList(int currentPage, int userNo) {
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = mService.selectContactListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<MailTo> list = mService.selectContactList(userNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		return map;
+	}
+	
+	/**
+	 * 주소록 추가 컨트롤러
+	 * @param c
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.addContact", produces="application/json; charset=utf-8")
+	public int addContact(Contact c) {
+		int result = mService.addContact(c);
+		
+		return result;
+	}
+	
+	/**
+	 * 연락처 수정시 정보 조회 컨트롤러
+	 * @param contactNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.selectContact", produces="application/json; charset=utf-8")
+	public Contact selectContact(int contactNo) {
+		Contact c = mService.selectContact(contactNo);
+		return c;
+	}
+	
+
+	/**
+	 * 연락처 수정 컨트롤러
+	 * @param c
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="webMail.editContact", produces="application/json; charset=utf-8")
+	public int editContact(Contact c) {
+		System.out.println("zzz");
+		int result = mService.editContact(c);
+		System.out.println(c);
+		System.out.println(result);
+		return result;
 	}
 	
 	/**

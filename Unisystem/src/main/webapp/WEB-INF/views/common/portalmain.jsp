@@ -59,12 +59,6 @@
 	border-bottom: 1px solid #153e73;
 }
 
-.mail {
-	grid-area: mail;
-	border-top:2px solid #fcaf17;
-	border-bottom:1px solid #fcaf17;
-}
-
 .room {
 	grid-area: room;
 	border-top:2px solid #fcaf17;
@@ -133,6 +127,75 @@ color:white;
 a{
 text-decoration:none;
 }
+
+/*웹메일*/
+.mail {
+	grid-area: mail;
+	border-top:2px solid #fcaf17;
+	border-bottom:1px solid #fcaf17;
+	position:relative;
+}
+.mail>h4{
+	position:absolute;
+	top:15px;
+	left:17px;
+}
+#inbox{
+	width:105px;
+	height:105px;
+	background-color:RGB(235,242,252);
+	border-radius:200px;
+	position:absolute;
+	left:23px;
+	top:52px;
+	cursor:pointer;
+}
+#inbox-title{
+	position:absolute;
+	left:10px;
+	top:115px;
+	font-size:16px;
+}
+#inbox>img{
+	object-fit: contain;
+    width:65%;
+    height:65%;
+    position:absolute;
+    left:20px;
+	top:20px;
+}
+#line{
+	width:0.1px;
+	height:95px;
+	border: 1px solid lightgray;
+	position:absolute;
+	left:142px;
+	top:60px;
+}
+#unread{
+	width:105px;
+	height:105px;
+	background-color:RGB(235,242,252);
+	border-radius:200px;
+	position:absolute;
+	left:160px;
+	top:52px;
+	cursor:pointer;
+}
+#unread-title{
+	position:absolute;
+	left:0px;
+	top:115px;
+	font-size:16px;
+}
+#unread>img{
+	object-fit: contain;
+    width:65%;
+    height:65%;
+    position:absolute;
+    left:20px;
+	top:20px;
+}
 </style>
 
 
@@ -157,7 +220,18 @@ text-decoration:none;
 		<!-- 메일 -->
 		<div class="mail">
 		<h4>웹메일</h4>
-		
+			<div id="inbox" onclick="location.href='webMail.inbox'">
+				<img src="resources/images/inbox.png" alt="">
+				<div id="inbox-title">받은메일<span style="color:blue; font-weight:900;">&nbsp;0</span>건</div>
+			</div>
+			
+			<div id="line"></div>
+			
+			<div id="unread" onclick="location.href='webMail.unread'">
+				<img src="resources/images/unread.png" alt="">
+				<div id="unread-title">미확인메일<span style="color:blue; font-weight:900;">&nbsp;0</span>건</div>
+			</div>
+			
 		</div>
 		
 		<!-- 시설예약 -->

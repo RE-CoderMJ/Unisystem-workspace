@@ -202,7 +202,7 @@
 						</c:forEach>
 						
                     </table>
-	          
+
                     <div class="container">
                         <ul class="pagination justify-content-center">
                         
@@ -211,12 +211,12 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage - 1 }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }" >&lt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                     		
                     		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ p }">${ p }</a></li>	
+                            	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ p }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }">${ p }</a></li>	
                     		</c:forEach>
                     		
                     		<c:choose>
@@ -224,7 +224,7 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="lectureAttControl.stu?cpage=${ pi.currentPage + 1 }&userNo=${ loginUser.userNo }&classCode=${ classInfo.classCode }">&gt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                     		
@@ -284,6 +284,7 @@
                      			}
                      		});
                      	}
+                     	
                      </script>
                      
                      

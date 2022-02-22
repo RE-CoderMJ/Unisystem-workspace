@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -66,6 +67,9 @@ public interface MailService {
 	
 	// 메일 삭제용(휴지통) 서비스
 	int moveToTrash(int mNo, int tNo);
+	// 메일 삭제용(중요메일함) 서비스
+	int moveToTrashI(HttpSession session, MailTo mt);
+	
 	// 휴지통 리스트 서비스
 	int selectTrashListCount(int userNo);
 	ArrayList<MailTo> selectTrashList(int userNo, PageInfo pi);
@@ -79,13 +83,23 @@ public interface MailService {
 	// 휴지통 비우기 서비스
 	int emptyTrash(HttpSession session, int userNo);
 
-	// 중요메일
+	// 중요처리
 	int changeImportance(String status, int mNo, int type);
 	int changeImportanceT(String status, int mNo, String type);
 	
-	// 전달
+	// 중요 메일함 리스트 페이지 서비스
+	int selectImportantListCount(int userNo);
+	ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi);
 	
-	// 답장
+	// 주소록 추가
+	int addContact(Contact c);
 	
-	// 주소록
+	// 주소록 리스트 조회
+	int selectContactListCount(int userNo);
+	ArrayList<MailTo> selectContactList(int userNo, PageInfo pi);
+	
+	// 주소록 수정시 조회 컨트롤러
+	Contact selectContact(int contactNo);
+	// 주소록 수정 컨트롤러
+	int editContact(Contact c);
 }

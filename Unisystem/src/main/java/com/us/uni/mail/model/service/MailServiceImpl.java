@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.mail.model.dao.MailDao;
+import com.us.uni.mail.model.vo.Contact;
 import com.us.uni.mail.model.vo.MailFrom;
 import com.us.uni.mail.model.vo.MailTo;
 
@@ -253,6 +254,12 @@ public class MailServiceImpl implements MailService {
 		int result = mDao.moveToTrash(sqlSession, mNo, tNo);
 		return result;
 	}
+	
+	@Override
+	public int moveToTrashI(HttpSession session, MailTo mt) {
+		return mDao.moveToTrashI(sqlSession, session, mt);
+	}
+
 	@Override
 	public int selectTrashListCount(int userNo) {
 		int result = mDao.selectTrashListCount(sqlSession, userNo);
@@ -291,7 +298,45 @@ public class MailServiceImpl implements MailService {
 		return mDao.changeImportanceT(sqlSession, mNo, status, type);
 	}
 
+	@Override
+	public int selectImportantListCount(int userNo) {
+		int result = mDao.selectImportantListCount(sqlSession, userNo);
+		return result;
+	}
 
+	@Override
+	public ArrayList<MailTo> selectImportantList(int userNo, PageInfo pi) {
+		ArrayList<MailTo> list = mDao.selectImportantList(sqlSession, userNo, pi);
+		return list;
+	}
+
+	@Override
+	public int addContact(Contact c) {
+		int result = mDao.addContact(sqlSession, c);
+		return result;
+	}
+
+	@Override
+	public int selectContactListCount(int userNo) {
+		return mDao.selectContactListCount(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<MailTo> selectContactList(int userNo, PageInfo pi) {
+		
+		return mDao.selectContactListCount(sqlSession, userNo, pi);
+	}
+
+	@Override
+	public Contact selectContact(int contactNo) {
+		return mDao.selectContact(sqlSession, contactNo);
+	}
+
+	@Override
+	public int editContact(Contact c) {
+		int result = mDao.editContact(sqlSession, c);
+		return result;
+	}
 	
 
 

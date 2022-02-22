@@ -63,6 +63,7 @@
     }
     #important{
         margin-top: -3px;
+        cursor:pointer;
     }
     .fa-star{color:RGB(252,175,23);}
     #att{
@@ -162,7 +163,7 @@
                 <div id="unread" onclick="location.href='webMail.unread'">
                     <div id="unread-count">6</div><div>안읽음</div>
                 </div>
-                <div id="important">
+                <div id="important" onclick="location.href='webMail.important'">
                     <i class="fa fa-star fa-xs" aria-hidden="true"></i><div>중요</div>
                 </div>
                 <div id="att" onclick="location.href='webMail.attach'">
@@ -191,7 +192,7 @@
                 </div>
             </div>
             <hr class="sidebar-lines">
-            <div id="contact">
+            <div id="contact" onclick="location.href='webMail.contact'">
                 <i class="fa fa-address-book fa-2x" aria-hidden="true"></i>
                 <span>주소록</span>
             </div>
