@@ -55,4 +55,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment selectApp(int appNo) {
 		return aDao.selectApp(sqlSession, appNo);
 	}
+
+	@Override
+	public int editApp(Appointment a) {
+		return aDao.editApp(sqlSession, a);
+	}
+
+	@Override
+	public int deleteApp(int appNo) {
+		return aDao.deleteApp(sqlSession, appNo);
+	}
 }

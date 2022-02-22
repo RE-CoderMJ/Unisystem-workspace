@@ -72,7 +72,7 @@
 					let value = "";
 					
 					if(result.list.length ===0){
-						value = "<tr><td style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>"
+						value = "<tr><td colspan='7' style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>"
 					}else{
 						
 						for(let i in result.list){

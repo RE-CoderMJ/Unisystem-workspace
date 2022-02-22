@@ -27,5 +27,10 @@ public interface AppointmentService {
 	//학생 상담신청 내역 상세조회 서비스
 	Appointment selectApp(int appNo);
 	
+	// 상담신청내역 수정 서비스
+	int editApp(Appointment a);
+	// 상담신청내역 삭제 서비스
+	int deleteApp(int appNo);
+	
 
 }

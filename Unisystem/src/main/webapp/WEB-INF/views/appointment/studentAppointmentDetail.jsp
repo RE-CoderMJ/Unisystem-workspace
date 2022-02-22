@@ -24,11 +24,11 @@
 	                <br>
 	            </div>
 	          	<div id="tools" align="right">
-	          		<button data-toggle="modal" data-target="#editContact">목록</button>
+	          		<button onclick="location.href='myStu.appList'" type="button" >목록</button>
 	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
-	                <button data-toggle="modal" data-target="#deleteContact"><span style="color:red">-</span>&nbsp;삭제</button>
-	                <c:if test=${a.appStatus eq 1 }>
-	                	<button data-toggle="modal" data-target="#editContact">수정</button>
+	                <c:if test="${a.appStatus eq 1 }">
+		                <button onclick="location.href='myStu.deleteApp?appNo=${a.appNo }'"><span style="color:red">-</span>&nbsp;삭제</button>
+	                	<button onclick="location.href='myStu.editFormApp?appNo=${a.appNo}'">수정</button>
 	                </c:if>
 				</div>
 			</header>

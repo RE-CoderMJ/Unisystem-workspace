@@ -51,14 +51,12 @@ public class AppointmentController {
 		map.put("pi", pi);
 		map.put("list", list);
 		
-		System.out.println(list);
-		
 		return map;
 	}
 	
 	
 	/**
-	 * 
+	 * 상담 상세페이지 컨트롤러
 	 * @param appNo
 	 * @param m
 	 * @return
@@ -79,7 +77,7 @@ public class AppointmentController {
 	 * @return
 	 */
 	@RequestMapping("myStu.appEnrollForm")
-	public String enrollForm(HttpSession session, Model m) {
+	public String enrollForm(HttpSession session, int appNo, Model m) {
 		
 		Users u = (Users)session.getAttribute("loginUser");
 		
@@ -96,7 +94,7 @@ public class AppointmentController {
 	 */
 	@RequestMapping("myStu.enrollApp")
 	public String enrollApp(Appointment a) {
-		a.setAppDate(a.getAppDate() + "   " + a.getAppTime() + ":00");
+		a.setAppDate(a.getAppDate() + " " + a.getAppTime() + ":00");
 		
 		int result = aService.enrollApp(a);
 		
@@ -105,6 +103,62 @@ public class AppointmentController {
 		}else {
 			return "";
 		}
+	}
+	
+	/**
+	 * 상담신청내역 수정 폼 컨트롤러
+	 * @param session
+	 * @param appNo
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("myStu.editFormApp")
+	public String editApp(HttpSession session, int appNo, Model m) {
+		
+		Users u = (Users)session.getAttribute("loginUser");
+		
+		Student s = aService.selectStuAppInfo(u.getUserNo());
+		Appointment a = aService.selectApp(appNo);
+		
+		m.addAttribute("s", s);
+		m.addAttribute("a", a);
+		
+		return "appointment/studentAppointmentEditForm";
+	}
+	
+	/**
+	 * 상담 신청 수정 컨트롤러
+	 * @param a
+	 * @return
+	 */
+	@RequestMapping("myStu.editApp")
+	public String editApp(Appointment a) {
+		a.setAppDate(a.getAppDate() + " " + a.getAppTime() + ":00");
+		
+		int result = aService.editApp(a);
+		
+		if(result > 0) {
+			return "redirect:myStu.appDetail?appNo=" + a.getAppNo();			
+		}else {
+			return "";
+		}
+	}
+	
+	/**
+	 * 상담신청내역 삭제 컨트롤러
+	 * @param appNo
+	 * @return
+	 */
+	@RequestMapping("myStu.deleteApp")
+	public String deleteApp(int appNo) {
+		int result = aService.deleteApp(appNo);
+		
+		if(result > 0) {
+			return "redirect:myStu.appList";
+		}else {
+			return "";
+		}
+			
 	}
 	
 	@RequestMapping("myProf.appDetail")

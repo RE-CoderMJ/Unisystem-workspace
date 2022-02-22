@@ -25,7 +25,7 @@
 	            </div>
 			</header>
 			<article>
-				<form action="myStu.enrollApp" method="post">
+				<form action="myStu.editApp" method="post">
 	                <div id="content-area">
 		                <span class="badge badge-pill title">담당교수</span>
 		                <span class="contents">${s.profName } 교수</span><br><br>
@@ -49,15 +49,16 @@
 	                    
 		                </select> <br><br>
 		                
+		                <input type="hidden" name="appNo" value="${a.appNo }">
 	                    <input type="hidden" name="studNo" value="${s.studNo }">
 	                    <input type="hidden" name="profNo" value="${s.profNo2 }">    
 		                <span class="badge badge-pill title">제목</span>
-		                <input type="text" class="contents" placeholder="제목을 입력해주세요" style="width:900px;" name="title" required><br><br>
+		                <input type="text" class="contents" placeholder="제목을 입력해주세요" style="width:900px;" name="title" value="${a.title}" required><br><br>
 		                <span class="badge badge-pill title">내용</span><br>
-		                <textarea class="contents" placeholder="내용을 입력해주세요" id="input-content" name="content" required></textarea>
+		                <textarea class="contents" placeholder="내용을 입력해주세요" id="input-content" name="content" required>${a.content}</textarea>
 		                <div id="btn-area" align="right">
 			                <button id="goToList" type="button" onclick="location.href='myStu.appList'">목록으로</button>
-			                <button id="submit-btn" type="submit">신청하기</button>
+			                <button id="submit-btn" type="submit">수정하기</button>
 		                </div>
 	                </div>
                 </form>

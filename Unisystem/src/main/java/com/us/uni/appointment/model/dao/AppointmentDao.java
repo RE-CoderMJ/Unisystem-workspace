@@ -49,4 +49,12 @@ public class AppointmentDao {
 		return sqlSession.selectOne("appMapper.selectApp", appNo);
 	}
 
+	public int editApp(SqlSessionTemplate sqlSession, Appointment a) {
+		return sqlSession.update("appMapper.editApp", a);
+	}
+
+	public int deleteApp(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("appMapper.deleteApp", appNo);
+	}
+
 }

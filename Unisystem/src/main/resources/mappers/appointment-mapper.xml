@@ -133,4 +133,20 @@
 		 where app_no = #{appNo}
 		   and status = 'Y'
 	</select>
+	
+	<update id="editApp">
+		update
+		       appointment
+		   set title = #{title}
+		     , content = #{content}
+		  	 , app_date = #{appDate}
+		 where app_no = #{appNo}
+	</update>
+	
+	<update id="deleteApp">
+		update
+		       appointment
+		   set status = 'N'
+		 where app_no = #{appNo}
+	</update>
 </mapper>
