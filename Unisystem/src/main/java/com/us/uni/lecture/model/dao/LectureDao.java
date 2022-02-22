@@ -1,12 +1,14 @@
 package com.us.uni.lecture.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -147,6 +149,7 @@ public class LectureDao {
 		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", classNo);
 	}
 	
+	// 마감된 과제 리스트 페이지 조회
 	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, int classNo){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
@@ -155,5 +158,37 @@ public class LectureDao {
 		
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", classNo);
 	}
+	
+	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	public ArrayList<Homework> selectIStuHomeworkInfo(SqlSessionTemplate sqlSession, Homework h, List<String> tdArr){
+	      
+		System.out.println(tdArr);
+		ArrayList<Homework> list = new ArrayList<>();
+							
+		for(int i=0; i<tdArr.size(); i++) {
+			
+			h.setHomeworkpNo(tdArr.get(i));
+			
+			//list.add((Homework) sqlSession.selectList("lectureMapper.selectIStuHomeworkInfo", h));   sqlSession.selectList("lectureMapper.selectIStuHomeworkInfo", h);
+		}
+		System.out.println(list);
+		
+	
+		return list;
+			
+		/*
+		int result = 0;
+	      for(int i=0; i<studNoList.size(); i++) {
+	         
+	         l.setStudNo(studNoList.get(i).getStudNo());
+	        
+	         result += sqlSession.insert("lectureMapper.insertAtt", l);
+	         
+	      }
+
+	      return result; 
+	      */
+	}
+	
 	
 }

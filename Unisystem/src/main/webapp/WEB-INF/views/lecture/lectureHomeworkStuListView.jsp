@@ -84,13 +84,12 @@
         <div id="wrap_content" style="float: left;">
             
             <article id="content_header"><span>자료실 > </span>과제업로드</article>
+            <input type="hidden" id="studNo" name="studNo" value="${ loginUser.userNo }" />
 
             <div id="contentBox">
 
                 <div id="possible_box">
-                	<c:if test="${ loginUser.userDiv eq 2 }">
-	                	<div><button type="button" id="hwInsertBtn">과제 등록</button></div>
-                	</c:if>
+
                     <div>제출가능한 과제</div>
                     
                     <table>
@@ -132,32 +131,40 @@
                         </tr>
                         
                         <c:forEach var="l" items="${ list }" >
-	                        <tr>
-	                            <td>${ l.rownum }</td>
+	                        <tr class="trs">
+	                            <td class="homeworkpNo">${ l.homeworkpNo }</td>
 	                            <td>${ l.homeworkpName }</td>
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
-	                            <td>
-		                            <c:if test="${ l.homeworkpCategory eq 'I' }">
-		                        		제출마감
-		                        	</c:if>
-		                        	<c:if test="${ l.classCategory eq 2 }">
-		                        		비대면강의
-		                        	</c:if>
-	                            </td>
+	                            <td>제출</td>
 	                            <td>미채점</td>
 	                            <td><span>/ 100</span></td>
 	                        </tr>
 						</c:forEach>
+						</table>
                     <div class="container">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                    		<c:choose>
+                    			<c:when test="${ pi.currentPage eq 1 }">
+		                        	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+		                        	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ pi.currentPage - 1 }&classNo=${classInfo.classNo}">&lt;</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
+                    		
+                    		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                            	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                    		</c:forEach>
+                    		
+                    		<c:choose>
+                    			<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+		                        	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ pi.currentPage + 1 }&classNo=${classInfo.classNo}">&gt;</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
                         </ul>
                     </div>
                     
@@ -168,6 +175,40 @@
 
         </div>
     </div>
+    
+    <script>
+    	$(function(){
+    		
+    		selectIStuHomeworkInfo();
+    	})
+    	
+    		function selectIStuHomeworkInfo(){
+    			let trs = $(".trs")
+    			let studNo = $("#studNo").val();
+    			let tdArr = new Array();
+    			let td = trs.children(".homeworkpNo");
+    						
+    			td.each(function(i){
+    				tdArr.push(td.eq(i).text());
+    			})
+    			
+    		
+    			$.ajax({
+    				url:"IHomeworkList.lec",
+    				data:{
+    					studNo:studNo,
+    					tdArr:tdArr
+    				},
+    				success:function(studInfo){
+    					
+    				}, error:function(){
+    					
+    				}
+    				
+    			})
+    		
+    		}
+    </script>
 
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />

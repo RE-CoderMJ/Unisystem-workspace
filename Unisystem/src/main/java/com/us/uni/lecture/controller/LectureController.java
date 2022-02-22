@@ -1,6 +1,7 @@
 package com.us.uni.lecture.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.LectureService;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -298,7 +300,6 @@ public class LectureController {
 	/* 학생 - 마감된 과제 리스트를 띄워주는 컨트롤러 */
 	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
-	/*
 	@RequestMapping("homeworkEndList.lec")
 	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="classNo") int classNo, ModelAndView mv) { 
 		// @RequestParam => request.getParameter를 대신함
@@ -310,11 +311,26 @@ public class LectureController {
 		
 		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, classNo);
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkListView");
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkStuListView");
 		
 		return mv; 
 	}
-	*/
+	
+	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	@ResponseBody
+	@RequestMapping(value="IHomeworkList.lec", produces="application/json; charset=UTF-8")
+	public String selectIStuHomeworkInfo(Homework h, @RequestParam(value="tdArr[]") List<String>tdArr ) {
+		
+		ArrayList<Homework> list = lService.selectIStuHomeworkInfo(h, tdArr);
+		
+		System.out.println(list);
+		return new Gson().toJson(list);		
+	}
+	
+	
+	
+	
+
 	
 	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureHomeworkDetail.stu")

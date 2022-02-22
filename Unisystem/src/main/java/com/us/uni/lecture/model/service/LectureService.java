@@ -1,8 +1,10 @@
 package com.us.uni.lecture.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -76,6 +78,9 @@ public interface LectureService {
 	
 	// 마감된 과제 리스트 페이지 조회
 	ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo);
+	
+	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	ArrayList<Homework> selectIStuHomeworkInfo(Homework h, List<String>tdArr);
 	
 	
 	

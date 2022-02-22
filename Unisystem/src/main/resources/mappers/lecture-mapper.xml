@@ -48,6 +48,10 @@
 		<result column="homeworkp_name" property="homeworkpName" />	
 		<result column="homeworkp_category" property="homeworkpCategory" />	
 		<result column="마감일시" property="homeworkpEndDateTime" />	
+		<result column="grade_status" property="gradeStatus" />
+		<result column="score" property="score" />
+		<result column="feedback" property="feedback" />
+		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
 		<result column="kor_name" property="korName" />				
 	</resultMap>
@@ -379,28 +383,36 @@
 
 	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
 	<select id="selectHomeworkpList" resultMap="homeworkResult">
-		select 
-		       rownum
-		     , a.*
-		  from
-		       (
-		        select
-		               homeworkp_no
-		             , class_no
-		             , homeworkp_name
-		             , kor_name
-		             , homeworkp_category
-		             , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
-		          from homeworkp
-		          join class using(class_no)
-		          join professor using(prof_no)
-		          join users on (prof_no = user_no)
-		         where homeworkp_category = 'I'
-		           and class_no = 1010
-		           and status = 'Y'
-		         order
-		            by "마감일시" desc       
-		       ) a	   
+		select
+               distinct
+               homeworkp_no
+		     , homeworkp_name
+		     , kor_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		  from homeworkp p
+		  join homeworks s using(homeworkp_no)
+		  join class using(class_no)
+		  join professor using(prof_no)
+		  join users on (prof_no = user_no)  
+		 where homeworkp_category = 'I'
+		   and s.status = 'Y'
+		   and p.status = 'Y'
+           and class_no = #{classNo}
+		 order
+		    by homeworkp_no desc 
+	</select>
+	
+	<!-- 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회하는 sql  -->
+	<select id="selectIStuHomeworkInfo" resultMap="homeworkResult">
+		select
+		       homeworks_no
+		     , grade_status
+		     , score
+		  from homeworks
+		  join homeworkp using(homeworkp_no)
+		  join class using(class_no)
+		 where homeworkp_no = #{homeworkpNo}
+		   and stud_no = #{studNo}
 	</select>
 
 

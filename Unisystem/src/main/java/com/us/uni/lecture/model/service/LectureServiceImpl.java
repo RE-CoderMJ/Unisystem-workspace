@@ -1,6 +1,7 @@
 package com.us.uni.lecture.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.LectureDao;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -149,6 +151,12 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo) {
 		return lDao.selectHomeworkpList(sqlSession, pi, classNo);
+	}
+
+	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	@Override
+	public ArrayList<Homework> selectIStuHomeworkInfo(Homework h, List<String> tdArr) {
+		return lDao.selectIStuHomeworkInfo(sqlSession, h, tdArr);
 	}
 	
 
