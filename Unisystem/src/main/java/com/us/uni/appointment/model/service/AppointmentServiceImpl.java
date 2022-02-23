@@ -65,4 +65,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int deleteApp(int appNo) {
 		return aDao.deleteApp(sqlSession, appNo);
 	}
+
+	@Override
+	public int selectProfAppListCount(int userNo) {
+		return aDao.selectProfAppListCount(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Appointment> selectProfAppList(int userNo) {
+		return aDao.selectProfAppList(sqlSession, userNo);
+	}
+
+	@Override
+	public int changeAppStatus(Appointment a) {
+		return aDao.changeAppStatus(sqlSession, a);
+	}
 }

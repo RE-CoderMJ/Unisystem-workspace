@@ -27,7 +27,7 @@ public class AppointmentController {
 	private AppointmentService aService;
 	
 	/**
-	 * 상담신청내역 페이지 컨트롤러
+	 * 학생 상담신청내역 페이지 컨트롤러
 	 * @return
 	 */
 	@RequestMapping("myStu.appList")
@@ -42,7 +42,7 @@ public class AppointmentController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("myStu.selectAppList")
+	@RequestMapping(value="myStu.selectAppList", produces="application/json; charset=UTF-8")
 	public Map<String, Object> selectAppList(int currentPage, int userNo){
 		
 		Map<String, Object> map = new HashMap();
@@ -165,19 +165,15 @@ public class AppointmentController {
 			
 	}
 	
-	@RequestMapping("myProf.appDetail")
-	public String selectProfApp() {
-		return "appointment/profAppointmentDetail";
-	}
 	
 	/**
-	 * 교수 상담신청 내역 리스트 컨트롤러
+	 * 교수 상담신청 내역 페이지 컨트롤러
 	 * @param m
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping("myProf.appList")
-	public String selectProfAppList(Model m, HttpSession session) {
+	public String profAppList(Model m, HttpSession session) {
 		
 		Users u = (Users)session.getAttribute("loginUser");
 		
@@ -194,6 +190,29 @@ public class AppointmentController {
 	}
 	
 	/**
+	 * 교수 상담신청 내역 페이지 리스트 조회 컨트롤러
+	 * @param currentPage
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="myProf.selectProfAppList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectProfAppList(int currentPage, int userNo){
+		
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = aService.selectProfAppListCount(userNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Appointment> list = aService.selectProfAppList(userNo);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	/**
 	 * 교수 상담가능시간 업로드 
 	 * @return
 	 */
@@ -204,6 +223,47 @@ public class AppointmentController {
 		
 		if(result > 0) {
 			return "redirect:myProf.appList";
+		}else {
+			return "";
+		}
+	}
+	
+	/**
+	 * 상담신청 교수 상세조회 페이지 컨트롤러
+	 * @param appNo
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("myProf.appProfDetail")
+	public String selectProfApp(int appNo, Model m) {
+		
+		Appointment a = aService.selectApp(appNo);
+		m.addAttribute("a", a);
+		
+		return "appointment/profAppointmentDetail";
+	}
+	
+	/**
+	 * 상태변경용 ajax 컨트롤러
+	 * @param a
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="myProf.changeAppStatus", produces="application/json; charset=UTF-8")
+	public int changeAppStatus(Appointment a) {
+		
+		int result = aService.changeAppStatus(a);
+		
+		return result;
+	}
+	
+	@RequestMapping("myProf.changeAppReasonStatus")
+	public String changeAppReasonStatus(Appointment a) {
+		
+		int result = aService.changeAppStatus(a);
+		
+		if(result > 0) {
+			return "redirect:myProf.appList";			
 		}else {
 			return "";
 		}

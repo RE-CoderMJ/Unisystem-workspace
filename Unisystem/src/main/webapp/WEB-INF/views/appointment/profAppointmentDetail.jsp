@@ -7,11 +7,23 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <link href="resources/css/appointment/profDetail.css" rel="stylesheet">
+<link href="resources/css/webMail/modals.css" rel="stylesheet">
+<style>
+	#reason-area{
+		width:255px;
+		height:150px;
+		resize:none;
+	}
+	.modalMsg-area{
+		font-weight:800;
+		font-size:18px;
+	}
+</style>
 </head>
 <body>
 
 	<jsp:include page="../common/links.jsp" />
-	<jsp:include page="../common/header.jsp" />	
+	<jsp:include page="../common/header.jsp" />
 	
 	<div id="wrapper">
 		<jsp:include page="../professor/pmySidebar.jsp" />
@@ -24,31 +36,46 @@
 	                <br>
 	            </div>
 	          	<div id="tools" align="right">
-	          		<button>목록</button>
-	                <button class="pending">대기</button>
-	                <button class="accepted">승인</button>
-	                <button class="completed">완료</button>
-	                <button class="rejected">반려</button>
+	          		<button onclick="location.href='myProf.appList'">목록</button>
+	                <button class="pending" onclick="changeStatus(1)">대기</button>
+	                <button class="accepted" onclick="changeStatus(2)">승인</button>
+	                <button class="completed" onclick="changeStatus(3)">완료</button>
+	                <button class="rejected" onclick="changeStatus(4)">반려</button>
 				</div>
 			</header>
 			<article>
                 <div id="content-area">
 	                <span class="badge badge-pill title">신청학생</span>
-	                <span class="contents">김나다</span><br><br>
+	                <span class="contents">${ a.studName }</span><br><br>
 	                <span class="badge badge-pill title">신청날짜</span>
-	                <span class="contents">2022-01-19</span><br><br>
+	                <span class="contents">${ a.enrollDate }</span><br><br>
 	                <span class="badge badge-pill title">상담일시</span>
-	                <span class="contents">2022-01-20 15:00</span><br><br>
+	                <span class="contents">${ a.appDate }</span><br><br>
 	                <span class="badge badge-pill title">제목</span>
-	                <span class="contents">이번학기 성적 관련 상담 신청합니다.</span><br><br>
+	                <span class="contents">${ a.title }</span><br><br>
 	                <span class="badge badge-pill title" style="float:left;">내용</span>
 	                <span class="contents" id="content">
-	                	이것은 현저하게 일월과 같은 예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다
+	                	${ a.content }
 	                </span><br><br>
 	                <span class="badge badge-pill title">상태</span>
-	                <span class="contents pending">대기</span><br><br>
-	                <span class="badge badge-pill title">반려 사유</span>
-	                <span class="contents"></span>
+	                <c:choose>
+	                	<c:when test="${ a.appStatus eq 1}">
+			                <span class="contents pending">대기</span><br><br>
+	                	</c:when>
+	                	<c:when test="${ a.appStatus eq 2}">
+			                <span class="contents approved">승인</span><br><br>
+	                	</c:when>
+	                	<c:when test="${ a.appStatus eq 3}">
+			                <span class="contents completed">완료</span><br><br>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<span class="contents rejected">반려</span><br><br>
+	          			</c:otherwise>
+	               	</c:choose>
+	                <c:if test="${ a.reason != null }">
+	                	<span class="badge badge-pill title">반려 사유</span>
+	                	<span class="contents">${a.reason }</span>
+	                </c:if>
                 </div>
 			</article>
 		</section>
@@ -56,13 +83,54 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<!-- 
+	<!-- 반려 사유 Modal -->
+    <div class="modal" id="reason">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+				<form action="myProf.changeAppReasonStatus" method="post">
+	                <!-- Modal body -->
+	                <div class="modal-body" align="center">
+	                    <div class="modalMsg-area">
+	                    	반려 사유를 입력해주세요.
+	                    </div>
+	                    <textarea name="reason" id="reason-area"></textarea>
+	                    <input type="hidden" name="appNo" value="${a.appNo }">
+	                    <input type="hidden" name="appStatus" value="4">
+	                    <div id="deleteContact-area">
+	                      <button type="submit" class="btn" id="contact-delete-confirm-btn">확인</a>
+	                      <button type="button" class="btn" data-dismiss="modal" id="contact-delete-closebtn">닫기</button>
+	                    </div>              
+	                </div>
+        		</form>
+            </div>
+        </div>
+    </div>
+
 	<script>
 		$(document).ready(function(){
 			let $len = $("section").height();
 			$(".wrap_sidebar").css('height', $len + 22);
 		})
 	</script>
-	 -->
+	
+	<script>
+		function changeStatus(appStatus){
+			if(appStatus == 4){
+				$("#reason").modal("show");
+			}else{
+				$.ajax({
+					url:"myProf.changeAppStatus",
+					data:{appNo:'${a.appNo}', appStatus:appStatus},
+					success:function(result){
+						if(result > 0){
+							location.href="myProf.appList";							
+						}
+					},error:function(){
+						console.log("상태변경 ajax 통신 실패");
+					}
+				})
+			}
+		}
+	</script>
 </body>
 </html>

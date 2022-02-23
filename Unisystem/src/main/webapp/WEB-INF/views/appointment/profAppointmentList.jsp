@@ -7,6 +7,18 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <link href="resources/css/appointment/profList.css" rel="stylesheet">
+<link href="resources/css/webMail/modals.css" rel="stylesheet">
+<style>
+	#reason-area{
+		width:255px;
+		height:150px;
+		resize:none;
+	}
+	.modalMsg-area{
+		font-weight:800;
+		font-size:18px;
+	}
+</style>
 </head>
 <body>
 
@@ -32,81 +44,33 @@
 	                <br>
 	            </div>
 	          	<div id="tools" align="right">
-	                <button class="pending">대기</button>
-	                <button class="accepted">승인</button>
-	                <button class="completed">완료</button>
-	                <button class="rejected">반려</button>
+	                <button class="pending" onclick="changeStatus(1)">대기</button>
+	                <button class="accepted" onclick="changeStatus(2)">승인</button>
+	                <button class="completed" onclick="changeStatus(3)">완료</button>
+	                <button class="rejected" onclick="changeStatus(4)">반려</button>
 				</div>
 			</header>
 			<article>
 				<table class="table table-hover" id="list">
-                    <tbody>
+					<thead>
                     	<tr style="background:rgb(232, 232, 232);">
-                    		<th><input type="checkbox" class="checkbox"></th>
+                    		<th><input type="checkbox" id="checkAll"></th>
                     		<th>No.</th>
                     		<th>신청학생</th>
                     		<th>신청날짜</th>
                     		<th>상담일시</th>
                     		<th>내용</th>
                     		<th>상태</th>
-                    	</tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>5</td>
-                            <td>김나다</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="pending">대기</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>4</td>
-                            <td>이별나</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>3</td>
-                            <td>박성적</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>2</td>
-                            <td>최룰루</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="completed">완료</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="checkbox"></td>
-                            <td>1</td>
-                            <td>강만점</td> 
-                            <td>2022-01-19</td>
-                            <td>2022-01-20 15:00 </td>
-                            <td>이번학기 성적 관련 상담 신청합니다.</td>
-                            <td class="rejected">반려</td>
-                        </tr>
+                    	</tr>						
+					</thead>
+                    <tbody>
+                        
                     </tbody>
                 </table>
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                 </div>
 			</article>
@@ -170,6 +134,29 @@
 		</form>
 	</div>
 	
+	<!-- 반려 사유 Modal -->
+    <div class="modal" id="reason">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+				<form action="myProf.changeAppReasonStatus" method="post">
+	                <!-- Modal body -->
+	                <div class="modal-body" align="center">
+	                    <div class="modalMsg-area">
+	                    	반려 사유를 입력해주세요.
+	                    </div>
+	                    <textarea name="reason" id="reason-area"></textarea>
+	                    <input type="hidden" name="appNo" value="">
+	                    <input type="hidden" name="appStatus" value="4">
+	                    <div id="deleteContact-area">
+	                      <button type="submit" class="btn" id="contact-delete-confirm-btn">확인</a>
+	                      <button type="button" class="btn" data-dismiss="modal" id="contact-delete-closebtn">닫기</button>
+	                    </div>              
+	                </div>
+        		</form>
+            </div>
+        </div>
+    </div>
+	
 	<script>
 		$(document).on("click", "#availableTime", function(){
 			let appDay = '${day}'.split(",");
@@ -191,6 +178,156 @@
 				})
 			}
 			
+		})
+	</script>
+	
+	<script>
+		$(function(){
+			selectProfAppList(1);
+		});
+		
+		function selectProfAppList(cPageNo){
+			$.ajax({
+				url:"myProf.selectProfAppList",
+				data:{currentPage:cPageNo, userNo:'${loginUser.userNo}'},
+				success:function(result){
+					
+					let value = "";
+					
+					if(result.list.length === 0){
+						value = "<tr><td colspan='7' style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>"
+					}else{
+						
+						for(let i in result.list){
+							value += "<tr><td><input type='checkbox' class='checkbox'></td>"
+								   + "<td class='click app-no'>" + result.list[i].appNo + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].studName + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].enrollDate + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].appDate + "</td>"
+	                        	   + "<td class='click'>" + result.list[i].title + "</td>";
+	                       if(result.list[i].appStatus == 1){
+	                       		value += "<td class='pending'>대기</td>";	                    	   
+	                       }else if(result.list[i].appStatus == 2){
+	                    	   value += "<td class='accepted'>승인</td>";
+	                       }else if(result.list[i].appStatus == 3){
+	                    	   value += "<td class='completed'>완료</td>";
+	                       }else{
+	                    	   value += "<td class='rejected'>반려</td>";
+	                       }
+	                        value += "</tr>";
+						}
+						
+						let piValue = "";
+						
+						if(result.pi.currentPage == 1){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectProfAppList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+						}
+	                    
+						for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+							
+							if(p == result.pi.currentPage){
+								piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectProfAppList(" + p + ")'>" + p + "</a></li>";
+							}else{
+								piValue += "<li class='page-item'><a class='page-link' onclick='selectProfAppList(" + p + ")'>" + p + "</a></li>";
+							}
+							
+						}
+		            	
+						if(result.pi.currentPage == result.pi.maxPage){
+							piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectProfAppList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+						}
+						
+						$(".pagination").html(piValue);
+						
+						// 사이드바와 컨텐츠영역 길이 맞춤
+						let $len = $("section").height();
+						$(".wrap_sidebar").css('height', $len + 22);
+						
+						$("#cPage").val(result.pi.currentPage);
+					}
+					
+					$("#list>tbody").html(value);
+					
+				},error:function(){
+					console.log("상담신청내역 목록 조회용 ajax 통신 실패");
+				}
+				
+			});
+		}
+	</script>
+	
+	<!-- 상세조회 -->
+	<script>
+		$(function(){
+			$(document).on("click", ".click", function(){
+				location.href="myProf.appProfDetail?appNo=" + $(this).siblings(".app-no").text();
+			});		
+		})
+	</script>
+	
+	<!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 상태 변경 -->
+	<script>
+		function changeStatus(appStatus){
+			
+			let count = 0;
+			let appNo;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count == 0){
+				alert("항목을 선택해주세요.");
+			}else{
+				if(appStatus == 4){
+					if(count > 1){
+						alert("반려는 1개의 항목만 선택이 가능합니다.");
+					}else{
+						$("#reason").modal("show");
+						$("input[name=appNo]").val($(".checkbox:checked").parent().siblings(".app-no").text());
+					}
+				}else{
+					$(".checkbox:checked").each(function(){
+						appNo = $(this).parent().siblings(".app-no").text();
+						ajaxChangeStatus(appNo, appStatus);
+					});
+				}
+			}
+		}
+		
+		function ajaxChangeStatus(appNo, appStatus){
+			$.ajax({
+				url:"myProf.changeAppStatus",
+				data:{appNo:appNo, appStatus:appStatus},
+				success:function(result){
+					if(result > 0){
+						location.href="myProf.appList";							
+					}
+				},error:function(){
+					console.log("상태변경 ajax 통신 실패");
+				}
+			})			
+		}
+	</script>
+	
+	<script>
+		$(function(){
+			$("#appointment").slideDown();
 		})
 	</script>
 	

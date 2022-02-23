@@ -23,5 +23,6 @@ public class Appointment {
 	private String reason;
 	private String status;
 	private String profName;
+	private String studName;
 	private String appTime;
 }

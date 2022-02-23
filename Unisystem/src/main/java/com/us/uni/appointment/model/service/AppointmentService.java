@@ -31,6 +31,13 @@ public interface AppointmentService {
 	int editApp(Appointment a);
 	// 상담신청내역 삭제 서비스
 	int deleteApp(int appNo);
+
+	// 교수 상담신청 내역 리스트 서비스
+	int selectProfAppListCount(int userNo);
+	ArrayList<Appointment> selectProfAppList(int userNo);
+	
+	// 상태변경용 서비스
+	int changeAppStatus(Appointment a);
 	
 
 }

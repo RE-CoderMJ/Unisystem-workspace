@@ -57,4 +57,16 @@ public class AppointmentDao {
 		return sqlSession.update("appMapper.deleteApp", appNo);
 	}
 
+	public int selectProfAppListCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("appMapper.selectProfAppListCount", userNo);
+	}
+
+	public ArrayList<Appointment> selectProfAppList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("appMapper.selectProfAppList", userNo);
+	}
+
+	public int changeAppStatus(SqlSessionTemplate sqlSession, Appointment a) {
+		return sqlSession.update("appMapper.changeAppStatus", a);
+	}
+
 }

@@ -29,6 +29,7 @@
 		<result column="reason" property="reason" />
 		<result column="status" property="status" />
 		<result column="prof_name" property="profName" />
+		<result column="stud_name" property="studName" />
 	</resultMap>
 
 	<update id="updateAvailableTime">
@@ -121,7 +122,8 @@
 		       app_no
 		     , stud_no
 		     , prof_no
-		     , kor_name "prof_name"
+		     , p.kor_name "prof_name"
+		     , s.kor_name "stud_name"
 		     , title
 		     , content
 		     , to_char(enroll_date, 'yyyy-mm-dd') "enroll_date"
@@ -129,7 +131,8 @@
 		     , app_status
 		     , reason
 		  from appointment
-		  join users on (user_no = prof_no)
+		  join users p on (p.user_no = prof_no)
+		  join users s on (s.user_no = stud_no)
 		 where app_no = #{appNo}
 		   and status = 'Y'
 	</select>
@@ -147,6 +150,42 @@
 		update
 		       appointment
 		   set status = 'N'
+		 where app_no = #{appNo}
+	</update>
+	
+	<select id="selectProfAppListCount" resultType="_int">
+		select
+		       count(*)
+		  from appointment
+		 where prof_no = #{userNo}
+		   and status = 'Y'
+	</select>
+	
+	<select id="selectProfAppList" resultMap="appResult">
+		select
+		       app_no
+		     , stud_no
+		     , prof_no
+		     , kor_name "stud_name"
+		     , title
+		     , content
+		     , to_char(enroll_date, 'yyyy-mm-dd') "enroll_date"
+		     , app_date
+		     , app_status
+		     , reason
+		  from appointment
+		  join users on (user_no = stud_no)
+		 where prof_no = #{userNo}
+		   and status = 'Y'
+		 order
+		    by app_no desc
+	</select>
+	
+	<update id="changeAppStatus">
+		update
+		       appointment
+		   set app_status = #{appStatus}
+		     , reason = #{reason}
 		 where app_no = #{appNo}
 	</update>
 </mapper>

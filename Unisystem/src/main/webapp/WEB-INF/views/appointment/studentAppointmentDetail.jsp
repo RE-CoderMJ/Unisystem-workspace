@@ -61,8 +61,10 @@
 	                		<span class="contents rejected">반려</span><br><br>
 	          			</c:otherwise>
 	               	</c:choose>
-	                <span class="badge badge-pill title">반려 사유</span>
-	                <span class="contents">${ a.profName == null ? "": a.reason }</span>
+	               	<c:if test="${ a.reason != null }">
+	                	<span class="badge badge-pill title">반려 사유</span>
+	                	<span class="contents">${a.reason }</span>
+	                </c:if>
                 </div>
 			</article>
 		</section>

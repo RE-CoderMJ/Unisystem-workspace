@@ -26,13 +26,14 @@
 	          	<div id="tools">
 	                <button onclick="location.href='myStu.appEnrollForm'"><span style="color:navy">+</span>&nbsp;신청</button>
 	                <button id="edit">수정</button>
+	                <button id="delete"><span style="color:red">-</span>&nbsp;삭제</button>
 				</div>
 			</header>
 			<article>
 				<table class="table table-hover" id="list">
 					<thead>
                     	<tr style="background:rgb(232, 232, 232);">
-                    		<th></th>
+                    		<th><input type='checkbox' id="checkAll"></th>
                     		<th>No.</th>
                     		<th>담당교수</th>
                     		<th>신청날짜</th>
@@ -83,13 +84,13 @@
 	                        	   + "<td class='click'>" + result.list[i].appDate + "</td>"
 	                        	   + "<td class='click'>" + result.list[i].title + "</td>";
 	                       if(result.list[i].appStatus == 1){
-	                       		value += "<td class='pending'>대기</td>";	                    	   
+	                       		value += "<td class='pending app-status'>대기</td>";	                    	   
 	                       }else if(result.list[i].appStatus == 2){
-	                    	   value += "<td class='accepted'>승인</td>";
+	                    	   value += "<td class='accepted app-status'>승인</td>";
 	                       }else if(result.list[i].appStatus == 3){
-	                    	   value += "<td class='completed'>완료</td>";
+	                    	   value += "<td class='completed app-status'>완료</td>";
 	                       }else{
-	                    	   value += "<td class='rejected'>반려</td>";
+	                    	   value += "<td class='rejected app-status'>반려</td>";
 	                       }
 	                        value += "</tr>";
 						}
@@ -146,6 +147,17 @@
 		})
 	</script>
 	
+	<!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
 	<script>
 		$(document).on("click", "#edit", function(){
 			
@@ -161,10 +173,37 @@
 			}else if(count == 0){
 				alert("수정하실 항목을 선택해주세요.");
 			}else{
-				appNo = $(".checkbox:checked").parent().siblings(".app-no").text();
-				location.href="myStu.editFormApp?appNo=" + appNo;
+				if($(".checkbox:checked").parent().siblings(".app-status").text() == "대기"){
+					alert("수정 및 삭제는 상담신청이 대기 상태일때만 가능합니다.");
+				}else{
+					appNo = $(".checkbox:checked").parent().siblings(".app-no").text();
+					location.href="myStu.editFormApp?appNo=" + appNo;					
+				}
 			}
 			
+		})
+		
+		$(document).on("click", "#delete", function(){
+			
+			let appNo;
+			let count = 0;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count == 0){
+				alert("삭제하실 항목을 선택해주세요.");
+			}else{					
+				$(".checkbox:checked").each(function(){
+					if($(this).parent().siblings(".app-status").text() != "대기"){
+						alert("삭제는 상담신청이 대기 상태인 항목만 가능합니다.");
+					}else{
+						appNo = $(this).parent().siblings(".app-no").text();
+						location.href="myStu.deleteApp?appNo=" + appNo;					
+					}
+				});
+			}
 		})
 	</script>
 	
