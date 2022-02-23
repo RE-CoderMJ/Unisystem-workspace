@@ -42,6 +42,8 @@ public class Lecture {
 	private int maxStud;              // 최대수강인원
 	private int currStud;             // 현재수강인원
 	
+	private String profMajor; 		  // 교수 전공
+	private String appdate; 		  // 강의 신청 날짜
 	
 	// 강의별 수강학생
 	private int classStudNo;          // 강의별 수강학생번호(seq)
