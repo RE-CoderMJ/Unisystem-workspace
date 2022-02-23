@@ -23,9 +23,10 @@ public interface ProfessorService {
 	int professorDelete(String dno);
 	// 교수 등록
 	
-	// 강의 개설
+	// 강의 개설 페이지
+	int selectAppCount(int profNo);
+	ArrayList<Lecture> classAppList(int profNo, PageInfo pi);
 	int classInsert(Lecture lec);
-	int classInsertAtt(HashMap map);
 	
 	
 

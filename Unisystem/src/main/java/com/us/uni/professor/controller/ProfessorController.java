@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -100,8 +99,17 @@ public class ProfessorController {
 	
 	
 	@RequestMapping("app.pr")
-	public String createClass() {
-		return "professor/professorCreateClassForm";
+	public ModelAndView classAppList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
+		
+		int profNo = (((Users)session.getAttribute("loginUser")).getUserNo());
+		int listCount = pService.selectAppCount(profNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
+		ArrayList<Lecture> list = pService.classAppList(profNo, pi);
+		
+		mv.addObject("list", list).addObject("pi", pi).setViewName("professor/professorCreateClassForm");
+	
+		return mv;
 	}
 	
 	/**
@@ -111,6 +119,7 @@ public class ProfessorController {
 	public String classInsert(Lecture lec, MultipartFile upfile, HttpSession session) {
 		
 		int result = 0;
+		
 		result = pService.classInsert(lec);
 		
 		if(result > 0) {

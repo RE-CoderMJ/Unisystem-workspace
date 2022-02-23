@@ -58,7 +58,17 @@ public class ProfessorDao {
 		return sqlSession.insert("lectureMapper.classInsert", lec);
 	}
 	
-	public int classInsertAtt(SqlSessionTemplate sqlSession, HashMap map) {
-		return sqlSession.insert("lectureMapper.attachmentInsert", map);
+	public int selectAppCount(SqlSessionTemplate sqlSession, int profNo) {
+		return sqlSession.selectOne("lectureMapper.selectAppCount", profNo);
 	}
+	
+	public ArrayList<Lecture> classAppList(SqlSessionTemplate sqlSession, int profNo, PageInfo pi) {
+		
+		int offset = ((pi.getCurrentPage()-1) * pi.getBoardLimit());
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.classAppList", profNo, rowBounds);
+	}
+	
 }

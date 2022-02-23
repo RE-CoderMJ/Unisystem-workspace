@@ -11,6 +11,9 @@
 	.appList{
 		margin:20px;
 	}
+	.appList .table td{
+		padding:7px;
+	}
 	#content label{
 		font-size:23px;
 		margin-bottom:12px;
@@ -142,7 +145,7 @@
 						<button class="btn btn-sm btn-outline-primary" onclick="createClass();">강의 개설</button>
 					</div>
 					
-					<table class="table table-bordered table-hover">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th><input type="checkbox"></th>
@@ -154,61 +157,49 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="c" items="${list}">
 							<tr>
 								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2021-01-10</td>
-								<td>미생물 유전체 해동 및 정보 분석</td>
-								<td>대기</td>
+								<td>${c.rownum}</td>
+								<td>${c.classNo}</td>
+								<td>${c.appdate}</td>
+								<td>${c.classKorName}</td>
+								<td>${c.classStatus}</td>
 							</tr>
-							<!-- 시작 -->
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2021-01-10</td>
-								<td>미생물 유전체 해동 및 정보 분석</td>
-								<td>대기</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2021-01-10</td>
-								<td>미생물 유전체 해동 및 정보 분석</td>
-								<td>대기</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2021-01-10</td>
-								<td>미생물 유전체 해동 및 정보 분석</td>
-								<td>대기</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2021-01-10</td>
-								<td>미생물 유전체 해동 및 정보 분석</td>
-								<td>대기</td>
-							</tr>
-							
-							<!-- 끝 -->
+						</c:forEach>	
 						</tbody>
 					</table>
 					
 					<div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+		                   <c:choose>
+		    				<c:when test="${ pi.currentPage eq 1 }">            
+			                    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="app.pr?cpage=${pi.currentPage-1}">&lt;</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    
+                    	<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                   		  <c:choose>
+                    		<c:when test="${ pi.currentPage == p }">
+                    			<li class="page-item active"><a class="page-link" href="app.pr?cpage=${p}">${p}</a></li>
+                    		</c:when>		    			
+		                    <c:otherwise>
+		                   		<li class="page-item"><a class="page-link" href="app.pr?cpage=${p}">${p}</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    	</c:forEach>
+                    
+                    		<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link" href="app.pr?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+						</c:otherwise>						
+						</c:choose>	
                     </ul>
                  </div>
 						
@@ -216,7 +207,7 @@
 			</div> <!-- searchList -->
 			
 			<!-- 강의 개설 -->
-			<div id="createClass" style="display:">
+			<div id="createClass" style="display:none">
 				<br>
 				<div class="createClass">
 					<label>* 교과목 개설 신청</label>
@@ -226,7 +217,7 @@
 							<table class="table1 table table-bordered" style="width:1090px">
 								<tr>
 									<th width="200px">개설년도</th>
-									<td width="200px"><input class="input" id="year" value="" disabled></td>
+									<td width="200px"><input class="input" id="year" name="classYear" value="0"></td>
 									<th width="200px">학기</th>
 									<td width="200px" style="padding:5px 10px;">
 									<select name="classSemester">
@@ -248,7 +239,7 @@
 								</tr>	
 								<tr>
 									<th colspan="2">과목명(영문)</th>
-									<td colspan="4"><input class="input" name="classEngName" required></td>
+									<td colspan="4"><input class="input" name="classEngName"></td>
 								</tr>
 								<tr>
 									<th colspan="2">개요(한글)</th>
@@ -328,7 +319,6 @@
 							<div class="plan" style="float:left">
 								<div class="plan-top">
 									<p>* 강의계획서</p>
-									
 									<label for="planPDF" class="button btn-sm btn-secondary" style="font-size:14px; margin-left:40px">파일첨부</label>
 								<div class="pdfBox" style="padding:10px;"></div>
 								<input type="file" name="upfile" id="planPDF">
@@ -356,14 +346,14 @@
 										<th>교시</th>
 										<td>
 											<select name="classStart">
-												<option>1교시</option>
-												<option>2교시</option>
-												<option>3교시</option>
-												<option>4교시</option>
-												<option>5교시</option>
-												<option>6교시</option>
-												<option>7교시</option>
-												<option>8교시</option>
+											<option value="1">1교시</option>
+											<option value="2">2교시</option>
+											<option value="3">3교시</option>
+											<option value="4">4교시</option>
+											<option value="5">5교시</option>
+											<option value="6">6교시</option>
+											<option value="7">7교시</option>
+											<option value="8">8교시</option>
 											</select>
 										</td>	
 									</tr>
@@ -371,9 +361,9 @@
 										<th>시간</th>
 										<td>
 											<select name="classTime">
-												<option>1시간</option>
-												<option>2시간</option>
-												<option>3시간</option>
+											<option value="1">1시간</option>
+											<option value="2">2시간</option>
+											<option value="3">3시간</option>
 											</select>
 										</td>
 										

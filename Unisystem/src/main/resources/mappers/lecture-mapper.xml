@@ -12,6 +12,7 @@
 		<result column="class_year" property="classYear" />
 		<result column="class_semester" property="classSemester" />
 		<result column="class_credit" property="classCredit" />	
+		<result column="class_status" property="classStatus" />				
 		<result column="class_location" property="classLocation" />				
 		<result column="class_day" property="classDay" />
 		<result column="score_att" property="scoreAtt" />
@@ -33,6 +34,7 @@
 		<result column="attendance_status" property="attendanceStatus" />
 		<result column="학번" property="stuGrade" />
 		<result column="total_semester" property="totalSemester" />
+		<result column="appdate" property="appdate" />
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -403,6 +405,7 @@
 		     , SCORE_MID
 		     , SCORE_FIN
 		     , MAX_STUD
+		     , APPDATE
 		     )
 		      VALUES
 		    (
@@ -412,7 +415,7 @@
 		     , #{classKorName}
 		     , #{classEngName}
 		     , #{classCategory}
-		     , TO_CHAR(SYSDATE, 'YYYY')
+		     , #{classYear}
 		     , #{classSemester}
 		     , #{classCredit}
 		     , #{classLocation}
@@ -432,29 +435,32 @@
 		     , #{scoreMid}
 		     , #{scoreFin}
 		     , #{maxStud}
+		     , TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		    )
 	</insert>
 	
-	<insert id="classInsertAtt">
-		INSERT
-	    INTO ATTACHMENT
-	         (
-	           ATTACH_NO
-	         , REF_TYPE
-	         , REF_NO
-	         , ORIGIN_NAME
-	         , CHANGE_NAME
-	         , PATH
-	         , STATUS
-	         )
-	          VALUES
-	         (
-	           SEQ_ATTNO.NEXTVAL
-	         , 'CA'
-	         , SEQ_CLASS.CURRVAL
-	         , #{originName}
-	         , #{changeName}
-	         , #{path}
-	         )
-	</insert>
+	<select id="selectAppCount" resultType="_int">
+		SELECT 
+			   COUNT(*)
+			   FROM CLASS
+		 WHERE PROF_NO = #{profNo}
+		 ORDER
+		    BY CLASS_YEAR ASC
+	</select>
+	
+	<select id="classAppList" resultMap="lectureResult">
+		SELECT 
+		       ROWNUM
+		     , A.*
+		 FROM (SELECT 
+		       CLASS_NO
+		     , APPDATE
+		     , CLASS_KOR_NAME
+		     , DECODE(CLASS_STATUS, NULL, '대기', 'Y', '승인', 'N', '반려') "CLASS_STATUS"
+		  FROM CLASS
+		 WHERE PROF_NO = #{profNo}
+		 ORDER
+		    BY CLASS_NO ASC NULLS FIRST) A 
+		ORDER BY ROWNUM DESC
+	</select>
 </mapper>

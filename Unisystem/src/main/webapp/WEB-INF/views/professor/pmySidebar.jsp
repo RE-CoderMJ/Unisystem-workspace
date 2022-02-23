@@ -62,9 +62,8 @@ a:hover {
 	color: rgb(26, 86, 162);
 	font-weight: bolder;
 }
-#myClassList:hover{
+#myClassList:hover, #classInsertList:hover{
 	color: rgb(26, 86, 162);
-	text-decoration:underline;
 	cursor:pointer;
 }
 </style>
@@ -92,7 +91,7 @@ a:hover {
 				 <b>담당 학생 관리</b> 
 			</div>
 			<div>
-				<a href="stlist.pr">- 담당 학생 조회</a>
+				<a href="stlist.pr" id="">- 담당 학생 조회</a>
 			</div>
 			<div>
 				<a href="">- 학적변동 신청내역</a>
@@ -108,7 +107,7 @@ a:hover {
 				<a onclick="urlSubmit(1);" id="myClassList">- 진행강의 조회</a>
 			</div>
 			<div>
-				<a href="app.pr">- 강의 관리</a>
+				<a href="app.pr" id="classInsertList">- 강의 관리</a>
 			</div>
 
             <div class="side_title">
@@ -149,12 +148,13 @@ a:hover {
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }" />
 			</form>
 			
+			<!-- 교수 -->
+			
 			<script>
 				function urlSubmit(num){
 			    	   if(num == 1){ // 강의 - 진행강의 조회 클릭 시  
 			    		   $("#myForm").attr("action", "professorClassList.me").submit();
-			    	   } 
-			    	   
+			    	   }
 			       }
 			</script>
 		</div>

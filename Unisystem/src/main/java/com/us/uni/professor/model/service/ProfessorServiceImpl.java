@@ -50,8 +50,13 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return pDao.classInsert(sqlSession, lec);
 	}
 	@Override
-	public int classInsertAtt(HashMap map) {
-		return pDao.attachmentInsert(sqlSession, map);
+	public int selectAppCount(int profNo) {
+		return pDao.selectAppCount(sqlSession, profNo);
 	}
+	@Override
+	public ArrayList<Lecture> classAppList(int profNo, PageInfo pi) {
+		return pDao.classAppList(sqlSession, profNo, pi);
+	}
+
 
 }

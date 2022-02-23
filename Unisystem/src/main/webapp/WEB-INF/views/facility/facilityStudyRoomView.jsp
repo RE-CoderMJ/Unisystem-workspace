@@ -523,10 +523,13 @@
 				  
 				  var hours = new Date().getHours();
 				  
+				  if(hours <= 4 || hours > 22){
+					  options += "<option>예약 불가능한 시간입니다.</option>";
+				  }
+				  
 				  for(let t=6; t<=22; t++){
 					  // 배열.indexOf로 해당 배열이 있는 값과 t가 일치하지 않으면 -1를 반환함!
-					  if(hours < t){
-						  
+					  if(hours < t || hours == 5){
 						  
 						  if(noTime.indexOf(t) == -1){
 							  if(t < 10){
@@ -543,6 +546,7 @@
 					  }
 					  
 				  }
+				  
 					  
 				  $("#useTime").html(options);
 				
