@@ -58,7 +58,6 @@ section::after{display:block;content:"";clear:both;}
 	margin-bottom:50px;
 }
 #cert-select-area{
-	margin-bottom:50px;
 	height:250px;
 }
 #cert-select-area>div{
@@ -80,11 +79,11 @@ section::after{display:block;content:"";clear:both;}
 	border:none !important;
 	cursor:default!important;
 }
-
-#useFor{
+#input-list{
 	margin-left:140px;
 }
-#useFor th{
+
+#input-list th{
 	background:rgb(223, 223, 223);
 	width:140px;
 	font-size:18px;

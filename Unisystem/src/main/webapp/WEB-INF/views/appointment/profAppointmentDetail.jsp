@@ -132,5 +132,11 @@
 			}
 		}
 	</script>
+	
+	<script>
+		$(function(){
+			$("#appointment").slideDown();
+		})
+	</script>
 </body>
 </html>

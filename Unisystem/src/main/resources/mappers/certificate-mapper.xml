@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="certMapper">
+
+	<resultMap type="Certificate" id="certResult">
+		<result column="cer_no" property="cerNo" />
+		<result column="stud_no" property="studNo" />
+		<result column="cer_type" property="cerType" />
+		<result column="usefor" property="useFor" />
+		<result column="to_type" property="toType" />
+		<result column="to_whom" property="toWhom" />
+		<result column="paid" property="paid" />
+		<result column="status" property="status" />
+	</resultMap>
+	
+	<insert id="applyCert">
+		insert
+		  into certificate
+		  (
+		  	cer_no
+		  , stud_no
+		  , cer_type
+		  , usefor
+		  , to_type
+		  , to_whom
+		  )
+		  values
+		  (
+		  	seq_certno.nextval
+		  , #{studNo}
+		  , #{cerType}
+		  , #{useFor}
+		  , #{toType}
+		  , #{toWhom}
+		  )
+	</insert>
+	
+	<select id="selectCertList" resultMap="certResult">
+		select
+		       cer_no
+		     , stud_no
+		     , cer_type
+		     , usefor
+		     , to_type
+		     , to_whom
+		  from certificate
+		 where stud_no = #{studNo}
+		   and status = 'Y'
+		   and paid = 'N'
+	</select>
+	
+	<update id="deleteCert">
+		update
+		       certificate
+		   set status = 'N'
+		 where cer_no = #{cerNo} 
+	</update>
+</mapper>

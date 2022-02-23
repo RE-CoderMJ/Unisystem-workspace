@@ -152,8 +152,8 @@ a:hover {
 			<div class="side_title">
 				<b>증명서</b>
 			</div>
-			<p>
-				<a href="">- 증명서 발급</a>
+			<p id="certificate">
+				<a href="myStu.cert.apply">- 증명서 발급</a>
 				<a href="">- 증명서 보관함</a>
 			</p>
 			
