@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Service;
 
 import com.us.uni.board.model.vo.Board;
+import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 
@@ -65,6 +66,11 @@ public interface BoardService {
 		//동아리
 		int cinsertBoard(Board b);
 		Board cselectBoard(int bno);
+		
+		//댓글 ajax 
+		ArrayList<Reply> selectReplyList(int bno);
+		int insertReply(Reply r);
+		int deleteReply(int replyNo);
 		
 		
 		

@@ -73,6 +73,14 @@ a:hover {
 	text-decoration:underline;
 	cursor:pointer;
 }
+.bo_content {
+	width: 1270px;
+	float: left;
+	background-color: white;
+	margin-left: 30px;
+	padding-bottom: 50px;
+	float:right;
+}
 </style>
 </head>
 
@@ -131,7 +139,7 @@ a:hover {
 			</div>
 			<p>
 				<a href="calendar">- 나의 일정</a>
-				<a href="">- TO-DO LIST</a>
+				<a href="todoList">- TO-DO LIST</a>
 			</p>
 			<div class="side_title">
 				<b>시설물 예약</b>

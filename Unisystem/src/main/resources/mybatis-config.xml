@@ -26,9 +26,11 @@
 			
 			<typeAlias type="com.us.uni.common.model.vo.Attachment" alias="Attachment" />
 			<typeAlias type="com.us.uni.lecture.model.vo.Classboard" alias="Classboard" />
-			<typeAlias type="com.us.uni.lecture.model.vo.HomeworkP" alias="HomeworkP" />
+			<typeAlias type="com.us.uni.lecture.model.vo.Homework" alias="Homework" />
 			<typeAlias type="com.us.uni.lecture.model.vo.Lecture" alias="Lecture" />
 			<typeAlias type="com.us.uni.event.model.vo.Event" alias="Event" />
+			<typeAlias type="com.us.uni.todo.model.vo.Todo" alias="Todo" />
+			<typeAlias type="com.us.uni.board.model.vo.Reply" alias="Reply" />
 		</typeAliases>
 		
 		<mappers>
@@ -40,6 +42,7 @@
 			<mapper resource="/mappers/appointment-mapper.xml" />			
 			<mapper resource="/mappers/lecture-mapper.xml" />
 			<mapper resource="/mappers/event-mapper.xml" />
+			<mapper resource="/mappers/todo-mapper.xml" />
 		</mappers>
 		
 </configuration>

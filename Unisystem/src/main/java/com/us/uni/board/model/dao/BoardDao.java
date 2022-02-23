@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.us.uni.board.model.vo.Board;
+import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 
@@ -239,7 +240,22 @@ public class BoardDao {
 			
 			return sqlSession.selectOne("boardMapper.selectBoard", bno);
 		}
-		
-		
+
+		public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int bno) {
+			
+			return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList",bno);
+		}
+
+		public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+			
+			return sqlSession.insert("boardMapper.insertReply",r);
+		}
+
+		public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+			
+			return sqlSession.update("boardMapper.deleteReply",replyNo);
+		}
+
+
 		 
 }

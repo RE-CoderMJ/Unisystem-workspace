@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.us.uni.board.model.dao.BoardDao;
 import com.us.uni.board.model.vo.Board;
+import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 
@@ -233,5 +234,27 @@ public class BoardServiceImpl implements BoardService{
 		
 		return bDao.nupdateBoard(sqlSession, b);
 	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int bno) {
+		
+		return bDao.selectReplyList(sqlSession, bno);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		
+		return bDao.insertReply(sqlSession, r);
+	}
+	
+	@Override
+	public int deleteReply(int replyNo) {
+		
+		return bDao.deleteReply(sqlSession, replyNo);
+	}
+	
+	
+	
+	
 
 }

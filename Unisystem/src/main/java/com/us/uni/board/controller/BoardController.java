@@ -14,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.us.uni.board.model.service.BoardService;
 import com.us.uni.board.model.vo.Board;
+import com.us.uni.board.model.vo.Reply;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
@@ -723,6 +726,35 @@ public class BoardController {
 					
 				}
 
+				
+				//댓글작성
+				@ResponseBody
+				@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
+				public String ajaxSelectReplyList(int bno) {
+					
+					ArrayList<Reply> list =bService.selectReplyList(bno);
+					
+					return new Gson().toJson(list);
+				}
+				
+				//댓글등록
+				@ResponseBody
+				@RequestMapping(value="rinsert.bo")
+				public String ajaxInsertReply(Reply r) {
+					System.out.println(r);
+					int result = bService.insertReply(r);
+					
+					return result>0 ? "success":"fail";
+				}
+				
+				//댓글삭제
+				@ResponseBody
+				@RequestMapping(value="replyDelete",produces="application/json; charset=utf-8")
+				public int ajaxdeleteReply(int replyNo) {
+					int result = bService.deleteReply(replyNo);
+					
+					return result;
+				}
 				
 				
 		

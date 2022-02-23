@@ -183,6 +183,10 @@
                         총 <span>${ classInfo.currStud }</span>명
                     </div>
                     
+                    <form action="insertAttDetail.lec" method="post" >
+                    <input type="hidden" id="classCode" name="classCode" value="${ list[0].classCode }" />
+		            <input type="hidden" id="classNo" name="classNo" value="${ list[0].classNo }" />
+                    <input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ list[0].attendanceDateB }" />
                     <div class="scroll type2">
 	                    <table id="attendance_table">
 	                    	<thead>
@@ -196,30 +200,23 @@
 		                        </tr>
 	                        </thead>
 	                        
-	                        <!-- <form id="insertAttForm"> -->
-	                        
-                        	<c:forEach var="l" items="${ list }">
-                        	
-	                        	<input type="hidden" id="classCode" name="classCode" value="${ l.classCode }" />
-	                        	<input type="hidden" id="classNo" name="classNo" value="${ l.classNo }" />
-	                        	<input type="hidden" id="attendanceDateB" name="attendanceDateB" value="${ l.attendanceDateB }" />
-		                       		                        
-                        	</c:forEach> 
-                        	                
-		                        <tbody>
-			                        
-		                        </tbody>
+	                       
+	                        	                
+			                        <tbody>
+				                     <!-- ajax로 데이터값 뿌려주는 영역 -->   
+				                     
+			                        </tbody>
+		
+		                    </table>
 	
-	                    </table>
-
-                    </div>
-
-			                    <div id="cancle_submit_button">
-			                        <button>초기화</button>
-			                        <button type="button" id="submitBtn">제출</button>
-			                    </div>
-
-	                        <!-- </form> -->
+	                    </div>
+	
+				                    <div id="cancle_submit_button">
+				                        <button>초기화</button>
+				                        <button type="submit" id="submitBtn">제출</button>
+				                    </div>
+	                        
+	                        </form>
 
     <script>      
     	$(function(){
@@ -281,21 +278,21 @@
 	    						status = list[i].attendanceStatus;
 	    					}
 	    					
-	                   		value += "<input type='hidden' class='studNo' name='studsNo' value='" + list[i].studNo + "' />"
-	                   			   + "<tr>"
-			                       +    "<td>" + list[i].rownum + "</td>"
-			                       +    "<td>" + totalSemester + "</td>"
-			                       +    "<td>" + list[i].studNo + "</td>"
-			                       +    "<td>" + list[i].korName + "</td>"
-			                       +    "<td class='status'>"											          	
-			                       + 		"<input type='text' class='statusInput' name='attendanceStatus' value='" + status + "' />"          
-			                       +    "</td>"
-			                       +    "<td>"
-			                       +       "<button class='attend' id='statusBtnA' type='button' name='attend'>출석</button>"
-			                       +       "<button class='absence' id='statusBtnB' type='button' name='absence'>결석</button>"
-			                       +       "<button class='tardiness' id='statusBtnC' type='button' name='tardiness'>지각</button>"
-			                       +     "</td>"
-			                       +  "</tr>";
+                            value += "<input type='hidden' class='studNo' name='studsNo[" + i + "].studNo' value='" + list[i].studNo + "' />"
+		                            + "<tr>"
+		                          +    "<td>" + list[i].rownum + "</td>"
+		                          +    "<td>" + totalSemester + "</td>"
+		                          +    "<td>" + list[i].studNo + "</td>"
+		                          +    "<td>" + list[i].korName + "</td>"
+		                          +    "<td class='status'>"                                              
+		                          +       "<input type='text' class='statusInput' name='studsNo[" + i + "].attendanceStatus' value='" + status + "' />"          
+		                          +    "</td>"
+		                          +    "<td>"
+		                          +       "<button class='attend' id='statusBtnA' type='button' name='attend'>출석</button>"
+		                          +       "<button class='absence' id='statusBtnB' type='button' name='absence'>결석</button>"
+		                          +       "<button class='tardiness' id='statusBtnC' type='button' name='tardiness'>지각</button>"
+		                          +     "</td>"
+		                          +  "</tr>";
 	                   			
 	                   			//"<input type='text' name='attStatusList[" + i + "].attendanceStatus' + value='' />";	   					
 	    				}                   		
@@ -308,22 +305,19 @@
 	     		})	
 	     	}
 	    	
+	    	/*
 	 		$(document).on("click", "#submitBtn", function(){
 	    		
-	    		let status = $("input[name=attendanceStatus]").val();
+	    		let attendanceStatus = $("input[name=attendanceStatus]").val();
 	    		let studNo = $("input[name=studsNo]").val();
 	     		let classCode = $("#classCode").val();
 	     		let attendanceDateB = $("#attendanceDateB").val();
-	    		
-	     		console.log(status);
-	    		console.log(studNo);
-	    		
-	    		
+	    
 	    		$.ajax({
 	    			
 	    			url:"insertAttDetail.lec",
 	    			data:{
-	    				status:status,
+	    				attendanceStatus:attendanceStatus,
 	    				studNo:studNo,
 	    				classCode:classCode,
 	    				attendanceDateB:attendanceDateB
@@ -337,7 +331,7 @@
 	    		})
 	    	
 	    })
-	    	
+	    */	
 	    	
 	    	
 	    	
