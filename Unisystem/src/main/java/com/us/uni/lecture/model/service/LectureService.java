@@ -73,17 +73,16 @@ public interface LectureService {
 	
 	// 과제 -------------------------------------------------------------
 	
-	// 마감된 과제 리스트의 게시글 총 수를 조회
-	int selectHomeworkListCount(int classNo);
+	// 학생 - 과제업로드 : 마감된 과제 리스트의 게시글 총 수를 조회
+	int selectHomeworkListCount(Homework h);
 	
-	// 마감된 과제 리스트 페이지 조회
-	ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo);
+	// 학생 - 과제업로드 : 마감된 과제 리스트 페이지 조회
+	ArrayList<Lecture> selectHomeworkpList(PageInfo pi, Homework h);
 	
-	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
-	ArrayList<Homework> selectIStuHomeworkInfo(Homework h, List<String>tdArr);
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
+	ArrayList<Homework> selectPhomeworkList(Homework h);
 	
-	
-	
+
 
 }
 

@@ -383,37 +383,56 @@
 
 	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
 	<select id="selectHomeworkpList" resultMap="homeworkResult">
-		select
-               distinct
-               homeworkp_no
+		select 
+		       homeworkp_no
 		     , homeworkp_name
-		     , kor_name
 		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , kor_name
+		     , ( select 
+		               grade_status 
+		          from homeworks s
+		         where stud_no = #{studNo}
+		           and status = 'Y'
+		           and s.homeworkp_no = p.homeworkp_no ) "grade_status"
+		     , ( select 
+		                score 
+		          from homeworks s
+		         where stud_no = #{studNo}
+		           and status = 'Y'
+		           and s.homeworkp_no = p.homeworkp_no ) "score"
 		  from homeworkp p
-		  join homeworks s using(homeworkp_no)
-		  join class using(class_no)
-		  join professor using(prof_no)
-		  join users on (prof_no = user_no)  
-		 where homeworkp_category = 'I'
-		   and s.status = 'Y'
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
 		   and p.status = 'Y'
-           and class_no = #{classNo}
+		   and homeworkp_category = 'I'
 		 order
-		    by homeworkp_no desc 
+		    by homeworkp_no desc
 	</select>
 	
-	<!-- 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회하는 sql  -->
-	<select id="selectIStuHomeworkInfo" resultMap="homeworkResult">
-		select
-		       homeworks_no
-		     , grade_status
-		     , score
-		  from homeworks
-		  join homeworkp using(homeworkp_no)
-		  join class using(class_no)
-		 where homeworkp_no = #{homeworkpNo}
-		   and stud_no = #{studNo}
-	</select>
+	<!-- 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트를 불러오는 SQL -->
+	<select id="selectPhomeworkList" resultMap="homeworkResult">
+		select 
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , kor_name
+		     , ( select 
+		               grade_status 
+		          from homeworks s
+		         where stud_no = #{studNo}
+		           and status = 'Y'
+		           and s.homeworkp_no = p.homeworkp_no ) "grade_status"
+		  from homeworkp p
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
+		   and p.status = 'Y'
+		   and homeworkp_category = 'P'
+		 order
+		    by homeworkp_no desc	
+	</select>	
+	
 
 
 </mapper>

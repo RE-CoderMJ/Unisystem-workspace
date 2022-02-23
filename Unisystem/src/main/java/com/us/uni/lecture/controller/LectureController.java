@@ -1,7 +1,6 @@
 package com.us.uni.lecture.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -301,34 +300,39 @@ public class LectureController {
 	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
 	@RequestMapping("homeworkEndList.lec")
-	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="classNo") int classNo, ModelAndView mv) { 
+	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Homework h, ModelAndView mv, HttpSession session) { 
 		// @RequestParam => request.getParameter를 대신함
 		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
 		
-		int listCount = lService.selectHomeworkListCount(classNo);
+
+		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
+		
+		int listCount = lService.selectHomeworkListCount(h);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
-		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, classNo);
+		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, h);
 		
 		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkStuListView");
 		
 		return mv; 
 	}
 	
-	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
 	@ResponseBody
-	@RequestMapping(value="IHomeworkList.lec", produces="application/json; charset=UTF-8")
-	public String selectIStuHomeworkInfo(Homework h, @RequestParam(value="tdArr[]") List<String>tdArr ) {
+	@RequestMapping(value="selectPhomeworkList.lec", produces="application/json; charset=UTF-8")
+	public String selectPhomeworkList(HttpSession session) {
 		
-		ArrayList<Homework> list = lService.selectIStuHomeworkInfo(h, tdArr);
+		Homework h = new Homework();
 		
-		System.out.println(list);
-		return new Gson().toJson(list);		
-	}
-	
-	
-	
+		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		
+		ArrayList<Homework> list = lService.selectPhomeworkList(h);
+		
+		return new Gson().toJson(list);
+	}	
+
 	
 
 	

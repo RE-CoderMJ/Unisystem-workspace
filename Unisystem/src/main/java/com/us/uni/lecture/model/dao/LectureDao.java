@@ -145,50 +145,26 @@ public class LectureDao {
 	
 	
 	// 마감된 과제 리스트의 게시글 총 수를 조회
-	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, int classNo) {
-		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", classNo);
+	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", h);
 	}
 	
 	// 마감된 과제 리스트 페이지 조회
-	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, int classNo){
+	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, Homework h){
+
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", classNo);
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", h, rowBounds);
 	}
 	
-	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
-	public ArrayList<Homework> selectIStuHomeworkInfo(SqlSessionTemplate sqlSession, Homework h, List<String> tdArr){
-	      
-		System.out.println(tdArr);
-		ArrayList<Homework> list = new ArrayList<>();
-							
-		for(int i=0; i<tdArr.size(); i++) {
-			
-			h.setHomeworkpNo(tdArr.get(i));
-			
-			//list.add((Homework) sqlSession.selectList("lectureMapper.selectIStuHomeworkInfo", h));   sqlSession.selectList("lectureMapper.selectIStuHomeworkInfo", h);
-		}
-		System.out.println(list);
-		
-	
-		return list;
-			
-		/*
-		int result = 0;
-	      for(int i=0; i<studNoList.size(); i++) {
-	         
-	         l.setStudNo(studNoList.get(i).getStudNo());
-	        
-	         result += sqlSession.insert("lectureMapper.insertAtt", l);
-	         
-	      }
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
+	public ArrayList<Homework> selectPhomeworkList(SqlSessionTemplate sqlSession, Homework h){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectPhomeworkList", h);
+	}
 
-	      return result; 
-	      */
-	}
 	
 	
 }

@@ -143,22 +143,21 @@ public class LectureServiceImpl implements LectureService{
 	
 	// 마감된 과제 리스트의 게시글 총 수를 조회
 	@Override
-	public int selectHomeworkListCount(int classNo) {
-		return lDao.selectHomeworkListCount(sqlSession, classNo);
+	public int selectHomeworkListCount(Homework h) {
+		return lDao.selectHomeworkListCount(sqlSession, h);
 	}
 
 	// 마감된 과제 리스트 페이지 조회
 	@Override
-	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo) {
-		return lDao.selectHomeworkpList(sqlSession, pi, classNo);
+	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, Homework h) {
+		return lDao.selectHomeworkpList(sqlSession, pi, h);
 	}
 
-	/* 학생 - 과제업로드 : 마감상태 게시글리스트에서 제출상태, 채점상태, 점수를 조회 */
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
 	@Override
-	public ArrayList<Homework> selectIStuHomeworkInfo(Homework h, List<String> tdArr) {
-		return lDao.selectIStuHomeworkInfo(sqlSession, h, tdArr);
+	public ArrayList<Homework> selectPhomeworkList(Homework h) {
+		return lDao.selectPhomeworkList(sqlSession, h);
 	}
-	
 
 	
 }

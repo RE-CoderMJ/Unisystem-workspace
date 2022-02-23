@@ -31,7 +31,7 @@
     }
     #contentBox>div{padding-left: 30px;}
     #impossible_box{margin-top: 80px;}
-    #possible_box div:nth-child(2), #impossible_box div:first-child{
+    #possible_box div:nth-child(1), #impossible_box div:first-child{
         font-size: 20px; 
         font-weight: 900;
         margin-bottom: 15px;
@@ -92,28 +92,19 @@
 
                     <div>제출가능한 과제</div>
                     
-                    <table>
-                        <tr>
-                            <th style="width: 70px;">번호</th>
-                            <th>과제명</th>
-                            <th style="width: 100px;">담당 교수</th>
-                            <th style="width: 170px;">제출 기한</th>
-                            <th style="width: 120px;">제출 여부</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>[8주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>미제출</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>[9주차 과제]</td>
-                            <td>김말똥</td>
-                            <td>2022.01.01 12:00</td>
-                            <td>제출 완료</td>
-                        </tr>
+                    <table id="pHomeworkList">
+                    	<thead>
+	                        <tr>
+	                            <th style="width: 70px;">번호</th>
+	                            <th>과제명</th>
+	                            <th style="width: 100px;">담당 교수</th>
+	                            <th style="width: 170px;">제출 기한</th>
+	                            <th style="width: 120px;">제출 여부</th>
+	                        </tr>
+                    	</thead>
+                    	<tbody>
+							<!-- ajax로 리스트 띄워주는 영역 -->                 	
+                    	</tbody>
                     </table>
                 </div>
 
@@ -133,12 +124,30 @@
                         <c:forEach var="l" items="${ list }" >
 	                        <tr class="trs">
 	                            <td class="homeworkpNo">${ l.homeworkpNo }</td>
-	                            <td>${ l.homeworkpName }</td>
+	                            <td><a href="">${ l.homeworkpName }</a></td>
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
-	                            <td>제출</td>
-	                            <td>미채점</td>
-	                            <td><span>/ 100</span></td>
+	                            <td>
+	                            	<c:choose>
+	                            		<c:when test="${ empty l.gradeStatus }">
+	                            			미제출
+	                            		</c:when>
+	                            		<c:otherwise>
+	                            			제출
+	                            		</c:otherwise>
+	                            	</c:choose>
+	                            </td>
+	                            <td>
+	                            	<c:choose>
+	                            		<c:when test="${ l.gradeStatus eq 'A'|| empty l.gradeStatus}">
+	                            			채점
+	                            		</c:when>
+	                            		<c:otherwise>
+	                            			미채점
+	                            		</c:otherwise>
+	                            	</c:choose>
+	                            </td>
+	                            <td><span>${ l.score } / 100</span></td>
 	                        </tr>
 						</c:forEach>
 						</table>
@@ -154,7 +163,14 @@
                     		</c:choose>
                     		
                     		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                    			<c:choose>
+                    				<c:when test="${ pi.currentPage == p }">
+                            			<li class="page-item active"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                    				</c:when>
+                    				<c:otherwise>
+                    					<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                    				</c:otherwise>
+                    			</c:choose>
                     		</c:forEach>
                     		
                     		<c:choose>
@@ -178,34 +194,41 @@
     
     <script>
     	$(function(){
-    		
-    		selectIStuHomeworkInfo();
+    		selectPhomeworkList();
     	})
     	
-    		function selectIStuHomeworkInfo(){
-    			let trs = $(".trs")
-    			let studNo = $("#studNo").val();
-    			let tdArr = new Array();
-    			let td = trs.children(".homeworkpNo");
-    						
-    			td.each(function(i){
-    				tdArr.push(td.eq(i).text());
-    			})
-    			
+    		function selectPhomeworkList(){
     		
     			$.ajax({
-    				url:"IHomeworkList.lec",
-    				data:{
-    					studNo:studNo,
-    					tdArr:tdArr
-    				},
-    				success:function(studInfo){
+    				url:"selectPhomeworkList.lec",
+    				success:function(list){
     					
+    					let value = "";
+    					let status = "";
+    					for(let i in list){
+    						
+    						if(list[i].gradeStatus == null){
+    							status = "미제출";
+    						} else {
+    							status = "제출";
+    						}
+    						
+	    					value += "<tr>"
+	                              + 	"<td>"+ list[i].homeworkpNo + "</td>"
+	                              + 	"<td>" + "<a href=''>" + list[i].homeworkpName + "</a></td>"
+	                              +		"<td>" + list[i].korName + "</td>"
+	                              + 	"<td>" + list[i].homeworkpEndDateTime + "</td>"
+	                              + 	"<td>" + status + "</td>"
+	                              + "</tr>"; 				
+    					}
+    					
+    					$("#pHomeworkList>tbody").html(value);	
+
     				}, error:function(){
-    					
+    					console.log("제출가능한 과제 리스트 조회용 ajax 통신 실패");
     				}
-    				
     			})
+    		
     		
     		}
     </script>
