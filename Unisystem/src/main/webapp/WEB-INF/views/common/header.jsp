@@ -130,8 +130,10 @@
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
 	
+	<div id="socketAlert"class="alert alert-primary" style="display:none;">
+	</div>
+	
     <header id="header">
-
         <div id="header-up">
         	<div id="header-up-line">
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
@@ -179,5 +181,43 @@
         
     </header>
     
+    <!-- 웹소켓 js -->
+    <script>
+	var socket = null; //다른페이지 어디서든 소켓으로 메시지를 보낼수 있도록 전역변수처리 
+	
+	$(document).ready(function(){
+		connectWS();
+	})
+	
+	function connectWS(){
+		//msg websocket
+		var ws = new WebSocket("ws://localhost:8009/uni/msgEcho");
+		socket = ws;
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	    };
+	
+	
+	    ws.onmessage = function (event) {
+	        console.log("ReceiveMessage:", event.data+'\n');
+	       let $socketAlert =  $('div #socketAlert');
+	       $socketAlert.text(event.data);
+	       $socketAlert.css('display','block');
+	       
+	       setTimeout(function(){
+	    	   $socketAlert.css('display','none');
+	       }, 3000);
+	    };
+	
+	
+	    ws.onclose = function (event) { 
+	    	console.log('Info: connection closed.'); 
+	    	//setTimeout( function(){ connect(); }, 1000); // retry connection!!
+	    };
+	    ws.onerror = function (err) { console.log('Error',err); };
+	}
+    </script>
+    
+  
 </body>
 </html>

@@ -9,25 +9,37 @@ import org.springframework.stereotype.Repository;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.message.model.vo.Message;
 
-/*
+
 @Repository
 public class MessageDao {
 
-	public int recSelectListCount(SqlSessionTemplate sqlSession) {
+	public int selectMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
 		
-		return sqlSession.selectOne("MessageMapper.recSelectListCount");
+		return sqlSession.selectOne("messageMapper.recSelectListCount", userNo);
 	}
 
-	public ArrayList<Message> recSelectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Message> selectMsgList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset,limit);
-		
-		
-		
-		return (ArrayList)sqlSession.selectList("MessageMapper.recSelectList", null, rowBounds);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList)sqlSession.selectList("messageMapper.recSelectList", userNo, rowBounds);
 	}
 
+	public int SendMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
+		
+		return sqlSession.selectOne("messageMapper.sendSelectListCount", userNo);
+	}
+
+	public ArrayList<Message> SendMsgList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("messageMapper.sendSelectList", userNo, rowBounds);
+	}
+	
+	
 }
-*/

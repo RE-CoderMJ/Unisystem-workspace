@@ -158,14 +158,17 @@ li {
     color: #fff !important;
     background: black!important;
 }
-
+.btn-search{
+float:right;
+margin-right:87px;
+}
 </style>
 <body>
 
 
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
-
+	<jsp:include page="../message/messageModal.jsp" />
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
@@ -182,7 +185,7 @@ li {
 
 			<div class="page_title">받은 메시지</div>
 			
-			<hr width="1000px;">
+			<hr width="1200px;">
 
 			<div class="head_count msg_division">받은 메시지 목록</div>
 
@@ -200,60 +203,26 @@ li {
 
 			<br clear="both">
 
-			<!-- list 영역-->
-			<table class="table" style="width: 900px; text-align: center;">
 
+
+			<!-- ajax로 리스트 불러오기  쪽지 받았을 때 상단에 알림이 뜨도록 -->
+			<!-- list 영역-->
+			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
+			<thead>
 				<tr>
 					<th width="20px"></th>
 					<th width="70px">번호</th>
 					<th width="100px">보낸사람</th>
-					<th width="200px">내용</th>
+					<th width="300px">내용</th>
 					<th width="100px">상태</th>
+					<th>보낸날짜</th>
 				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-				
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-
+			</thead>
+			
+			<tbody>
+						
+			</tbody>
 			</table>
-
 		
 
 
@@ -277,7 +246,50 @@ li {
 		<br clear="both">
 
 		<script>
-
+		
+		$(function(){
+			receiveMsgList();
+		})
+		
+		//쪽지 리스트 조회 ajax구현하기 
+		function receiveMsgList(){
+    		$.ajax({
+    			type: 'POST',  
+				dataType:'json',
+    			url:"rmsg.list",
+    			data:{userNo: '${loginUser.userNo}'},
+    			success:function(data){
+    				console.log(data);
+    				let value="";
+    				
+    				for(let i in data){
+    					let readYN = "";
+    					
+    					if(data[i].readYN == 'Y'){
+  						  readYN = "읽음 ";
+  						  }else if(data[i].readYN =='N'){
+  							readYN = "안읽음";
+  						  }
+    					
+    					value += "<tr>"
+    						  + "<td>" 
+    						  + "<input id='msgCheck' type='checkbox'>"
+    						  +"</td>"
+    						  + "<td>" + data[i].messageNo +"</td>"
+    						  + "<td>" + data[i].msgWriter + "</td>"
+    						  + "<td>" + data[i].msgContent + "</td>"
+    						  + "<td>"+readYN+ "</td>"
+    						  + "<td>" + data[i].sendDate + "</td>"
+    						  + "</tr>";
+    				}
+    				
+    				$("#msgArea tbody").html(value);
+    			},
+    			error:function(){
+    				console.log("댓글리스트 조회용 ajax 통신실패");
+    			}
+    		});
+    	}
     </script>
 
 		<!-- footer.jsp-->
@@ -285,34 +297,6 @@ li {
 
 	</div>
 
-
-	<!-- msg 모달 영역  -->
-
-	<div class="modal" id="msgModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content" style="border-radius: 80px;">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">메시지 보내기</h4>
-	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      	<p><b>받는이:</b> 곰돌이(201901234) </p>
-	      	<textarea class="modalText"></textarea>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
-	 
 
 </body>
 </html>

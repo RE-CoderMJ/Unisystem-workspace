@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<!-- 
+
 <mapper namespace="messageMapper">
 
   <resultMap id="messageResult" type="Message">
@@ -18,24 +18,59 @@
   </resultMap>
 	
 	<select id="recSelectListCount" resultType="_int">
-	 
+	 select
+	 	count(*)
+	 	from message
+	 	where msg_reader =#{userNo}
+	 	and deleteyn ='n'
 	</select>
 	
 	<select id="recSelectList" resultMap="messageResult">
 	select
 		message_no
-		,msg_writer
-		,msg_reader
+		,w.kor_name as "msg_writer"
+		,r.kor_name as "msg_reader"
 		,msg_content
 		,READYN
 		,DELETEYN
 		,imp_msg
-		,send_date
-		,read_date
+		,to_char(send_date,'YYYY-MM-DD') as "send_date"
+		,to_char(read_date,'YYYY-MM-DD') as "read_date"
 		,msg_alert
 	from message
+	join users w on (msg_writer = w.user_no)
+	join users r on (msg_reader = r.user_no)
 	where msg_reader =#{userNo}
+	and deleteyn ='n'
 	</select>
 	
+	
+	<select id="sendSelectListCount" resultType="_int">
+	 select
+	 	count(*)
+	 	from message
+	 	where msg_writer =#{userNo}
+	 	and deleteyn ='n'
+	</select>
+	
+	<select id="sendSelectList" resultMap="messageResult">
+	select
+		message_no
+		,w.kor_name as "msg_writer"
+		,r.kor_name as "msg_reader"
+		,msg_content
+		,READYN
+		,DELETEYN
+		,imp_msg
+		,to_char(send_date,'YYYY-MM-DD') as "send_date"
+		,to_char(read_date,'YYYY-MM-DD') as "read_date"
+		,msg_alert
+	from message
+	join users w on (msg_writer = w.user_no)
+	join users r on (msg_reader = r.user_no)
+	where msg_writer =#{userNo}
+	and deleteyn ='n'
+	</select>
+	
+	
 </mapper>
-	 -->

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 </head>
- 
+
 <style>
 .sidewrap {
 	float: left;
@@ -21,7 +21,7 @@
 	background-color: white;
 	margin-left: 30px;
 	padding-bottom: 50px;
-	float:right;
+	float: right;
 }
 
 .page_title {
@@ -41,10 +41,10 @@
 
 #condition {
 	width: 110px;
-    display: inline-block;
-    position: relative;
-    left: 329px;
-    top: -26px;
+	display: inline-block;
+	position: relative;
+	left: 329px;
+	top: -26px;
 }
 
 #condition .ctg {
@@ -92,7 +92,7 @@
 .ctg-area {
 	font-size: 16px;
 	display: inline-block;
-	width:800px;
+	width: 800px;
 	margin-top: 11px;
 }
 
@@ -100,74 +100,82 @@
 	position: relative;
 	top: 0px;
 }
+
 .b_write {
 	border: none;
-    float: right;
-    margin-right: 212px;
-    background-color: rgb(15, 43, 80);
-    color: white;
-    height: 35px;
-    width: 90px;
-    border-radius: 3px;
-    font-size: 14px;
-    cursor: pointer;
-    position: relative;
-    right: 0px;
-}
-.board-content textarea{
-	resize: none;
-    width: 850px;
-    margin: auto;
-    height: 650px;
-    margin-left: 210px;
-    margin-top:20px;
-}
-.b-count{
-	font-size: 16px;
-    display: inline-block;
-    float: right;
-    position: relative;
-    left: 34px;
-    top: -10px;
+	float: right;
+	margin-right: 212px;
+	background-color: rgb(15, 43, 80);
+	color: white;
+	height: 35px;
+	width: 90px;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+	position: relative;
+	right: 0px;
 }
 
-#bfile{
+.board-content textarea {
+	resize: none;
+	width: 850px;
+	margin: auto;
+	height: 650px;
+	margin-left: 210px;
+	margin-top: 20px;
+}
+
+.b-count {
+	font-size: 16px;
+	display: inline-block;
+	float: right;
+	position: relative;
+	left: 34px;
+	top: -10px;
+}
+
+#bfile {
 	margin-left: 126px;
 	margin-top: 10px;
 }
-.upload-area{
-margin:auto;
-margin-left: 210px;
-margin-top: 10px;
+
+.upload-area {
+	margin: auto;
+	margin-left: 210px;
+	margin-top: 10px;
 }
-.updel{
+
+.updel {
 	height: 24px;
-    margin-right: 212px;
-    font-size: 15px;
+	margin-right: 212px;
+	font-size: 15px;
 }
-.updel a{
+
+.updel a {
 	text-decoration: none;
 	color: black;
 	float: right;
 }
-.bdel{
-	margin-right:4px;
+
+.bdel {
+	margin-right: 4px;
 }
-.replyDiv{
+
+.replyDiv {
 	width: 869px;
-    margin: auto;
-    margin-top: 36px;
-    margin-right: 195px;
-    position: relative;
-    right: 10px;
-    }
+	margin: auto;
+	margin-top: 36px;
+	margin-right: 195px;
+	position: relative;
+	right: 10px;
+}
 </style>
 
 <body>
-	
-	
-	
-	<jsp:include page="../common/links.jsp"/>
+
+
+
+	<jsp:include page="../common/links.jsp" />
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
 
@@ -176,58 +184,61 @@ margin-top: 10px;
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
+	<div
+		style="background-color: rgb(235, 242, 252); width: 1500px; margin: auto; margin-top: 30px;">
 		<div class="sidewrap">
 			<jsp:include page="../student/smySidebar.jsp" />
 		</div>
-		
+
 		<div class="bo_content">
 			<!-- title -->
 			<div class="page_title">커뮤니티</div>
-			
-			<c:if test="${ loginUser != null || loginUser.userNo == b.userNo }">
-	          	<div class="updel">
-				<a onclick="postFormSubmit(1);">수정</a> 
-				<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
-				</div>
-				</c:if>
-				
-				<div class="grayWrap">
-					<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly/><br>
-					<input type="hidden" value="${loginUser.userNo}" name="userNo" />
-					
-						<div class="ctg-area">
-							<span>날짜</span> ${ b.createDate }
-							<span>작성자</span> ${loginUser.korName}
-							<span>카테고리</span> ${ b.subCategory }
-					
-							
-							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount } </div>
-						</div>
-						</div>
-		
-	
 
-		<div class="board-content">
-			<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
-		</div>
-		
-		<div class="upload-area">
-							<c:choose>
-                    		<c:when test="${ empty  at.originName }">
+			<c:if test="${ loginUser != null || loginUser.userNo == b.userNo }">
+				<div class="updel">
+					<a onclick="postFormSubmit(1);">수정</a> <a class="bdel"
+						onclick="postFormSubmit(2);">삭제</a>
+				</div>
+			</c:if>
+
+			<div class="grayWrap">
+				<input type="text" name="boardTitle" value="${ b.boardTitle }"
+					readonly /><br> <input type="hidden"
+					value="${loginUser.userNo}" name="userNo" />
+
+				<div class="ctg-area">
+					<span>날짜</span> ${ b.createDate } <span>작성자</span>
+					${b.userNo} <span>카테고리</span> ${ b.subCategory }
+
+
+					<div class="b-count">
+						<b style="color: rgb(231, 76, 60); font-size: 16px;">조회수</b> ${ b.boCount }
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="board-content">
+				<textarea name="boardContent" readonly>${ b.boardContent }</textarea>
+			</div>
+
+			<div class="upload-area">
+				<c:choose>
+					<c:when test="${ empty  at.originName }">
 	                    		첨부파일이 없습니다.
 	                    	</c:when>
-	                    	<c:otherwise>
-	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>
-                        	</c:otherwise>
-                       		</c:choose>
-                       		
-	            <form id="postForm" action="" method="post">
-	            	<input type="hidden" name="bno" value="${ b.boardNo }">
-	            	<input type="hidden" name="filePath" value="${at.path}">
-	            </form>
-	            
-	             <script>
+					<c:otherwise>
+						<a href="${at.path}" download="${at.originName}">${at.originName}</a>
+					</c:otherwise>
+				</c:choose>
+
+				<form id="postForm" action="" method="post">
+					<input type="hidden" name="bno" value="${ b.boardNo }"> <input
+						type="hidden" name="filePath" value="${at.path}">
+				</form>
+
+				<script>
 	            	function postFormSubmit(num){
 	            		if(num == 1){ // 수정하기 클릭시
 	            			$("#postForm").attr("action", "updateForm.bo").submit();
@@ -236,38 +247,58 @@ margin-top: 10px;
 	            		}
 	            	}
 	            </script>
-	            
-				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
-				
-	            <!-- ajax 댓글구현 -->
-			<div class="replyDiv">
-			<table id="replyArea" class="table">
-	                <thead>
-                   <c:choose>
-                    		<c:when test="${ empty loginUser }">
-		                        <th colspan="2">
-		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
-		                        </th>
-		                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
-	                        </c:when>
-	                        <c:otherwise>
-		                        <th colspan="2">
-		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-		                        </th>
-		                        <th style="vertical-align: middle"><button type="button" class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-                        	</c:otherwise>
-                        </c:choose>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <br><br>
-        
 
-	    
-	    <script>
-	    
+				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
+
+				
+
+				<!-- ajax 댓글구현 -->
+				<div class="replyDiv">
+					<table id="replyArea" class="table">
+						<thead>
+							<c:choose>
+								<c:when test="${ empty loginUser }">
+									<th colspan="2"><textarea class="form-control" cols="55"
+											rows="2" style="resize: none; width: 100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
+									</th>
+									<th style="vertical-align: middle"><button
+											class="btn btn-secondary" disabled>등록하기</button></th>
+								</c:when>
+								<c:otherwise>
+									<th colspan="2"><textarea class="form-control"
+											id="msg" cols="55" rows="2"
+											style="resize: none; width: 100%"></textarea></th>
+									<th style="vertical-align: middle"><button type="button"
+											id="btnSend" class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+								</c:otherwise>
+							</c:choose>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<br> <br>
+
+				
+				
+				
+				<script>
+				$(document).ready(function(){
+					
+				    $('#btnSend').on('click', function(evt) {
+					  evt.preventDefault();
+				  if (socket.readyState !== 1) return;
+				    	  let msg = $('input#msg').val();
+				    	  socket.send(msg);
+				    });
+				});
+				</script>
+				
+				<script>
+				let ruserNo = '${loginUser.userNo}',
+				boardNo = ${b.boardNo},
+				boardWriter = ${b.boardWriter};
+			    
 			$(function(){
 	    		selectReplyList();
 	    		
@@ -277,27 +308,32 @@ margin-top: 10px;
 					})
 	    	})
 	     
-			
-    	
-			
+			//댓글작성이고 -> 알림을 주고싶으면  success에 알림구문을 추가해준다. 
 	    	function addReply(){
-				
-	    		if($("#content").val().trim().length != 0){
+	    		if($("#msg").val().trim().length != 0){
 	    			
 	    			$.ajax({
 	    				url:"rinsert.bo",
 	    				data:{
 	    					rboardNo : ${b.boardNo},
-	    					replyContent:$('#content').val(),
+	    					replyContent:$('#msg').val(),
 	    					ruserNo:'${loginUser.userNo}'
-	    				},
-	    				success:function(status){
+	    				}, success:function(status){
 	    					if(status =="success"){
-	    						selectReplyList();
-	    						$('#content').val("");
+	    						//websocket에 보내기(댓글작성자 게시글작성자 글번호)
+	    						console.debug("socket",socket)
+		    						if(socket != null){ 
+		    							let socketMsg = "reply,"+ '${loginUser.userNo}' +","+ '${b.boardWriter}' +","+'${b.boardNo}';
+		    							//가져올 변수들 홑따옴표로 감싸주기
+		    							
+			    						console.debug("jsp::socket>",socketMsg)
+		    							socket.send("socketMsg : "+ socketMsg);
+			    						
+			    						selectReplyList();
+			    						$('#msg').val("");
+		    						}
 	    						}
-	    					}
-	    				, error:function(){
+	    					}, error:function(){
 	    					console.log("댓글작성용 ajax 통신실패");
 	    				}
 	    			})
@@ -316,7 +352,6 @@ margin-top: 10px;
 	    				let value="";
 	    				
 	    				for(let i in list){
-	    					
 	    					value += "<tr>"
 	    						  + "<th>" + list[i].replyWriter +"</th>"
 	    						  + "<td>" + list[i].replyContent + "</td>"
@@ -335,9 +370,6 @@ margin-top: 10px;
 	    			}
 	    		});
 	    	}
-			
-			
-			
 			
 			
 			function replyDelete(){
@@ -362,23 +394,23 @@ margin-top: 10px;
  				});
  				}
 			}
-	    	
-	    	
-	    </script>        
-	           
-		</div>
+			
+	    	</script>
+
+
 			</div>
 		</div>
-		<!--로그인한 회원에게만 보여지도록 조건처리-->
 	</div>
-	
-	
+	<!--로그인한 회원에게만 보여지도록 조건처리-->
+	</div>
+
+
 
 	<br clear="both">
 
 	<!-- footer.jsp-->
 	<jsp:include page="../common/footer.jsp" />
- </div>
+	</div>
 
 </body>
 </html>
