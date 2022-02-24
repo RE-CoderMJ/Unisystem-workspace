@@ -13,9 +13,9 @@ public interface MessageService {
 
 	//받은메시지리스트 조회 
 	int selectMsgListCount(int userNo);
-	ArrayList<Message> selectMsgList(int userNo, PageInfo pi);
+	ArrayList<Message> selectMsgList(PageInfo pi,int userNo);
 
 	//보낸
-	int SendMsgListCount(int userNo);
-	ArrayList<Message> SendMsgList(int userNo, PageInfo pi);
+	int sendMsgListCount(int userNo);
+	ArrayList<Message> sendMsgList(int userNo,PageInfo pi);
 }

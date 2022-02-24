@@ -27,21 +27,21 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public ArrayList<Message> selectMsgList(int userNo, PageInfo pi) {
+	public ArrayList<Message> selectMsgList(PageInfo pi, int userNo) {
 		
-		return mDao.selectMsgList(sqlSession,userNo,pi);
+		return mDao.selectMsgList(sqlSession,pi,userNo);
 	}
 
 	@Override
-	public int SendMsgListCount(int userNo) {
+	public int sendMsgListCount(int userNo) {
 		
-		return mDao.SendMsgListCount(sqlSession,userNo);
+		return mDao.sendMsgListCount(sqlSession,userNo);
 	}
 
 	@Override
-	public ArrayList<Message> SendMsgList(int userNo, PageInfo pi) {
+	public ArrayList<Message> sendMsgList(int userNo, PageInfo pi) {
 		
-		return mDao.SendMsgList(sqlSession,userNo,pi);
+		return mDao.sendMsgList(sqlSession,userNo,pi);
 	}
 
 	

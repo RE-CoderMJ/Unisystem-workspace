@@ -22,7 +22,7 @@
 	 	count(*)
 	 	from message
 	 	where msg_reader =#{userNo}
-	 	and deleteyn ='n'
+	 	and deleteyn ='N'
 	</select>
 	
 	<select id="recSelectList" resultMap="messageResult">
@@ -41,7 +41,7 @@
 	join users w on (msg_writer = w.user_no)
 	join users r on (msg_reader = r.user_no)
 	where msg_reader =#{userNo}
-	and deleteyn ='n'
+	and deleteyn ='N'
 	</select>
 	
 	
@@ -50,7 +50,7 @@
 	 	count(*)
 	 	from message
 	 	where msg_writer =#{userNo}
-	 	and deleteyn ='n'
+	 	and deleteyn ='N'
 	</select>
 	
 	<select id="sendSelectList" resultMap="messageResult">
@@ -69,7 +69,7 @@
 	join users w on (msg_writer = w.user_no)
 	join users r on (msg_reader = r.user_no)
 	where msg_writer =#{userNo}
-	and deleteyn ='n'
+	and deleteyn ='N'
 	</select>
 	
 	

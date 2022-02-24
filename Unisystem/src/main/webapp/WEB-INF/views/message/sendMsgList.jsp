@@ -162,6 +162,9 @@ li {
 float:right;
 margin-right:87px;
 }
+.page-link{
+cursor:pointer;
+}
 </style>
 <body>
 
@@ -204,7 +207,7 @@ margin-right:87px;
 
 
 			<!-- list 영역-->
-			<table class="table" style="width: 900px; text-align: center;">
+			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
 			<thead>
 				<tr>
 				<th width="20px"></th>
@@ -223,13 +226,6 @@ margin-right:87px;
 			<div id="pagingArea">
 
 				<ul class="pagination">
-					<li class="page-item ltgt"><a href="">&lt;</a></li>
-					<li class="page-item"><a href="">1</a></li>
-					<li class="page-item"><a href="">2</a></li>
-					<li class="page-item"><a href="">3</a></li>
-					<li class="page-item"><a href="">4</a></li>
-					<li class="page-item"><a href="">5</a></li>
-					<li class="page-item ltgt"><a href="">&gt;</a></li>
 				</ul>
 			</div>
 		</div>
@@ -243,47 +239,85 @@ margin-right:87px;
 
 	</div>
 <script>
-//쪽지 리스트 조회 ajax구현하기 
-function receiveMsgList(){
-	$.ajax({
-		type: 'POST',  
-		dataType:'json',
-		url:"smsg.list",
-		data:{userNo: '${loginUser.userNo}'},
-		success:function(data){
-			console.log(data);
-			let value="";
-			
-			for(let i in data){
-				let readYN = "";
+		
+		$(function(){
+			sendMsgList(1);
+		})
+		
+		//쪽지 리스트 조회 ajax구현하기 
+		function sendMsgList(cPageNo){
+    		$.ajax({
+    			type: 'POST',  
+				dataType:'json',
+    			url:"smsg.list",
+    			data:{currentPage:cPageNo, userNo: '${loginUser.userNo}'},
+    			success:function(data){
+    				console.log(data);
+    				
+	    			let value="";
+    				
+    				if(data.list.length == 0){
+    					value = "<tr ><td colspan='6' style='text-align:center;'>보낸 메시지가 없습니다.</td></tr>"
+    				}else{
+    				
+    				for(let i in data.list){
+    					let readYN = "";
+    					
+    					if(data.list[i].readYN == 'Y'){
+  						  readYN = "읽음 ";
+  						  }else if(data.list[i].readYN =='N'){
+  							readYN = "안읽음";
+  						  }
+    					
+    					value += "<tr>"
+    						  + "<td>" 
+    						  + "<input id='msgCheck' type='checkbox'>"
+    						  +"</td>"
+    						  + "<td>" + data.list[i].messageNo +"</td>"
+    						  + "<td>" + data.list[i].msgReader + "</td>"
+    						  + "<td>" + data.list[i].msgContent + "</td>"
+    						  + "<td>"+readYN+ "</td>"
+    						  + "<td>" + data.list[i].sendDate + "</td>"
+    						  + "</tr>";
+    					}
+    				
+    				}
+    				
+    				let piValue = "";
+					
+					if(data.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='sendMsgList(" + (data.pi.currentPage-1) + ")'>&lt;</a></li>";
+					}
+                    
+					for(let p = data.pi.startPage; p<=data.pi.endPage; p++){
+						
+						if(p == data.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='sendMsgList(" + p + ")'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='sendMsgList(" + p + ")'>" + p + "</a></li>";
+						}
+						
+					}
+	            	
+					if(data.pi.currentPage == data.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='sendMsgList(" + (data.pi.currentPage + 1) + ")'>&gt;</a></li>"
+    			}
 				
-				if(data[i].readYN == 'Y'){
-					  readYN = "읽음 ";
-					  }else if(data[i].readYN =='N'){
-						readYN = "안읽음";
-					  }
-				
-				value += "<tr>"
-					  + "<td>" 
-					  + "<input id='msgCheck' type='checkbox'>"
-					  +"</td>"
-					  + "<td>" + data[i].messageNo +"</td>"
-					  + "<td>" + data[i].msgWriter + "</td>"
-					  + "<td>" + data[i].msgContent + "</td>"
-					  + "<td>"+ readYN+ "</td>"
-					  + "<td>" + data[i].sendDate + "</td>"
-					  + "</tr>";
-			}
-			
-			$("#msgArea tbody").html(value);
-		},
-		error:function(){
-			console.log("댓글리스트 조회용 ajax 통신실패");
-		}
-	});
-}
-</script>
-	
+					$(".pagination").html(piValue);
+					$("#cPage").val(data.pi.currentPage);
+					$("#msgArea tbody").html(value);
+    				},
+    				
+    			error:function(){
+    				console.log("댓글리스트 조회용 ajax 통신실패");
+    			}
+    		});
+    	}
+    </script>
 	
 	</div>
 

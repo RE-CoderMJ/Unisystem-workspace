@@ -30,13 +30,11 @@ public class MessageController {
 	@ResponseBody
 	@RequestMapping(value="rmsg.list", produces="application/json; charset=UTF-8")
 	public Map<String, Object> selectMsgList(int currentPage, int userNo) {
-		
 		Map<String, Object> map = new HashMap();
-		
 		int listCount = mService.selectMsgListCount(userNo);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Message> list = mService.selectMsgList(userNo, pi);
+		ArrayList<Message> list = mService.selectMsgList(pi,userNo);
 		
 		map.put("pi", pi);
 		map.put("list", list);
@@ -45,7 +43,7 @@ public class MessageController {
 	}
 	
 	
-	@RequestMapping("smsg.list")
+	@RequestMapping("list.smsg")
 	public String selectSendMsg(){
 		
 		return "message/sendMsgList";
@@ -53,20 +51,22 @@ public class MessageController {
 	
 	@ResponseBody
 	@RequestMapping(value="smsg.list", produces="application/json; charset=UTF-8")
-	public Map<String, Object> selectSendMsgList(int currentPage, int userNo) {
-		
+	public Map<String, Object> sendMsgList(int currentPage, int userNo) {
 		Map<String, Object> map = new HashMap();
-		
-		int listCount = mService.SendMsgListCount(userNo);
+		System.out.println(userNo);
+		int listCount = mService.sendMsgListCount(userNo);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Message> list = mService.SendMsgList(userNo, pi);
+		ArrayList<Message> list = mService.sendMsgList(userNo,pi);
+		System.out.println(list);
 		
 		map.put("pi", pi);
 		map.put("list", list);
+		System.out.println(map);
 		
 		return map;
 	}
+	
 	
 	
 	

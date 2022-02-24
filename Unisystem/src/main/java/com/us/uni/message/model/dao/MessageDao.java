@@ -14,25 +14,26 @@ import com.us.uni.message.model.vo.Message;
 public class MessageDao {
 
 	public int selectMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
+		System.out.println("daocount"+userNo);
 		
 		return sqlSession.selectOne("messageMapper.recSelectListCount", userNo);
 	}
 
-	public ArrayList<Message> selectMsgList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
-		
+	public ArrayList<Message> selectMsgList(SqlSessionTemplate sqlSession, PageInfo pi , int userNo) {
+
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, limit);
+		RowBounds rowBounds = new RowBounds(offset,limit);
 
 		return (ArrayList)sqlSession.selectList("messageMapper.recSelectList", userNo, rowBounds);
 	}
 
-	public int SendMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
+	public int sendMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
 		
 		return sqlSession.selectOne("messageMapper.sendSelectListCount", userNo);
 	}
 
-	public ArrayList<Message> SendMsgList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
+	public ArrayList<Message> sendMsgList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
@@ -40,6 +41,8 @@ public class MessageDao {
 		
 		return (ArrayList)sqlSession.selectList("messageMapper.sendSelectList", userNo, rowBounds);
 	}
+
+	 
 	
 	
 }
