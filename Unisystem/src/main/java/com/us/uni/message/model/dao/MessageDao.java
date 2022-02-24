@@ -14,7 +14,6 @@ import com.us.uni.message.model.vo.Message;
 public class MessageDao {
 
 	public int selectMsgListCount(SqlSessionTemplate sqlSession, int userNo) {
-		System.out.println("daocount"+userNo);
 		
 		return sqlSession.selectOne("messageMapper.recSelectListCount", userNo);
 	}
@@ -42,7 +41,24 @@ public class MessageDao {
 		return (ArrayList)sqlSession.selectList("messageMapper.sendSelectList", userNo, rowBounds);
 	}
 
-	 
-	
+	public int sendMessage(SqlSessionTemplate sqlSession, Message msg) {
+		
+		return sqlSession.insert("messageMapper.sendMessage",msg);
+	}
+
+	public int readDate(SqlSessionTemplate sqlSession, int messageNo) {
+		
+		return sqlSession.update("messageMapper.readDate",messageNo);
+	}
+
+	public Message rdetailMsg(SqlSessionTemplate sqlSession, int messageNo) {
+		
+		return sqlSession.selectOne("messageMapper.rdetailMsg",messageNo);
+	}
+
+	public Message sdetailMsg(SqlSessionTemplate sqlSession, int messageNo) {
+		
+		return sqlSession.selectOne("messageMapper.sdetailMsg",messageNo);
+	}
 	
 }

@@ -165,6 +165,7 @@ margin-right:87px;
 .page-link{
 cursor:pointer;
 }
+   
 </style>
 <body>
 
@@ -213,8 +214,7 @@ cursor:pointer;
 			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
 			<thead>
 				<tr>
-					<th width="20px"></th>
-					<th width="70px">번호</th>
+					<th width=""></th>
 					<th width="100px">보낸사람</th>
 					<th width="300px">내용</th>
 					<th width="100px">상태</th>
@@ -226,9 +226,27 @@ cursor:pointer;
 						
 			</tbody>
 			</table>
+			
+			
+			<div class="modal" id="detailrecMsg">
+			<div class="modal-dialog">
+				<div class="modal-content" style="border-radius: 80px;">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="mtitle">받은메시지 조회</h4>
+						<button type="button" class="close" id="close"
+							data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body" id="mbody">
+					</div>
+ 
+
+				</div>
+			</div>
+		</div>
 		
-
-
 			<!-- paging bar 영역-->
 			<div id="pagingArea">
 				<ul class="pagination">
@@ -245,6 +263,40 @@ cursor:pointer;
 		
 		$(function(){
 			receiveMsgList(1);
+			
+			$(document).on("click", ".text-overflow > a", function(){
+				console.log();
+				
+				let value="";
+				
+				$.ajax({
+					url:"detail.rmsg",
+					dataType:'json',
+					type:'POST',
+					data:{
+						messageNo:$(this).parent().siblings("input[name=messageNo]").val()
+					},
+					success:function(list){
+						console.log(list);
+						
+						value +="<p>" 
+							   + 	"<b>보낸이:</b>" + list.msgWriter
+							   + "</p>"
+							   + "<textarea class='modalText' name='msgContent' id='msgContent'>"
+							   +  list.msgContent
+							   + "</textarea>";
+						
+						$('#mbody').html(value);
+						$('#detailrecMsg').modal('show');
+						
+						console.log(value);
+					}, error:function() {
+						console.log("쪽지디테일 조회용 ajax 통신실패");
+					}
+					
+				});
+			})
+			 
 		})
 		
 		//쪽지 리스트 조회 ajax구현하기 
@@ -260,7 +312,9 @@ cursor:pointer;
 	    			let value="";
     				
     				if(data.list.length == 0){
-    					value = "<tr ><td colspan='6' style='text-align:center;'>받은 메시지가 없습니다.</td></tr>"
+    					
+    					value = "<tr><td colspan='5' style='text-align:center;'>받은 메시지가 없습니다.</td></tr>"
+    					
     				}else{
     				
     				for(let i in data.list){
@@ -276,14 +330,13 @@ cursor:pointer;
     						  + "<td>" 
     						  + "<input id='msgCheck' type='checkbox'>"
     						  +"</td>"
-    						  + "<td>" + data.list[i].messageNo +"</td>"
+    						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
     						  + "<td>" + data.list[i].msgWriter + "</td>"
-    						  + "<td>" + data.list[i].msgContent + "</td>"
+    						  + "<td class='text-overflow'>" +"<a>" + data.list[i].msgContent +"</a>"+"</td>"
     						  + "<td>"+readYN+ "</td>"
     						  + "<td>" + data.list[i].sendDate + "</td>"
     						  + "</tr>";
     					}
-    				
     				}
     				
     				let piValue = "";
@@ -301,9 +354,8 @@ cursor:pointer;
 						}else{
 							piValue += "<li class='page-item'><a class='page-link' onclick='receiveMsgList(" + p + ")'>" + p + "</a></li>";
 						}
-						
 					}
-	            	
+					
 					if(data.pi.currentPage == data.pi.maxPage){
 						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
 					}else{
@@ -316,7 +368,7 @@ cursor:pointer;
     				},
     				
     			error:function(){
-    				console.log("댓글리스트 조회용 ajax 통신실패");
+    				console.log("쪽지리스트 조회용 ajax 통신실패");
     			}
     		});
     	}
@@ -326,7 +378,6 @@ cursor:pointer;
 		<jsp:include page="../common/footer.jsp" />
 
 	</div>
-
 
 </body>
 </html>

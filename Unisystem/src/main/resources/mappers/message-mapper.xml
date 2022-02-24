@@ -72,5 +72,49 @@
 	and deleteyn ='N'
 	</select>
 	
+	<!-- message 전송-->
+	<insert id="sendMessage">
+		insert
+		  into message
+		  (
+		   	MESSAGE_NO
+			,MSG_WRITER
+			,MSG_READER
+			,MSG_CONTENT
+		  )
+		  values
+		  (
+		    seq_msgno.nextval
+		    ,#{userNo}
+		    ,#{msgReader}
+		    ,#{msgContent}
+		  )
+	</insert>
+	
+	<update id="readDate">
+		update
+			message
+			set read_date = SYSDATE
+			where message_no = #{messageNo}
+	</update>
+	
+	<select id="rdetailMsg" resultMap="messageResult">
+		select
+		msg_content
+		,msg_writer
+		from message
+		where message_no = #{messageNo}
+	</select>
+	
+	
+	<select id="sdetailMsg" resultMap="messageResult">
+		select
+		msg_content
+		,msg_reader
+		from message
+		where message_no = #{messageNo}
+	</select>
+	
+	
 	
 </mapper>

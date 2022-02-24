@@ -196,26 +196,27 @@ margin-left:10px;
 </head>
 <body>
 
-	<!-- msg 전송 모달 영역  -->
-	<form action="sendMsg" method="get">
-		<div class="modal" id="msgModal">
+	<!-- 보낸 msg 조회영역  -->
+		<div class="modal" id="detailSendMsg">
 			<div class="modal-dialog">
-				<div class="modal-content" style="border-radius: 80px;"">
+				<div class="modal-content" style="border-radius: 80px;">
 				<input type="hidden" value="${loginUser.userNo}" name="userNo" id="userNo"/>
+				<input type="hidden" value="${list.messageNo}" name="userNo" id="userNo"/>
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title" id="mtitle" style="margin-left:148px;font-weight:600;">메시지 보내기</h4>
+						<h4 class="modal-title" id="mtitle">받은메시지 조회</h4>
 						<button type="button" class="close" id="close"
 							data-dismiss="modal">&times;</button>
 					</div>
 
 					<!-- Modal body -->
-					<div class="modal-body" style="margin:auto;">
+					<div class="modal-body" id="mbody">
 						<p>
-							<b>받는이:</b> <input type="text" name="msgReader" id="msgReader" />
+							<b>보낸이:</b> ${list.msgWriter}
 						</p>
-						<textarea class="modalText" name="msgContent" id="msgContent" style="width:383px;
-						 resize:none; height: 400px;"></textarea>
+						<textarea class="modalText" name="msgContent" id="msgContent">
+								${list.msgContent}
+						</textarea>
 					</div>
 
 					<!-- Modal footer -->
@@ -227,9 +228,7 @@ margin-left:10px;
 				</div>
 			</div>
 		</div>
-	</form>
-
-
+		
 	<jsp:include page="../common/links.jsp" />
 
 

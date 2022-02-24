@@ -18,4 +18,8 @@ public interface MessageService {
 	//보낸
 	int sendMsgListCount(int userNo);
 	ArrayList<Message> sendMsgList(int userNo,PageInfo pi);
+	int sendMessage(Message msg);
+	int readDate(int messageNo);
+	Message rdetailMsg(int messageNo);
+	Message sdetailMsg(int messageNo);
 }

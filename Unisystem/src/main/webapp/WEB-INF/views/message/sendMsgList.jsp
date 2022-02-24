@@ -165,12 +165,22 @@ margin-right:87px;
 .page-link{
 cursor:pointer;
 }
+#mtitle{
+margin-left:148px;
+font-weight:600;
+}
+#sbody textarea{
+	width: 383px;
+    resize: none;
+    height: 400px;
+}
 </style>
 <body>
 
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
 	<jsp:include page="../common/links.jsp" />
+	<jsp:include page="../message/messageModal.jsp" />
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
@@ -210,9 +220,8 @@ cursor:pointer;
 			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
 			<thead>
 				<tr>
-				<th width="20px"></th>
-					<th width="70px">번호</th>
-					<th width="100px">보낸사람</th>
+					<th width></th>
+					<th width="100px">받는사람</th>
 					<th width="300px">내용</th>
 					<th width="100px">상태</th>
 					<th>보낸날짜</th>
@@ -222,11 +231,34 @@ cursor:pointer;
 			</tbody>
 			</table>
 
+
+		<div class="modal" id="detailSendMsg">
+			<div class="modal-dialog">
+				<div class="modal-content" style="border-radius: 80px; padding-bottom: 29px;">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="mtitle">보낸메시지 조회</h4>
+						<button type="button" class="close" id="close"
+							data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body" id="sbody" style="margin:auto;">
+						
+					</div>
+
+					
+
+				</div>
+			</div>
+		</div>
+		
 			<!-- paging bar 영역-->
 			<div id="pagingArea">
 
-				<ul class="pagination">
-				</ul>
+			<ul class="pagination">
+			</ul>
+			<input type="hidden" id="cPage">
 			</div>
 		</div>
 		<!-- side바 div영역 끝 -->
@@ -236,12 +268,46 @@ cursor:pointer;
 
 		<!-- footer.jsp-->
 		<jsp:include page="../common/footer.jsp" />
-
+	<jsp:include page="../message/messageModal.jsp" />
 	</div>
 <script>
 		
 		$(function(){
 			sendMsgList(1);
+			
+			$(document).on("click", ".text-overflow > a", function(){
+				console.log();
+				
+				let value="";
+				
+				$.ajax({
+					url:"detail.smsg",
+					dataType:'json',
+					type:'POST',
+					data:{
+						messageNo:$(this).parent().siblings("input[name=messageNo]").val()
+					},
+					success:function(list){
+						console.log(list);
+						
+						value +="<p>" 
+							   + 	"<b>받는이:</b>" + list.msgReader
+							   + "</p>"
+							   + "<textarea class='modalText' name='msgContent' id='msgContent'>"
+							   +  list.msgContent
+							   + "</textarea>";
+						
+						$('#sbody').html(value);
+						$('#detailSendMsg').modal('show');
+						
+						console.log(value);
+					}, error:function() {
+						console.log("쪽지디테일 조회용 ajax 통신실패");
+					}
+					
+				});
+			})
+			 
 		})
 		
 		//쪽지 리스트 조회 ajax구현하기 
@@ -257,7 +323,7 @@ cursor:pointer;
 	    			let value="";
     				
     				if(data.list.length == 0){
-    					value = "<tr ><td colspan='6' style='text-align:center;'>보낸 메시지가 없습니다.</td></tr>"
+    					value = "<tr ><td colspan='5' style='text-align:center;'>보낸 메시지가 없습니다.</td></tr>"
     				}else{
     				
     				for(let i in data.list){
@@ -273,14 +339,13 @@ cursor:pointer;
     						  + "<td>" 
     						  + "<input id='msgCheck' type='checkbox'>"
     						  +"</td>"
-    						  + "<td>" + data.list[i].messageNo +"</td>"
+    						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
     						  + "<td>" + data.list[i].msgReader + "</td>"
-    						  + "<td>" + data.list[i].msgContent + "</td>"
+    						  + "<td class='text-overflow'><a>" + data.list[i].msgContent + "</a></td>"
     						  + "<td>"+readYN+ "</td>"
     						  + "<td>" + data.list[i].sendDate + "</td>"
     						  + "</tr>";
     					}
-    				
     				}
     				
     				let piValue = "";

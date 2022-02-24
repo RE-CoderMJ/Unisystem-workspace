@@ -44,6 +44,31 @@ public class MessageServiceImpl implements MessageService{
 		return mDao.sendMsgList(sqlSession,userNo,pi);
 	}
 
+	@Override
+	public int sendMessage(Message msg) {
+		
+		return mDao.sendMessage(sqlSession,msg);
+	}
+
+	@Override
+	public int readDate(int messageNo) {
+		
+		return mDao.readDate(sqlSession,messageNo);
+	}
+
+
+	@Override
+	public Message rdetailMsg(int messageNo) {
+		
+		return mDao.rdetailMsg(sqlSession,messageNo);
+	}
+
+	@Override
+	public Message sdetailMsg(int messageNo) {
+		
+		return mDao.sdetailMsg(sqlSession,messageNo);
+	}
+
 	
 
 }
