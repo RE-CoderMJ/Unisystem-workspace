@@ -55,4 +55,11 @@
 		   set status = 'N'
 		 where cer_no = #{cerNo} 
 	</update>
+	
+	<update id="updatePayment">
+		update
+		       certificate
+		   set paid = 'Y'
+		 where cer_no = #{cerNo}
+	</update>
 </mapper>

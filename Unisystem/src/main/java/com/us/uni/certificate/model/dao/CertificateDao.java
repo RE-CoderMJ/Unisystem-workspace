@@ -21,5 +21,9 @@ public class CertificateDao {
 	public int deleteCert(SqlSessionTemplate sqlSession, int cerNo) {
 		return sqlSession.update("certMapper.deleteCert", cerNo);
 	}
+
+	public int updatePayment(SqlSessionTemplate sqlSession, int cerNo) {
+		return sqlSession.update("cerMapper.updatePayment", cerNo);
+	}
 	
 }

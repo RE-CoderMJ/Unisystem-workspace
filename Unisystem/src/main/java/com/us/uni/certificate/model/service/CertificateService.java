@@ -15,4 +15,6 @@ public interface CertificateService {
 	// 증명서 출력 접수 내역 삭제 서비스
 	int deleteCert(int cerNo);
 
+	int updatePayment(int cerNo);
+
 }

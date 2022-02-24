@@ -32,4 +32,9 @@ public class CertificateServiceImpl implements CertificateService{
 	public int deleteCert(int cerNo) {
 		return cDao.deleteCert(sqlSession, cerNo);
 	}
+
+	@Override
+	public int updatePayment(int cerNo) {
+		return cDao.updatePayment(sqlSession, cerNo);
+	}
 }
