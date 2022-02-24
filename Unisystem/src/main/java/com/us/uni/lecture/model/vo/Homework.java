@@ -31,4 +31,7 @@ public class Homework {
 	
 	private String korName;
 	private int rownum;
+	private int countHW;					// 제출상황 총 개수
+	private int countGHW;					// 채점상황 총 개수
+	
 }

@@ -31,7 +31,7 @@
     }
     #contentBox>div{padding-left: 30px;}
     #impossible_box{margin-top: 80px;}
-    #possible_box div:nth-child(1), #impossible_box div:first-child{
+    #possible_box div:nth-child(2), #impossible_box div:first-child{
         font-size: 20px; 
         font-weight: 900;
         margin-bottom: 15px;
@@ -56,7 +56,7 @@
 	    background: RGB(26,86,162)!important;
 	}
 	
-	#hwInsertBtn{
+	#insertHomeworkp{
 		border-radius:5px;
 		border:none;
 		background-color: rgb(21, 62, 115);
@@ -83,13 +83,14 @@
 
         <div id="wrap_content" style="float: left;">
             
-            <article id="content_header"><span>자료실 > </span>과제업로드</article>
+            <article id="content_header"><span>자료실 > </span>과제관리</article>
             <input type="hidden" id="studNo" name="studNo" value="${ loginUser.userNo }" />
 
             <div id="contentBox">
 
                 <div id="possible_box">
-
+                
+					<button type="button" id="insertHomeworkp" onclick="location.href='proHomeworkEnrollForm.lec';">과제등록</button>
                     <div>제출가능한 과제</div>
                     
                     <table id="pHomeworkList">
@@ -99,7 +100,7 @@
 	                            <th>과제명</th>
 	                            <th style="width: 100px;">담당 교수</th>
 	                            <th style="width: 170px;">제출 기한</th>
-	                            <th style="width: 120px;">제출 여부</th>
+	                            <th style="width: 120px;">제출 상황</th>
 	                        </tr>
                     	</thead>
                     	<tbody>
@@ -116,9 +117,8 @@
                             <th>과제명</th>
                             <th style="width: 100px;">담당 교수</th>
                             <th style="width: 170px;">제출 기한</th>
-                            <th style="width: 120px;">제출 여부</th>
+                            <th style="width: 120px;">제출 상황</th>
                             <th style="width: 120px;">채점 상황</th>
-                            <th style="width: 120px;">점수</th>
                         </tr>
                         
                         <c:forEach var="l" items="${ list }" >
@@ -128,26 +128,11 @@
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
 	                            <td>
-	                            	<c:choose>
-	                            		<c:when test="${ empty l.gradeStatus }">
-	                            			미제출
-	                            		</c:when>
-	                            		<c:otherwise>
-	                            			제출
-	                            		</c:otherwise>
-	                            	</c:choose>
+									${ l.countHW } / ${ classInfo.currStud }
 	                            </td>
 	                            <td>
-	                            	<c:choose>
-	                            		<c:when test="${ l.gradeStatus eq 'A'|| empty l.gradeStatus}">
-	                            			채점
-	                            		</c:when>
-	                            		<c:otherwise>
-	                            			미채점
-	                            		</c:otherwise>
-	                            	</c:choose>
+									${ l.countGHW } / ${ classInfo.currStud }
 	                            </td>
-	                            <td><span>${ l.score } / 100</span></td>
 	                        </tr>
 						</c:forEach>
 					</table>
@@ -161,17 +146,17 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ pi.currentPage - 1 }&classNo=${classInfo.classNo}">&lt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="homeworkProEndList.lec?cpage=${ pi.currentPage - 1 }&classNo=${classInfo.classNo}">&lt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                     		
                     		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
                     			<c:choose>
                     				<c:when test="${ pi.currentPage == p }">
-                            			<li class="page-item active"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                            			<li class="page-item active"><a class="page-link" href="homeworkProEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
                     				</c:when>
                     				<c:otherwise>
-                    					<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
+                    					<li class="page-item"><a class="page-link" href="homeworkProEndList.lec?cpage=${ p }&classNo=${classInfo.classNo}">${ p }</a></li>	
                     				</c:otherwise>
                     			</c:choose>
                     		</c:forEach>
@@ -181,7 +166,7 @@
 		                        	<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
                     			</c:when>
                     			<c:otherwise>
-		                        	<li class="page-item"><a class="page-link" href="homeworkEndList.lec?cpage=${ pi.currentPage + 1 }&classNo=${classInfo.classNo}">&gt;</a></li>
+		                        	<li class="page-item"><a class="page-link" href="homeworkProEndList.lec?cpage=${ pi.currentPage + 1 }&classNo=${classInfo.classNo}">&gt;</a></li>
                     			</c:otherwise>
                     		</c:choose>
                         </ul>
@@ -204,25 +189,20 @@
     		function selectPhomeworkList(){
     		
     			$.ajax({
-    				url:"selectPhomeworkList.lec",
+    				url:"selectProPhomeworkList.lec",
     				success:function(list){
     					
     					let value = "";
     					let status = "";
     					for(let i in list){
     						
-    						if(list[i].gradeStatus == null){
-    							status = "미제출";
-    						} else {
-    							status = "제출";
-    						}
     						
 	    					value += "<tr>"
 	                              + 	"<td>"+ list[i].homeworkpNo + "</td>"
 	                              + 	"<td>" + "<a href='lectureHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
 	                              +		"<td>" + list[i].korName + "</td>"
 	                              + 	"<td>" + list[i].homeworkpEndDateTime + "</td>"
-	                              + 	"<td>" + status + "</td>"
+	                              + 	"<td>" + list[i].countHW + " / " +  ${ classInfo.currStud } + "</td>"
 	                              + "</tr>"; 				
     					}
     					
