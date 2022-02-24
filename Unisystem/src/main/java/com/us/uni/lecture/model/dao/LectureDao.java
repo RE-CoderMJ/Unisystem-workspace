@@ -165,6 +165,20 @@ public class LectureDao {
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectPhomeworkList", h);
 	}
 
+	// 교수 - 과제관리 : 마감된 과제 리스트 페이지 조회
+	public ArrayList<Homework> selectProHomeworkEndList(SqlSessionTemplate sqlSession, PageInfo pi, Homework h){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProHomeworkEndList", h, rowBounds);
+	}
 	
+	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
+	public ArrayList<Homework> selectProhomeworkList(SqlSessionTemplate sqlSession, Homework h){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProhomeworkList", h);
+	}
 	
 }

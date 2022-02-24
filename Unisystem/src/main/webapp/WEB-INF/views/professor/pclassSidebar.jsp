@@ -128,7 +128,7 @@ a:hover {
 	 		   $("#sideBarForm").attr("action", "lectureAttControl.stu?cpage=1").submit();
 	 	   
 	 	   } else if(num == 2){ // 과제관리 클릭 시
-	 		  $("#sideBarForm").attr("action", "homeworkEndList.lec").submit();
+	 		  $("#sideBarForm").attr("action", "homeworkProEndList.lec").submit();
 	 	   }
 	    }
 	</script>

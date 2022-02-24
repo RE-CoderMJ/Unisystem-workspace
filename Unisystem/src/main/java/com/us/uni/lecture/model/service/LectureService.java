@@ -82,6 +82,11 @@ public interface LectureService {
 	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
 	ArrayList<Homework> selectPhomeworkList(Homework h);
 	
+	// 교수 - 과제관리 : 마감된 과제 리스트 페이지 조회
+	ArrayList<Homework> selectProHomeworkEndList(PageInfo pi, Homework h);
+	
+	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
+	ArrayList<Homework> selectProhomeworkList(Homework h);
 
 
 }
