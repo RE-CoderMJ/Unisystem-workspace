@@ -50,10 +50,9 @@
                 
                 <div class="container">
                     <ul class="pagination justify-content-center">
-                      
                     </ul>
-                  </div>
 				<input type="hidden" id="cPage">
+                  </div>
             </article>
         </section>
     </div>

@@ -197,7 +197,7 @@ li {
 
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
-
+<jsp:include page="../common/links.jsp" />
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
