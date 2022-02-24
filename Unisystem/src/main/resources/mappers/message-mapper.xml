@@ -115,6 +115,14 @@
 		where message_no = #{messageNo}
 	</select>
 	
+	<update id="deleteMsg">
+	update
+		message
+		set 
+		deleteyn = 'Y'
+		where message_no = #{messageNo}
+	</update>
+	
 	
 	
 </mapper>

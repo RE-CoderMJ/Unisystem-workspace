@@ -22,4 +22,5 @@ public interface MessageService {
 	int readDate(int messageNo);
 	Message rdetailMsg(int messageNo);
 	Message sdetailMsg(int messageNo);
+	int deleteMsg(Message m);
 }

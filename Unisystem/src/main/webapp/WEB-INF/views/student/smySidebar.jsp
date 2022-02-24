@@ -163,7 +163,6 @@ a:hover {
 			<p>
 				<a href="list.msg">- 받은 메시지</a>
 				<a href="list.smsg">- 보낸 메시지</a>
-				<a href="">- 중요 메시지</a>
 			</p>
 			
 			<div class="side_title">

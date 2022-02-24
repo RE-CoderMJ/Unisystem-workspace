@@ -197,7 +197,7 @@ cursor:pointer;
 
 			<div class="btn-search">
 			<div class="btn-area">
-				<a class="btn btn-sm btn-danger" href="">선택삭제</a> 
+				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(231, 76, 60);">선택삭제</a> 
 				<a class="btn btn-sm" href="" data-toggle="modal" data-target="#msgModal" style="background-color:rgb(44, 62, 80); color:white;">쪽지보내기</a>
 			</div>
 		 
@@ -264,6 +264,11 @@ cursor:pointer;
 		$(function(){
 			receiveMsgList(1);
 			
+			$(document).on("click", "#mdel", function(){
+				deleteMsg();
+			})
+				
+			
 			$(document).on("click", ".text-overflow > a", function(){
 				console.log();
 				
@@ -329,6 +334,7 @@ cursor:pointer;
     					value += "<tr>"
     						  + "<td>" 
     						  + "<input id='msgCheck' type='checkbox'>"
+    						  + '<input type="hidden" name="deleteYN" id="mYN"/>'
     						  +"</td>"
     						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
     						  + "<td>" + data.list[i].msgWriter + "</td>"
@@ -372,6 +378,35 @@ cursor:pointer;
     			}
     		});
     	}
+		
+		function deleteMsg(){
+
+            if ( $("#msgCheck").is(":checked") ){
+                $("#mYN").val('Y');
+                
+                $.ajax({
+                	type: 'POST',  
+    				dataType:'json',
+        			url:"del.msg",
+        			data:{
+        				messageNo:$('#msgNo').val(),
+        				deleteYN:$('#mYN').val()
+        			},
+        			success:function(data){
+        				if(!confirm("메세지를 삭제하시겠습니까?")){
+        					return false;
+		 				}else{
+		 					alert('삭제가 완료되었습니다.');
+		 					location.reload();
+		 				}
+        			}
+                });
+            }else{
+            	 $("#mYN").val('N');
+            }
+            
+		}
+		
     </script>
 
 		<!-- footer.jsp-->

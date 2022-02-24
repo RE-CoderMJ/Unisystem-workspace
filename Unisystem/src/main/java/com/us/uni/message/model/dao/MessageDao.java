@@ -60,5 +60,10 @@ public class MessageDao {
 		
 		return sqlSession.selectOne("messageMapper.sdetailMsg",messageNo);
 	}
+
+	public int deleteMsg(SqlSessionTemplate sqlSession, Message m) {
+		
+		return sqlSession.update("messageMapper.deleteMsg",m);
+	}
 	
 }

@@ -110,4 +110,13 @@ public class MessageController {
 		return new Gson().toJson(msg);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="del.msg", produces="application/json; charset=UTF-8")
+	public int ajaxrdelMsg(Message m){
+		//System.out.println(m);
+		
+		int result = mService.deleteMsg(m);
+		return result;
+	}
+	
 }
