@@ -120,16 +120,19 @@ public class ProfessorController {
 		
 		int result = 0;
 		
-		result = pService.classInsert(lec);
-		
-		if(result > 0) {
 			
 			if(!upfile.getOriginalFilename().equals("")) {
 				String changeName = saveFile(upfile, session);
 				
-				lec.setClassPlan("/resources/images/uploadFiles/classPlan/" + changeName);
-
+				lec.setClassPlan("resources/uploadFiles/classPlan/" + changeName);
 			}
+			
+		result = pService.classInsert(lec);
+		
+		if(result > 0) {
+			
+			System.out.println(lec.getClassPlan());
+			System.out.println(lec);
 			
 			session.setAttribute("alertMsg", "강의 개설 신청이 완료되었습니다.");
 		}else {
@@ -161,15 +164,7 @@ public class ProfessorController {
 		return "professor/professorEnrollForm";
 	}
 	
-	
-	/**
-	 * admin : 학생의 담당교수 조회/변경 페이지
-	 */
-	@RequestMapping("join.ad")
-	public String selectJoinList() {
-		return "professor/adminJoinListView";
-	}
-	
+
 	
 	
 	@RequestMapping("clist.ad")
@@ -177,6 +172,22 @@ public class ProfessorController {
 		return "professor/adminRequestClassListView";
 	}
 	
+	
+	/**
+	 * admin : 학생의 담당교수 조회/변경 페이지
+	 */
+	@RequestMapping("join.ad")
+	public ModelAndView selectJoinList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+		int listCount = pService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Users> list = pService.selectProfessorList(pi);
+		
+		mv.addObject("pi", pi).addObject("list", list).setViewName("professor/adminJoinListView");
+		
+		return mv;
+	}
 	
 	
 	// * 첨부파일 : 파일명 수정 작업 후 서버에 업로드
@@ -192,7 +203,7 @@ public class ProfessorController {
 			String changeName = currentTime + ranNum + ext;
 
 			// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기 (session 필요함)
-			String savePath = session.getServletContext().getRealPath("/resources/images/uploadFiles/profile/"); 
+			String savePath = session.getServletContext().getRealPath("resources/uploadFiles/classPlan/"); 
 			// getRealPath : 실제 저장시킬 파일의 물리적인 경로, 해당 경로 안에 changeName이라는 이름으로 해당 파일을 업로드 시킬 예정!
 			
 			try {
