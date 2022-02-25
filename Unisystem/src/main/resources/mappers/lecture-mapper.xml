@@ -54,12 +54,23 @@
 		<result column="마감일시" property="homeworkpEndDateTime" />	
 		<result column="grade_status" property="gradeStatus" />
 		<result column="score" property="score" />
+		<result column="homeworkp_content" property="homeworkpContent" />
 		<result column="제출상황" property="countHW" />	
 		<result column="채점상황" property="countGHW" />	
 		<result column="feedback" property="feedback" />
 		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
 		<result column="kor_name" property="korName" />				
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attResult">
+		<result column="attach_no" property="attachNo" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="path" property="path" />
+		<result column="status" property="status" />	
 	</resultMap>
 	
 	
@@ -541,6 +552,57 @@
 		  , #{path}
 		  )	
 	</insert>
+
+	<!-- 교수 : 과제관리 - 상세페이지 조회(상단의 교수가 낸 과제 상세페이지) -->
+	<select id="selectProHomework" resultMap="homeworkResult">
+		select
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , homeworkp_content
+		  from homeworkp
+		 where homeworkp_no = #{homeworkpNo}
+		   and class_no = #{classNo}
+		   and status = 'Y'
+		   and homeworkp_category = 'P'
+	</select>
+	
+	<!--  교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일) -->
+	<select id="selectAttachHomework" resultMap="attResult">
+		select
+               attach_no
+             , ref_type
+             , ref_no
+             , origin_name
+             , change_name
+             , path
+             , status
+          from attachment
+		 where ref_type = 'P'
+		   and ref_no = #{homeworkpNo}	
+	</select>
+	
+	<!-- 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경 -->
+	<update id="updatepHomeworkStatus">
+		update 
+		       homeworkp
+		   set homeworkp_category = 'I'
+		 where class_no = #{classNo}
+		   and homeworkp_no = #{homeworkpNo}	
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

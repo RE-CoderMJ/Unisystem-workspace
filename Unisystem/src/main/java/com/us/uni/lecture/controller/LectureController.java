@@ -47,7 +47,7 @@ public class LectureController {
 		String changeName = currentTime + ranNum + ext;
 		
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/homework_upfiles/");
 		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
@@ -372,7 +372,7 @@ public class LectureController {
 		// @RequestParam => request.getParameter를 대신함
 		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
 		
-
+		h.setClassNo((((Lecture)session.getAttribute("classInfo")).getClassNo()));
 		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
 		
 		int listCount = lService.selectHomeworkListCount(h);
@@ -412,8 +412,7 @@ public class LectureController {
 	public String insertHomeworkEnrollForm(Homework h, MultipartFile upfile, HttpSession session, Model model ) {
 		
 		h.setHomeworkpEndDateTime(h.getHomeworkpEndDateTime().replace("T", " "));
-		
-		System.out.println(h);
+	
 		Attachment at = new Attachment();
 		
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -421,7 +420,7 @@ public class LectureController {
 			// 원본명, 서버업로드된경로를 Attatchment 에 이어서 담기
 			at.setOriginName(upfile.getOriginalFilename());
 			at.setChangeName(changeName);
-			at.setPath("resources/uploadFiles/homework/"+ changeName);
+			at.setPath("resources/uploadFiles/homework_upfiles/"+ changeName);
 		} 
 		
 		// 넘어온 첨부파일이 있을 경우 h : 제목, 작성자, 내용이 담겨있음
@@ -437,14 +436,47 @@ public class LectureController {
 		}
 	}
 	
+	/* 교수 - 과제관리 : 제출가능한 과제 상세페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureProHomeworkDetail.stu")
+	public ModelAndView selectLectureProHomeworkDetial(String hno, Homework h, HttpSession session, ModelAndView mv) {
+		// lno => 상세조회시 필요한 게시글 번호
+		
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		h.setHomeworkpNo(hno);
 	
+		// 상단의 교수가 낸 과제 상세보기 항목을 불러오는 select문
+		h = lService.selectProHomework(h);		
+		Attachment at = lService.selectAttachHomework(h);	
+		mv.addObject("h", h).addObject("at", at).setViewName("lecture/lectureHomeworkProDetailView");
+		
+		return mv;
+	}
+	
+	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
+	@RequestMapping("updatepHomeworkStatus.lec")
+	public String updatepHomeworkStatus(Homework h, HttpSession session, Model model) {
+		
+		System.out.println(h);
+		int result = 0;
+		
+		result = lService.updatepHomeworkStatus(h);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 변경되었습니다.");
+			return "redirect:homeworkProEndList.lec" ;
+		} else {
+			model.addAttribute("errorMsg", "과제 상태 변경 실패");
+			return "lecture/lectureHomeworkProListView";
+		}
+		
+	}
 	
 
 
 	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureHomeworkDetail.stu")
 	public String selectLectureHomeworkDetial(int hno) {
-		return "lecture/lectureHomeworkEnrollForm";
+		return "lecture/lectureHomeworkProEnrollForm";
 	}
 	
 	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */

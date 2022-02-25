@@ -199,7 +199,7 @@
     						
 	    					value += "<tr>"
 	                              + 	"<td>"+ list[i].homeworkpNo + "</td>"
-	                              + 	"<td>" + "<a href='lectureHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
+	                              + 	"<td>" + "<a href='lectureProHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
 	                              +		"<td>" + list[i].korName + "</td>"
 	                              + 	"<td>" + list[i].homeworkpEndDateTime + "</td>"
 	                              + 	"<td>" + list[i].countHW + " / " +  ${ classInfo.currStud } + "</td>"
