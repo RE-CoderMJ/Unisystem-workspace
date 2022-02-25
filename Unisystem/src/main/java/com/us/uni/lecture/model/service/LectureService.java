@@ -3,6 +3,7 @@ package com.us.uni.lecture.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -87,6 +88,9 @@ public interface LectureService {
 	
 	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
 	ArrayList<Homework> selectProhomeworkList(Homework h);
+	
+	// 교수 - 과제관리 : 과제등록
+	int insertHomeworkEnrollForm(Homework h, Attachment at);
 
 
 }

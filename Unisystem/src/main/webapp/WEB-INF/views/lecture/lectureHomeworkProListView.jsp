@@ -206,7 +206,7 @@
 	                              + "</tr>"; 				
     					}
     					
-    					$("#pHomeworkList>tbody").html(value);	
+    					$("#pHomeworkList tbody").html(value);	
 
     				}, error:function(){
     					console.log("제출가능한 과제 리스트 조회용 ajax 통신 실패");

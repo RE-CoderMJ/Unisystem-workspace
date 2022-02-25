@@ -18,8 +18,8 @@ public class Homework {
 	private String homeworkpName;			// 과제명
 	private String homeworkpCategory;		// 제출가능(P) | 제출마감(I)
 	private String homeworkpEndDateTime;    // 마감일시
-	private String pstatus;                  // 게시여부(Y|N)
-	
+	private String pstatus;                 // 게시여부(Y|N)
+	private String homeworkpContent;		// 내용
 	
 	// HOMEWORKS (학생이 제출한 과제)
 	private int homeworksNo;				// 과제번호(seq)

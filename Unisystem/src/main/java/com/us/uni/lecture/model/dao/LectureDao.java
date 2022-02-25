@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -181,4 +182,13 @@ public class LectureDao {
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectProhomeworkList", h);
 	}
 	
+	// 교수 - 과제관리 : 과제등록
+	public int insertHomeworkEnrollForm(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.insert("lectureMapper.insertHomeworkEnrollForm", h);
+	}
+	
+	// 교수 - 과제관리 : 과제등록(첨부파일)
+	public int insertAttachPHomework(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertAttachPHomework", at);
+	}
 }

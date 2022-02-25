@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.LectureDao;
 import com.us.uni.lecture.model.vo.Homework;
@@ -169,6 +170,22 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public ArrayList<Homework> selectProhomeworkList(Homework h) {
 		return lDao.selectProhomeworkList(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 과제등록
+	@Override
+	public int insertHomeworkEnrollForm(Homework h, Attachment at) {	
+		
+		int result1 = lDao.insertHomeworkEnrollForm(sqlSession, h);
+		
+		if(at.getOriginName() != null) {
+			
+			int result2 = lDao.insertAttachPHomework(sqlSession, at);
+
+			return result1*result2;
+		}
+		
+		return result1;
 	}
 
 	
