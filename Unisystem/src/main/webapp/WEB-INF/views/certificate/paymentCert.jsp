@@ -45,35 +45,9 @@
             			<tbody>
 	            			<c:forEach var="c" items="${list}">
 	            				<tr>
-	            					<c:choose>
-	            						<c:when test="${ c.cerType eq 1 }">
-			            					<td>(국)졸업증명서</td>            							
-	            						</c:when>
-	            						<c:when test="${ c.cerType eq 2 }">
-	            							<td>(영)졸업증명서</td>
-	            						</c:when>
-	            						<c:when test="${ c.cerType eq 3 }">
-	            							<td>(국)재학증명서</td>
-	            						</c:when>
-	            						<c:otherwise>
-	            							<td>(영)재학증명서</td>
-	            						</c:otherwise>
-	            					</c:choose>
-	            					
-	            					<c:choose>
-	            						<c:when test="${ c.useFor eq 1 }">
-			            					<td>취업 제출용</td>            							
-	            						</c:when>
-	            						<c:when test="${ c.useFor eq 2 }">
-			            					<td>자격증 발급용</td>            							
-	            						</c:when>
-	            						<c:when test="${ c.useFor eq 3 }">
-			            					<td>신분 확인용</td>            							
-	            						</c:when>
-	            						<c:otherwise>
-	            							<td>기타 증명서류 제출용</td>
-	            						</c:otherwise>
-	            					</c:choose>
+	            					<input type="hidden" class="tt" value="${ c.cerNo }">
+	            					<td>${c.cerTypeT }</td>
+	            					<td>${c.useFor }</td>
 	            					<td>${c.toWhom}</td>
 	            					<td>1,000원</td>
 	            				</tr>
@@ -106,6 +80,14 @@
 		$(document).ready(function(){			   	  
 			
 			$("#pay").click(function(e){
+				
+				let no = [];
+				$(".tt").each(function(i, obj){
+					no.push($(obj).val());
+				})
+				
+				console.log(no);
+				
 				var IMP = window.IMP;
 				var code = "imp70460028"; //가맹점 식별코드
 				IMP.init(code);
@@ -138,12 +120,15 @@
 						console.log("결제성공 " + msg);
 						
 						$.ajax({
-							url : 'myStu.cert.payment', 
+							url : 'myStu.cert.pay', 
 					        type :'POST',
-					        data : {cerNoList : '${list}'},
-					        success: function(result){		        	
-					          if(result > 0){
-								 console.log("추가성공");			           
+					        //data : {cerNoList : '${list}'}, 
+					        data:{cerNoList:no},
+					        traditional:true,
+					        success: function(result){
+					          if(result == "success"){
+								 console.log("추가성공");
+								 location.href="myStu.cert.list";
 					          }
 					        },
 					        error:function(){

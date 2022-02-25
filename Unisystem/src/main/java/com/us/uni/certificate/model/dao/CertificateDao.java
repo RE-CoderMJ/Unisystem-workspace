@@ -1,10 +1,12 @@
 package com.us.uni.certificate.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.certificate.model.vo.Certificate;
 
 @Repository
@@ -22,8 +24,16 @@ public class CertificateDao {
 		return sqlSession.update("certMapper.deleteCert", cerNo);
 	}
 
-	public int updatePayment(SqlSessionTemplate sqlSession, int cerNo) {
-		return sqlSession.update("cerMapper.updatePayment", cerNo);
+	public int updatePayment(SqlSessionTemplate sqlSession,HashMap<String, Object> map) {
+		return sqlSession.update("certMapper.updatePayment", map);
+	}
+
+	public int selectPaidCertListCount(SqlSessionTemplate sqlSession, int studNo) {
+		return sqlSession.selectOne("certMapper.selectPaidCertListCount", studNo);
+	}
+
+	public ArrayList<Appointment> selectPaidCertList(SqlSessionTemplate sqlSession, int studNo) {
+		return (ArrayList)sqlSession.selectList("certMapper.selectPaidCertList", studNo);
 	}
 	
 }

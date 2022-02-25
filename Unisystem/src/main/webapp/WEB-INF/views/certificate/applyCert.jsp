@@ -78,13 +78,25 @@
             				
             			</tbody>
             		</table>
-            		<button id="next-btn" onclick="location.href='myStu.cert.payment'">다음</button>
+            		<button id="next-btn" onclick="moveToPayment();">다음</button>
             	</div>
+            	<input type="hidden" id="empty">
 			</article>
 		</section>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		function moveToPayment(){
+			if($("#empty").val() == 'e'){
+				alert("증명서 발급 신청내역이 없습니다.");
+			}else{
+				location.href="myStu.cert.payment";
+			}
+			
+		}
+	</script>
 	
 	<script>
 		$(".cert-type").click(function(){
@@ -112,34 +124,16 @@
 					
 					if(result.length === 0){
 						value = "<tr><td colspan='4' style='text-align:center;'>증명서 발급 신청내역이 없습니다.</td></tr>";
+						$("#empty").val('e');
 					}else{
 						for(let i in result){
-							value += "<tr>";
-							
-							if(result[i].cerType == 1){
-								value += "<td>(국)졸업증명서</td>"; 
-							}else if(result[i].cerType == 2){
-								value += "<td>(영)졸업증명서</td>"; 
-							}else if(result[i].cerType == 3){
-								value += "<td>(국)재학증명서</td>"; 
-							}else{
-								value += "<td>(영)재학증명서</td>"; 
-							}
-							
-							if(result[i].useFor == 1){
-								value += "<td>취업 제출용</td>"; 
-							}else if(result[i].useFor == 2){
-								value += "<td>자격증 발급용</td>";
-							}else if(result[i].useFor == 3){
-								value += "<td>신분 확인용</td>";
-							}else{
-								value += "<td>기타 증명서류 제출용</td>";
-							}
-							
-							value += "<td>" + result[i].toWhom + "</td>" 
+							value += "<tr>"
+								   + "<td>" + result[i].cerTypeT + "</td>"
+								   + "<td>" + result[i].useFor + "</td>"
+								   + "<td>" + result[i].toWhom + "</td>" 
 								   + "<input type='hidden' value='"+ result[i].cerNo + "'>"
 	    					       + "<td><button class='delete-btn'>삭제</button></td>"
-	    						   + "</tr>";							
+	    						   + "</tr>";					
 						}
 					}
 					
@@ -169,38 +163,45 @@
 			if(!$(".cert-type").hasClass("selected")){
 				alert("출력하실 증명서의 종류를 선택해주세요.");
 			}else{
-				if(toWhom == ''){
-					alert("제출처를 입력해주세요.");
+				if(${loginUser.studGrad == null} && ($(".selected").hasClass("kor-grad") || $(".selected").hasClass("kor-grad"))){
+					alert("졸업을 한 학생만 해당 증명서 출력이 가능합니다.");
+				}else if(${loginUser.studGrad != null} && ($(".selected").hasClass("kor-enroll") || $(".selected").hasClass("eng-enroll"))){
+					alert("재학중인 학생만 해당 증명서 출력이 가능합니다.");
 				}else{					
-					if($(".selected").hasClass("kor-grad")){
-						cerType = 1;
-					}else if($(".selected").hasClass("eng-grad")){
-						cerType = 2;
-					}else if($(".selected").hasClass("kor-enroll")){
-						cerType = 3;
-					}else{
-						cerType = 4;
+					if(toWhom == ''){
+						alert("제출처를 입력해주세요.");
+					}else{					
+						if($(".selected").hasClass("kor-grad")){
+							cerType = 1;
+						}else if($(".selected").hasClass("eng-grad")){
+							cerType = 2;
+						}else if($(".selected").hasClass("kor-enroll")){
+							cerType = 3;
+						}else{
+							cerType = 4;
+						}
+						
+						$.ajax({
+							url:"myStu.cert.applyCert",
+							data:{
+								studNo:'${loginUser.userNo}', 
+								cerType: cerType,
+								useFor: useFor,
+								toType: toType,
+								toWhom: toWhom
+							},
+							success:function(result){
+								if(result > 0){
+									selectCertList(1);							
+								}
+							},error:function(){
+								console.log("상태변경 ajax 통신 실패");
+							}
+						})
 					}
 				}
 			}
 			
-			$.ajax({
-				url:"myStu.cert.applyCert",
-				data:{
-					studNo:'${loginUser.userNo}', 
-					cerType: cerType,
-					useFor: useFor,
-					toType: toType,
-					toWhom: toWhom
-				},
-				success:function(result){
-					if(result > 0){
-						selectCertList(1);							
-					}
-				},error:function(){
-					console.log("상태변경 ajax 통신 실패");
-				}
-			})
 		}
 	</script>
 	

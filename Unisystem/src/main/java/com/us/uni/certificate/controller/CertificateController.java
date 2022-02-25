@@ -1,6 +1,8 @@
 package com.us.uni.certificate.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.certificate.model.service.CertificateService;
 import com.us.uni.certificate.model.vo.Certificate;
+import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.common.template.Pagination;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
@@ -86,6 +91,23 @@ public class CertificateController {
 		
 		return "certificate/paymentCert";
 	}
+
+	/**
+	 * 결제정보 업데이트 컨트롤러
+	 * @param cerNoList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="myStu.cert.pay")
+	public String updatePayment(/*ArrayList<Certificate> cerNoList*/ String[] cerNoList) {
+		
+		//System.out.println(cerNoList[0]);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cerNoList", cerNoList);
+		int result = cService.updatePayment(map);
+	
+		return result > 0 ? "success" : "fail";
+	}
 	
 	/**
 	 * 결제 완료 후 출력 페이지 컨트롤러
@@ -96,23 +118,20 @@ public class CertificateController {
 		return "certificate/listCert";
 	}
 	
-	/**
-	 * 결제정보 업데이트 컨트롤러
-	 * @param cerNoList
-	 * @return
-	 */
 	@ResponseBody
-	@RequestMapping(value="myStu.cert.payment", produces="application/json; charset=UTF-8")
-	public int updatePayment(ArrayList<Certificate> cerNoList) {
+	@RequestMapping(value="myStu.cert.selectPaidCertList", produces="application/json; charset=UTF-8")
+	public Map<String, Object> selectPaidCertList(int currentPage, int studNo){
 		
-		System.out.println(cerNoList);
-		int result = 0;
-		/*
-		for(int cerNo:cerNoList) {
-			result = cService.updatePayment(cerNo);
-		}
-		*/
-		return result;
+		Map<String, Object> map = new HashMap();
+		
+		int listCount = cService.selectPaidCertListCount(studNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Appointment> list = cService.selectPaidCertList(studNo, pi);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		return map;
 	}
 	
 	/**

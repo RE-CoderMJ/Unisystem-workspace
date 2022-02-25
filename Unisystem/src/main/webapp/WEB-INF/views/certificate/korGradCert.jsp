@@ -47,8 +47,14 @@
         }
 </style>
 </head>
-<body>
+<body face="HYGoThic-Medium" encoding="UniKS-UCS2-H">
 	<div class="page">
+		<div>성민석</div>
+		<div>1993년 3월 6일</div>
+		<div>공과대학 / 컴퓨터공학과</div>
+		<div>2014년 3월 3일</div>
+		<div>2018년 2월 14일</div>
+		<div>2021년 2월 25일</div>
 	</div>
 </body>
 </html>

@@ -5,12 +5,13 @@
 	<resultMap type="Certificate" id="certResult">
 		<result column="cer_no" property="cerNo" />
 		<result column="stud_no" property="studNo" />
-		<result column="cer_type" property="cerType" />
+		<result column="cer_type" property="cerTypeT" />
 		<result column="usefor" property="useFor" />
-		<result column="to_type" property="toType" />
+		<result column="to_type" property="toTypeT" />
 		<result column="to_whom" property="toWhom" />
 		<result column="paid" property="paid" />
 		<result column="status" property="status" />
+		<result column="issue_date" property="issueDate" />
 	</resultMap>
 	
 	<insert id="applyCert">
@@ -39,10 +40,11 @@
 		select
 		       cer_no
 		     , stud_no
-		     , cer_type
-		     , usefor
-		     , to_type
+		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
+		     , decode(to_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
+		     , decode(usefor, 1, '취업 제출용', 2, '자격증 발급용', 3, '신분 확인용', 4, '기타 증명서류 제출용') "usefor"
 		     , to_whom
+		     , to_char(issue_date, 'yyyy-mm-dd') "issue_date"
 		  from certificate
 		 where stud_no = #{studNo}
 		   and status = 'Y'
@@ -60,6 +62,32 @@
 		update
 		       certificate
 		   set paid = 'Y'
-		 where cer_no = #{cerNo}
+		     , issue_date = sysdate
+		<where>
+			<foreach item="item" index="index" collection="cerNoList" open="cer_no in (" separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
 	</update>
+	
+	<select id="selectPaidCertListCount" resultType="_int">
+		select
+		       count(*)
+		  from certificate
+		 where stud_no = #{studNo}
+		   and status = 'Y'
+		   and paid = 'Y'
+	</select>
+	
+	<select id="selectPaidCertList" resultMap="certResult">
+		select
+		       cer_no
+		     , stud_no
+		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
+		     , to_char(issue_date, 'yyyy-mm-dd') "issue_date"
+		  from certificate
+		 where stud_no = #{studNo}
+		   and status = 'Y'
+		   and paid = 'Y'
+	</select>
 </mapper>

@@ -1,13 +1,16 @@
 package com.us.uni.certificate.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.certificate.model.dao.CertificateDao;
 import com.us.uni.certificate.model.vo.Certificate;
+import com.us.uni.common.model.vo.PageInfo;
 
 @Service
 public class CertificateServiceImpl implements CertificateService{
@@ -34,7 +37,17 @@ public class CertificateServiceImpl implements CertificateService{
 	}
 
 	@Override
-	public int updatePayment(int cerNo) {
-		return cDao.updatePayment(sqlSession, cerNo);
+	public int updatePayment(HashMap<String, Object> map) {
+		return cDao.updatePayment(sqlSession, map);
+	}
+
+	@Override
+	public int selectPaidCertListCount(int studNo) {
+		return cDao.selectPaidCertListCount(sqlSession, studNo);
+	}
+
+	@Override
+	public ArrayList<Appointment> selectPaidCertList(int studNo, PageInfo pi) {
+		return cDao.selectPaidCertList(sqlSession, studNo);
 	}
 }

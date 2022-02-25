@@ -33,7 +33,6 @@
 }
 
 .side_title {
-	margin-bottom: 4px;
 	margin-left: 10px; 
 	cursor:pointer;
 	height:30px;
@@ -57,6 +56,7 @@
 
 .sidebar p{
 	display:none;
+	margin:0px;
 }
 
 .sidebar b{
