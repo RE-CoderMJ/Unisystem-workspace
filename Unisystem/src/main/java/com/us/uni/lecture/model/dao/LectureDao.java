@@ -1,12 +1,14 @@
 package com.us.uni.lecture.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -143,17 +145,40 @@ public class LectureDao {
 	
 	
 	// 마감된 과제 리스트의 게시글 총 수를 조회
-	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, int classNo) {
-		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", classNo);
+	public int selectHomeworkListCount(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectHomeworkListCount", h);
 	}
 	
-	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, int classNo){
+	// 마감된 과제 리스트 페이지 조회
+	public ArrayList<Lecture> selectHomeworkpList(SqlSessionTemplate sqlSession, PageInfo pi, Homework h){
+
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", classNo);
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectHomeworkpList", h, rowBounds);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
+	public ArrayList<Homework> selectPhomeworkList(SqlSessionTemplate sqlSession, Homework h){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectPhomeworkList", h);
+	}
+
+	// 교수 - 과제관리 : 마감된 과제 리스트 페이지 조회
+	public ArrayList<Homework> selectProHomeworkEndList(SqlSessionTemplate sqlSession, PageInfo pi, Homework h){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProHomeworkEndList", h, rowBounds);
+	}
+	
+	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
+	public ArrayList<Homework> selectProhomeworkList(SqlSessionTemplate sqlSession, Homework h){
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectProhomeworkList", h);
 	}
 	
 }

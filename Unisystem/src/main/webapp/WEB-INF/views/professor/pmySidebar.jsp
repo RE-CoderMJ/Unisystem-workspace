@@ -62,9 +62,8 @@ a:hover {
 	color: rgb(26, 86, 162);
 	font-weight: bolder;
 }
-#myClassList:hover{
+#myClassList:hover, #classInsertList:hover{
 	color: rgb(26, 86, 162);
-	text-decoration:underline;
 	cursor:pointer;
 }
 </style>
@@ -92,7 +91,7 @@ a:hover {
 				 <b>담당 학생 관리</b> 
 			</div>
 			<div>
-				<a href="stlist.pr">- 담당 학생 조회</a>
+				<a href="stlist.pr" id="">- 담당 학생 조회</a>
 			</div>
 			<div>
 				<a href="">- 학적변동 신청내역</a>
@@ -108,7 +107,7 @@ a:hover {
 				<a onclick="urlSubmit(1);" id="myClassList">- 진행강의 조회</a>
 			</div>
 			<div>
-				<a href="app.pr">- 강의 관리</a>
+				<a href="app.pr" id="classInsertList">- 강의 관리</a>
 			</div>
 
             <div class="side_title">
@@ -122,10 +121,10 @@ a:hover {
 				 <b>My 캘린더</b> 
 			</div>
 			<div>
-				<a href="">- 나의 일정</a>
+				<a href="calendar">- 나의 일정</a>
 			</div>
 			<div>
-				<a href="">- TO-DO LIST</a>
+				<a href="todoList">- TO-DO LIST</a>
 			</div>
 	  
 
@@ -133,28 +132,33 @@ a:hover {
 				 <b>쪽지</b> 
 			</div>
 			<div>
-				<a href="">- 받은 메시지</a>
+				<a href="list.msg">- 받은 메시지</a>
 			</div>
 			<div>
-				<a href="">- 보낸 메시지</a>
-			</div>
-			<div>
-				<a href="">- 중요 메시지</a>
-			</div>
-			<div>
-				<a href="">- 스팸 보관함</a>
+				<a href="list.smsg">- 보낸 메시지</a>
 			</div>
 			
+			<div class="side_title">
+				<b>게시판</b>
+			</div>
+			
+			<div>
+				<a href="list.nbo">- 공지사항</a>
+				<a href="list.bo">- 커뮤니티</a>
+				<a href="list.vbo">- 대외활동</a>
+				<a href="list.cbo">- 동아리 </a>
+			</div>
 			<form id="myForm" action="" method="post">
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }" />
 			</form>
+			
+			<!-- 교수 -->
 			
 			<script>
 				function urlSubmit(num){
 			    	   if(num == 1){ // 강의 - 진행강의 조회 클릭 시  
 			    		   $("#myForm").attr("action", "professorClassList.me").submit();
-			    	   } 
-			    	   
+			    	   }
 			       }
 			</script>
 		</div>

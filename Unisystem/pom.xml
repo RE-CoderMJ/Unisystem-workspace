@@ -303,7 +303,28 @@
 		    <version>7.1.6</version>
 		    <scope>test</scope>
 		</dependency>
-		
+
+		<!-- websocet -->
+		 <dependency>
+	       <groupId>javax.websocket</groupId>
+	       <artifactId>javax.websocket-api</artifactId>
+	       <version>1.1</version>
+        </dependency>
+        
+
+        <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-websocket</artifactId>
+        	<version>4.2.4.RELEASE</version>
+        </dependency>
+        
+        <!-- String commons lang3 -->
+        <dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.11</version>
+		</dependency>
+
 	</dependencies>
 	
     <build>
@@ -334,6 +355,7 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -342,6 +364,7 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
 </project>

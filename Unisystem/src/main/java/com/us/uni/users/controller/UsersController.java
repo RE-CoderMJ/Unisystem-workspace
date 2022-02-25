@@ -83,8 +83,17 @@ public class UsersController {
 		return "redirect:/";
 	}
 	
+	
+	//id search
+		@RequestMapping("findId")
+		public String id() {
+		 
+			return "common/idFind";
+		}
+	
+	
 	//아이디찾기
-	@RequestMapping("findid")
+	@RequestMapping("findid.me")
 	public ModelAndView findId(Users m, HttpSession session, ModelAndView mv) {
 		
 		//System.out.println(m);
@@ -116,8 +125,9 @@ public class UsersController {
 		
 		
 		/* 비밀번호 찾기 */
-		@RequestMapping(value = "/pwdFind", method = RequestMethod.GET)
-		public void findPwGET() throws Exception{
+		@GetMapping("pwdFind")
+		public ModelAndView pwdfind() {
+			return new ModelAndView ("common/pwdFind");
 		}
 
 		@RequestMapping(value = "/pwdFind", method = RequestMethod.POST)

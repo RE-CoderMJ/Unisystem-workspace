@@ -158,14 +158,21 @@ li {
     color: #fff !important;
     background: black!important;
 }
-
+.btn-search{
+float:right;
+margin-right:87px;
+}
+.page-link{
+cursor:pointer;
+}
+   
 </style>
 <body>
 
 
 	<!-- header.jsp 영역 -->
 	<jsp:include page="../common/header.jsp" />
-
+	<jsp:include page="../message/messageModal.jsp" />
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
@@ -182,7 +189,7 @@ li {
 
 			<div class="page_title">받은 메시지</div>
 			
-			<hr width="1000px;">
+			<hr width="1200px;">
 
 			<div class="head_count msg_division">받은 메시지 목록</div>
 
@@ -190,7 +197,7 @@ li {
 
 			<div class="btn-search">
 			<div class="btn-area">
-				<a class="btn btn-sm btn-danger" href="">선택삭제</a> 
+				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(231, 76, 60);">선택삭제</a> 
 				<a class="btn btn-sm" href="" data-toggle="modal" data-target="#msgModal" style="background-color:rgb(44, 62, 80); color:white;">쪽지보내기</a>
 			</div>
 		 
@@ -200,75 +207,51 @@ li {
 
 			<br clear="both">
 
+
+
+			<!-- ajax로 리스트 불러오기  쪽지 받았을 때 상단에 알림이 뜨도록 -->
 			<!-- list 영역-->
-			<table class="table" style="width: 900px; text-align: center;">
-
+			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
+			<thead>
 				<tr>
-					<th width="20px"></th>
-					<th width="70px">번호</th>
+					<th width=""></th>
 					<th width="100px">보낸사람</th>
-					<th width="200px">내용</th>
+					<th width="300px">내용</th>
 					<th width="100px">상태</th>
+					<th>보낸날짜</th>
 				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-				
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>1</td>
-					<td>이망고</td>
-					<td>망고는 맛있어</td>
-					<td>읽음</td>
-				</tr>
-
-
+			</thead>
+			
+			<tbody>
+						
+			</tbody>
 			</table>
+			
+			
+			<div class="modal" id="detailrecMsg">
+			<div class="modal-dialog">
+				<div class="modal-content" style="border-radius: 80px;">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="mtitle">받은메시지 조회</h4>
+						<button type="button" class="close" id="close"
+							data-dismiss="modal">&times;</button>
+					</div>
 
+					<!-- Modal body -->
+					<div class="modal-body" id="mbody">
+					</div>
+ 
+
+				</div>
+			</div>
+		</div>
 		
-
-
 			<!-- paging bar 영역-->
 			<div id="pagingArea">
-
 				<ul class="pagination">
-					<li class="page-item ltgt"><a href="">&lt;</a></li>
-					<li class="page-item"><a href="">1</a></li>
-					<li class="page-item"><a href="">2</a></li>
-					<li class="page-item"><a href="">3</a></li>
-					<li class="page-item"><a href="">4</a></li>
-					<li class="page-item"><a href="">5</a></li>
-					<li class="page-item ltgt"><a href="">&gt;</a></li>
 				</ul>
+				<input type="hidden" id="cPage">
 			</div>
 
 		</div>
@@ -277,42 +260,159 @@ li {
 		<br clear="both">
 
 		<script>
+		
+		$(function(){
+			receiveMsgList(1);
+			
+			$(document).on("click", "#mdel", function(){
+				deleteMsg();
+			})
+				
+			
+			$(document).on("click", ".text-overflow > a", function(){
+				console.log();
+				
+				let value="";
+				
+				$.ajax({
+					url:"detail.rmsg",
+					dataType:'json',
+					type:'POST',
+					data:{
+						messageNo:$(this).parent().siblings("input[name=messageNo]").val()
+					},
+					success:function(list){
+						console.log(list);
+						
+						value +="<p>" 
+							   + 	"<b>보낸이:</b>" + list.msgWriter
+							   + "</p>"
+							   + "<textarea class='modalText' name='msgContent' id='msgContent'>"
+							   +  list.msgContent
+							   + "</textarea>";
+						
+						$('#mbody').html(value);
+						$('#detailrecMsg').modal('show');
+						
+						console.log(value);
+					}, error:function() {
+						console.log("쪽지디테일 조회용 ajax 통신실패");
+					}
+					
+				});
+			})
+			 
+		})
+		
+		//쪽지 리스트 조회 ajax구현하기 
+		function receiveMsgList(cPageNo){
+    		$.ajax({
+    			type: 'POST',  
+				dataType:'json',
+    			url:"rmsg.list",
+    			data:{currentPage:cPageNo, userNo: '${loginUser.userNo}'},
+    			success:function(data){
+    				console.log(data);
+    				
+	    			let value="";
+    				
+    				if(data.list.length == 0){
+    					
+    					value = "<tr><td colspan='5' style='text-align:center;'>받은 메시지가 없습니다.</td></tr>"
+    					
+    				}else{
+    				
+    				for(let i in data.list){
+    					let readYN = "";
+    					
+    					if(data.list[i].readYN == 'Y'){
+  						  readYN = "읽음 ";
+  						  }else if(data.list[i].readYN =='N'){
+  							readYN = "안읽음";
+  						  }
+    					
+    					value += "<tr>"
+    						  + "<td>" 
+    						  + "<input id='msgCheck' type='checkbox'>"
+    						  + '<input type="hidden" name="deleteYN" id="mYN"/>'
+    						  +"</td>"
+    						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
+    						  + "<td>" + data.list[i].msgWriter + "</td>"
+    						  + "<td class='text-overflow'>" +"<a>" + data.list[i].msgContent +"</a>"+"</td>"
+    						  + "<td>"+readYN+ "</td>"
+    						  + "<td>" + data.list[i].sendDate + "</td>"
+    						  + "</tr>";
+    					}
+    				}
+    				
+    				let piValue = "";
+					
+					if(data.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='receiveMsgList(" + (data.pi.currentPage-1) + ")'>&lt;</a></li>";
+					}
+                    
+					for(let p = data.pi.startPage; p<=data.pi.endPage; p++){
+						
+						if(p == data.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='receiveMsgList(" + p + ")'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='receiveMsgList(" + p + ")'>" + p + "</a></li>";
+						}
+					}
+					
+					if(data.pi.currentPage == data.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='receiveMsgList(" + (data.pi.currentPage + 1) + ")'>&gt;</a></li>"
+    			}
+				
+					$(".pagination").html(piValue);
+					$("#cPage").val(data.pi.currentPage);
+					$("#msgArea tbody").html(value);
+    				},
+    				
+    			error:function(){
+    				console.log("쪽지리스트 조회용 ajax 통신실패");
+    			}
+    		});
+    	}
+		
+		function deleteMsg(){
 
+            if ( $("#msgCheck").is(":checked") ){
+                $("#mYN").val('Y');
+                
+                $.ajax({
+                	type: 'POST',  
+    				dataType:'json',
+        			url:"del.msg",
+        			data:{
+        				messageNo:$('#msgNo').val(),
+        				deleteYN:$('#mYN').val()
+        			},
+        			success:function(data){
+        				if(!confirm("메세지를 삭제하시겠습니까?")){
+        					return false;
+		 				}else{
+		 					alert('삭제가 완료되었습니다.');
+		 					location.reload();
+		 				}
+        			}
+                });
+            }else{
+            	 $("#mYN").val('N');
+            }
+            
+		}
+		
     </script>
 
 		<!-- footer.jsp-->
 		<jsp:include page="../common/footer.jsp" />
 
 	</div>
-
-
-	<!-- msg 모달 영역  -->
-
-	<div class="modal" id="msgModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content" style="border-radius: 80px;">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">메시지 보내기</h4>
-	        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      	<p><b>받는이:</b> 곰돌이(201901234) </p>
-	      	<textarea class="modalText"></textarea>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="moBtn" id="sendModal" data-dismiss="modal">보내기</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
-	 
 
 </body>
 </html>

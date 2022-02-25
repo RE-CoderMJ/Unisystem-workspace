@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.LectureService;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -298,27 +299,87 @@ public class LectureController {
 	/* 학생 - 마감된 과제 리스트를 띄워주는 컨트롤러 */
 	// 메뉴바 클릭 시  => homeworkList.lec  (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => homeworkList.lec?cpage=요청하는페이지
-	/*
 	@RequestMapping("homeworkEndList.lec")
-	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="classNo") int classNo, ModelAndView mv) { 
+	public ModelAndView selectHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Homework h, ModelAndView mv, HttpSession session) { 
 		// @RequestParam => request.getParameter를 대신함
 		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
 		
-		int listCount = lService.selectHomeworkListCount(classNo);
+
+		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
+		
+		int listCount = lService.selectHomeworkListCount(h);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
-		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, classNo);
+		ArrayList<Lecture> list = lService.selectHomeworkpList(pi, h);
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkListView");
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkStuListView");
 		
 		return mv; 
 	}
-	*/
+	
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="selectPhomeworkList.lec", produces="application/json; charset=UTF-8")
+	public String selectPhomeworkList(HttpSession session) {
+		
+		Homework h = new Homework();
+		
+		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		
+		ArrayList<Homework> list = lService.selectPhomeworkList(h);
+		
+		return new Gson().toJson(list);
+	}	
+
+	/* 교수 - 마감된 과제 리스트를 띄워주는 컨트롤러 */
+	@RequestMapping("homeworkProEndList.lec")
+	public ModelAndView selectProHomeworkEndList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Homework h, ModelAndView mv, HttpSession session) { 
+		// @RequestParam => request.getParameter를 대신함
+		// "cpage"라는 키값을 int currentPage라는 변수에 담음 
+		
+
+		h.setStudNo(((Users)session.getAttribute("loginUser")).getUserNo());
+		
+		int listCount = lService.selectHomeworkListCount(h);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		ArrayList<Homework> list = lService.selectProHomeworkEndList(pi, h);
+
+		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkProListView");
+		
+		return mv; 
+	}
+	
+	
+	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="selectProPhomeworkList.lec", produces="application/json; charset=UTF-8")
+	public String selectProhomeworkList(HttpSession session) {
+		
+		Homework h = new Homework();
+	
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		
+		ArrayList<Homework> list = lService.selectProhomeworkList(h);
+		
+		return new Gson().toJson(list);
+	}
+	
+	/* 교수 - 과제관리 : 과제 등록 */
+	@RequestMapping("proHomeworkEnrollForm.lec")
+	public String insertHomework() {
+		return "lecture/lectureHomeworkProEnrollForm";
+	}
+	
+	
+	
 	
 	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureHomeworkDetail.stu")
-	public String selectLectureHomeworkDetial() {
+	public String selectLectureHomeworkDetial(int hno) {
 		return "lecture/lectureHomeworkEnrollForm";
 	}
 	
@@ -333,6 +394,15 @@ public class LectureController {
 	public String selectLectureHomeworkResult() {
 		return "lecture/lectureHomeworkResult";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */

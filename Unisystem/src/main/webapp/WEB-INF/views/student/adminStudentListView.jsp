@@ -103,7 +103,6 @@
 				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;기본정보&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;학생 관리</p></div>
 			</div>
 			
-			
 			<div class="searchList">
 				<div class="searchBox">
 					<span class="nameTag">학생 목록</span>
@@ -125,7 +124,7 @@
 				</div>
 				
 				
-			<form id="studDelete">
+			  <form id="studDelete">
 				<div class="btnBox">
 					<div class="switchBox">
 						<label class="switch">
@@ -138,9 +137,43 @@
 					
 					<div class="btnDiv">
 						<a class="btn btn-sm btn-outline-secondary" href="enrollForm.st">새로 등록</a>
-						<button onclick="studentDelete();" class="btn btn-sm btn-outline-secondary">삭제</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#delete">삭제</button>
 					</div>
 				</div>
+
+
+
+		
+			  <!-- The Modal -->
+			  <div class="modal" id="delete">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			      
+			        <!-- Modal Header -->
+			        <div class="modal-header">
+			          <h4 class="modal-title">삭제하시겠습니까?</h4>
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			      	
+			        <!-- Modal body -->
+			        <div class="modal-body">
+					 	<input type="hidden" id="adminPwd" value="${loginUser.userPwd}"> 
+					        삭제 시 다시 복구하실 수 없습니다.<br>
+			          	관리자의 승인이 필요합니다. <br><br>
+			          	* 비밀번호 : 
+			          	<input type="password" name="userPwd">
+			        </div>
+			        
+			        <!-- Modal footer -->
+			        <div class="modal-footer">
+			          <button type="submit" onclick="studentDelete();" class="btn btn-danger" data-dismiss="modal">삭제</button>
+			        </div>
+			      
+			        
+			      </div>
+			    </div>
+			  </div>
+
 
 
 					<div class="appList">
@@ -185,11 +218,9 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					
-					<!-- $(".page-link).val(""); -->
+				  
 					<div class="container">
                     <ul class="pagination justify-content-center">
-                    
 		                   <c:choose>
 		    				<c:when test="${ pi.currentPage eq 1 }">            
 			                    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
@@ -219,7 +250,6 @@
 							<li class="page-item"><a class="page-link" href="student.ad?cpage=${ pi.currentPage+1 }">&gt;</a></li>
 						</c:otherwise>						
 						</c:choose>	
-                 
                     </ul>
                  </div>
 						
@@ -232,6 +262,7 @@
 	</div> <!-- wrap -->
 	<jsp:include page="../common/footer.jsp" />
 			
+			  
 			
 			<script>
 			
@@ -252,11 +283,11 @@
 				
 				// 선택 회원 삭제
 				function studentDelete(){
-					
 					const checkboxes = document.getElementsByClassName('deleteNo');
 					var checkNum = 0;
 					var delForm = document.getElementById('studDelete');
-					
+					let checkPwd = $("input[name=userPwd]").val();
+					let adminPwd = $("#adminPwd").val();
 					
 					for(var i=0; i<checkboxes.length; i++) {
 						if(checkboxes[i].checked == true) {
@@ -267,18 +298,21 @@
 					}
 
 					if(checkNum == 0) {
-						alert("삭제할 게시글을 선택해주세요.");
+						alertify.alert("삭제할 학생을 선택해주세요.");
 					} else if(checkNum > 0) {
-						if(confirm("정말 삭제하시겠습니까?")){
-							// 관리자의 비밀번호를 입력받기
-							 
+						if(checkPwd == adminPwd){
+							
 							// 삭제 요청
 							delForm.action = "delete.st";
 							delForm.submit();
+						}else{
+							alertify.alert("비밀번호를 잘못 입력하셨습니다.");
+							return false;
 						}
 					}
 
 				}
+				
 				
 				// 사이드바 길이 조절
 				function sidebar(){
@@ -289,7 +323,7 @@
 							$(".wrap_sidebar").css('height', $len);
 						}else{
 							$(".wrap_sidebar").css('height', 270);
-							document.getElementById("content").style.marginBottom = "280px";
+							document.getElementById("content").style.marginBottom = "300px";
 						}
 				}
 				
@@ -327,11 +361,6 @@
     			// search 기능
 				function pagination(i){
     				
-					if (!$("#univList").val().length==0 && $("#departList").val().length==0) {
-					  alert("학부를 선택해 주세요!");
-					  return;
-					}
-					
 					let list = "";
 					let status = "";
 					let page = "";
@@ -349,13 +378,13 @@
 						success:data => {
 							
 							// 검색 결과 리스트
-							$(data.searchList).each(function(index, value){
+							$(data.searchList).each(function(index, obj){
 	   						
-							if(value.studStatus == 1){
+							if(obj.studStatus == 1){
 								status = "재학";
-							}else if(value.studStatus == 2){
+							}else if(obj.studStatus == 2){
 								status = "휴학"
-							}else if(value.studStatus == 3){
+							}else if(obj.studStatus == 3){
 								status = "졸업";
 							}else{
 								status = "자퇴";
@@ -363,11 +392,11 @@
 								
 	    						list += "<tr>" 
 			    							+ "<td><input type='checkbox'></td>"
-	    									+ "<td>" + value.studNo + "</td>"
-	    									+ "<td>" + value.korName + "</td>"
-	    									+ "<td>" + value.studUniv + "</td>"
-	    									+ "<td>" + value.studDepartment + "</td>"
-	    									+ "<td>" + value.studMajor + "</td>"
+	    									+ "<td>" + obj.studNo + "</td>"
+	    									+ "<td>" + obj.korName + "</td>"
+	    									+ "<td>" + obj.studUniv + "</td>"
+	    									+ "<td>" + obj.studDepartment + "</td>"
+	    									+ "<td>" + obj.studMajor + "</td>"
 	    									+ "<td>" + status + "</td>"
 	  								 + "</tr>";
 								})

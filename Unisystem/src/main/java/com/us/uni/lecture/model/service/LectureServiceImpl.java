@@ -1,6 +1,7 @@
 package com.us.uni.lecture.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.LectureDao;
+import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
 
@@ -141,16 +143,33 @@ public class LectureServiceImpl implements LectureService{
 	
 	// 마감된 과제 리스트의 게시글 총 수를 조회
 	@Override
-	public int selectHomeworkListCount(int classNo) {
-		return lDao.selectHomeworkListCount(sqlSession, classNo);
+	public int selectHomeworkListCount(Homework h) {
+		return lDao.selectHomeworkListCount(sqlSession, h);
 	}
 
-	// 마감된 과제 리스트 페이지 조회
+	// 학생 - 과제업로드 : 마감된 과제 리스트 페이지 조회
 	@Override
-	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, int classNo) {
-		return lDao.selectHomeworkpList(sqlSession, pi, classNo);
+	public ArrayList<Lecture> selectHomeworkpList(PageInfo pi, Homework h) {
+		return lDao.selectHomeworkpList(sqlSession, pi, h);
+	}
+
+	// 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트 조회
+	@Override
+	public ArrayList<Homework> selectPhomeworkList(Homework h) {
+		return lDao.selectPhomeworkList(sqlSession, h);
 	}
 	
+	// 교수 - 과제관리 : 마감된 과제 리스트 페이지 조회
+	@Override
+	public ArrayList<Homework> selectProHomeworkEndList(PageInfo pi, Homework h) {
+		return lDao.selectProHomeworkEndList(sqlSession, pi, h);
+	}
+
+	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
+	@Override
+	public ArrayList<Homework> selectProhomeworkList(Homework h) {
+		return lDao.selectProhomeworkList(sqlSession, h);
+	}
 
 	
 }

@@ -12,6 +12,7 @@
 		<result column="class_year" property="classYear" />
 		<result column="class_semester" property="classSemester" />
 		<result column="class_credit" property="classCredit" />	
+		<result column="class_status" property="classStatus" />				
 		<result column="class_location" property="classLocation" />				
 		<result column="class_day" property="classDay" />
 		<result column="score_att" property="scoreAtt" />
@@ -32,7 +33,10 @@
 		
 		<result column="attendance_status" property="attendanceStatus" />
 		<result column="학번" property="stuGrade" />
-		<result column="total_semester" property="totalSemester" />		
+
+		<result column="total_semester" property="totalSemester" />
+		<result column="appdate" property="appdate" />
+
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -48,6 +52,12 @@
 		<result column="homeworkp_name" property="homeworkpName" />	
 		<result column="homeworkp_category" property="homeworkpCategory" />	
 		<result column="마감일시" property="homeworkpEndDateTime" />	
+		<result column="grade_status" property="gradeStatus" />
+		<result column="score" property="score" />
+		<result column="제출상황" property="countHW" />	
+		<result column="채점상황" property="countGHW" />	
+		<result column="feedback" property="feedback" />
+		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
 		<result column="kor_name" property="korName" />				
 	</resultMap>
@@ -380,28 +390,203 @@
 	<!-- 학생 - 과제업로드 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
 	<select id="selectHomeworkpList" resultMap="homeworkResult">
 		select 
-		       rownum
-		     , a.*
-		  from
-		       (
-		        select
-		               homeworkp_no
-		             , class_no
-		             , homeworkp_name
-		             , kor_name
-		             , homeworkp_category
-		             , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
-		          from homeworkp
-		          join class using(class_no)
-		          join professor using(prof_no)
-		          join users on (prof_no = user_no)
-		         where homeworkp_category = 'I'
-		           and class_no = 1010
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , kor_name
+		     , ( select 
+		               grade_status 
+		          from homeworks s
+		         where stud_no = #{studNo}
 		           and status = 'Y'
-		         order
-		            by "마감일시" desc       
-		       ) a	   
+		           and s.homeworkp_no = p.homeworkp_no ) "grade_status"
+		     , ( select 
+		                score 
+		          from homeworks s
+		         where stud_no = #{studNo}
+		           and status = 'Y'
+		           and s.homeworkp_no = p.homeworkp_no ) "score"
+		  from homeworkp p
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
+		   and p.status = 'Y'
+		   and homeworkp_category = 'I'
+		 order
+		    by homeworkp_no desc
+	</select>
+	
+	<!-- 학생 - 과제업로드 : 제출가능상태의 총 게시글 리스트를 불러오는 SQL -->
+	<select id="selectPhomeworkList" resultMap="homeworkResult">
+		select 
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , kor_name
+		     , ( select 
+		               grade_status 
+		          from homeworks s
+		         where stud_no = #{studNo}
+		           and status = 'Y'
+		           and s.homeworkp_no = p.homeworkp_no ) "grade_status"
+		  from homeworkp p
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
+		   and p.status = 'Y'
+		   and homeworkp_category = 'P'
+		 order
+		    by homeworkp_no desc	
+	</select>	
+	
+	<!-- 교수 - 과제관리 : 마감상태의 총 게시글 리스트를 불러오는 SQL -->
+	<select id="selectProHomeworkEndList" resultMap="homeworkResult">
+		select 
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , kor_name
+		     , ( select
+                         count(stud_no)
+                    from homeworks s
+                   where homeworkp_category = 'I'
+                     and s.status = 'Y'
+                     and p.status = 'Y'
+                     and s.homeworkp_no = p.homeworkp_no ) "제출상황"
+		     , ( select
+                         count(grade_status)
+                    from homeworks s
+                   where homeworkp_category = 'I'
+                     and s.status = 'Y'
+                     and p.status = 'Y'
+                     and s.homeworkp_no = p.homeworkp_no
+                     and grade_status = 'A') "채점상황"
+		  from homeworkp p
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
+		   and p.status = 'Y'
+		   and homeworkp_category = 'I'
+		 order
+		    by homeworkp_no desc
+	</select>
+
+	<!-- 교수 : 과제관리 - 제출가능상태의 총 게시글 리스트를 불러오는 SQL -->
+	<select id="selectProhomeworkList" resultMap="homeworkResult">
+		select 
+		       homeworkp_no
+		     , homeworkp_name
+             , kor_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , ( select
+                         count(stud_no)
+                    from homeworks s
+                   where homeworkp_category = 'P'
+                     and s.status = 'Y'
+                     and p.status = 'Y'
+                     and s.homeworkp_no = p.homeworkp_no ) "제출상황"
+		  from homeworkp p
+		  join class c using(class_no)
+		  join users on (c.prof_no = user_no)
+		 where class_no = #{classNo}
+		   and p.status = 'Y'
+		   and homeworkp_category = 'P'
+		 order
+		    by homeworkp_no desc	
 	</select>
 
 
+
+
+
+
+	<!-- AUTHOR DAHYUN -->
+	<insert id="classInsert">
+		INSERT
+		INTO CLASS
+		     (
+		       CLASS_NO
+		     , PROF_NO
+		     , CLASS_CODE
+		     , CLASS_KOR_NAME
+		     , CLASS_ENG_NAME
+		     , CLASS_CATEGORY
+		     , CLASS_YEAR
+		     , CLASS_SEMESTER
+		     , CLASS_CREDIT
+		     , CLASS_LOCATION
+		     , CLASS_DAY
+		     , CLASS_TIME
+		     , CLASS_START
+		     , CLASS_DIVISION
+		     , CLASS_KOR_OUTLINE
+		     , CLASS_ENG_OUTLINE
+		     , CLASS_GOAL
+		     , CLASS_STATUS
+		     , CLASS_PHONE
+		     , PROF_LOCATION
+		     , CLASS_PLAN
+		     , SCORE_ATT
+		     , SCORE_TASK
+		     , SCORE_MID
+		     , SCORE_FIN
+		     , MAX_STUD
+		     , APPDATE
+		     )
+		      VALUES
+		    (
+		       SEQ_CLASS.NEXTVAL
+		     , #{profNo}
+		     , SEQ_CLASSCODE.NEXTVAL
+		     , #{classKorName}
+		     , #{classEngName}
+		     , #{classCategory}
+		     , #{classYear}
+		     , #{classSemester}
+		     , #{classCredit}
+		     , #{classLocation}
+		     , #{classDay}
+		     , #{classTime}
+		     , #{classStart}
+		     , #{classDivision}
+		     , #{classKorOutline}
+		     , #{classEngOutline}
+		     , #{classGoal}
+		     , #{classStatus}
+		     , #{classPhone}
+		     , #{profLocation}
+		     , #{classPlan}
+		     , #{scoreAtt}
+		     , #{scoreTask}
+		     , #{scoreMid}
+		     , #{scoreFin}
+		     , #{maxStud}
+		     , TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		    )
+	</insert>
+	
+	<select id="selectAppCount" resultType="_int">
+		SELECT 
+			   COUNT(*)
+			   FROM CLASS
+		 WHERE PROF_NO = #{profNo}
+		 ORDER
+		    BY CLASS_YEAR ASC
+	</select>
+	
+	<select id="classAppList" resultMap="lectureResult">
+		SELECT 
+		       ROWNUM
+		     , A.*
+		 FROM (SELECT 
+		       CLASS_NO
+		     , APPDATE
+		     , CLASS_KOR_NAME
+		     , DECODE(CLASS_STATUS, NULL, '대기', 'Y', '승인', 'N', '반려') "CLASS_STATUS"
+		  FROM CLASS
+		 WHERE PROF_NO = #{profNo}
+		 ORDER
+		    BY CLASS_NO ASC NULLS FIRST) A 
+		ORDER BY ROWNUM DESC
+	</select>
 </mapper>
