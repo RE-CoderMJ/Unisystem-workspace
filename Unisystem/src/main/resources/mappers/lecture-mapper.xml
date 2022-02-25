@@ -494,8 +494,53 @@
 		 order
 		    by homeworkp_no desc	
 	</select>
-
-
+	
+	<!-- 교수 - 과제관리 : 과제등록에서  homeworkp 테이블에 등록하는 sql-->
+	<insert id="insertHomeworkEnrollForm">
+		insert
+		  into homeworkp
+		  (
+		    homeworkp_no
+		  , class_no
+		  , homeworkp_name
+		  , homeworkp_category
+		  , homeworkp_enddatetime
+		  , status
+		  , homeworkp_content
+		  )
+		  values
+		  (
+		    seq_homeworkp.nextval
+		  , #{classNo}
+		  , #{homeworkpName}
+		  , 'P'
+		  , to_char(to_date( #{ homeworkpEndDateTime }, 'YYYY-MM-DD HH24:MI'), 'YYYYMMDDHH24MI') 
+		  , 'Y'
+		  , #{homeworkpContent}
+		  )	
+	</insert>
+	
+	<insert id="insertAttachPHomework">
+		insert
+		  into attachment
+		  (
+            attach_no
+          , ref_type
+          , ref_no
+          , origin_name
+          , change_name
+          , path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'P'
+		  , seq_homeworkp.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )	
+	</insert>
 
 
 
