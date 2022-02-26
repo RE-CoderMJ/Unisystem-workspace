@@ -35,5 +35,9 @@ public class CertificateDao {
 	public ArrayList<Appointment> selectPaidCertList(SqlSessionTemplate sqlSession, int studNo) {
 		return (ArrayList)sqlSession.selectList("certMapper.selectPaidCertList", studNo);
 	}
+
+	public Certificate selectCert(SqlSessionTemplate sqlSession, int cerNo) {
+		return sqlSession.selectOne("certMapper.selectCert", cerNo);
+	}
 	
 }

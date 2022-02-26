@@ -1,18 +1,24 @@
 package com.us.uni.certificate.controller;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.certificate.model.service.CertificateService;
 import com.us.uni.certificate.model.vo.Certificate;
@@ -139,7 +145,11 @@ public class CertificateController {
 	 * @return
 	 */
 	@RequestMapping("myStu.cert.gradCert/kor")
-	public String gradCertKor() {
+	public String gradCertKor(int cerNo, Model m) {
+		
+		Certificate c = cService.selectCert(cerNo);
+		m.addAttribute("c", c);
+		
 		return "certificate/korGradCert";
 	}
 	
@@ -148,7 +158,11 @@ public class CertificateController {
 	 * @return
 	 */
 	@RequestMapping("myStu.cert.gradCert/eng")
-	public String gradCertEng() {
+	public String gradCertEng(int cerNo, Model m) {
+		
+		Certificate c = cService.selectCert(cerNo);
+		m.addAttribute("c", c);
+		
 		return "certificate/engGradCert";
 	}
 	
@@ -157,7 +171,14 @@ public class CertificateController {
 	 * @return
 	 */
 	@RequestMapping("myStu.cert.enrollCert/kor")
-	public String EnrollCertKor() {
+	public String EnrollCertKor(int cerNo, Model m) {
+		
+		Certificate c = cService.selectCert(cerNo);
+		
+		int grade = c.getGrade()/2; 
+		c.setGrade(grade);
+		m.addAttribute("c", c);
+		
 		return "certificate/korEnrollCert";
 	}
 	
@@ -166,7 +187,14 @@ public class CertificateController {
 	 * @return
 	 */
 	@RequestMapping("myStu.cert.enrollCert/eng")
-	public String EnrollCertEng() {
+	public String EnrollCertEng(int cerNo, Model m) {
+		
+		Certificate c = cService.selectCert(cerNo);
+		
+		int grade = c.getGrade()/2; 
+		c.setGrade(grade);
+		m.addAttribute("c", c);
+		
 		return "certificate/engEnrollCert";
 	}
 	

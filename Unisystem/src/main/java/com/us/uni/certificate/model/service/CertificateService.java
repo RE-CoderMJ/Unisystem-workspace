@@ -24,6 +24,8 @@ public interface CertificateService {
 	// 발급된 증명서 리스트 조회 서비스
 	int selectPaidCertListCount(int studNo);
 	ArrayList<Appointment> selectPaidCertList(int studNo, PageInfo pi);
-
+	
+	// 증명서 조회 서비스
+	Certificate selectCert(int cerNo);
 
 }

@@ -48,6 +48,8 @@
 		     , PROF_DEPARTMENT
 		     , PROF_MAJOR
 		     , PROF_RANK
+		     , PHONE
+		     , EMAIL
 		  FROM PROFESSOR
 		  JOIN USERS ON(PROF_NO = USER_NO)
 		 WHERE PROF_STATUS = 'Y'
@@ -95,6 +97,8 @@
 		     , PROF_DEPARTMENT
 		     , PROF_MAJOR
 		     , PROF_RANK
+		     , EMAIL
+		     , PHONE
 		  FROM PROFESSOR
 		  JOIN USERS ON(PROF_NO = USER_NO)
 		 <choose>
@@ -130,4 +134,70 @@
 		 WHERE USER_NO = #{profNo}
 	</delete>
 	
+	<update id="changeProfessorJoin">
+		UPDATE
+		       STUDENT
+		   SET PROF_NO = #{profNo}
+		 WHERE STUD_NO = #{studNo}
+	</update>
+	
+	<insert id="professorInsert1">
+		INSERT 
+		  INTO USERS 
+		     ( 
+		       USER_NO
+		     , PASSWORD
+		     , KOR_NAME
+		     , ENG_NAME
+		     , BIRTHDAY
+		     , GENDER
+		     , EMAIL
+		     , PHONE
+		     , ADDRESS
+		     , NATION
+		     , WEBMAIL
+		     , USER_DIV
+		     , PROFILE_IMG
+		     )
+		       VALUES
+		     (
+		       (TO_CHAR(SYSDATE, 'YYYY')) || SEQ_PROFESSOR.NEXTVAL
+		     , #{birthday}
+		     , #{korName}   
+		     , #{engName}
+		     , #{birthday}
+		     , #{gender}
+		     , #{email}
+		     , #{phone}
+		     , #{address}
+		     , #{nation}
+		     , ((TO_CHAR(SYSDATE, 'YYYY')) || SEQ_PROFESSOR.CURRVAL) || '@unisystem.com'
+		     , 1
+		     , #{profileImg}
+		     )
+	</insert>
+	
+	<insert id="professorInsert2">
+	    INSERT 
+		  INTO PROFESSOR 
+		     ( 
+		       PROF_NO
+		     , PROF_RANK
+			 , PROF_UNIV
+		 	 , PROF_DEPARTMENT
+			 , PROF_MAJOR
+			 , PROF_INTO
+			 , PROF_STATUS
+		     )
+		       VALUES
+		     (
+		       (TO_CHAR(SYSDATE, 'YYYY')) || SEQ_PROFESSOR.CURRVAL
+		     , #{profRank}
+		     , #{profUniv}
+		     , #{profDepartment}
+		     , #{profMajor}
+		     , TO_CHAR(SYSDATE, 'YYYYMMDD')
+		     , 'Y'
+		     )
+	</insert>
 </mapper>
