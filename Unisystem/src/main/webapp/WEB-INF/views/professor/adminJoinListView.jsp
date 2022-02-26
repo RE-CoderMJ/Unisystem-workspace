@@ -80,7 +80,7 @@
 						<tbody>
 							<c:forEach var="prof" items="${ list }">
 								<tr>
-									<td><input type="checkbox" class="choose" name="profNo" value="${prof.profNo}" style="opacity:0">
+									<td><input type="checkbox" class="chooseP" name="profNo" value="${prof.profNo}" style="opacity:0">
 										${ prof.profNo }</td>
 									<td>${ prof.profUniv }</td>
 									<td>${ prof.profDepartment }</td>
@@ -180,7 +180,7 @@
    	              
    	              
 		             <br><br> 
-					<button type="submit" class="submitBtn" style="margin-left:430px;">
+					<button type="submit" class="submitBtn" onclick="return validate()" style="margin-left:430px;">
 						<p>담당 교수 변경</p>
 					</button>
 					
@@ -213,7 +213,7 @@
 			$(".appList.profTable tr").on("click", function(){
 				
 				$(this).siblings().css("background", "white");
-				$("tr .chooseP").prop("checked", false);
+				$("tr .chooseP").prop("checked", false); //전체 false
 				$(this).children().children(".chooseP").prop("checked", true);
 				
 				$(this).css("background", "RGB(235,242,252)");
@@ -233,32 +233,21 @@
 				}
 			})
 		}
-			
-		function professorDelete(){
-				const checkboxes = document.getElementsByClassName('deleteNo');
-				var checkNum = 0;
-				var delForm = document.getElementById('profDelete');
-				let checkPwd = $("input[name=userPwd]").val();
-				let adminPwd = $("#adminPwd").val();
-				
-				for(var i=0; i<checkboxes.length; i++) {
-					if(checkboxes[i].checked == true) {
-					// 단순 체크된 박스의 개수를 세는 작업
-					// checkBox name="dno"으로 form태그 안에서 넘기고 있기 때문에 콘솔로 출력하지 않아도 controller에서는 값을 전달받음! 
-						checkNum += 1;
-				}
-			}	
-			
-		}
-						
-		function clickCheck(target) {
-		    document.querySelectorAll('input[type=checkbox]')
-		        .forEach(el => el.checked = false);
 		
-		    target.checked = true;
-		    
+		// 변경할 교수, 학생 미 선택 시 경고 알림창
+		function validate(){
+			
+			if($("tr .chooseP").is(":checked") == false){
+				alertify.alert("주의!" , "교수를 선택하지 않았습니다.");
+				return false;
+			}else if($("tr .chooseS").is(":checked") == false){
+			// 매칭 시 학생을 선택하지 않았을 경우
+				alertify.alert("주의!", "학생을 선택하지 않았습니다.");
+				return false;
+			}
+			
 		}
-	
+			
 		// 사이드바 길이 조절
 		function sidebar(){
 			document.getElementById("content").style.marginBottom = "50px";
@@ -351,7 +340,7 @@
 					$(data.searchList).each(function(index, obj){
 			
 		 						list += "<tr>" 
-		 									+ "<td><input type='checkbox' class='choose' name='profNo' value='" + obj.profNo + "' style='opacity:0'>"
+		 									+ "<td><input type='checkbox' class='chooseP' name='profNo' value='" + obj.profNo + "' style='opacity:0'>"
 		 									+ obj.profNo + "</td>"
 		 									+ "<td>" + obj.profUniv + "</td>"
 		 									+ "<td>" + obj.profDepartment + "</td>"
@@ -416,13 +405,9 @@
 					
 					// 학년 구하기
 					var level = 0;
-					console.log(data);
-					
 					// 검색 결과 리스트
 					$(data.searchList).each(function(index, obj){
 						
-					console.log(obj.studSemester);
-					
 					if(obj.studSemester < 2){
 						level = 1;
 					}else if(obj.studSemester < 4){
