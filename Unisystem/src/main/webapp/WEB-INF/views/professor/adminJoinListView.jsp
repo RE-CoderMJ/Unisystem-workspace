@@ -43,11 +43,11 @@
 			<div class="pageName"><p>마이페이지&nbsp;>&nbsp;담당 교수 관리&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;담당 교수 변경</p></div>
 			</div>
 			
-			
+				<form action="changeJoin" method="post">
 				<div class="searchList">
 				<div class="searchBox">
 					<span class="nameTag">교수 목록</span>
-					<select id="univListP" required>
+					<select id="univListP">
 						<option value="" style="display: none;" selected>대학별 조회</option>
 						<option>문과대학</option>
 						<option>공과대학</option>
@@ -57,11 +57,11 @@
 						<option>예술체육대학</option>
 						<option>자연과학대학</option>
 					</select>
-					<select id="departListP" required>
+					<select id="departListP">
 						<option value="" style="display: none;" selected>학부별 조회</option>
 					</select>
 					<input type="text" id="keywordP" placeholder="이름으로 조회">
-					<button type='submit' onclick='pagination("1");'>검색</button>
+					<button type='button' onclick='pagination("1");'>검색</button>
 				</div>
 				
 					<div class="appList profTable">
@@ -128,14 +128,14 @@
                  </div>
 						
 				</div> <!-- appList -->
-			</div> <!-- searchList -->
+			  </div> <!-- searchList -->
 			
 			
 			
 				<div class="searchList">
 				<div class="searchBox">
 					<span class="nameTag">학생 목록</span>
-					<select id="univListS" required>
+					<select id="univListS">
 						<option value="" style="display: none;" selected>대학별 조회</option>
 						<option>문과대학</option>
 						<option>공과대학</option>
@@ -145,11 +145,11 @@
 						<option>예술체육대학</option>
 						<option>자연과학대학</option>
 					</select>
-					<select id="departListS" required>
+					<select id="departListS">
 						<option value="" style="display: none;" selected>학부별 조회</option>
 					</select>
 					<input type="text" id="keywordS" placeholder="이름으로 조회">
-					<button type='submit' onclick='studentSelect();'>검색</button>
+					<button type='button' onclick='studentSelect();'>검색</button>
 				</div>
 				
 					<div class="appList studTable">
@@ -187,8 +187,8 @@
 					
 						
 				</div> <!-- appList -->
-			</div> <!-- searchList -->
-			
+  			  </div> <!-- searchList -->
+			</form>
 			
 			
 			
@@ -414,18 +414,35 @@
 					let list = "";
 					let page = "";
 					
+					// 학년 구하기
+					var level = 0;
+					console.log(data);
+					
 					// 검색 결과 리스트
 					$(data.searchList).each(function(index, obj){
-			
+						
+					console.log(obj.studSemester);
+					
+					if(obj.studSemester < 2){
+						level = 1;
+					}else if(obj.studSemester < 4){
+						level = 2;
+					}else if(obj.studSemester < 6){
+						level = 3;
+					}else{
+						level = 4;
+					}
+						
+						
 		 						list += "<tr>" 
-		 							        + "<td width='30'><input type='checkbox' class='chooseS' value='" + obj.studNo + "'></td>"
+		 							        + "<td width='30'><input type='checkbox' class='chooseS' name='studNo' value='" + obj.studNo + "'></td>"
 		 									+ "<td>" + obj.studNo + "</td>"
-		 									+ "<td>" + obj.studUniv + "</td>"
-		 									+ "<td>" + obj.studDepartment + "</td>"
+		 									+ "<td width='30'>" + level + "</td>"
+		 									+ "<td>" + obj.korName + "</td>"
 		 									+ "<td>" + obj.studMajor + "</td>"
 		 									+ "<td>" + obj.phone + "</td>"
 		 									+ "<td>" + obj.email + "</td>"
-		 									+ "<td>" + obj.korName + "</td>"
+		 									+ "<td>" + obj.sprofName + "</td>"
 									 + "</tr>";
 						})
 								

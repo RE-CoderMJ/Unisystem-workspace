@@ -134,4 +134,11 @@
 		 WHERE USER_NO = #{profNo}
 	</delete>
 	
+	<update id="changeProfessorJoin">
+		UPDATE
+		       STUDENT
+		   SET PROF_NO = #{profNo}
+		 WHERE STUD_NO = #{studNo}
+	</update>
+	
 </mapper>

@@ -19,7 +19,7 @@
 		
 		<!-- STUDENT -->
 		<result column="stud_no" property="studNo" />
-		<result column="sprof_no" property="sprofNo" />
+		<result column="sprof_name" property="sprofName" />
 		<result column="stud_univ" property="studUniv" />
 		<result column="stud_department" property="studDepartment" />
 		<result column="stud_major" property="studMajor" />
@@ -40,16 +40,18 @@
 	<select id="selectStudentList" resultMap="usersResult">
 		SELECT 
 		       STUD_NO
-		     , KOR_NAME
+		     , U.KOR_NAME "kor_name"
+             , U2.KOR_NAME "sprof_name"
 		     , STUD_UNIV
 		     , STUD_DEPARTMENT
 		     , STUD_MAJOR
 		     , STUD_STATUS
-		  FROM STUDENT
-		  JOIN USERS ON(STUD_NO = USER_NO)
+		  FROM STUDENT S
+		  JOIN USERS U ON(STUD_NO = U.USER_NO)
+          JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
 		 WHERE STUD_STATUS != 4
 		 ORDER
-	        BY STUD_NO DESC
+	        BY STUD_NO DESC;
 	</select>
 	
 	<select id="selectDepartment" resultMap="usersResult">
@@ -86,18 +88,20 @@
 	<select id="searchStudent" resultMap="usersResult">
 		SELECT 
 		       STUD_NO
-		     , KOR_NAME
+		     , U.KOR_NAME "KOR_NAME"
+             , U2.KOR_NAME "SPROF_NAME"
 		     , STUD_UNIV
 		     , STUD_DEPARTMENT
 		     , STUD_MAJOR
 		     , STUD_STATUS
-		     , PHONE
-		     , EMAIL
-		  FROM STUDENT
-		  JOIN USERS ON(STUD_NO = USER_NO)
+		     , U.PHONE
+		     , U.EMAIL
+		  FROM STUDENT S
+		  JOIN USERS U ON(STUD_NO = U.USER_NO)
+          JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
 		 <choose>
 		 	<when test="univ.equals('')">
-		 	 	WHERE KOR_NAME LIKE '%'||#{keyword}||'%'
+		 	 	WHERE U.KOR_NAME LIKE '%'||#{keyword}||'%'
 		 	</when>
 		 	<when test="!univ.equals('') and depart.equals('')">
 		 		WHERE STUD_UNIV = #{univ}
@@ -109,11 +113,11 @@
 		 	<otherwise>
 		 		WHERE STUD_UNIV = #{univ}
    		   	      AND STUD_DEPARTMENT = #{depart}  
-   	     	      AND KOR_NAME LIKE '%'||#{keyword}||'%'
+   	     	      AND U.KOR_NAME LIKE '%'||#{keyword}||'%'
 		 	</otherwise>
 		 </choose>
 		  ORDER
-		     BY KOR_NAME
+		     BY U.KOR_NAME
 	</select>
 	
 	<delete id="studentDelete1">

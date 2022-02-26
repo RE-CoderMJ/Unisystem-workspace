@@ -313,7 +313,7 @@
 							}
 								
 	    						list += "<tr>" 
-			    							+ "<td><input type='checkbox'></td>"
+			    							+ "<td><input type='checkbox' name='profNo' value='"+obj.profNo+"'></td>"
 	    									+ "<td>" + obj.profNo + "</td>"
 	    									+ "<td>" + obj.korName + "</td>"
 	    									+ "<td>" + obj.profUniv + "</td>"
