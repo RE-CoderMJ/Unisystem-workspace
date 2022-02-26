@@ -42,6 +42,7 @@
 	<resultMap id="usersResult" type="Users">
 		<result column="user_no" property="userNo" />
 		<result column="kor_name" property="korName" />
+		<result column="user_div" property="userDiv"/>
 	</resultMap>
 	
   <select id="selectListCount" resultType="_int">
@@ -220,7 +221,8 @@
 		select
 		       board_no
 		     , board_title
-		     , u.user_no as "board_writer"
+		     , u.kor_name as "board_writer"
+		     , u.user_no as"user_no"
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , board_content
 		     ,notice_yn
@@ -538,8 +540,8 @@
 		  )
 	</insert>
 
-<!-- 동아리 -->
-<select id="cselectListCount" resultType="_int">
+	<!-- 동아리 -->
+	<select id="cselectListCount" resultType="_int">
 		select
 		       count(*)
 		  from board
@@ -629,6 +631,7 @@
 		select
 			reply_no,
 			u.kor_name as "reply_writer",
+			u.user_no as "user_no",
 			board_no,
 			reply_content,
 			to_char(create_date,'YYYY-MM-DD') as "create_date",

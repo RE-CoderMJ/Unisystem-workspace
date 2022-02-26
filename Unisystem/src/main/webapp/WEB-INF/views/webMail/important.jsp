@@ -264,7 +264,6 @@
 			
 			type = $(this).siblings("input[name=type]").val();
 			changeImportanceT($(this).siblings("input[name=mNo]").val(), status, type);
-	
 		})
 		
 		function changeImportanceT(mNo,status, type){
@@ -316,7 +315,6 @@
 				},error:function(){
 					console.log("휴지통 이동 ajax통신 실패");
 				}
-			
 			})
 		}
 		
@@ -347,7 +345,6 @@
 				
 				location.href= "webMail.writeForwardForm?mNo=" + mNo + "&tNo=" + tNo;
 			}
-						
 		})
 		
 	</script>
