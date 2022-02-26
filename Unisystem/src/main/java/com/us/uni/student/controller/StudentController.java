@@ -111,15 +111,16 @@ public class StudentController {
 		
 		int result = 0;
 		
-		result = sService.studentInsert(student);		
 	
 		// 학생 정보 등록 시 프로필 사진 파일을 Student에 경로 저장
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
 			
-			student.setProfileImg("/resources/images/uploadFiles/profiles/" + changeName);
+			student.setProfileImg("resources/images/uploadFiles/studentImg/" + changeName);
 		}
 		
+			result = sService.studentInsert(student);		
+			
 		if(result > 0) {
 			session.setAttribute("alertMsg", "학생 등록이 되었습니다!");
 			return "redirect:student.ad";
@@ -172,7 +173,7 @@ public class StudentController {
 		String changeName = currentTime + ranNum + ext;
 
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기 (session 필요함)
-		String savePath = session.getServletContext().getRealPath("/resources/images/uploadFiles/profile/"); 
+		String savePath = session.getServletContext().getRealPath("resources/images/uploadFiles/studentImg/"); 
 		// getRealPath : 실제 저장시킬 파일의 물리적인 경로, 해당 경로 안에 changeName이라는 이름으로 해당 파일을 업로드 시킬 예정!
 		
 		try {

@@ -61,6 +61,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public int changeProfessorJoin(HashMap map) {
 		return pDao.changeProfessorJoin(sqlSession, map);
 	}
+	@Override
+	public int professorInsert(Users professor) {
+		return pDao.professorInsert(sqlSession, professor);
+	}
 
 
 }

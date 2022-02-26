@@ -51,7 +51,7 @@
           JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
 		 WHERE STUD_STATUS != 4
 		 ORDER
-	        BY STUD_NO DESC;
+	        BY STUD_NO DESC
 	</select>
 	
 	<select id="selectDepartment" resultMap="usersResult">

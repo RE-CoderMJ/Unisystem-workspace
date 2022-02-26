@@ -75,4 +75,15 @@ public class ProfessorDao {
 		return sqlSession.update("professorMapper.changeProfessorJoin", map);
 	}
 	
+	public int professorInsert(SqlSessionTemplate sqlSession, Users professor) {
+		int result = 0;
+		int result1 = sqlSession.insert("professorMapper.professorInsert1", professor);
+		int result2 = sqlSession.insert("professorMapper.professorInsert2", professor);
+		
+		result = result1 * result2;
+		if(result > 0) {
+			return result;
+		}
+		return 0;
+	}
 }
