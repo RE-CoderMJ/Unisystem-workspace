@@ -1,26 +1,16 @@
 package com.us.uni.users.controller;
 
-import java.util.Random;
-
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.us.uni.users.model.service.UsersService;
@@ -36,33 +26,46 @@ public class UsersController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	// 로그인
+		@RequestMapping("loginMain")
+		public String loginMain() {
+			
+			return "common/userLogin";
+		}
+		
+	//portal메인
 	@GetMapping("enview")
 	public ModelAndView find() {
 		return new ModelAndView ("common/portalmain");
 	}
 	
+	
 	// 로그인
 	@RequestMapping("login.me")
-	public ModelAndView loginUser(Users m, HttpSession session, ModelAndView mv){
+	public ModelAndView loginUser(Users m, HttpSession session, ModelAndView mv, Model model){
 	
+		//System.out.println(m);
+
 		Users loginUser = uService.loginUser(m);
+		
+		System.out.println(loginUser.getUserPwd());
+		
 		//String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
 		//System.out.println("평문:" + m.getUserPwd());
 		//System.out.println("암호문:"+ encPwd);
 		//m.setUserPwd(encPwd);
 		
 		
-		if(loginUser != null || bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			
 			// 로그인 성공
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("redirect:enview");
 			
 		} else {
-			
 			// 로그인 실패
-			mv.addObject("alertMsg", "로그인 실패");
-			mv.setViewName("common/errorPage"); 
+			model.addAttribute("alertMsg", "일치하는 회원정보가 없습니다.");
+			mv.setViewName("common/mainPage"); 
 		}
 		return mv;	
 	}
@@ -85,7 +88,7 @@ public class UsersController {
 	
 	
 	//id search
-		@RequestMapping("findId")
+		@RequestMapping("findid.me")
 		public String id() {
 		 
 			return "common/idFind";
@@ -93,43 +96,40 @@ public class UsersController {
 	
 	
 	//아이디찾기
-	@RequestMapping("findid.me")
-	public ModelAndView findId(Users m, HttpSession session, ModelAndView mv) {
-		
-		//System.out.println(m);
+	@RequestMapping("findid")
+	public String findId(Users m, HttpSession session, Model model) {
 		
 		Users findId = uService.findId(m);
+		System.out.println(m);
 		
 		//String dateDob = String.join("", findId.getBirthday().substring(2,10).split("-"));
 	
-	
 		if(findId.getKorName().equals(m.getKorName()) && findId.getPhone().equals(m.getPhone()) && findId.getBirthday().equals(m.getBirthday())) {
 			
-			mv.addObject("alertMsg", String.format("로그인 아이디는 %s 입니다.", findId.getUserNo()));
-			mv.setViewName("common/mainPage");
-			
+			session.setAttribute("alertMsg", String.format("로그인 아이디는 %s 입니다.", findId.getUserNo()));
+			return "common/mainPage";
 		} else {
-			mv.addObject("alertMsg", "일치하는 회원정보가 없습니다.");
-			mv.setViewName("common/mainPage");
+			model.addAttribute("alertMsg", "일치하는 회원정보가 없습니다.");
+			return "common/mainPage";
 		}
 		
-		return mv; 
 	}
 	
 		 
 		/* 비밀번호 찾기 form */
-		@GetMapping("pwdForm")
+		@GetMapping("findpwd")
 		public ModelAndView findPwForm() {
 			return new ModelAndView ("common/pwdFind");
 		}
 		
 		
-		/* 비밀번호 찾기 */
+		/* 비밀번호 찾기 
 		@GetMapping("pwdFind")
 		public ModelAndView pwdfind() {
 			return new ModelAndView ("common/pwdFind");
 		}
-
+*/
+		
 		@RequestMapping(value = "/pwdFind", method = RequestMethod.POST)
 		public void findPwPOST(@ModelAttribute Users m, HttpServletResponse response) throws Exception{
 			uService.findPwd(response, m);

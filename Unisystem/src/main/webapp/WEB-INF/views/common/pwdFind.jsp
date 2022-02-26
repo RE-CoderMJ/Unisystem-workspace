@@ -270,7 +270,7 @@ $(function(){
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon1.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href="findid"><span> 아이디 찾기 <br></span></a>
+					<th class="search-title"><a href="findid.me"><span> 아이디 찾기 <br></span></a>
 						아이디를 잊어버리셨나요?</th>
 
 					<tr></tr>
@@ -284,7 +284,7 @@ $(function(){
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon3.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span> 비회원 이용 <br></span></a>
+					<th class="search-title"><a href="enview"><span> 비회원 이용 <br></span></a>
 						게시글 조회만 가능합니다.</th>
 
 				</tbody>

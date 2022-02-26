@@ -6,6 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
 </head>
 <style>
 
@@ -189,13 +197,16 @@ li {
 }
 
 </style>
+
 <body>
+
 <c:if test="${ not empty alertMsg }">
 		<script>
 			alert("${alertMsg}");
 		</script>
 		<c:remove var="alertMsg" scope="session" />
-	</c:if>
+</c:if>
+	
 	
 	<div class="back-color">
 		<!--가로 로고 자리 -->
@@ -258,7 +269,7 @@ li {
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon1.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span> 아이디 찾기 <br></span></a>
+					<th class="search-title"><a href="findid.me"><span> 아이디 찾기 <br></span></a>
 						아이디를 잊어버리셨나요?</th>
 
 
@@ -266,20 +277,20 @@ li {
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon2.png" alt="아이콘"></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span>비밀번호 찾기 <br></span></a>
+					<th class="search-title"><a href="findpwd"><span>비밀번호 찾기 <br></span></a>
 						비밀번호를 잊어버리셨나요?</th>
 
 					<tr></tr>
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon3.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span> 비회원 이용 <br></span></a>
+					<th class="search-title"><a href="enview"><span> 비회원 이용 <br></span></a>
 						게시글 조회만 가능합니다.</th>
 
 				</tbody>
 			</table>
-
 		</div>
+
 
 
 	</div>
