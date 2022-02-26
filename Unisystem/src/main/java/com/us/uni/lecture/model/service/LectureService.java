@@ -3,6 +3,7 @@ package com.us.uni.lecture.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -87,7 +88,18 @@ public interface LectureService {
 	
 	// 교수 - 과제관리 : 제출가능상태의 총 게시글 리스트 조회
 	ArrayList<Homework> selectProhomeworkList(Homework h);
-
+	
+	// 교수 - 과제관리 : 과제등록
+	int insertHomeworkEnrollForm(Homework h, Attachment at);
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	Homework selectProHomework(Homework h);
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
+	Attachment selectAttachHomework(Homework h);
+	
+	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
+	int updatepHomeworkStatus(Homework h);
 
 }
 

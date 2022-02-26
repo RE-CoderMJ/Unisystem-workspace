@@ -33,7 +33,6 @@
 }
 
 .side_title {
-	margin-bottom: 4px;
 	margin-left: 10px; 
 	cursor:pointer;
 	height:30px;
@@ -57,6 +56,7 @@
 
 .sidebar p{
 	display:none;
+	margin:0px;
 }
 
 .sidebar b{
@@ -152,9 +152,9 @@ a:hover {
 			<div class="side_title">
 				<b>증명서</b>
 			</div>
-			<p>
-				<a href="">- 증명서 발급</a>
-				<a href="">- 증명서 보관함</a>
+			<p id="certificate">
+				<a href="myStu.cert.apply">- 증명서 발급</a>
+				<a href="myStu.cert.list">- 증명서 보관함</a>
 			</p>
 			
 			<div class="side_title">

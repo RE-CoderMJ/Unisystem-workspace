@@ -243,14 +243,15 @@
 						
 						$(".pagination").html(piValue);
 						
-						// 사이드바와 컨텐츠영역 길이 맞춤
-						let $len = $("section").height();
-						$(".wrap_sidebar").css('height', $len + 22);
-						
 						$("#cPage").val(result.pi.currentPage);
 					}
 					
 					$("#list>tbody").html(value);
+					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$(".wrap_sidebar").css('height', $len + 22);
+					
 					
 				},error:function(){
 					console.log("상담신청내역 목록 조회용 ajax 통신 실패");

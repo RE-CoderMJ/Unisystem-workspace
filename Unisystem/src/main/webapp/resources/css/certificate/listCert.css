@@ -85,7 +85,7 @@ section::after{display:block;content:"";clear:both;}
 }
 /*페이징바*/
 .container{
-    margin-top: 50px;
+    margin-top: 60px;
     margin-bottom: 50px;
 }
 .page-link{

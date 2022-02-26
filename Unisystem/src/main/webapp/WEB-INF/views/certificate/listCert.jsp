@@ -29,31 +29,22 @@
 				<div id="contents">
             		<div style="font-size:17px; font-weight:600; margin-bottom:30px;"><i class="fas fa-check-circle fa-lg"></i>&nbsp;&nbsp;신청내역 및 결제</div>
             		<table class="table table-bordered" id="list" style="width:900px;">
-            			<tbody>
+            			<thead>
             				<tr>
             					<th>구분</th>
             					<th>증명서명</th>
             					<th>발급일</th>
             					<th>다운로드</th>
             				</tr>
-            				<tr>
-            					<td>증명서</td>
-            					<td>(국)졸업증명서</td>
-            					<td>2022-01-20</td>
-            					<td><button class="open-btn">열기</button></td>
-            				</tr>
+            			</thead>
+            			<tbody>
+            				
             			</tbody>
             		</table>
             		
             		<div class="container">
                     <ul class="pagination justify-content-center">
-                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                      
                     </ul>
                   </div>
                   
@@ -64,13 +55,101 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-	<!-- 
+	
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$(".wrap_sidebar").css('height', $len + 22);
+		$(function(){
+			selectPaidCertList(1);
+		})
+		
+		function selectPaidCertList(cPage){
+			$.ajax({
+				url:"myStu.cert.selectPaidCertList",
+				data:{
+					currentPage:cPage,
+					studNo:'${loginUser.userNo}',
+				},
+				success:function(result){
+					
+					let value = "";
+					
+					if(result.length === 0){
+						value = "<tr><td colspan='4' style='text-align:center;'>증명서 발급내역이 없습니다.</td></tr>";
+						$("#empty").val('e');
+					}else{
+						for(let i in result.list){
+							value += "<tr>"
+								   + "<td>증명서</td>"
+								   + "<td>" + result.list[i].cerTypeT + "</td>"
+								   + "<td>" + result.list[i].issueDate + "</td>" 
+								   + "<input type='hidden' name='cert-no' value='"+ result.list[i].cerNo + "'>"
+								   + "<input type='hidden' name='cert-type' value='"+ result.list[i].cerType + "'>"
+	    					       + "<td><button class='open-btn issue-btn'>열기</button></td>"
+	    						   + "</tr>";					
+						}
+					}
+					
+					$("#list>tbody").html(value);
+					
+					let piValue = "";
+					
+					if(result.pi.currentPage == 1){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&lt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectPaidCertList(" + (result.pi.currentPage-1) + ")'>&lt;</a></li>";
+					}
+                    
+					for(let p = result.pi.startPage; p<=result.pi.endPage; p++){
+						
+						if(p == result.pi.currentPage){
+							piValue += "<li class='page-item disabled active'><a class='page-link' onclick='selectPaidCertList(" + p + ")'>" + p + "</a></li>";
+						}else{
+							piValue += "<li class='page-item'><a class='page-link' onclick='selectPaidCertList(" + p + ")'>" + p + "</a></li>";
+						}
+						
+					}
+	            	
+					if(result.pi.currentPage == result.pi.maxPage){
+						piValue += "<li class='page-item disabled'><a class='page-link' href='#'>&gt;</a></li>";
+					}else{
+						piValue += "<li class='page-item'><a class='page-link' onclick='selectPaidCertList(" + (result.pi.currentPage + 1) + ")'>&gt;</a></li>"
+					}
+					
+					$(".pagination").html(piValue);
+					
+					// 사이드바와 컨텐츠영역 길이 맞춤
+					let $len = $("section").height();
+					$(".wrap_sidebar").css('height', $len + 22);
+						
+				},error:function(){
+					console.log("신청 증명서 내용 리스트용 ajax 통신 오류");
+				}
+				
+			})
+		}
+	</script>
+	
+	<script>
+		$(document).on("click", ".issue-btn", function(){
+			let cerNo = $(this).parent().siblings("input[name=cert-no]").val();
+			let cerType = $(this).parent().siblings("input[name=cert-type]").val();
+			
+			if(cerType == 1){
+				location.href="myStu.cert.gradCert/kor?cerNo=" + cerNo;							
+			}else if(cerType == 2){
+				location.href="myStu.cert.gradCert/eng?cerNo=" + cerNo;
+			}else if(cerType == 3){
+				location.href="myStu.cert.enrollCert/kor?cerNo=" + cerNo;
+			}else{
+				location.href="myStu.cert.enrollCert/eng?cerNo=" + cerNo;
+			}
 		})
 	</script>
-	 -->
+	
+	<script>
+		$(function(){
+			$("#certificate").slideDown();
+		})
+	</script>
+
 </body>
 </html>

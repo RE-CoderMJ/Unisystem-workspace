@@ -100,25 +100,29 @@
         margin-top: 5px;
     }
     .box-file-input label{
-    display:inline-block;
-    background:rgb(21, 62, 115);
-    color:#fff;
-    padding:0px 15px;
-    line-height:35px;
-    cursor:pointer;
+	    display:inline-block;
+	    background:rgb(21, 62, 115);
+	    color:#fff;
+	    padding:0px 15px;
+	    line-height:35px;
+	    cursor:pointer;
     }
 
     .box-file-input label:after{
-    content:"파일등록";
+    	content:"파일등록";
     }
 
     .box-file-input .file-input{
-    display:none;
+    	display:none;
     }
 
     .box-file-input .filename{
-    display:inline-block;
-    padding-left:10px;
+    	display:inline-block;
+    	padding-left:10px;
+    }
+    
+    #meeting-time{
+   		margin-top : 10px;
     }
 </style>
 </head>
@@ -140,35 +144,41 @@
 
             <div id="contentBox">
 
-                <form action="">
+                <form id="enrollForm" method="post" action="proHomeworkInsert.lec" enctype="multipart/form-data">
 
                     <div id="contentBox_border">
                         <div id="contentBox_header">
-                            <input type="text" id="title" name="" placeholder="제목 입력">
+                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력">
                         </div>
     
                         <div id="contentBox_info">
                             <div><i class="fas fa-user-circle"></i></div>
                             <div id="pro_name">
-                                <div>김말똥<span>교수</span></div>
+                                <div>${ loginUser.korName }<span>교수</span></div>
+                            	<input type="hidden" id="classNo" name="classNo" value="${ classInfo.classNo }" />
                             </div>
                         </div>
     
                         <div>
                             <div id="contentBox_file">
                                 <div class="box-file-input">
-                                    <label><input type="file" name="ev_display" class="file-input" accept="image/*"></label>
+                                    <label><input type="file" name="upfile" class="file-input" accept="image/*" id="upfile"></label>
                                     <span class="filename">파일을 선택해주세요.</div>
                                 </div>      
                             </div>
+                            <label for="meeting-time">마감기한 : </label>
+
+							<input type="datetime-local" id="meeting-time"
+							   	   name="homeworkpEndDateTime" min="2018-06-07T00:00" >
+							       
                             <div id="contentBox_content">
-                                <textarea name="" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." ></textarea>
+                                <textarea name="homeworkpContent" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." ></textarea>
                             </div>
                         </div>
     
                         <div id="two_btn">
                             <button type="button">목록</button>
-                            <button type="button">등록</button>
+                            <button type="submit">등록</button>
                         </div>
        
                     </div>
@@ -188,6 +198,10 @@
                     $(".filename").text($filename);
 
                     })
+                    
+      
+  					document.getElementById('meeting-time').value = new Date().toISOString().slice(0, 16);
+
                 </script>
 
             </div>

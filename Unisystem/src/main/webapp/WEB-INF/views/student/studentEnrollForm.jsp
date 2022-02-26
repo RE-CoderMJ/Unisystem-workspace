@@ -79,7 +79,7 @@
 			                    <br>
 			                    
 			                    <label for="userPwd">* 생년월일 :</label>
-			                    <input type="number" class="form-control" id="birthday" name="birthday" placeholder="ex) 970222" required><br>
+			                    <input type="number" class="form-control" id="birthday" name="birthday" placeholder="ex) 910101" required><br>
 			                    
 			                    <label for=""> * 성별 : </label><br>
 			                    <div>				                    
@@ -119,7 +119,6 @@
 			                    <label for="userName">* 입학 정보 :</label>
 			                    <div>
 									<div>
-										<input type="hidden" >
 										<select class="select float" name="studDivision">
 											<option value="1">신입</option>
 											<option value="2">편입</option>
@@ -128,7 +127,6 @@
 									</div>
 
 									<div>
-										<input type="hidden">
 										<select class="select" name="studStatus" disabled>
 											<option value="1" selected>재학</option>
 										</select>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
@@ -181,4 +182,28 @@ public class LectureDao {
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectProhomeworkList", h);
 	}
 	
+	// 교수 - 과제관리 : 과제등록
+	public int insertHomeworkEnrollForm(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.insert("lectureMapper.insertHomeworkEnrollForm", h);
+	}
+	
+	// 교수 - 과제관리 : 과제등록(첨부파일)
+	public int insertAttachPHomework(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertAttachPHomework", at);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	public Homework selectProHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectProHomework", h);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
+	public Attachment selectAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectAttachHomework", h);
+	}
+	
+	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
+	public int updatepHomeworkStatus(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.updatepHomeworkStatus", h);
+	}
 }
