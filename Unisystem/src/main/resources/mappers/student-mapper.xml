@@ -91,6 +91,8 @@
 		     , STUD_DEPARTMENT
 		     , STUD_MAJOR
 		     , STUD_STATUS
+		     , PHONE
+		     , EMAIL
 		  FROM STUDENT
 		  JOIN USERS ON(STUD_NO = USER_NO)
 		 <choose>

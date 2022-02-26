@@ -48,6 +48,8 @@
 		     , PROF_DEPARTMENT
 		     , PROF_MAJOR
 		     , PROF_RANK
+		     , PHONE
+		     , EMAIL
 		  FROM PROFESSOR
 		  JOIN USERS ON(PROF_NO = USER_NO)
 		 WHERE PROF_STATUS = 'Y'
@@ -95,6 +97,8 @@
 		     , PROF_DEPARTMENT
 		     , PROF_MAJOR
 		     , PROF_RANK
+		     , EMAIL
+		     , PHONE
 		  FROM PROFESSOR
 		  JOIN USERS ON(PROF_NO = USER_NO)
 		 <choose>
