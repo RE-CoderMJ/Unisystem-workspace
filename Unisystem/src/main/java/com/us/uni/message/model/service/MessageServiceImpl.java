@@ -70,11 +70,18 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int deleteMsg(Message m) {
+	public int deleteMsg(int messageNo) {
 		
-		return mDao.deleteMsg(sqlSession,m);
+		return mDao.deleteMsg(sqlSession,messageNo);
 	}
 
+	@Override
+	public int updateReadDate(int messageNo) {
+		
+		return mDao.updateReadDate(sqlSession, messageNo);
+	}
+
+	 
 	
 
 }

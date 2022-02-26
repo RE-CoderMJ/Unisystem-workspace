@@ -26,7 +26,7 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 	@Override
 	 public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		 System.out.println("afterConnectionEstablished : "+ session);
+		 //System.out.println("afterConnectionEstablished : "+ session);
 		 sessions.add(session); //ArrayList에 담긴 접속된 유저들을 추가
 		 String senderId = getId(session); 
 		 //senderId로 상단 map에 전역변수로 담아주고 전역변수로 선언한 usersessions를 아래에 put해준다
@@ -41,7 +41,7 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 	 protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		//개인 정보를 가져오기위해 웹소켓세션에서 HTTP세션으로 접근 해야한다 
 		
-		System.out.println("handleTextMessage : "+session + ":" + message); 
+		//System.out.println("handleTextMessage : "+session + ":" + message); 
 		// (1) 웹소켓이 정상적으로 접근가능한지 출력문 test
 		 
 		 /*접속한 모든 사용자에게 접근하는 for-loop
@@ -70,8 +70,8 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 				String boardWriter = strs[2];
 				String boardNo = strs[3];
 				
-				System.out.println("cmd"+cmd);
-				System.out.println("boardWriter"+boardWriter);
+				//System.out.println("cmd"+cmd);
+				//System.out.println("boardWriter"+boardWriter);
 				WebSocketSession boardWriterSession = userSessions.get(boardWriter); 
 				
 				//작성자가 접속중일때만 알람이 가도록 작성자 정보를 가져옴 -> 가져오면 웹소켓 세션을 가져옴 
@@ -86,7 +86,7 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 					//System.out.println("boardNo"+ boardNo);
 					boardWriterSession.sendMessage(tmpMsg);
 					
-					System.out.println("tmpMsg : " + tmpMsg);
+					//System.out.println("tmpMsg : " + tmpMsg);
 					
 					 //이제 jsp ajax부분에가서 웹소켓으로 번호를 보내줘야하고 
 					 //댓글에만 있던 js 부분을 전역으로 빼줘야함 
@@ -114,11 +114,7 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 		}
 		
 	}
-
-
-
-
-
+	
 	@Override
 	 public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 		 //System.out.println("afterConnectionClosed : "+session +":"+ status);
