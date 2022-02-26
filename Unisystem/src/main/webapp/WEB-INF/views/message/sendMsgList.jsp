@@ -205,7 +205,7 @@ font-weight:600;
 
 			<div class="btn-search">
 			<div class="btn-area">
-				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(231, 76, 60);">선택삭제</a> 
+				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(192, 57, 43);">선택삭제</a> 
 				<a class="btn btn-sm" href="" data-toggle="modal" data-target="#msgModal" style="background-color:rgb(44, 62, 80); color:white;">쪽지보내기</a>
 			</div>
 		 
@@ -220,7 +220,7 @@ font-weight:600;
 			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
 			<thead>
 				<tr>
-					<th width></th>
+					<th width=""><input type="checkbox" id="checkAll"></th>
 					<th width="100px">받는사람</th>
 					<th width="300px">내용</th>
 					<th width="100px">상태</th>
@@ -246,9 +246,6 @@ font-weight:600;
 					<div class="modal-body" id="sbody" style="margin:auto;">
 						
 					</div>
-
-					
-
 				</div>
 			</div>
 		</div>
@@ -341,7 +338,7 @@ font-weight:600;
     					
     					value += "<tr>"
     						  + "<td>" 
-    						  + "<input id='msgCheck' type='checkbox'>"
+    						  + "<input class='checkbox' type='checkbox'>"
     						  +"</td>"
     						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
     						  + "<td>" + data.list[i].msgReader + "</td>"
@@ -387,33 +384,56 @@ font-weight:600;
     		});
     	}
 		
-		function deleteMsg(){
+		
+		//체크박스 여러개 담는 ajax
+		 $(function(){
+		            $("#mdel").click(function(){
+		          let cknArr = [];
+		           	 let value;
+		           	 
+		           	$(".checkbox:checked").each(function(){
+		           		value = $(this).parent().siblings("input[name=messageNo]").val();
+		           		cknArr.push(value);
+		           	})
+		           	
+		           	let ckn;
+		               for(let i in cknArr){
+		                   console.log(cknArr[i]);
+		                   ckn = cknArr[i];
+		                   deleteMsg(cknArr[i]);
+		               }
+		           });
+		        })
 
-            if ( $("#msgCheck").is(":checked") ){
-                $("#mYN").val('Y');
-                
-                $.ajax({
-                	type: 'POST',  
-    				dataType:'json',
-        			url:"del.msg",
-        			data:{
-        				messageNo:$('#msgNo').val(),
-        				deleteYN:$('#mYN').val()
-        			},
-        			success:function(data){
-        				if(!confirm("메세지를 삭제하시겠습니까?")){
-        					return false;
-		 				}else{
-		 					alert('삭제가 완료되었습니다.');
-		 					location.reload();
-		 				}
-        			}
-                });
-            }else{
-            	 $("#mYN").val('N');
-            }
-            
+		
+		//메시지 삭제 ajax
+		
+		function deleteMsg(ckn){
+			
+			$.ajax({
+				type: 'POST',  
+				dataType:'json',
+   			url:"del.msg",
+   			data:{messageNo:ckn},
+   			success:function(data){
+   						console.log(data)
+	 					location.reload();}
+	
+   			, error:function() {
+				console.log("선택삭제 ajax 통신실패");
+					}//error	
+			});//ajax끝
 		}
+		
+		
+		 /*전체 체크박스*/
+			$(document).on("click", "#checkAll", function(){
+				if($("#checkAll").is(":checked")){
+					$(".checkbox").prop("checked", true);
+				}else{
+					$(".checkbox").prop("checked", false);
+				}
+			});	
     </script>
 	
 	</div>

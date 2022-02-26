@@ -283,7 +283,7 @@ li {
 			
            </div>
                        <!--로그인한 회원에게만 보여지도록 조건처리-->
-			<c:if test="${ not empty loginUser }">
+			<c:if test="${ not empty loginUser && loginUser.userDiv == 3}">
 				<a class="b_write btn-sm btn-secondary" href="enrollForm.nbo">글쓰기</a>
 			</c:if>
 	</div>
