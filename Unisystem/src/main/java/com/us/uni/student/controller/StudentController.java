@@ -57,6 +57,7 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value="department", produces="application/json; charset=UTF-8")
 	public String selectDepartment(String studUniv) {
+		System.out.println(studUniv);
 		ArrayList<Users> depart = sService.selectDepartment(studUniv);
 		return new Gson().toJson(depart);
 		
@@ -110,15 +111,16 @@ public class StudentController {
 		
 		int result = 0;
 		
-		result = sService.studentInsert(student);		
 	
 		// 학생 정보 등록 시 프로필 사진 파일을 Student에 경로 저장
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(upfile, session);
 			
-			student.setProfileImg("/resources/images/uploadFiles/profiles/" + changeName);
+			student.setProfileImg("resources/images/uploadFiles/studentImg/" + changeName);
 		}
 		
+			result = sService.studentInsert(student);		
+			
 		if(result > 0) {
 			session.setAttribute("alertMsg", "학생 등록이 되었습니다!");
 			return "redirect:student.ad";
@@ -129,12 +131,39 @@ public class StudentController {
 		
 	}
 	
+	/**
+	 * 담당 교수 지정을 위한 student list 조회, ajax
+	 */
+	@ResponseBody
+	@RequestMapping(value="join.st", produces="application/json; charset=UTF-8")
+	public String studentJoinList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String univ, String depart, String keyword) {
+		
+		HashMap map = new HashMap();
+		map.put("univ", univ);
+		map.put("depart", depart);
+		map.put("keyword", keyword);
+		
+		int listCount = sService.selectSearchCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Users> searchList = sService.searchStudent(map, pi);	
+		
+		JSONObject jobj = new JSONObject();
+		jobj.put("searchList", searchList);
+		jobj.put("pi", pi);
+		jobj.put("univ", univ);
+		jobj.put("depart", depart);
+		jobj.put("keyword", keyword);
+		
+		return new Gson().toJson(jobj);
+	}
+	
+	
 	
 	// * 첨부파일 : 파일명 수정 작업 후 서버에 업로드
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
 		
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // 20220118103507 (년월일시분초)
 		int ranNum = (int)(Math.random() * 90000 + 10000); // 99999까지의 5자리 랜덤값
@@ -144,7 +173,7 @@ public class StudentController {
 		String changeName = currentTime + ranNum + ext;
 
 		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기 (session 필요함)
-		String savePath = session.getServletContext().getRealPath("/resources/images/uploadFiles/profile/"); 
+		String savePath = session.getServletContext().getRealPath("resources/images/uploadFiles/studentImg/"); 
 		// getRealPath : 실제 저장시킬 파일의 물리적인 경로, 해당 경로 안에 changeName이라는 이름으로 해당 파일을 업로드 시킬 예정!
 		
 		try {

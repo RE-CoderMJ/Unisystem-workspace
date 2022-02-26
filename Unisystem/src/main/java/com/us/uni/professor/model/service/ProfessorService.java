@@ -22,12 +22,15 @@ public interface ProfessorService {
 	// 교수 삭제
 	int professorDelete(String dno);
 	// 교수 등록
-	
+	int professorInsert(Users professor);
 	// 강의 개설 페이지
 	int selectAppCount(int profNo);
 	ArrayList<Lecture> classAppList(int profNo, PageInfo pi);
 	int classInsert(Lecture lec);
 	
+	// 담당 교수 변경
+	int changeProfessorJoin(HashMap map);
+
 	
 
 }

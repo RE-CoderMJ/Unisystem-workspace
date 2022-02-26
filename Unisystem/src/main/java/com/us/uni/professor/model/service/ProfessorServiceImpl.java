@@ -57,6 +57,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public ArrayList<Lecture> classAppList(int profNo, PageInfo pi) {
 		return pDao.classAppList(sqlSession, profNo, pi);
 	}
+	@Override
+	public int changeProfessorJoin(HashMap map) {
+		return pDao.changeProfessorJoin(sqlSession, map);
+	}
+	@Override
+	public int professorInsert(Users professor) {
+		return pDao.professorInsert(sqlSession, professor);
+	}
 
 
 }

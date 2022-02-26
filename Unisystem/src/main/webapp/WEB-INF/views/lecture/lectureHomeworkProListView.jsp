@@ -199,14 +199,14 @@
     						
 	    					value += "<tr>"
 	                              + 	"<td>"+ list[i].homeworkpNo + "</td>"
-	                              + 	"<td>" + "<a href='lectureHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
+	                              + 	"<td>" + "<a href='lectureProHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
 	                              +		"<td>" + list[i].korName + "</td>"
 	                              + 	"<td>" + list[i].homeworkpEndDateTime + "</td>"
 	                              + 	"<td>" + list[i].countHW + " / " +  ${ classInfo.currStud } + "</td>"
 	                              + "</tr>"; 				
     					}
     					
-    					$("#pHomeworkList>tbody").html(value);	
+    					$("#pHomeworkList tbody").html(value);	
 
     				}, error:function(){
     					console.log("제출가능한 과제 리스트 조회용 ajax 통신 실패");

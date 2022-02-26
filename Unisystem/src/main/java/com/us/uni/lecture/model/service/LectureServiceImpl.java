@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.LectureDao;
 import com.us.uni.lecture.model.vo.Homework;
@@ -169,6 +170,40 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public ArrayList<Homework> selectProhomeworkList(Homework h) {
 		return lDao.selectProhomeworkList(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 과제등록
+	@Override
+	public int insertHomeworkEnrollForm(Homework h, Attachment at) {	
+		
+		int result1 = lDao.insertHomeworkEnrollForm(sqlSession, h);
+		
+		if(at.getOriginName() != null) {
+			
+			int result2 = lDao.insertAttachPHomework(sqlSession, at);
+
+			return result1*result2;
+		}
+		
+		return result1;
+	}
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	@Override
+	public Homework selectProHomework(Homework h) {
+		return lDao.selectProHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
+	@Override
+	public Attachment selectAttachHomework(Homework h) {
+		return lDao.selectAttachHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
+	@Override
+	public int updatepHomeworkStatus(Homework h) {
+		return lDao.updatepHomeworkStatus(sqlSession, h);
 	}
 
 	

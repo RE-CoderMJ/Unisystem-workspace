@@ -19,6 +19,7 @@ public class Users {
 	 //학생
      private int studNo;
 	 private int sprofNo; 
+	 private String sprofName;
 	 private String studUniv; 
 	 private String studDepartment;
 	 private String studMajor;
@@ -48,11 +49,11 @@ public class Users {
 
 	public Users(int userNo, String userPwd, String korName, String engName, String birthday, String gender,
 			String email, String phone, String address, String nation, String webMail, int userDiv, String profileImg,
-			int studNo, int sprofNo, String studUniv, String studDepartment, String studMajor, String studMinor,
-			String studInto, String studGrad, int studDivision, int studStatus, int studSemester, int profNo,
-			int profRank, String rankChange, String profUniv, String profDepartment, String profMajor, String profInto,
-			String profResign, String profLocation, String profTel, String profStatus, String profAppDay,
-			String profAppTime) {
+			int studNo, int sprofNo, String sprofName, String studUniv, String studDepartment, String studMajor,
+			String studMinor, String studInto, String studGrad, int studDivision, int studStatus, int studSemester,
+			int profNo, int profRank, String rankChange, String profUniv, String profDepartment, String profMajor,
+			String profInto, String profResign, String profLocation, String profTel, String profStatus,
+			String profAppDay, String profAppTime) {
 		super();
 		this.userNo = userNo;
 		this.userPwd = userPwd;
@@ -69,6 +70,7 @@ public class Users {
 		this.profileImg = profileImg;
 		this.studNo = studNo;
 		this.sprofNo = sprofNo;
+		this.sprofName = sprofName;
 		this.studUniv = studUniv;
 		this.studDepartment = studDepartment;
 		this.studMajor = studMajor;
@@ -92,6 +94,8 @@ public class Users {
 		this.profAppDay = profAppDay;
 		this.profAppTime = profAppTime;
 	}
+
+
 
 	public int getUserNo() {
 		return userNo;
@@ -211,6 +215,14 @@ public class Users {
 
 	public void setSprofNo(int sprofNo) {
 		this.sprofNo = sprofNo;
+	}
+
+	public String getSprofName() {
+		return sprofName;
+	}
+
+	public void setSprofName(String sprofName) {
+		this.sprofName = sprofName;
 	}
 
 	public String getStudUniv() {
@@ -422,6 +434,8 @@ public class Users {
 		builder.append(studNo);
 		builder.append(", sprofNo=");
 		builder.append(sprofNo);
+		builder.append(", sprofName=");
+		builder.append(sprofName);
 		builder.append(", studUniv=");
 		builder.append(studUniv);
 		builder.append(", studDepartment=");
