@@ -215,9 +215,9 @@
                         </div>
 							       
                         <div id="two_btn">
-                            <button type="button">목록</button>
-                            <button type=button>수정</button>
-                            <button type=button>삭제</button>
+                            <button type="button" onclick="history.back()">목록</button>
+                            <button type=button onclick="postFormSubmit(2);">수정</button>
+                            <button type=button onclick="postFormSubmit(3);">삭제</button>
                         </div>
        
                     </div>
@@ -326,7 +326,10 @@
 	                   function postFormSubmit(num){
 	                	   if(num == 1){ // 과제마감 클릭 시 
 	                		   $("#postForm").attr("action", "updatepHomeworkStatus.lec").submit();
-	                	   } 
+	                	   } else if(num == 2){ // '수정' 버튼 클릭 시 
+	                		   $("#postForm").attr("action", "updateForm.ho").submit();
+	                	   } else if(num == 3) // '삭제' 버튼 클릭 시 
+	                	   
 	                   }
 
                 </script>

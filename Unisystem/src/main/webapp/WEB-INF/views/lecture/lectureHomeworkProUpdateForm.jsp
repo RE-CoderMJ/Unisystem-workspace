@@ -144,11 +144,14 @@
 
             <div id="contentBox">
 
-                <form id="enrollForm" method="post" action="proHomeworkInsert.lec" enctype="multipart/form-data">
+                <form id="updateForm" method="post" action="updateProHomework.lec" enctype="multipart/form-data">
 
                     <div id="contentBox_border">
                         <div id="contentBox_header">
-                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력">
+                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력" value="${ h.homeworkpName }">
+                            <c:if test="${ not empty at.originName}">
+	                            <span><i class="fas fa-paperclip"></i></span>
+                        	</c:if>
                         </div>
     
                         <div id="contentBox_info">
@@ -162,23 +165,29 @@
                         <div>
                             <div id="contentBox_file">
                                 <div class="box-file-input">
-                                    <label><input type="file" name="upfile" class="file-input" accept="image/*" id="upfile"></label>
-                                    <span class="filename">파일을 선택해주세요.</div>
+                                    <label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
+	                                <c:if test="${ not empty at.originName }">                                
+			                                                               현재 업로드된 파일 : 
+			                            <a href="${ at.changeName }" download="${ at.originName }">${ at.originName }</a>
+			                            <!-- 첨부파일이 있을때만 넘어가는 input type="hidden" 요소  -->
+			                            <input type="hidden" name="originName" value="${ at.originName }" />
+			                            <input type="hidden" name="changeName" value="${ at.changeName }" />
+		                        	</c:if>
                                 </div>      
                             </div>
                             <label for="meeting-time">마감기한 : </label>
 
 							<input type="datetime-local" id="meeting-time"
-							   	   name="homeworkpEndDateTime" min="2018-06-07T00:00" >
+							   	   name="homeworkpEndDateTime" value="${ h.homeworkpEndDateTime }" >
 							       
                             <div id="contentBox_content">
-                                <textarea name="homeworkpContent" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." ></textarea>
+                                <textarea name="homeworkpContent" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." >${ h.homeworkpContent }</textarea>
                             </div>
                         </div>
     
                         <div id="two_btn">
                             <button type="button" onclick="history.back()">목록</button>
-                            <button type="submit">등록</button>
+                            <button type="submit">수정</button>
                         </div>
        
                     </div>

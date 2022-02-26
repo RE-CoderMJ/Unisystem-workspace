@@ -471,6 +471,49 @@ public class LectureController {
 		
 	}
 	
+	// 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 수정하기 폼을 띄워주기
+	@RequestMapping("updateForm.ho")
+	public String updatepHomeworkForm(Homework h, HttpSession session, Model model) {
+		
+		model.addAttribute("h", lService.selectProHomework(h));
+		model.addAttribute("at", lService.selectAttachHomework(h));
+		
+		return "lecture/lectureHomeworkProUpdateForm";
+	}
+	
+	// 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 내용 수정하기
+	@RequestMapping("updateProHomework.lec")
+	public String updateProHomework(Homework h, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+				
+		// 새로 넘어온 첨부파일이 있을 경우 => 기존의 첨부파일 있을 경우 기존 첨부파일 삭제 후 새로운 첨부파일 업로드
+		if(!reupfile.getOriginalFilename().equals("")) {
+						
+			if(at.getOriginName() != null) {// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
+				new File(session.getServletContext().getRealPath(at.getChangeName())).delete();
+			} 
+			
+			// 기존의 첨부파일이 없을 경우 => 새로 전달된 파일 서버에 업로드	
+			
+			// 새로넘어온 첨부파일 서버 업로드 시키기 
+			String changeName = saveFile(reupfile, session);
+			
+			// h에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
+			at.setOriginName(reupfile.getOriginalFilename());
+			at.setChangeName(changeName);
+			at.setPath("resources/uploadFiles/homework_upfiles/" + changeName);
+			
+		}
+		
+		int result = lService.updateProHomework(h);
+		
+		if(result > 0) { // 수정 성공
+			
+		}
+		
+
+		
+		return "lecture/lectureHomeworkProUpdateForm";
+	}
 
 
 	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */

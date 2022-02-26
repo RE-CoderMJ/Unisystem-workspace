@@ -206,4 +206,10 @@ public class LectureDao {
 	public int updatepHomeworkStatus(SqlSessionTemplate sqlSession, Homework h) {
 		return sqlSession.update("lectureMapper.updatepHomeworkStatus", h);
 	}
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제를 수정
+	public int updateProHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.updateProHomework", h);
+	}
+	
 }
