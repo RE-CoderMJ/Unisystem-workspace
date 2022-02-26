@@ -5,13 +5,21 @@
 	<resultMap type="Certificate" id="certResult">
 		<result column="cer_no" property="cerNo" />
 		<result column="stud_no" property="studNo" />
-		<result column="cer_type" property="cerTypeT" />
+		<result column="cer_typeT" property="cerTypeT" />
+		<result column="cer_type" property="cerType" />
 		<result column="usefor" property="useFor" />
 		<result column="to_type" property="toTypeT" />
 		<result column="to_whom" property="toWhom" />
 		<result column="paid" property="paid" />
 		<result column="status" property="status" />
 		<result column="issue_date" property="issueDate" />
+		<result column="stud_name" property="studName" />
+		<result column="birthday" property="birthday" />
+		<result column="department" property="department" />
+		<result column="stud_into" property="studInto" />
+		<result column="stud_grad" property="studGrad" />
+		<result column="grade" property="grade" />
+		<result column="eng_name" property="engName" />
 	</resultMap>
 	
 	<insert id="applyCert">
@@ -40,8 +48,8 @@
 		select
 		       cer_no
 		     , stud_no
-		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
-		     , decode(to_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
+		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_typeT"
+		     , decode(to_type, 1, '기업', 2, '기관', 3, '기타') "to_type"
 		     , decode(usefor, 1, '취업 제출용', 2, '자격증 발급용', 3, '신분 확인용', 4, '기타 증명서류 제출용') "usefor"
 		     , to_whom
 		     , to_char(issue_date, 'yyyy-mm-dd') "issue_date"
@@ -83,11 +91,33 @@
 		select
 		       cer_no
 		     , stud_no
-		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_type"
+		     , cer_type
+		     , decode(cer_type, 1, '(국)졸업증명서', 2, '(영)졸업증명서', 3, '(국)재학증명서', 4, '(영)재학증명서') "cer_typeT"
 		     , to_char(issue_date, 'yyyy-mm-dd') "issue_date"
 		  from certificate
 		 where stud_no = #{studNo}
 		   and status = 'Y'
 		   and paid = 'Y'
+	</select>
+	
+	<select id="selectCert" resultMap="certResult">
+		select
+		       cer_no
+		     , cer_type
+		     , decode(usefor, 1, '취업 제출용', 2, '자격증 발급용', 3, '신분 확인용', 4, '기타 증명서류 제출용') "usefor"
+		     , decode(to_type, 1, '기업', 2, '기관', 3, '기타') "to_type"
+		     , to_whom
+		     , to_char(issue_date, 'yyyy-mm-dd') "issue_date"
+		     , kor_name "stud_name"
+		     , eng_name "eng_name"
+		     , birthday
+		     , stud_department || '/' || stud_major "department"
+		     , stud_into
+		     , stud_grad
+		     , total_semester "grade"
+		  from certificate c
+		  join users on (user_no = stud_no)
+		  join student s on (c.stud_no = s.stud_no)
+		 where cer_no = #{cerNo}
 	</select>
 </mapper>

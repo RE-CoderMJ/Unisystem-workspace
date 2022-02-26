@@ -81,8 +81,9 @@
 								   + "<td>증명서</td>"
 								   + "<td>" + result.list[i].cerTypeT + "</td>"
 								   + "<td>" + result.list[i].issueDate + "</td>" 
-								   + "<input type='hidden' value='"+ result.list[i].cerNo + "'>"
-	    					       + "<td><button class='open-btn'>열기</button></td>"
+								   + "<input type='hidden' name='cert-no' value='"+ result.list[i].cerNo + "'>"
+								   + "<input type='hidden' name='cert-type' value='"+ result.list[i].cerType + "'>"
+	    					       + "<td><button class='open-btn issue-btn'>열기</button></td>"
 	    						   + "</tr>";					
 						}
 					}
@@ -126,13 +127,29 @@
 			})
 		}
 	</script>
-	<!-- 
+	
 	<script>
-		$(document).ready(function(){
-			let $len = $("section").height();
-			$(".wrap_sidebar").css('height', $len + 22);
+		$(document).on("click", ".issue-btn", function(){
+			let cerNo = $(this).parent().siblings("input[name=cert-no]").val();
+			let cerType = $(this).parent().siblings("input[name=cert-type]").val();
+			
+			if(cerType == 1){
+				location.href="myStu.cert.gradCert/kor?cerNo=" + cerNo;							
+			}else if(cerType == 2){
+				location.href="myStu.cert.gradCert/eng?cerNo=" + cerNo;
+			}else if(cerType == 3){
+				location.href="myStu.cert.enrollCert/kor?cerNo=" + cerNo;
+			}else{
+				location.href="myStu.cert.enrollCert/eng?cerNo=" + cerNo;
+			}
 		})
 	</script>
-	 -->
+	
+	<script>
+		$(function(){
+			$("#certificate").slideDown();
+		})
+	</script>
+
 </body>
 </html>

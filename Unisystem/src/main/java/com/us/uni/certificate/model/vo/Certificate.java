@@ -24,4 +24,11 @@ public class Certificate {
 	private String paid;
 	private String status;
 	private String issueDate;
+	private String studName;
+	private String birthday;
+	private String department;
+	private String studInto;
+	private String studGrad;
+	private int grade;
+	private String engName;
 }
