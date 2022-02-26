@@ -28,6 +28,8 @@ public interface ProfessorService {
 	ArrayList<Lecture> classAppList(int profNo, PageInfo pi);
 	int classInsert(Lecture lec);
 	
+	// 담당 교수 변경
+	int changeProfessorJoin(HashMap map);
 	
 
 }

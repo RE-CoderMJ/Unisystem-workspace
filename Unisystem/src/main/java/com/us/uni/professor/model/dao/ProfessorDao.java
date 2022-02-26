@@ -71,4 +71,8 @@ public class ProfessorDao {
 		return (ArrayList)sqlSession.selectList("lectureMapper.classAppList", profNo, rowBounds);
 	}
 	
+	public int changeProfessorJoin(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.update("professorMapper.changeProfessorJoin", map);
+	}
+	
 }
