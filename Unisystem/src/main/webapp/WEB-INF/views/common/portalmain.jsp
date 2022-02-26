@@ -30,14 +30,13 @@
 .container2 {
 	display: grid;
 	grid-gap: 10px;
+	height:460px;
 	grid-template-columns: 292px 592px 292px;
-	grid-template-rows: 256px 150px 256px;
-	height: 100vh;
+	grid-template-rows: 256px 170px 130px;
 	grid-template-areas: 
 	'inform baro calendar' 
 	'weather notice calendar'
-	'weather unischedule resite' 
-	'dust unischedule store';
+	'weather unischedule resite' ;
 }
 .gridWrap{
  	display: grid;
@@ -88,40 +87,29 @@ text-decoration:none;
 	grid-area: calendar;
 }
 
-.weather {
-	grid-area: weather;
-}
-
 .notice {
 	grid-area: notice;
 }
 .notice li{
-	list-style-type:none;
 	font:15px;
 }
+.notice a{
+text-decoration:none;
+color:black;
+ }
 
-.dust {
-	grid-area: dust;
-}
-
-.unischedule {
-	grid-area: unischedule;
-}
-
-.resite {
-	grid-area: resite;
-}
-
-.store {
-	grid-area: store;
+.notice a:hover{
+text-decoration:none;
+color:black;
+font-weight:700;
 }
 
 #group{
 background-color:rgb(41, 128, 185);
 border:none;
-border-radious:40px important;
 height:50px;
 color:white;
+font-size:16px;
 }
 
 a{
@@ -196,12 +184,22 @@ text-decoration:none;
     left:20px;
 	top:20px;
 }
+
+
+#calendar{
+width:260px;
+font-size:10px;
+}
+
 </style>
-
-
-
+ <!-- jquery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- fullcalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+  <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
+  	
 <body>
-
 	<jsp:include page="../common/links.jsp" />
 	<div>
 		<jsp:include page="header.jsp" />
@@ -245,14 +243,51 @@ text-decoration:none;
 
 		<!-- 개인정보 -->
 		<div class="inform">
-		 <h2><b>이망고</b>님</h2>
-		 정보기술대학 <br>
-		 정보통신공학과 (재학)
+		 <h2><b>${loginUser.korName}</b></h2>
+		 <c:choose>
+		<c:when test="${loginUser.userDiv eq 1}">
+		 ${loginUser.studUniv} <br>
+		 ${loginUser.studDepartment} 
+		 	
+		 	<c:if test="${loginUser.studStatus eq 1}">
+		 		(재학)
+		 	</c:if>
+		 	<c:if test="${loginUser.studStatus eq 2}">
+		 		(휴학)
+		 	</c:if>
+		 	<c:if test="${loginUser.studStatus eq 3}">
+		 		(졸업)
+		 	</c:if>
+		 	<c:if test="${loginUser.studStatus eq 3}">
+		 		(자퇴)
+		 	</c:if>
+		 	
+		 </c:when>
+		<c:when test="${loginUser.userDiv eq 2}">
+		 ${loginUser.profUniv} <br>
+		 ${loginUser.profDepartment} (재직)
+		</c:when>
+		
+		<c:when test="${loginUser.userDiv eq 3}">
+		 관리자전용 <br>
+		 관리페이지입니다.
+		</c:when>
+		 <c:otherwise>
+		 비회원페이지<br>
+		로그인 후 이용해주세요
+		 </c:otherwise>
 		 
-		 <button id="group">UNI SYSTEM 학사그룹 </button>
+		 </c:choose>
+		 
+		  <span id="group" style="line-height: 38px;" class="badge badge-pill badge-primary">UNI SYSTEM 학사그룹</span>
+		 
+		  
+		   <!--<button id="group" style="">UNI SYSTEM 학사그룹 </button>  -->
 		 
 		 <div style="text-align:center;">
-		 <a href="">비밀번호 변경</a>&nbsp;|&nbsp;<a href="">로그아웃</a>
+		 <a href="">비밀번호 변경</a>&nbsp;|&nbsp;<a href="logout">로그아웃</a>
+		 
+		
 		 </div>
 		</div>
 		
@@ -265,7 +300,7 @@ text-decoration:none;
 		<!-- 나의일정 -->
 		<div class="calendar">
 		<h4>나의 일정</h4>
-		
+		<div id='calendar'></div>  
 		</div>
 		
 		<!-- 날씨 -->
@@ -278,36 +313,162 @@ text-decoration:none;
 		<div class="notice">
 		<h4>공지사항</h4>
 		<ul>
-			<li><a></a></li>
-			<li><a></a></li>
-			<li><a></a></li>	 
+			<li><a href="http://localhost:8009/uni/detail.nbo?bno=932">Microsoft 365 Education 이용 안내</a></li>
+			<li><a href="http://localhost:8009/uni/detail.nbo?bno=929">스마트메시지 앱알림 설정 방법 안내</a></li>
+			<li><a href="http://localhost:8009/uni/detail.nbo?bno=931">학내 무선랜 와이파이(Wi-Fi)접속방법 안내</a></li>
+			<li><a href="http://localhost:8009/uni/detail.nbo?bno=930">교육용 소프트웨어 교외 사용 안내(200422 수정)</a></li>	 
 		</ul>
 		
-		
 		</div>
 		
-		<!-- 미세먼지 -->
-		<div class="dust">
-		<h4>미세먼지</h4>
-		
-		</div>
-		
-		<!-- 학사일정 -->
-		<div class="unischedule">
-		<h4>학사일정</h4>
-		
-		</div>
-		
-		<!-- 관련사이트 -->
-		<div class="resite">resite</div>
-		
-		<!-- 스토어 -->
-		<div class="store">store</div>
-	</div>
 	
 	</div>
-	<br="clear:both">
-	<jsp:include page="footer.jsp" />
+	
 
+<script>
+
+$(function(){
+	
+	$.ajax({
+		   url:'getevent',
+	       data:{euserNo : '${loginUser.userNo}'
+	    	   	 ,tuserNo : '${loginUser.userNo}'},
+	       type:'POST',
+	       dataType:'json',
+	       success:function(data){
+    	       console.log(data);
+    	      
+    	       let eventArr = []; // [{title:xxx, start:xxxx, end:xxx}, {}]
+    	       
+    	       let todoArr =[];
+    	       
+    	       for(let i in data.eventList){
+    	    	   let obj = {
+    	    			  	  groupId:data.eventList[i].eventNo,
+    	    			   	  title:data.eventList[i].eventTitle,
+    	    			   	  start:data.eventList[i].startDate,
+    	    			   	  end:data.eventList[i].endDate
+    	    			   	  };
+    	    	   eventArr.push(obj);
+    	       }
+    	       
+    	       for(let i in data.todoList){
+					let obj = {
+							groupId:data.todoList[i].todoNo,
+							title:data.todoList[i].todoContent,
+							start:data.todoList[i].todoDate,
+							allDay : true 
+					};
+					todoArr.push(obj);
+				}	
+    	       
+    	       let arr = eventArr.concat(todoArr);
+    	       console.log(arr);
+    	       
+	    	    // calendar element 취득
+	  		     var calendarEl = $('#calendar')[0];
+	  		     // full-calendar 생성하기
+	  		     var calendar = new FullCalendar.Calendar(calendarEl, {
+	  		        height: '350px', // calendar 높이 설정
+	  		        expandRows: true, // 화면에 맞게 높이 재설정
+	  		        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+	  		        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+	  		        // 해더에 표시할 툴바
+	  		        headerToolbar: {
+	  		          left: 'prev,next today',
+	  		          right: 'dayGridMonth'
+	  		        },
+	  		        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+	  		        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+	  		        editable: true, // 수정 가능 
+	  		        selectable: true, // 달력 일자 드래그 설정가능
+	  		        nowIndicator: true, // 현재 시간 마크
+	  		        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+	  		        locale: 'ko', // 한국어 설정
+	  		        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
+	  		          console.log(obj);
+	  		        },
+	  		      eventDrop: function(data, delta, revertFunc) { //이벤트 수정
+	  		    	  
+	  				 let updateStartDate = data.event._instance.range.start;
+	  				 let updateStartStr =  (new Date(updateStartDate)).toISOString().slice(0, 10)
+	  			   
+	  				 let updateEndDate = data.event._instance.range.end;
+	  				 let updateEndStr = (new Date(updateEndDate)).toISOString().slice(0, 10)
+		  			 
+	  		       	 // let updateStartStr = updateStartDate.getFullYear() + "-" + (updateStartDate.getMonth() + 1) + "-" + updateStartDate.getDate();
+	  		      	 // let updateEndStr = updateEndDate.getFullYear() + "-" + (updateEndDate.getMonth() + 1) + "-" + updateEndDate.getDate();
+	  		    	  
+	  		    	 console.log(updateStartStr);
+	  		    	 
+			  			$.ajax({
+			  			  type: 'POST',  
+			  			  dataType:'json',
+			  			  url: "updateSchedule",
+			  			  data: {
+			  				  eventNo:data.event._def.groupId, 
+			  				  eventTitle:data.event._def.title, 
+			  				  startDate:updateStartStr, 
+			  				  endDate:updateEndStr
+			  				  },
+			  				  success:function( result ) {
+			  					  console.log(result)
+			  					  if(result == 1){
+			  					  }
+			  				  }
+			  				  });
+	  			  } , 
+	  			 
+	  			  
+	  		     
+	  		        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
+	  		          console.log(obj);
+	  		        },
+	  		        
+	  		        select: function (start, end, allDay) {             
+				        var startFix= moment($.fullCalendar.formatDate(start, 'YYYY-MM-DD'));               
+				        newCalendar(startFix);           
+	  		        }, 
+
+	  		       
+	  		       events:arr,
+	  		       
+	  		       eventClick: function(data, jsEvent, view) { //이벤트 삭제
+	  		    	   console.log(data);
+	 				if(!confirm("일정 '"+ data.event._def.title+"'을 삭제하시겠습니까?"))
+	 				{
+	 					return false;
+	 				}else{
+	 					
+	 				$.ajax({
+	 				  type: 'POST',  
+	 				  dataType:'json',
+	 				  url: "deleteSchedule",
+	 				  data: {eventNo: data.event._def.groupId},
+	 				  success:
+	 					function(result){
+	 					   if(result == 1){
+	 						alert('삭제되었습니다.');
+	 						location.reload();
+	 						}
+	 				  }
+	 				});
+	 				}
+	 			  }
+	  		        
+	  		        
+	  		      });
+	  		      // 캘린더 랜더링
+	  		      calendar.render();
+    	         
+	      } // success:function 끝
+	})  // ajax 끝  
+	
+	 
+}); //$function 끝
+
+</script>
+ 
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

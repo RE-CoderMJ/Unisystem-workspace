@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+
+
 <style>
 	body *{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -53,7 +56,7 @@
         line-height: 43px;
         display: inline-block;
     }
-    #header-up-right #logout{
+    #header-up-right .logout{
         background-color: rgb(14, 43, 80);
         color: white;
         height: 43px;
@@ -139,8 +142,32 @@
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
-	                <span>${loginUser.korName}(학생)님 환영합니다.</span>
-	                <a href="logout.me" id="logout">로그아웃 →</a>
+	                <span>${loginUser.korName}
+	                <c:choose>
+	                <c:when test="${loginUser.userDiv eq 1}">
+	                (학생)님 환영합니다.
+	                </c:when>
+	                <c:when test="${loginUser.userDiv eq 2}">
+	                 (교수)님 환영합니다.
+	                </c:when>
+	                <c:when test="${loginUser.userDiv eq 3}">
+	                페이지 입니다.
+	                </c:when>
+	                <c:otherwise>
+	             		로그인 후 이용해주세요.
+	                </c:otherwise>
+	                </c:choose>
+	                
+	                </span>
+	                
+	                <c:choose>
+	                <c:when test="${ not empty loginUser }">
+	                <a href="logout.me" class="logout">로그아웃 →</a>
+	                </c:when>
+	                <c:when test="${ empty loginUser }">
+	                <a href="loginMain" class="logout">로그인 →</a>
+	                </c:when>
+	                </c:choose>
 	            </div>
             </div>
         </div>
