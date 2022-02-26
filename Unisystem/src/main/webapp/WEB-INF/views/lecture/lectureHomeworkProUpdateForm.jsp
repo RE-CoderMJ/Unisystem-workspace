@@ -149,9 +149,6 @@
                     <div id="contentBox_border">
                         <div id="contentBox_header">
                             <input type="text" id="title" name="homeworkpName" placeholder="제목 입력" value="${ h.homeworkpName }">
-                            <c:if test="${ not empty at.originName}">
-	                            <span><i class="fas fa-paperclip"></i></span>
-                        	</c:if>
                         </div>
     
                         <div id="contentBox_info">
@@ -165,14 +162,22 @@
                         <div>
                             <div id="contentBox_file">
                                 <div class="box-file-input">
-                                    <label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
-	                                <c:if test="${ not empty at.originName }">                                
-			                                                               현재 업로드된 파일 : 
-			                            <a href="${ at.changeName }" download="${ at.originName }">${ at.originName }</a>
-			                            <!-- 첨부파일이 있을때만 넘어가는 input type="hidden" 요소  -->
-			                            <input type="hidden" name="originName" value="${ at.originName }" />
+                                
+                                <c:choose>
+			                    	<c:when test="${ empty at.originName}">
+				                    	<label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
+	                                    <span class="filename">파일을 선택해주세요.</div>
+			                    	</c:when>
+			                    	<c:otherwise>
+										<label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
+		                        		<span class="filename"><a href="${ at.changeName }" download="${ at.originName }">${ at.originName }</a></div>
+		                        		<input type="hidden" name="originName" value="${ at.originName }" />
 			                            <input type="hidden" name="changeName" value="${ at.changeName }" />
-		                        	</c:if>
+			                    	</c:otherwise>
+                        		</c:choose>
+
+			                            <input type="hidden" name="homeworkpNo" value="${ h.homeworkpNo }" />
+		                        	
                                 </div>      
                             </div>
                             <label for="meeting-time">마감기한 : </label>

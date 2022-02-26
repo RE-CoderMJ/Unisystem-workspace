@@ -217,4 +217,11 @@ public class LectureDao {
 		return sqlSession.update("lectureMapper.updateProHwAtt", at);
 	}
 	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존에 파일 x)
+	public int insertNewAtt(SqlSessionTemplate sqlSession, Attachment at) {
+		System.out.println("잘 넘어오나?");
+		System.out.println(at);
+		return sqlSession.insert("lectureMapper.insertNewAtt", at);
+	}
+	
 }
