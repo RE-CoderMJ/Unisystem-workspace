@@ -591,12 +591,51 @@
 		   and homeworkp_no = #{homeworkpNo}	
 	</update>
 
+	<!-- 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 과제수정 -->
+	<update id="updateProHomework">
+		update
+		       homeworkp
+		   set homeworkp_name = #{homeworkpName}
+		     , homeworkp_enddatetime = to_char(to_date( #{ homeworkpEndDateTime }, 'YYYY-MM-DD HH24:MI'), 'YYYYMMDDHH24MI')
+		     , homeworkp_content = #{homeworkpContent}
+		 where class_no = #{classNo}
+		   and homeworkp_no = #{homeworkpNo}
+		   and status = 'Y'	
+	</update>
+	
+	<!-- 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 첨부파일수정 -->
+	<update id="updateProHwAtt">
+		update 
+			   attachment
+		   set origin_name = #{originName}
+			 , change_name = #{changeName}
+			 , path = #{path}
+         where ref_no = #{refNo}	
+	</update>
 
-
-
-
-
-
+	<!-- 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존에 파일 x) -->
+	<insert id="insertNewAtt">
+		insert
+		  into attachment
+		  (
+            attach_no
+          , ref_type
+          , ref_no
+          , origin_name
+          , change_name
+          , path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'P'
+		  , #{refNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )		
+	
+	</insert>
 
 
 
@@ -696,4 +735,5 @@
 		    BY CLASS_NO ASC NULLS FIRST) A 
 		ORDER BY ROWNUM DESC
 	</select>
+	
 </mapper>
