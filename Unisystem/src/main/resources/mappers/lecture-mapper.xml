@@ -591,10 +591,27 @@
 		   and homeworkp_no = #{homeworkpNo}	
 	</update>
 
-
-
-
-
+	<!-- 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 과제수정 -->
+	<update id="updateProHomework">
+		update
+		       homeworkp
+		   set homeworkp_name = #{homeworkpName}
+		     , homeworkp_enddatetime = #{homeworkpEndDateTime}
+		     , homeworkp_content = #{homeworkContent}
+		 where class_no = #{classNo}
+		   and homeworkp_no = #{homeworkpNo}
+		   and status = 'Y'	
+	</update>
+	
+	<!-- 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 첨부파일수정 -->
+	<update id="updateProHwAtt">
+		update 
+			   attachment
+		   set origin_name = #{originName}
+			 , change_name = #{changeName}
+			 , path = #{path}
+         where ref_no = #{refNo}	
+	</update>
 
 
 

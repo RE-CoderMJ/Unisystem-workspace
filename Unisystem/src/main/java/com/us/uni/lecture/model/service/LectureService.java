@@ -103,6 +103,9 @@ public interface LectureService {
 	
 	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제를 수정
 	int updateProHomework(Homework h);
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정
+	int updateProHwAtt(Attachment at);
 
 }
 

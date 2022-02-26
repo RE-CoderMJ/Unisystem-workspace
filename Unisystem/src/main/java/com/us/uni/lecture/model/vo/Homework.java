@@ -13,7 +13,7 @@ public class Homework {
 	
 	
 	// HOMEWORKP (교수가 낸 과제)
-	private String homeworkpNo;             // 과제번호(seq) or 참조게시글번호
+	private int homeworkpNo;             // 과제번호(seq) or 참조게시글번호
 	private int classNo;					// 강의번호
 	private String homeworkpName;			// 과제명
 	private String homeworkpCategory;		// 제출가능(P) | 제출마감(I)

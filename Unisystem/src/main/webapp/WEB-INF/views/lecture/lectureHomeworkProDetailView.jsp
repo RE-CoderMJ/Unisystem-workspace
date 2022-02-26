@@ -323,14 +323,18 @@
                     	}
                     }
                     
-	                   function postFormSubmit(num){
-	                	   if(num == 1){ // 과제마감 클릭 시 
-	                		   $("#postForm").attr("action", "updatepHomeworkStatus.lec").submit();
-	                	   } else if(num == 2){ // '수정' 버튼 클릭 시 
-	                		   $("#postForm").attr("action", "updateForm.ho").submit();
-	                	   } else if(num == 3) // '삭제' 버튼 클릭 시 
-	                	   
-	                   }
+                   function postFormSubmit(num){
+                	   if(num == 1){ // 과제마감 클릭 시 
+                		   $("#postForm").attr("action", "updatepHomeworkStatus.lec").submit();
+                	   
+                	   } else if(num == 2){ // '수정' 버튼 클릭 시 
+                		   $("#postForm").attr("action", "updateForm.ho").submit();
+                	   
+                	   } else if(num == 3) // '삭제' 버튼 클릭 시 
+                	   
+                   }
+                   
+                 
 
                 </script>
 

@@ -212,5 +212,11 @@ public class LectureServiceImpl implements LectureService{
 		return lDao.updateProHomework(sqlSession, h);
 	}
 
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정
+	@Override
+	public int updateProHwAtt(Attachment at) {
+		return lDao.updateProHwAtt(sqlSession, at);
+	}
+
 	
 }

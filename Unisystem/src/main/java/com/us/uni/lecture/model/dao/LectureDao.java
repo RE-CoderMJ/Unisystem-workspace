@@ -212,4 +212,9 @@ public class LectureDao {
 		return sqlSession.update("lectureMapper.updateProHomework", h);
 	}
 	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정
+	public int updateProHwAtt(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("lectureMapper.updateProHwAtt", at);
+	}
+	
 }
