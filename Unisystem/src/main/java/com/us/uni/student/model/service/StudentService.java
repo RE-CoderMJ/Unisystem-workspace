@@ -27,5 +27,5 @@ public interface StudentService {
 	int studentInsert(Users student);
 	
 	// 학생 정보 변경
-	int studentUpdateInfo(Users student)
+	int studentUpdateInfo(Users student);
 }
