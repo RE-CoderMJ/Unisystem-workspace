@@ -1,12 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import = "java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
 <link href="resources/css/academicStatus/academicStatus.css" rel="stylesheet">
+<%
+	String today = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()); 
+	int year = Integer.parseInt(new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()));
+%>
+<style>
+	#list>tbody tr{
+		cursor:pointer;
+	}
+</style>
 </head>
 <body>
 
@@ -21,48 +32,71 @@
 					<div class="pageName"><p style="color:gray">마이페이지>학적변동>&nbsp;</p><p style="font-size:19px; font-weight:600;">휴복학 신청</p></div>
 					<br><br>
 					<div id="pageName">학생 정보</div>
-	                <br>
+	                <br><br><br>
 	                <table class="table table-bordered" style="width:1134px;">
 						<tbody>
 							<tr>
 								<th>학번</th>
-								<td>201112345</td>
+								<td>${loginUser.userNo}</td>
 								<th>성명</th>
-								<td>김길동</td>
+								<td>${loginUser.korName}</td>
 								<th>생년월일</th>
-								<td>1996-01-12</td>
+								<td>${loginUser.birthday}</td>
 								<th>성별</th>
-								<td>남성</td>
+								<td>${loginUser.gender}</td>
 							</tr>
 							<tr>
 								<th>대학</th>
-								<td>자연과학대학</td>
+								<td>${loginUser.studUniv}</td>
 								<th>학과</th>
-								<td>물리학과</td>
+								<td>${loginUser.studDepartment}</td>
 								<th>전공</th>
-								<td>물리학</td>
+								<td>${loginUser.studMajor}</td>
 								<th>복수전공</th>
-								<td></td>
+								<td>${loginUser.studMinor}</td>
 							</tr>
 							<tr>
 								<th>학년</th>
-								<td>2</td>
+								<td>${loginUser.studSemester/2}</td>
 								<th>국적</th>
-								<td>대한민국</td>
+								<td>${loginUser.nation}</td>
 								<th>입학일자</th>
-								<td>2011-02-06</td>
+								<td>${loginUser.studInto}</td>
 								<th>졸업일자</th>
-								<td></td>
+								<td>${loginUser.studGrad}</td>
 							</tr>
 							<tr>
 								<th>입학구분</th>
-								<td>신입</td>
+								<c:choose>
+									<c:when test="${loginUser.studDivision eq 1 }">
+										<td>신입</td>
+									</c:when>
+									<c:when test="${loginUser.studDivision eq 2 }">
+										<td>편입</td>
+									</c:when>
+									<c:otherwise>
+										<td>재입학</td>
+									</c:otherwise>
+								</c:choose>
 								<th>학적변동</th>
-								<td>재학</td>
+								<c:choose>
+									<c:when test="${loginUser.studStatus eq 1 }">
+										<td>재학</td>
+									</c:when>
+									<c:when test="${loginUser.studStatus eq 2 }">
+										<td>휴학</td>
+									</c:when>
+									<c:when test="${loginUser.studStatus eq 3 }">
+										<td>졸업</td>
+									</c:when>
+									<c:otherwise>
+										<td>자퇴</td>
+									</c:otherwise>
+								</c:choose>
 								<th>담당교수</th>
-								<td>홍말동</td>
+								<td>${profName}</td>
 								<th>이수학점</th>
-								<td>58</td>
+								<td>${loginUser.studSemester}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -71,16 +105,18 @@
 			<article>
                 <div id="contents">
                 	<div class="titles">휴복학 신청</div>
-                	<form>
+                	<form action="myStu.academic.applyAsOff" method="post" id="off" enctype="multipart/form-data">
+                		<input type="hidden" name="studNo" value="${loginUser.userNo }">
+                		<input type="hidden" name="asType" value="1">
 	                	<div id="offYearSelect">
 		                	<table class="table table-bordered" style="width:1134px;">
 								<tbody>
 									<tr>
 										<th style="width:140px;">신청사항 선택</th>
 										<td colspan="2">
-											<input type="radio" id="offYear" name="formFor" value="1" checked>
+											<input type="radio" id="offYear-off" name="formFor" value="1">
 		       	 							<label for="offYear" style="margin-right:10px;">휴학</label>
-											<input type="radio" id="back" name="formFor" value="2">
+											<input type="radio" id="back-off" name="formFor" value="2">
 		       	 							<label for="back">복학</label>
 										</td>
 									</tr>
@@ -88,26 +124,28 @@
 										<th>학적상태</th>
 										<td style="width:140px;">재학</td>
 										<th>신청일자</th>
-										<td>2021-07-01</td>
+										<c:set value="<%=today%>" var="today" />
+										<td>${today}</td>
 										<th>복학희망년도</th>
-										<td><input type="number" style="height:30px; width:140px;"></td>
+										<td><input type="number" name="offUntilYear" style="height:30px; width:140px;"></td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
 										<td>
-											<select name="offSemester" style="height:30px; width:140px;">
+											<select name="offType" style="height:30px; width:140px;">
 												<option value="1">일반휴학</option>
 												<option value="2">군입대휴학</option>
 												<option value="3">임신/출산휴학</option>
 												<option value="4">육아유학</option>
 											</select>
 										</td>
+										<c:set value="<%=year%>" var="year" />
 										<th>신청년도</th>
-										<td><input type="number" style="height:30px; width:140px;"></td>
+										<td><input type="number" name="offYear" style="height:30px; width:140px;"></td>
 										<th>복학 희망 학기</th>
 										<td>
-											<select name="backSemester" style="height:30px; width:140px;">
+											<select name="offUntilSemester" style="height:30px; width:140px;">
 												<option value="1">1학기</option>
 												<option value="2">2학기</option>
 											</select>
@@ -117,7 +155,7 @@
 									<tr>
 										<th>휴학사유</th>
 										<td>
-											<select name="offSemester" style="height:30px; width:140px;">
+											<select name="reason" style="height:30px; width:140px;">
 												<option value="" selected>선택하세요</option>
 												<option value="1">개인사정</option>
 												<option value="2">군입대</option>
@@ -132,25 +170,29 @@
 											</select>
 										</td>
 										<th>첨부파일</th>
-										<td colspan="2" style="height:30px;"><input type="file"></td>
+										<td colspan="2" style="height:30px;"><input type="file" id="files" name="files" multiple></td>
 									</tr>
 									<tr>
 										<th rowspan="3">휴학사유상세<br>[200자이내]</th>
-										<td colspan="6"><textarea id="reason-area" placeholder="휴학 사유를 간단하게 입력하세요."></textarea></td>
+										<td colspan="6"><textarea id="reason-area" name="reasonDetail" placeholder="휴학 사유를 간단하게 입력하세요."></textarea></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
+						</form>
 						
-						<div id="backYearSelect" style="display:none;">
+						<form action="myStu.academic.applyAsBack" method="post" id="back">
+						<div id="backYearSelect">
+							<input type="hidden" name="studNo" value="${loginUser.userNo }">
+                			<input type="hidden" name="asType" value="2">
 							<table class="table table-bordered" style="width:1134px;">
 								<tbody>
 									<tr>
 										<th style="width:140px;">신청사항 선택</th>
 										<td colspan="2">
-											<input type="radio" id="offYear" name="formFor" value="1">
+											<input type="radio" id="offYear-b" name="formFor" value="1">
 		       	 							<label for="offYear" style="margin-right:10px;">휴학</label>
-											<input type="radio" id="back" name="formFor" value="2" checked>
+											<input type="radio" id="back-b" name="formFor" value="2">
 		       	 							<label for="back">복학</label>
 										</td>
 									</tr>
@@ -160,13 +202,13 @@
 										<th>신청일자</th>
 										<td>2021-07-01</td>
 										<th>복학신청년도</th>
-										<td><input type="number" style="height:30px; width:140px;"></td>
+										<td><input type="number" name="backYear" style="height:30px; width:140px;"></td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
 										<td>
-											일반휴학
+											
 										</td>
 										<th>휴학 신청년도</th>
 										<td>2021</td>
@@ -196,6 +238,7 @@
 								</tbody>
 							</table>
 						</div>
+						</form>
 						
 						<div style="font-size:13px;">
 							<span style="font-weight:800;">첨부파일: </span>
@@ -213,7 +256,6 @@
 						<div align="right" style="width:1130px;">
 							<button type="submit" id="apply-btn">신청</button>
 						</div>
-					</form>
                 
                 	<div id="progress">
 	                	<span class="titles">진행 절차 안내</span><br><br><br>
@@ -230,34 +272,31 @@
                 	<div style="margin-bottom:100px;">
                 		<div class="titles" style="margin-bottom:0px;">신청내역</div>
                 		<br><br><br>
-						<div id="notice">** 접수된 후에는 신청내역 삭제 불가</div>
-						<button id="delete-btn"><span style="color:red">-</span>&nbsp;삭제</button>
 	                	<table class="table table-hover" id="list" style="width:1134px; text-align:center; margin-top:10px;">
-		                    <tbody style="border-top:2px solid gray; border-bottom:2px solid gray;">
+		                    <thead>
 		                    	<tr style="background:rgb(232, 232, 232);">
-		                    		<th><input type="checkbox" class="checkbox"></th>
 		                    		<th>No.</th>
 		                    		<th>신청일자</th>
 		                    		<th>신청사항</th>
-		                    		<th>담당교수승인구분</th>
 		                    		<th>학사지원과진행 상태</th>
-		                    	</tr>
-		                        <tr>
-		                            <td><input type="checkbox" class="checkbox"></td>
-		                            <td>2</td>
-		                            <td>2022-01-20</td> 
-		                            <td>복학</td>
-		                            <td></td>
-		                            <td>담당교수승인대기</td>
-		                        </tr>
-		                        <tr>
-		                            <td><input type="checkbox" class="checkbox"></td>
-		                            <td>1</td>
-		                            <td>2021-07-01</td> 
-		                            <td>휴학</td>
-		                            <td>Y</td>
-		                            <td>최종승인 완료</td>
-		                        </tr>
+		                    	</tr>		                    
+		                    </thead>
+		                    <tbody style="border-top:2px solid gray; border-bottom:2px solid gray;">
+		                        <c:choose>
+		                        	<c:when test="${asList eq null}">
+		                        		<td colspan='4'>신청내역이 없습니다.</td>
+		                        	</c:when>
+		                        	<c:otherwise>
+				                        <c:forEach var="a" items="${asList}">
+				                        <tr>
+				                            <td class="as-no">${a.asNo}</td>
+				                            <td>${a.asDate}</td> 
+				                            <td class="as-type">${a.asTypeT}</td>
+				                            <td>${a.progressT }</td>
+				                        </tr>
+				                        </c:forEach>
+		                        	</c:otherwise>
+		                        </c:choose>
 		                    </tbody>
 	                	</table>
                		</div>
@@ -268,19 +307,89 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
+	<!-- 작성 폼 양식 학생의 상태에 따라 알맞게 뜨도록 -->
 	<script>
     	$(function(){
+    		if('${loginUser.studStatus}' == 1){
+	    		$("#offYear-off").prop("checked", true);
+	    		$("#backYearSelect").hide();
+	    		$("#offYearSelect").show();
+    		}else if('${loginUser.studStatus}' == 2){
+    			$("#back-b").prop("checked", true);
+    			$("#offYearSelect").hide();
+    			$("#backYearSelect").show();
+    		}else{
+    			alert("졸업한 학생은 휴복학 신청이 불가능합니다.");
+    			location.href="list.st";
+    		}
+    		
     		$("input[name='formFor']").on("change", function(){
 	    		let option = $("input[name='formFor']:checked").val();
 	    		
-	    		console.log(option);
 	    		if(option == 2){
-	    			$("#offYearSelect").hide();
-	    			$("#backYearSelect").show();
+	    			if('${loginUser.studStatus}' == 1){
+	    				alert("휴학중인 학생만 신청이 가능합니다.");
+		    			$("#back-b").prop("checked", false);
+	    				$("#offYear-off").prop("checked", true);
+	    			}
 	    		}else{
-	    			$("#backYearSelect").hide();
-	    			$("#offYearSelect").show();
+	    			if('${loginUser.studStatus}' == 2){
+	    				alert("재학중인 학생만 신청이 가능합니다.");
+		    			$("#offYear-off").prop("checked", false);
+		    			$("#back-b").prop("checked", true);
+	    			}
 	    		}    		    			
+    		})
+    	})
+    </script>
+    
+    <!-- 학적변동 신청 ajax -->
+    <script>
+    	$(document).on("click", "#apply-btn", function(){
+    		let option = $("input[name='formFor']:checked").val();
+    		
+    		if(option == 1){
+    			$("#off").submit();
+    			/*
+	    		$.ajax({
+	    			url:"myStu.academic.applyAsOff",
+					data:{
+						studNo:'${loginUser.userNo}',
+						asType: option,
+						offType: $("select[name=offType]").val(),
+						reason: $("select[name=reason]").val(),
+						reasonDetail: $("#reason-area").val(),
+						offYear: $("input[name=offYear]").val(),
+						offSemester: $("select[name=offSemester]").val(),
+						offUntilYear: $("input[name=backYear]").val(),
+						offUntilSemester: $("select[name=backSemester]").val()
+					},
+					type:"POST",
+					success:function(result){
+						if(result>0){
+							//selectAsList();
+							console.log("휴학신청 성공!");
+						}
+					},error:function(){
+						console.log();
+					}
+	    		})
+	    		*/
+    		}else{
+    			$("#back").submit();
+    		}
+    	})
+    </script>
+    
+    <!-- 상세보기 -->
+    <script>
+    	$(function(){
+    		$("#list>tbody tr").click(function(){
+    			if($(this).children(".as-type").text() == "휴학"){
+	    			location.href="myStu.academic.detailOff?asNo=" + $(this).children(".as-no").text();     				
+    			}else{
+    				location.href="myStu.academic.detailBack?asNo=" + $(this).children(".as-no").text();
+    			}
     		})
     	})
     </script>
@@ -289,6 +398,12 @@
 		$(document).ready(function(){
 			let $len = $("section").height();
 			$(".wrap_sidebar").css('height', $len + 22);
+		})
+	</script>
+	
+	<script>
+		$(function(){
+			$("#academic-status").slideDown();
 		})
 	</script>
 

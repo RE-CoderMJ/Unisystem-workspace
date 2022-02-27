@@ -22,7 +22,7 @@
 			<typeAlias type="com.us.uni.mail.model.vo.Contact" alias="Contact" />
 			
 			<typeAlias type="com.us.uni.certificate.model.vo.Certificate" alias="Certificate" />
-			
+			<typeAlias type="com.us.uni.academicStatus.model.vo.AcademicStatus" alias="AcademicStatus" />
 			<typeAlias type="com.us.uni.appointment.model.vo.Appointment" alias="Appointment" />
 			
 			<typeAlias type="com.us.uni.common.model.vo.Attachment" alias="Attachment" />
@@ -43,7 +43,8 @@
 			<mapper resource="/mappers/facility-mapper.xml" />
 			<mapper resource="/mappers/mail-mapper.xml" />
 			<mapper resource="/mappers/certificate-mapper.xml" />
-			<mapper resource="/mappers/appointment-mapper.xml" />			
+			<mapper resource="/mappers/appointment-mapper.xml" />
+			<mapper resource="/mappers/academicStatus-mapper.xml" />			
 			<mapper resource="/mappers/lecture-mapper.xml" />
 			<mapper resource="/mappers/event-mapper.xml" />
 			<mapper resource="/mappers/todo-mapper.xml" />

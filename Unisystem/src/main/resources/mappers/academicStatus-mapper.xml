@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="academicMapper">
+	
+	<resultMap type="AcademicStatus" id="asResult">
+		<result column="AS_NO" property="asNo" />
+		<result column="STUD_NO" property="studNo" />
+		<result column="AS_TYPE" property="asType" />
+		<result column="AS_TYPET" property="asTypeT" />
+		<result column="AS_DATE" property="asDate" />
+		<result column="OFF_TYPE" property="offType" />
+		<result column="OFF_TYPET" property="offTypeT" />
+		<result column="REASON" property="reason" />
+		<result column="REASONT" property="reasonT" />
+		<result column="REASON_DETAIL" property="reasonDetail" />
+		<result column="OFF_YEAR" property="offYear" />
+		<result column="OFF_SEMESTER" property="offSemester" />
+		<result column="OFFUNTIL_YEAR" property="offUntilYear" />
+		<result column="OFFUNTIL_SEMESTER" property="offUntilSemester" />
+		<result column="BACK_YEAR" property="backYear" />
+		<result column="BACK_SEMESTER" property="backSemester" />
+		<result column="PROGRESS" property="progress" />
+		<result column="PROGRESST" property="progressT" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attResult">
+		<result column="attach_no" property="attachNo" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="path" property="path" />
+	</resultMap>
+
+	<select id="selectStuInfo" resultType="string">
+		select
+		       kor_name
+		  from student
+		  join users on (prof_no = user_no)
+		 where stud_no = #{userNo}
+	</select>
+	
+	<insert id="applyAsOff">
+		insert
+		  into academic_status
+		  (
+		    as_no
+		  , stud_no
+		  , as_type
+		  , off_type
+		  , reason
+		  , reason_detail
+		  , off_year
+		  , off_semester
+		  , offuntil_year
+		  , offuntil_semester
+		  )
+		  values
+		  (
+		    seq_acsno.nextval
+		  , #{studNo}
+		  , #{asType}
+		  , #{offType}
+		  , #{reason}
+		  , #{reasonDetail}
+		  , #{offYear}
+		  , #{offSemester}
+		  , #{offUntilYear}
+		  , #{offUntilSemester}
+		  )
+	</insert>
+	
+	<!-- 첨부파일 작성 -->
+	<insert id="insertAttachment">
+		insert
+		  into attachment
+		  (
+		  	attach_no
+		  , ref_type
+		  , ref_no
+		  , origin_name
+		  , change_name
+		  , path
+		  )
+		  values
+		  (
+		  	seq_attno.nextval
+		  , 'A'
+		  , seq_acsno.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
+	<select id="selectAsList" resultMap="asResult">
+		select
+		       as_no
+		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
+		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
+		     , off_type
+		     , reason
+		     , reason_detail
+		     , off_year
+		     , off_semester
+		     , offuntil_year
+		     , offuntil_semester
+		     , back_year
+		     , back_semester
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		  from academic_status
+		 where stud_no = #{userNo}
+	</select>
+	
+	<select id="selectAs" resultMap="asResult">
+		select
+		       as_no
+		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
+		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
+		     , decode(off_type, 1, '일반휴학', 2, '군입대휴학', 3, '임신/출산휴학', 4, '육아휴학') "off_typeT"
+		     , decode(reason, 1, '개인사정', 2, '군입대', 3, '기타') "reasonT"
+		     , reason_detail
+		     , off_year
+		     , off_semester
+		     , offuntil_year
+		     , offuntil_semester
+		     , back_year
+		     , back_semester
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		  from academic_status
+		 where as_no = #{asNo}
+	</select>
+	
+	<select id="selectAttachmentList" resultMap="attResult">
+		select
+		       attach_no
+		     , ref_no
+		     , origin_name
+		     , change_name
+		     , path
+		  from attachment
+		 where ref_type = 'A'
+		   and ref_no = #{asNo}
+		 order
+		    by attach_no desc
+	</select>
+	
+	<select id="selectProfAsListCount" resultType="_int">
+		select
+		       count(*)
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+		 where prof_no = #{userNo}
+		   and progress = 0    
+	</select>
+	
+	<select id="selectProfAsList" resultMap="asResult">
+		select
+		       as_no
+		     , stud_no
+		     , kor_name
+		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
+		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+		 where prof_no = #{userNo}
+		   and progress = 0
+	</select>
+</mapper>
