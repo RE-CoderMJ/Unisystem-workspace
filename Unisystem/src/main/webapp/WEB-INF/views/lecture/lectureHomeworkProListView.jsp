@@ -124,7 +124,7 @@
                         <c:forEach var="l" items="${ list }" >
 	                        <tr class="trs">
 	                            <td class="homeworkpNo">${ l.homeworkpNo }</td>
-	                            <td><a href="lectureHomeworkDetail.stu?hno=${ l.homeworkpNo }">${ l.homeworkpName }</a></td>
+	                            <td><a href="lectureProHomeworkDetailI.stu?hno=${ l.homeworkpNo }">${ l.homeworkpName }</a></td>
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
 	                            <td>
@@ -199,7 +199,7 @@
     						
 	    					value += "<tr>"
 	                              + 	"<td>"+ list[i].homeworkpNo + "</td>"
-	                              + 	"<td>" + "<a href='lectureProHomeworkDetail.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
+	                              + 	"<td>" + "<a href='lectureProHomeworkDetailP.stu?hno="+ list[i].homeworkpNo + "'>" + list[i].homeworkpName + "</a></td>"
 	                              +		"<td>" + list[i].korName + "</td>"
 	                              + 	"<td>" + list[i].homeworkpEndDateTime + "</td>"
 	                              + 	"<td>" + list[i].countHW + " / " +  ${ classInfo.currStud } + "</td>"

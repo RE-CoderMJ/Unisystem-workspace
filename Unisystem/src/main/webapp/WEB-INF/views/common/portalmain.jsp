@@ -58,6 +58,13 @@
 	border-bottom: 1px solid #153e73;
 }
 
+.class a{
+	color : black;
+}
+
+.class ul{
+	margin:0;
+}
 .room {
 	grid-area: room;
 	border-top:2px solid #fcaf17;
@@ -210,9 +217,25 @@ font-size:10px;
 	<div class="container1">
 	
 		<!-- 수강중인 과목 -->
-		<div class="class">
-		<h4>수강중인 과목</h4>
-		어쩌구 저쩌구
+		<div class="class" style="overflow:auto; width:auto; height:auto;">
+			<!-- 학생일경우 -->
+			<c:if test="${ loginUser.userDiv eq  1}">
+				<h4 style="margin-bottom:20px;">수강중인 과목</h4>
+				<c:forEach var="l" items="${ list }" >
+		            <ul class="trs">
+		            	<li id='classKorName' style="padding:none;"><a href="lectureMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
+		            </ul>
+				</c:forEach>
+			</c:if>
+			<c:if test="${ loginUser.userDiv eq  2}">
+				<h4>진행중인 과목</h4>
+				<c:forEach var="l" items="${ list }" >
+		            <ul class="trs">
+		            	<li id='classKorName' style="padding:none;"><a href="lectureProMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
+		            </ul>
+				</c:forEach>
+			</c:if>
+			
 		</div>
 		
 		<!-- 메일 -->

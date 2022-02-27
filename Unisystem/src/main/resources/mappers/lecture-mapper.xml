@@ -553,7 +553,7 @@
 		  )	
 	</insert>
 
-	<!-- 교수 : 과제관리 - 상세페이지 조회(상단의 교수가 낸 과제 상세페이지) -->
+	<!-- 교수 : 과제관리 - 상세페이지 조회(제출가능한 과제 상세페이지) -->
 	<select id="selectProHomework" resultMap="homeworkResult">
 		select
 		       homeworkp_no
@@ -565,6 +565,20 @@
 		   and class_no = #{classNo}
 		   and status = 'Y'
 		   and homeworkp_category = 'P'
+	</select>
+	
+	<!-- 교수 : 과제관리 - 상세페이지 조회(마감된 과제 상세페이지) -->
+	<select id="selectProHomeworkI" resultMap="homeworkResult">
+		select
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , homeworkp_content
+		  from homeworkp
+		 where homeworkp_no = #{homeworkpNo}
+		   and class_no = #{classNo}
+		   and status = 'Y'
+		   and homeworkp_category = 'I'
 	</select>
 	
 	<!--  교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일) -->
@@ -637,10 +651,24 @@
 	
 	</insert>
 
+	<!-- 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글 삭제 -->
+	<update id="deleteProHomework">
+		update
+		       homeworkp
+		   set status = 'N'
+		 where homeworkp_no = #{homeworkpNo}
+           and class_No = #{classNo}	
+	</update>
 
-
-
-
+	<!-- 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글에 딸린 첨부파일 삭제 -->
+	<update id="deleteAttachProHomework">
+		update
+		       attachment
+		   set status = 'N'
+		 where ref_no = #{homeworkpNo}
+           and ref_type = 'P'	
+	</update>
+	
 
 
 
