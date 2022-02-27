@@ -139,7 +139,7 @@
 			                    <input type="text" class="form-control" id="nation" name="nation" value="대한민국"><br>
 			                    
 			                    <label for="phone"> * 연락처 :</label>
-			                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="11" placeholder="(-없이 입력)"><br>
+			                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="13" placeholder="(-포함 입력)"><br>
 			                    
 			                    <label for="email"> * 이메일 :</label>
 			                    <input type="email" class="form-control" id="email" name="email"><br>
@@ -258,12 +258,10 @@
 		function postNo(){
              // 우편번호 찾기 찾기 화면을 넣을 element
 		    var element_wrap = document.getElementById('wrapper');	
-		    
 	        // 현재 scroll 위치를 저장해놓는다.
 	        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 	        new daum.Postcode({
 	            oncomplete: function(data) {
-	            
 	                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 					
 	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -320,7 +318,7 @@
 	            },
 	            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
 	            onresize : function(size) {
-	            	
+	            	sidebar();
 	            	address();
 	                element_wrap.style.height = size.height+'px';
 	            },

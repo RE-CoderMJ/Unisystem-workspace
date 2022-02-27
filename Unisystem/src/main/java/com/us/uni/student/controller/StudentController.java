@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,8 +32,15 @@ public class StudentController {
 	private StudentService sService;
 	
 	@RequestMapping("list.st")
-	public String selectStudentInfo() {
-		return "student/studentMyInfoView";
+	public ModelAndView StudentInfo(HttpSession session, ModelAndView mv) {
+		
+		int studNo = (((Users)session.getAttribute("loginUser")).getUserNo());
+		Users stud = sService.StudentInfo(studNo);
+		System.out.println(stud);
+		
+		mv.addObject("stud", stud).setViewName("student/studentMyInfoView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("enrollForm.st")
@@ -158,7 +166,23 @@ public class StudentController {
 		return new Gson().toJson(jobj);
 	}
 	
-	
+	/**
+	 * 개인 정보 변경
+	 */
+	@RequestMapping("update.st")
+	public String studentUpdateInfo(Users student, HttpSession session) {
+		
+		System.out.println(student);
+		int result = sService.studentUpdateInfo(student);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "정보가 변경되었습니다!");
+		}else {
+			session.setAttribute("alertMsg", "정보 변경을 실패했습니다.");
+		}
+		
+		return "redirect:list.st";
+	}
 	
 	// * 첨부파일 : 파일명 수정 작업 후 서버에 업로드
 	public String saveFile(MultipartFile upfile, HttpSession session) {

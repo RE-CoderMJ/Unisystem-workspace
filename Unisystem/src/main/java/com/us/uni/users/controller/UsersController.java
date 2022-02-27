@@ -1,5 +1,7 @@
 package com.us.uni.users.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.us.uni.lecture.model.service.LectureService;
+import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.service.UsersService;
 import com.us.uni.users.model.vo.Users;
 
@@ -24,6 +28,9 @@ public class UsersController {
 	private UsersService uService;
 	
 	@Autowired
+	private LectureService lService;
+	
+	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	// 로그인
@@ -33,19 +40,29 @@ public class UsersController {
 			return "common/userLogin";
 		}
 		
-		//portal메인
-		@RequestMapping("enview")
-		public ModelAndView find() {
-			return new ModelAndView ("common/portalmain");
+	//portal메인
+	@GetMapping("enview")
+	public ModelAndView find(HttpSession session,  ModelAndView mv) {
+		
+		int userNo = ((Users)session.getAttribute("loginUser")).getUserNo();
+		int userDiv = ((Users)session.getAttribute("loginUser")).getUserDiv();
+		
+		if(userDiv == 1) {
+			ArrayList<Lecture> list = lService.selectStudentClassList(userNo);			
+			mv.addObject("list", list).setViewName("common/portalmain");
+		} else {
+			ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
+			mv.addObject("list", list).setViewName("common/portalmain");
 		}
+			
+		return mv;
+	}
 	
 		//관리자 portal메인
 		@RequestMapping("adenview")
 		public String adfind() {
 			return "admin/adportalmain";
 		}
-		
-	
 	
 	// 로그인
 	@RequestMapping("login.me")
@@ -158,7 +175,6 @@ public class UsersController {
 			return mv;
 		}
 			
-
 
 
 

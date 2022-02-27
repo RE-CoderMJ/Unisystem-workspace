@@ -188,10 +188,16 @@ public class LectureServiceImpl implements LectureService{
 		return result1;
 	}
 	
-	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	// 교수 - 과제관리 : 상세페이지 조회 (제출가능한 과제 상세페이지)
 	@Override
 	public Homework selectProHomework(Homework h) {
 		return lDao.selectProHomework(sqlSession, h);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (마감된 과제 상세페이지)
+	@Override
+	public Homework selectProHomeworkI(Homework h) {
+		return lDao.selectProHomeworkI(sqlSession, h);
 	}
 
 	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
@@ -223,6 +229,19 @@ public class LectureServiceImpl implements LectureService{
 	public int insertNewAtt(Attachment at) {
 		return lDao.insertNewAtt(sqlSession, at);
 	}
+
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글 삭제
+	@Override
+	public int deleteProHomework(Homework h) {
+		return lDao.deleteProHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글에 딸린 첨부파일 삭제
+	@Override
+	public int deleteAttachProHomework(Homework h) {
+		return lDao.deleteAttachProHomework(sqlSession, h);
+	}
+
 
 	
 }

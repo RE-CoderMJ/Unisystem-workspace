@@ -162,7 +162,7 @@
                         <div>
                             <div id="contentBox_file">
                                 <div class="box-file-input">
-                                    <label><input type="file" name="upfile" class="file-input" accept="image/*" id="upfile"></label>
+                                    <label><input type="file" name="upfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
                                     <span class="filename">파일을 선택해주세요.</div>
                                 </div>      
                             </div>

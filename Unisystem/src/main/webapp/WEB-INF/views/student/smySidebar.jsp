@@ -100,7 +100,7 @@ a:hover {
 			<div class="side_title">
 				<b>학적</b>
 			</div>
-			<p>
+			<p id="myPage">
 				<a href="list.st">- 내 정보조회</a>
 			</p>
 
