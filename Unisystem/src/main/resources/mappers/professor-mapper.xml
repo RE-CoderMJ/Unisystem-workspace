@@ -196,7 +196,7 @@
 		     , #{profUniv}
 		     , #{profDepartment}
 		     , #{profMajor}
-		     , TO_CHAR(SYSDATE, 'YYYYMMDD')
+		     , #{profInto}
 		     , 'Y'
 		     )
 	</insert>

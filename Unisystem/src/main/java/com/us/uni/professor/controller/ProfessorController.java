@@ -207,7 +207,7 @@ public class ProfessorController {
 	public String professorInsert(Users professor, MultipartFile upfile, HttpSession session) {
 	
 		int result = 0;
-		
+		System.out.println(professor.getProfInto());
 	
 		// 학생 정보 등록 시 프로필 사진 파일을 Student에 경로 저장
 		if(!upfile.getOriginalFilename().equals("")) {

@@ -76,6 +76,13 @@
 			               <form id="insertForm" action="insert.pr" method="post" enctype="multipart/form-data">
 			                
 			                <div class="form-group">
+			                	
+			                	<label>* 임용날짜 :</label>
+			                    <div>
+				                    <input type="date" class="form-control" name="profInto" required>
+			                    </div>
+			                    <br>
+			                
 			                
 			                    <label>* 이름 :</label>
 			                    <div>
