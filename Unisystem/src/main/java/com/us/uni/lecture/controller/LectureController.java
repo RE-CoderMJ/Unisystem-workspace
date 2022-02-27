@@ -59,6 +59,19 @@ public class LectureController {
 		
 	}
 	
+	/* 학생 - 메인페이지 : 내가 수강중인 강의 리스트 조회 */
+	@RequestMapping("selectStuClassList.lec")
+	public ModelAndView selectStudentClassListMainPage(HttpSession session, ModelAndView mv){
+		
+		
+		int userNo = ((Users)session.getAttribute("loginUser")).getUserNo();
+		ArrayList<Lecture> list = lService.selectStudentClassList(userNo);
+		
+		System.out.println(list);
+		mv.addObject("list", list).setViewName("common/portalmain");
+		
+		return mv;
+	}
 	
 	/* 학생 - 마이페이지에서 내가수강중인강의 페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("studentClassList.me")
@@ -429,7 +442,7 @@ public class LectureController {
 		
 		if(result > 0) { // 성공 => 게시글 리스트페이지 (list.bo  url재요청)
 			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
-			return "redirect:proHomeworkEnrollForm.lec";
+			return "redirect:homeworkProEndList.lec";
 		}else { // 실패 => 에러페이지 포워딩
 			session.setAttribute("alertMsg", "과제 등록 실패");
 			return "lecture/lectureHomeworkProListView";
@@ -437,17 +450,33 @@ public class LectureController {
 	}
 	
 	/* 교수 - 과제관리 : 제출가능한 과제 상세페이지를 띄워주는 컨트롤러 */
-	@RequestMapping("lectureProHomeworkDetail.stu")
-	public ModelAndView selectLectureProHomeworkDetial(int hno, Homework h, HttpSession session, ModelAndView mv) {
+	@RequestMapping("lectureProHomeworkDetailP.stu")
+	public ModelAndView selectLectureProHomeworkDetialP(int hno, HttpSession session, ModelAndView mv) {
 		// lno => 상세조회시 필요한 게시글 번호
-		
+		Homework h = new Homework();
 		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
 		h.setHomeworkpNo(hno);
 	
 		// 상단의 교수가 낸 과제 상세보기 항목을 불러오는 select문
 		h = lService.selectProHomework(h);		
 		Attachment at = lService.selectAttachHomework(h);	
-		mv.addObject("h", h).addObject("at", at).setViewName("lecture/lectureHomeworkProDetailView");
+		mv.addObject("h", h).addObject("at", at).setViewName("lecture/lectureHomeworkProDetailViewP");
+		
+		return mv;
+	}
+	
+	/* 교수 - 과제관리 : 마감된 과제 상세페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("lectureProHomeworkDetailI.stu")
+	public ModelAndView selectLectureProHomeworkDetialI(int hno, HttpSession session, ModelAndView mv) {
+		// lno => 상세조회시 필요한 게시글 번호
+		Homework h = new Homework();
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		h.setHomeworkpNo(hno);
+	
+		// 상단의 교수가 낸 과제 상세보기 항목을 불러오는 select문
+		h = lService.selectProHomeworkI(h);		
+		Attachment at = lService.selectAttachHomework(h);	
+		mv.addObject("h", h).addObject("at", at).setViewName("lecture/lectureHomeworkProDetailViewI");
 		
 		return mv;
 	}
@@ -456,7 +485,6 @@ public class LectureController {
 	@RequestMapping("updatepHomeworkStatus.lec")
 	public String updatepHomeworkStatus(Homework h, HttpSession session, Model model) {
 		
-		System.out.println(h);
 		int result = 0;
 		
 		result = lService.updatepHomeworkStatus(h);
@@ -483,26 +511,23 @@ public class LectureController {
 	
 	// 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 내용 수정하기
 	@RequestMapping("updateProHomework.lec")
-	public String updateProHomework(Homework h, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+	public String updateProHomework(int hno, Homework h, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
 		
 		h.setHomeworkpEndDateTime(h.getHomeworkpEndDateTime().replace("T", " "));
-		System.out.println(h);
-		System.out.println(at);
+
 		int newAtt = 1;
 		
 		// 새로 넘어온 첨부파일이 있을 경우 => 기존의 첨부파일 있을 경우 기존 첨부파일 삭제 후 새로운 첨부파일 업로드
 		if(!reupfile.getOriginalFilename().equals("")) {
-			
-			
-						
+					
 			if(at.getOriginName() != null) {// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기  =>
-				System.out.println("기존첨파있음");
+
 				new File(session.getServletContext().getRealPath(at.getChangeName())).delete();
 				
 				// 새로넘어온 첨부파일 서버 업로드 시키기 
 				String changeName = saveFile(reupfile, session);
 				// h에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
-				at.setRefNo(h.getHomeworkpNo());
+				at.setRefNo(hno);
 				at.setOriginName(reupfile.getOriginalFilename());
 				at.setChangeName(changeName);
 				at.setPath("resources/uploadFiles/homework_upfiles/"+ changeName);
@@ -510,9 +535,7 @@ public class LectureController {
 				newAtt = lService.updateProHwAtt(at);
 				
 			} else { // 기존의 첨부파일이 없을 경우 => 새로 전달된 파일 서버에 업로드	
-				
-				System.out.println("기존 첨파 없음");
-				
+								
 				// 새로넘어온 첨부파일 서버 업로드 시키기 
 				String changeName = saveFile(reupfile, session);
 				// h에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
@@ -535,10 +558,36 @@ public class LectureController {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "lecture/lectureHomeworkProListView";
 		}
-		
-
-		
+			
 	
+	}
+	
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글 + 첨부파일 삭제
+	@RequestMapping("deleteProHomework.lec")
+	public String deleteProHomework(int homeworkpNo, String filePath, HttpSession session, Model model) {
+		
+		Homework h = new Homework();
+		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
+		h.setHomeworkpNo(homeworkpNo);
+			
+		int result = lService.deleteProHomework(h);
+		
+		if(result > 0) {
+			
+			// 첨부파일이 있을경우 => 첨부파일 삭제
+			if(!filePath.equals("")) {  
+				int atresult = lService.deleteAttachProHomework(h);
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			// 과제 리스트 url 재요청
+			session.setAttribute("alertMsg", "과제 삭제 성공");
+			return "redirect:homeworkProEndList.lec";
+		} else {
+			model.addAttribute("errorMsg", "과제 삭제 실패");
+			return "redirect:homeworkProEndList.lec";
+		}
+		
 	}
 
 

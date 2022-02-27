@@ -124,6 +124,12 @@
     #meeting-time{
    		margin-top : 10px;
     }
+    .filename{
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  width:400px; 
+    }
 </style>
 </head>
 <body>
@@ -165,12 +171,13 @@
                                 
                                 <c:choose>
 			                    	<c:when test="${ empty at.originName}">
-				                    	<label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
+				                    	<label><input type="file" name="reupfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
 	                                    <span class="filename">파일을 선택해주세요.</div>
 			                    	</c:when>
 			                    	<c:otherwise>
-										<label><input type="file" name="reupfile" class="file-input" accept="image/*" id="upfile"></label>
-		                        		<span class="filename"><a href="${ at.changeName }" download="${ at.originName }">${ at.originName }</a></div>
+										<label><input type="file" name="reupfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
+		                        		<span class="filename"><a href="${ at.path }" download="${ at.originName }">${ at.originName }</a></div>
+		                        		
 		                        		<input type="hidden" name="originName" value="${ at.originName }" />
 			                            <input type="hidden" name="changeName" value="${ at.changeName }" />
 			                    	</c:otherwise>
@@ -191,7 +198,7 @@
                         </div>
     
                         <div id="two_btn">
-                            <button type="button" onclick="history.back()">목록</button>
+                            <button type="button" onclick="location.href='homeworkProEndList.lec';">목록</button>
                             <button type="submit">수정</button>
                         </div>
        
