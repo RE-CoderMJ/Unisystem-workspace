@@ -326,11 +326,11 @@
 	    						//websocket에 보내기(댓글작성자 게시글작성자 글번호)
 	    						console.debug("socket",socket)
 		    						if(socket != null){ 
-		    							let socketMsg = "reply,"+ '${loginUser.userNo}' +","+ '${b.boardWriter}' +","+'${b.boardNo}';
+		    							let socketMsg = "reply,"+ '${loginUser.userNo}' +","+ '${b.userNo}' +","+'${b.boardWriter}';
 		    							//가져올 변수들 홑따옴표로 감싸주기
 		    							
 			    						console.debug("jsp::socket>",socketMsg)
-		    							socket.send("socketMsg : "+ socketMsg);
+		    							socket.send(socketMsg);
 			    						
 			    						selectReplyList();
 			    						$('#msg').val("");

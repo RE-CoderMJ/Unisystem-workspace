@@ -228,12 +228,12 @@
 	    ws.onmessage = function (event) {
 	        console.log("ReceiveMessage:", event.data+'\n');
 	       let $socketAlert =  $('div #socketAlert');
-	       $socketAlert.text(event.data);
+	       $socketAlert.html(event.data);
 	       $socketAlert.css('display','block');
 	       
 	       setTimeout(function(){
 	    	   $socketAlert.css('display','none');
-	       }, 3000);
+	       }, 5000);
 	    };
 	
 	

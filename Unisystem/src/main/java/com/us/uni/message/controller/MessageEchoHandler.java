@@ -66,35 +66,34 @@ public class MessageEchoHandler extends TextWebSocketHandler {
 			String[] strs = msg.split(",");
 			if(strs != null && strs.length == 4) {
 				String cmd = strs[0]; //배열의 0번째 -> (1)참고 
-				String ruserNo = strs[1];
-				String boardWriter = strs[2];
-				String boardNo = strs[3];
+				String messageReader = strs[1];
+				String messageWriter = strs[2];
+				String msgContent = strs[3];
 				
-				//System.out.println("cmd"+cmd);
-				//System.out.println("boardWriter"+boardWriter);
-				WebSocketSession boardWriterSession = userSessions.get(boardWriter); 
 				
-				//작성자가 접속중일때만 알람이 가도록 작성자 정보를 가져옴 -> 가져오면 웹소켓 세션을 가져옴 
-				
-				if(boardWriterSession != null) { //not null이면 메시지를 보내줌 
-					TextMessage tmpMsg = new TextMessage(boardNo + "게시글에 댓글이 달렸습니다.");
+				if(cmd.equals("message")) { //not null이면 메시지를 보내줌 
+					WebSocketSession boardWriterSession = userSessions.get(messageReader); 
+						if(boardWriterSession != null) {
+						 	TextMessage tmpMsg = new TextMessage(messageWriter+"님에게 "+"새로운 메시지가 도착했습니다"+"<a href='http://localhost:8009/uni/list.msg'>"+"(메시지함으로 이동)"+ "</a>");
 					//text 출력되는 부분 -> 알맞게 수정하기 
 					//메시지면 전송 클릭하는 순간 alert가 되도록 하고 header스크립트문을 text가 아니라 html로 수정하기 
 					
-					
-					//System.out.println("ruserNo: "+ruserNo);
-					//System.out.println("boardNo"+ boardNo);
 					boardWriterSession.sendMessage(tmpMsg);
+					 				}
+							}
 					
-					//System.out.println("tmpMsg : " + tmpMsg);
-					
-					 //이제 jsp ajax부분에가서 웹소켓으로 번호를 보내줘야하고 
-					 //댓글에만 있던 js 부분을 전역으로 빼줘야함 
-						}
-					}
+					if(cmd.equals("reply")) {  
+						WebSocketSession boardWriterSession = userSessions.get(messageWriter); 
+						if(boardWriterSession != null) {
+							TextMessage tmpMsg = new TextMessage(messageWriter+"님에게 "+"새로운 댓글이 작성되었습니다."+"<a href='http://localhost:8009/uni/list.bo'>"+"(게시판으로 이동)"+ "</a>");
+							boardWriterSession.sendMessage(tmpMsg);
+													}//null
+											}//cmd reply
+									}
 				}
+		
+		
 	 		}
-
 	private String getId(WebSocketSession session) {
 		
 		Map<String, Object> httpSession = session.getAttributes(); 

@@ -65,6 +65,7 @@
 		  join users u on (b.user_no = u.user_no)
 		 where delete_yn = 'N'
 		 and bo_category = 4
+		 ORDER BY BOARD_NO DESC
 	</select>
 	
 	<!-- community 검색 기능 -->
