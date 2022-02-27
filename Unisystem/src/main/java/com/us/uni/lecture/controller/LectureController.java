@@ -438,7 +438,7 @@ public class LectureController {
 	
 	/* 교수 - 과제관리 : 제출가능한 과제 상세페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureProHomeworkDetail.stu")
-	public ModelAndView selectLectureProHomeworkDetial(String hno, Homework h, HttpSession session, ModelAndView mv) {
+	public ModelAndView selectLectureProHomeworkDetial(int hno, Homework h, HttpSession session, ModelAndView mv) {
 		// lno => 상세조회시 필요한 게시글 번호
 		
 		h.setClassNo(((Lecture)session.getAttribute("classInfo")).getClassNo());
@@ -471,6 +471,75 @@ public class LectureController {
 		
 	}
 	
+	// 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 수정하기 폼을 띄워주기
+	@RequestMapping("updateForm.ho")
+	public String updatepHomeworkForm(Homework h, HttpSession session, Model model) {
+		
+		model.addAttribute("h", lService.selectProHomework(h));
+		model.addAttribute("at", lService.selectAttachHomework(h));
+		
+		return "lecture/lectureHomeworkProUpdateForm";
+	}
+	
+	// 교수 - 과제관리 : 과제상세페이지에서 '수정'버튼을 통해 내용 수정하기
+	@RequestMapping("updateProHomework.lec")
+	public String updateProHomework(Homework h, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		h.setHomeworkpEndDateTime(h.getHomeworkpEndDateTime().replace("T", " "));
+		System.out.println(h);
+		System.out.println(at);
+		int newAtt = 1;
+		
+		// 새로 넘어온 첨부파일이 있을 경우 => 기존의 첨부파일 있을 경우 기존 첨부파일 삭제 후 새로운 첨부파일 업로드
+		if(!reupfile.getOriginalFilename().equals("")) {
+			
+			
+						
+			if(at.getOriginName() != null) {// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기  =>
+				System.out.println("기존첨파있음");
+				new File(session.getServletContext().getRealPath(at.getChangeName())).delete();
+				
+				// 새로넘어온 첨부파일 서버 업로드 시키기 
+				String changeName = saveFile(reupfile, session);
+				// h에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
+				at.setRefNo(h.getHomeworkpNo());
+				at.setOriginName(reupfile.getOriginalFilename());
+				at.setChangeName(changeName);
+				at.setPath("resources/uploadFiles/homework_upfiles/"+ changeName);
+				
+				newAtt = lService.updateProHwAtt(at);
+				
+			} else { // 기존의 첨부파일이 없을 경우 => 새로 전달된 파일 서버에 업로드	
+				
+				System.out.println("기존 첨파 없음");
+				
+				// 새로넘어온 첨부파일 서버 업로드 시키기 
+				String changeName = saveFile(reupfile, session);
+				// h에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
+				at.setRefNo(h.getHomeworkpNo());
+				at.setOriginName(reupfile.getOriginalFilename());
+				at.setChangeName(changeName);
+				at.setPath("resources/uploadFiles/homework_upfiles/"+ changeName);
+			
+				newAtt = lService.insertNewAtt(at);
+			}	
+			
+		}
+		
+		int result = lService.updateProHomework(h);
+		
+		if(result * newAtt> 0) { // 수정 성공
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:lectureProHomeworkDetail.stu?hno=" + h.getHomeworkpNo();
+		}else { // 수정 실패 => 에러페이지
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "lecture/lectureHomeworkProListView";
+		}
+		
+
+		
+	
+	}
 
 
 	/* 학생 - 과제업로드 상세페이지를 띄워주는 컨트롤러 */

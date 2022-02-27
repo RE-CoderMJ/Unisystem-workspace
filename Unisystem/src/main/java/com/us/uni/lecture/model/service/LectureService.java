@@ -100,6 +100,17 @@ public interface LectureService {
 	
 	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
 	int updatepHomeworkStatus(Homework h);
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제를 수정
+	int updateProHomework(Homework h);
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존 파일 있을 경우)
+	int updateProHwAtt(Attachment at);
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존에 파일 x)
+	int insertNewAtt(Attachment at);
+
+	
 
 }
 
