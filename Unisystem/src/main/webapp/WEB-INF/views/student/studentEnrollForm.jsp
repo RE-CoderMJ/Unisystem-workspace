@@ -138,7 +138,7 @@
 			                    <input type="text" class="form-control" id="nation" name="nation" value="대한민국"><br>
 			                    
 			                    <label for="phone"> * 연락처 :</label>
-			                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="11" placeholder="(-없이 입력)"><br>
+			                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="13" placeholder="(-포함 입력)"><br>
 			                    
 			                    <label for="email"> * 이메일 :</label>
 			                    <input type="email" class="form-control" id="email" name="email"><br>
@@ -319,7 +319,7 @@
 	            },
 	            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
 	            onresize : function(size) {
-	            	
+	            	sidebar();
 	            	address();
 	                element_wrap.style.height = size.height+'px';
 	            },

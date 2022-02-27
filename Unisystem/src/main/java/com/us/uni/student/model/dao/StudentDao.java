@@ -75,5 +75,13 @@ public class StudentDao {
 		return 0;
 	}
 	
+	public Users StudentInfo(SqlSessionTemplate sqlSession, int studNo){
+		return sqlSession.selectOne("studentMapper.StudentInfo", studNo);
+	}
+	
+	public int studentUpdateInfo(SqlSessionTemplate sqlSession, Users student) {
+		return sqlSession.update("studentMapper.studentUpdateInfo", student);
+	}
+	
 	
 }
