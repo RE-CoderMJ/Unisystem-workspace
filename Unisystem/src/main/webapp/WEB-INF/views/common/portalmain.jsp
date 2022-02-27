@@ -87,6 +87,17 @@ text-decoration:none;
 	grid-area: calendar;
 }
 
+.calendar a{
+text-decoration:none;
+color:black;
+}
+
+.calendar a:hover{
+text-decoration:none;
+color:black;
+font-weight:600;
+}
+
 .notice {
 	grid-area: notice;
 }
@@ -285,7 +296,7 @@ font-size:10px;
 		   <!--<button id="group" style="">UNI SYSTEM 학사그룹 </button>  -->
 		 
 		 <div style="text-align:center;">
-		 <a href="">비밀번호 변경</a>&nbsp;|&nbsp;<a href="logout">로그아웃</a>
+		 <a href="">비밀번호 변경</a>&nbsp;|&nbsp;<a href="logout.me">로그아웃</a>
 		 
 		
 		 </div>
@@ -299,7 +310,7 @@ font-size:10px;
 		
 		<!-- 나의일정 -->
 		<div class="calendar">
-		<h4>나의 일정</h4>
+		<h4><a href="calendar">나의 일정</a></h4>
 		<div id='calendar'></div>  
 		</div>
 		

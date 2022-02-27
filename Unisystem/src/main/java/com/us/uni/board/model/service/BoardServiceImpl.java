@@ -252,6 +252,30 @@ public class BoardServiceImpl implements BoardService{
 		
 		return bDao.deleteReply(sqlSession, replyNo);
 	}
+
+	@Override
+	public int selectcSearchCount(HashMap<String, String> map) {
+		
+		return bDao.selectcSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> selectcSearchList(HashMap<String, String> map, PageInfo pi) {
+		
+		return bDao.selectcSearchList(sqlSession, map,pi);
+	}
+
+	@Override
+	public int selectvSearchCount(HashMap<String, String> map) {
+		
+		return  bDao.selectvSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> selectvSearchList(HashMap<String, String> map, PageInfo pi) {
+		
+		return  bDao.selectvSearchList(sqlSession, map,pi);
+	}
 	
 	
 	

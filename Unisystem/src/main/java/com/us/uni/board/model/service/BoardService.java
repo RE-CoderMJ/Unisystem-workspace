@@ -62,10 +62,15 @@ public interface BoardService {
 		//대외활동
 		int vinsertBoard(Board b);
 		Board vselectBoard(int bno);
+		int selectvSearchCount(HashMap<String, String> map);
+		ArrayList<Board> selectvSearchList(HashMap<String, String> map, PageInfo pi);
 		
 		//동아리
 		int cinsertBoard(Board b);
 		Board cselectBoard(int bno);
+		int selectcSearchCount(HashMap<String, String> map);
+		ArrayList<Board> selectcSearchList(HashMap<String, String> map, PageInfo pi);
+		
 		
 		//댓글 ajax 
 		ArrayList<Reply> selectReplyList(int bno);

@@ -60,19 +60,23 @@ public class BoardController {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-			
-		int searchCount = bService.selectSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+		
+		int searchCount = bService.selectSearchCount(map); 
+		//현재 검색결과에 맞는 게시글 총갯수 
 
-		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 5);
 		ArrayList<Board> list = bService.selectSearchList(map, pi);
+			
+			//System.out.println(searchCount);
+			//System.out.println(map);
 			
 			mv.addObject("pi", pi)
 			  .addObject("list", list)
 			  .addObject("condition", condition)
 			  .addObject("keyword", keyword)
 			  .setViewName("board/boardListView");
-			
-			return mv;
+			  
+			  return mv;
 		}
 	
 	
@@ -80,12 +84,14 @@ public class BoardController {
 	@RequestMapping("keyword.bo")
 	public ModelAndView selectKeyword(@RequestParam(value="cpage",defaultValue="1")int currentPage,int bokeyword, ModelAndView mv) {
 		
+		
+		//System.out.println(bokeyword);
+		
+		
 		int listCount = bService.selectKeywordListCount(bokeyword);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Board> list = bService.selectKeyword(pi,bokeyword);
-		
-		//System.out.println(list);
 		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
@@ -535,6 +541,52 @@ public class BoardController {
 					}
 				}
 	
+				//대외활동 검색
+				@RequestMapping("search.vbo")
+				public ModelAndView searchvList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
+						
+
+					HashMap<String, String> map = new HashMap<>();
+					map.put("condition", condition);
+					map.put("keyword", keyword);
+						
+					int searchCount = bService.selectvSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+
+					PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+					ArrayList<Board> list = bService.selectvSearchList(map, pi);
+						
+						mv.addObject("pi", pi)
+						  .addObject("list", list)
+						  .addObject("condition", condition)
+						  .addObject("keyword", keyword)
+						  .setViewName("volunteer/volListView");
+						
+						return mv;
+					}
+				
+				//대외활동 검색
+				@RequestMapping("search.cbo")
+				public ModelAndView searchcList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
+						
+
+					HashMap<String, String> map = new HashMap<>();
+					map.put("condition", condition);
+					map.put("keyword", keyword);
+						
+					int searchCount = bService.selectcSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+
+					PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+					ArrayList<Board> list = bService.selectcSearchList(map, pi);
+						
+						mv.addObject("pi", pi)
+						  .addObject("list", list)
+						  .addObject("condition", condition)
+						  .addObject("keyword", keyword)
+						  .setViewName("volunteer/circleListView");
+						
+						return mv;
+					}
+				
 				
 				@RequestMapping("detail.cbo")
 				public ModelAndView cselectBoard(int bno, ModelAndView mv) {

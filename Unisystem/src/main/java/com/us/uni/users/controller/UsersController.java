@@ -33,11 +33,18 @@ public class UsersController {
 			return "common/userLogin";
 		}
 		
-	//portal메인
-	@GetMapping("enview")
-	public ModelAndView find() {
-		return new ModelAndView ("common/portalmain");
-	}
+		//portal메인
+		@RequestMapping("enview")
+		public ModelAndView find() {
+			return new ModelAndView ("common/portalmain");
+		}
+	
+		//관리자 portal메인
+		@RequestMapping("adenview")
+		public String adfind() {
+			return "admin/adportalmain";
+		}
+		
 	
 	
 	// 로그인
@@ -48,22 +55,26 @@ public class UsersController {
 
 		Users loginUser = uService.loginUser(m);
 		
-		System.out.println(loginUser.getUserPwd());
+		//System.out.println(loginUser.getUserPwd());
 		
 		//String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
 		//System.out.println("평문:" + m.getUserPwd());
 		//System.out.println("암호문:"+ encPwd);
 		//m.setUserPwd(encPwd);
 		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())&&(loginUser.getUserDiv() ==3)){
+			System.out.println(loginUser.getUserDiv());
+			
+						// 관리자 로그인 성공
+						session.setAttribute("loginUser", loginUser);
+						mv.setViewName("redirect:adenview");
 		
-		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-			
-			// 로그인 성공
-			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("redirect:enview");
-			
-		} else {
-			// 로그인 실패
+		} else if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+							
+							// 로그인 성공
+							session.setAttribute("loginUser", loginUser);
+							mv.setViewName("redirect:enview");
+		}else{// 로그인 실패
 			model.addAttribute("alertMsg", "일치하는 회원정보가 없습니다.");
 			mv.setViewName("common/mainPage"); 
 		}

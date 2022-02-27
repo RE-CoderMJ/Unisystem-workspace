@@ -76,15 +76,15 @@
 		  join users u on (b.user_no = u.user_no)
 		 where delete_yn = 'N'
 		 and bo_category = 4
-		<if test="condition == 'writer'">
+			<if test="condition == 'writer'">
 		   and u.kor_name like '%' || #{keyword} || '%'
-		  </if>
-		  <if test="condition == 'title'">
+		  	</if>
+		  	<if test="condition == 'title'">
 		  and board_title like '%' || #{keyword} || '%'
-		  </if>
-		  <if test="condition == 'content'">
+		 	 </if>
+		  	<if test="condition == 'content'">
 		  and board_content like '%' || #{keyword} || '%'
-		  </if>
+		 	 </if>
 		  
 	</select>
 	
@@ -669,5 +669,97 @@
 			set status = 'N'
 			where reply_no = #{replyNo}
 	</update>
+	
+	<!-- 공모전 검색 기능 -->
+	 <select id="selectcSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+		  
+	</select>
+	
+	<select id="selectcSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 대외활동 검색 기능 -->
+	 <select id="selectvSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+		  
+	</select>
+	
+	<select id="selectvSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
 	
 </mapper>

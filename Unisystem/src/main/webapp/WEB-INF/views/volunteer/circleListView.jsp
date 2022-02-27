@@ -255,9 +255,17 @@ li {
 								href="list.cbo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
+					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<li class="page-item"><a class="page-link" href="list.cbo?cpage=${ p }">${ p }</a></li>
+						<c:if test="${ empty condition }">
+							<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+						</c:if>
+						
+						<c:if test="${ not empty condition }">
+							<li class="page-item"><a class="page-link" href="search.cbo?cpage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+						</c:if>
 					</c:forEach>
+					
 					 <c:choose>
 						<c:when test="${ pi.currentPage eq pi.maxPage }">
 							<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
