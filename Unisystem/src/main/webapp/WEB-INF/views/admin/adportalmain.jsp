@@ -58,12 +58,13 @@
 	border-bottom: 1px solid #153e73;
 }
 
-.class a{
-	color : black;
+.class b{
+	color:#787878;
 }
-
-.class ul{
-	margin:0;
+.class li{
+list-style:none;
+font-weight:600;
+font-size:14px;
 }
 .room {
 	grid-area: room;
@@ -220,33 +221,23 @@ font-size:10px;
 <body>
 	<jsp:include page="../common/links.jsp" />
 	<div>
-		<jsp:include page="header.jsp" />
+		<jsp:include page="../common/header.jsp" />
 
 	</div>
 
 	<div class="gridWrap">
 	<div class="container1">
 	
-		<!-- 수강중인 과목 -->
-		<div class="class" style="overflow:auto; width:auto; height:auto;">
-			<!-- 학생일경우 -->
-			<c:if test="${ loginUser.userDiv eq  1}">
-				<h4 style="margin-bottom:20px;">수강중인 과목</h4>
-				<c:forEach var="l" items="${ list }" >
-		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
-		            </ul>
-				</c:forEach>
-			</c:if>
-			<c:if test="${ loginUser.userDiv eq  2}">
-				<h4>진행중인 과목</h4>
-				<c:forEach var="l" items="${ list }" >
-		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureProMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
-		            </ul>
-				</c:forEach>
-			</c:if>
-			
+		<div class="class" >
+		<h4>학사일정</h4>
+		 <ul style="margin-left:-22px; line-height: 24px;">
+		  <li style="padding:none;"><b>2022.03.02</b> &nbsp;&nbsp;&nbsp; 제1학기 개강 및 입학식 </li>
+		  <li style="padding:none;"><b>2022.03.12</b> &nbsp;&nbsp;&nbsp;개교기념일 </li>
+		  <li style="padding:none;"><b>2022.04.05</b> &nbsp;&nbsp;&nbsp;수업일수 1/3선 </li>
+		  <li style="padding:none;"><b>2022.04.23</b> &nbsp;&nbsp;&nbsp;수업일수 1/2선 </li>
+		  <li style="padding:none;"><b>2022.07.08</b> &nbsp;&nbsp;&nbsp;전과 신청 </li>
+		  <li style="padding:none;"><b>2022.07.25</b> &nbsp;&nbsp;&nbsp;부/복수/연계전공 신청 </li>
+		 </ul>
 		</div>
 		
 		<!-- 메일 -->
@@ -292,7 +283,7 @@ font-size:10px;
 		 	<c:if test="${loginUser.studStatus eq 3}">
 		 		(졸업)
 		 	</c:if>
-		 	<c:if test="${loginUser.studStatus eq 4}">
+		 	<c:if test="${loginUser.studStatus eq 3}">
 		 		(자퇴)
 		 	</c:if>
 		 	
@@ -503,6 +494,6 @@ $(function(){
 
 </script>
  
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

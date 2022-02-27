@@ -50,7 +50,7 @@
         line-height: 43px;
     }
     #header-up-right{
-        margin-left: 1065px;
+        margin-left: 967px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
@@ -123,6 +123,12 @@
     #searchBtn:focus{
         outline: none;
     }
+    .msg img{
+     height: 30px;
+    display: inline-block;
+    margin-top: 6px;
+    margin-left: 10px;
+    }
 </style>
 </head>
 <body>
@@ -141,6 +147,13 @@
         <div id="header-up">
         	<div id="header-up-line">
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
+	            
+	            <div style="float: left;" class="msg">
+	            <a href="list.msg"><img src="resources/images/msg_icon.png"></a>
+	            ${ message.pi.listCount }
+	            </div>
+	           
+	           
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
 	                <span>${loginUser.korName}
