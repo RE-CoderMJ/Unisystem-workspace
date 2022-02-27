@@ -119,6 +119,18 @@ public interface LectureService {
 	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글에 딸린 첨부파일 삭제
 	int deleteAttachProHomework(Homework h);
 
+	// 학생 - 과제업로드 : 제출가능한 과제 상세페이지 조회
+	Homework selectStuHomeworkP(Homework h);
+	
+	// 학생 - 과제업로드 : 제출가능한 과제에서 과제 등록 
+	int insertStuHomeworkEnrollForm(Homework h, Attachment at);
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 조회 
+	Homework selectStuHomeworkDetail(Homework h);
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
+	Attachment selectStuAttachHomework(Homework h);
+
 }
 
 
