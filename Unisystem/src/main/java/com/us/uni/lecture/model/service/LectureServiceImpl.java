@@ -274,6 +274,49 @@ public class LectureServiceImpl implements LectureService{
 	public Attachment selectStuAttachHomework(Homework h) {
 		return lDao.selectStuAttachHomework(sqlSession, h);
 	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제등록 시 첨부파일 등록
+	@Override
+	public int insertStuAttachPHomework(Attachment at) {
+		return lDao.insertStuAttachPHomework(sqlSession, at);
+	}
+	
+	// 학생 - 과제업로드 : 과제 수정
+	@Override
+	public int updateStuHomework(Homework h) {
+		return lDao.updateStuHomework(sqlSession, h);
+	}
+	
+	// 학생 - 과제업로드 : 과제수정 (기존에 과제가 없을 때 )
+	@Override
+	public int insertnewStuAttachPHomework(Attachment at) {
+		return lDao.insertnewStuAttachPHomework(sqlSession, at);
+	}
+	
+	// 학생 - 과제업로드 : 학생이 제출한 과제 삭제 
+	@Override
+	public int deleteStuHomework(Homework h) {
+		return lDao.deleteStuHomework(sqlSession, h);
+	}
+
+	// 학생 - 과제업로드 : 학생이 제출한 과제의 첨부파일 삭제
+	@Override
+	public int deleteAttachStuHomework(Homework h) {
+		return lDao.deleteAttachStuHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 총 개수 조회
+	@Override
+	public int selectStuHomeworkListCount(Homework h) {
+		return lDao.selectStuHomeworkListCount(sqlSession, h);
+	}
+	
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 조회
+	@Override
+	public ArrayList<Homework> selectStuHomeworkList(PageInfo pi, Homework h) {
+		return lDao.selectStuHomeworkList(sqlSession, pi, h);
+	}
+
 
 
 	

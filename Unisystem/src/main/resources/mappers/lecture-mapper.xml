@@ -63,6 +63,11 @@
 		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
 		<result column="kor_name" property="korName" />	
+		
+		<result column="total_semester" property="totalSemester" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="path" property="path" />
 					
 	</resultMap>
 	
@@ -767,16 +772,98 @@
 		   and status = 'Y'		
 	</select>
 
+	<!-- 학생 - 과제업로드 : 제출가능한 과제 새로운 첨부파일 업로드 -->
+	<update id="updateStuHomework">
+		update
+		       homeworks
+		   set homeworks_content = #{homeworksContent}
+		 where homeworks_no = #{homeworksNo}
+		   and status = 'Y'	
+	</update>
+	
+	<!-- 학생 - 과제업로드 : 과제수정 (기존에 과제가 없을 때 ) --> 
+	<insert id="insertnewStuAttachPHomework">
+		insert
+		  into attachment
+		  (
+            attach_no
+          , ref_type
+          , ref_no
+          , origin_name
+          , change_name
+          , path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'S'
+		  , #{refNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )		
+	</insert>
+	
+	<!-- 학생 - 과제업로드 : 학생이 제출한 과제 게시글 삭제 -->
+	<update id="deleteStuHomework">
+		update
+		       homeworks
+		   set status = 'N'
+		 where homeworks_no = #{homeworksNo}	
+	</update>
 
-
-
-
-
-
-
-
-
-
+	<!-- 학생  - 과제업로드 : 학새이 제출한 첨부파일 삭제 -->
+	<update id="deleteAttachStuHomework">
+		update
+		       attachment
+		   set status = 'N'
+		 where ref_no = #{homeworksNo}
+           and ref_type = 'S'		
+	</update>
+	
+	<!-- 교수 - 과제관리 : 한 과제에 대해 제출한 학생 정보 리스트 조회 -->
+	<select id="selectStuHomeworkList" resultMap="homeworkResult">
+		select
+               homeworkp_no
+		     , homeworks_no
+             , total_semester
+             , grade_status
+             , stud_no
+             , kor_name
+             , homeworks_content
+             , ( select
+                        origin_name
+                   from attachment
+                  where ref_type = 'S'
+                    and ref_no = homeworks_no) "originName"
+             , ( select
+                        change_name
+                   from attachment
+                  where ref_type = 'S'
+                    and ref_no = homeworks_no ) "changeName"
+             , ( select
+                        path
+                   from attachment
+                  where ref_type = 'S'
+                    and ref_no = homeworks_no ) "path"
+		  from homeworks s
+          join homeworkp p using (homeworkp_no)
+          join student using (stud_no)
+          join users on(stud_no = user_no)
+		 where s.status = 'Y'
+           and homeworkp_no = #{homeworkpNo}
+         order
+            by homeworks_no desc	
+	</select>
+	
+	<!-- 교수 : 과제관리 - 현재 게시글 리스트 갯수 조회 -->
+	<select id="selectStuHomeworkListCount" resultType="_int">
+		select
+			       count(*)
+			  from homeworks
+			 where status = 'Y'
+			   and homeworkp_no = #{homeworkpNo}	
+	</select>
 
 
 

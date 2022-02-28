@@ -130,7 +130,27 @@ public interface LectureService {
 	
 	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
 	Attachment selectStuAttachHomework(Homework h);
-
+	
+	// 학생 - 과제업로드 : 제출가능한 과제등록 시 첨부파일 등록
+	int insertStuAttachPHomework(Attachment at);
+	
+	// 학생 - 과제업로드 : 과제 수정
+	int updateStuHomework(Homework h);
+	
+	// 학생 - 과제업로드 : 과제수정 (기존에 과제가 없을 때 )
+	int insertnewStuAttachPHomework(Attachment at);
+	
+	// 학생 - 과제업로드 : 학생이 제출한 과제 삭제
+	int deleteStuHomework(Homework h);
+	
+	// 학생 - 과제업로드 : 학생이 제출한 과제의 첨부파일 삭제
+	int deleteAttachStuHomework(Homework h);
+	
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 총 개수 조회
+	int selectStuHomeworkListCount(Homework h);
+	
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 조회
+	ArrayList<Homework> selectStuHomeworkList(PageInfo pi, Homework h);
 }
 
 

@@ -259,7 +259,7 @@
 	                   				<td>제출</td>
 	                   				<td><a href="lectureHomeworkResult.stu">201800101 성민석 과제제출입니다.</a></td>
 	                   				<td><a href="lectureHomeworkResult.stu">201800101 성민석.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>2</td>

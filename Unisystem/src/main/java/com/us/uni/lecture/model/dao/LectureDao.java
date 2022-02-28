@@ -259,6 +259,45 @@ public class LectureDao {
 	
 	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
 	public Attachment selectStuAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
+		System.out.println(h);
 		return sqlSession.selectOne("lectureMapper.selectStuAttachHomework", h);
 	}
+	
+	// 학생 - 과제업로드 : 과제 수정
+	public int updateStuHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.updateStuHomework", h);
+	}
+	
+	// 학생 - 과제업로드 : 과제수정 (기존에 과제가 없을 때 )
+	public int insertnewStuAttachPHomework(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertnewStuAttachPHomework", at);
+	}
+	
+	// 학생 - 과제업로드 : 학생이 제출한 과제 삭제 
+	public int deleteStuHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.deleteStuHomework", h);
+	}
+	
+	// 학생 - 과제업로드 : 학생이 제출한 과제의 첨부파일 삭제
+	public int deleteAttachStuHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.deleteAttachStuHomework", h);
+	}
+	
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 총 개수 조회
+	public int selectStuHomeworkListCount(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuHomeworkListCount", h);
+	}
+	
+	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 조회
+	public ArrayList<Homework> selectStuHomeworkList(SqlSessionTemplate sqlSession, PageInfo pi, Homework h){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectStuHomeworkList", h, rowBounds);
+	}
+	
+	
 }
