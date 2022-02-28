@@ -218,7 +218,7 @@
 		     , STUD_DIVISION
 		     , STUD_STATUS
 		     , TOTAL_SEMESTER
-		     , U2.KOR_NAME "SPROF_NO"
+		     , U2.KOR_NAME "SPROF_NAME"
 		  FROM USERS U
 		  JOIN STUDENT ON (U.USER_NO = STUD_NO)
 		  JOIN USERS U2 ON (PROF_NO = U2.USER_NO)
@@ -241,4 +241,34 @@
 		   SET PASSWORD = #{encPwd}
 		 WHERE USER_NO = #{userNo}
 	</update>
+	
+	<update id="adminUpdateInfo1">
+		 UPDATE 
+	             STUDENT 
+	         SET STUD_UNIV = #{studUniv}
+	           , STUD_DEPARTMENT = #{studDepartment}
+			   , STUD_MAJOR = #{studMajor}
+			   , STUD_MINOR = #{studMinor}
+			   , STUD_INTO = #{studInto}
+			   , STUD_GRAD = #{studGrad}
+			   , STUD_STATUS = #{studStatus}
+			   , STUD_DIVISION = #{studDivision}
+	       WHERE STUD_NO = #{userNo}
+	</update>
+	
+	<update id="adminUpdateInfo2">
+		UPDATE 
+      		   USERS
+		   SET KOR_NAME = #{korName}
+		     , ENG_NAME = #{engName}
+		     , BIRTHDAY = #{birthday}
+		     , EMAIL = #{email}
+		     , PHONE = #{phone}
+		     , ADDRESS = #{address}
+		     , NATION = #{nation}
+		     , USER_DIV = #{userDiv}
+		     , PROFILE_IMG = #{profileImg}
+	     WHERE USER_NO = #{userNo}
+	</update>
+	
 </mapper>

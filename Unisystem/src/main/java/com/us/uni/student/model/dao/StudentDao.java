@@ -96,5 +96,24 @@ public class StudentDao {
 		return sqlSession.update("studentMapper.studentUpdatePwd", map);
 	}
 	
+	public int adminUpdateInfo(SqlSessionTemplate sqlSession, Users student) {
+
+		int result = 0;
+		
+		int result1 = sqlSession.insert("studentMapper.adminUpdateInfo1", student);
+		int result2 = sqlSession.insert("studentMapper.adminUpdateInfo2", student);		
+		
+		result = result1 * result2;
+		
+		if(result > 0) {
+			return result;
+		}else {
+			return 0;
+		}
+			
+		
+		
+	}
+	
 	
 }

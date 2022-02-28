@@ -187,7 +187,6 @@ public class StudentController {
 		return "redirect:list.st";
 	}
 	
-	
 	@RequestMapping("updatePwd.st")
 	public String studentUpdatePwd(int userNo, String currPwd, String checkPwd, String userPwd, HttpSession session) {
 		int result = 0;
@@ -244,8 +243,34 @@ public class StudentController {
 		
 		return changeName;
 		
-		
 	}
 		
+	/**
+	 * 관리자 - 학생 상세정보 조회
+	 */
+	@RequestMapping("detail.st")
+	public ModelAndView adminStudentDetailView(int studNo, ModelAndView mv) {
+		
+		Users stud = sService.StudentInfo(studNo);
+		
+		mv.addObject("stud", stud).setViewName("student/adminStudentDetailView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("updateInfo.ad")
+	public String adminUpdateInfo(Users student, HttpSession session) {
+			System.out.println(student);
+		int result = sService.adminUpdateInfo(student);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "학생 정보가 변경되었습니다!");
+		}else {
+			session.setAttribute("alertMsg", "학생 정보 변경을 실패했습니다.");
+		}
+		
+		return "redirect:detail.st?studNo=" + student.getUserNo();
+	}
+	
 	
 }

@@ -111,7 +111,7 @@ public class FacilityController {
 	
 	@RequestMapping("insert.sr")
 	public String insertStudy(Facility fa, HttpSession session) {
-		
+		System.out.println(fa);
 		int result = fService.insertStudy(fa);
 		
 		if(result < 0) {

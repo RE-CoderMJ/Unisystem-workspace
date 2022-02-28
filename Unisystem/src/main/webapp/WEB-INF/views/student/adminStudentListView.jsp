@@ -193,7 +193,7 @@
 								<tr>
 									<td><input type="checkbox" class="deleteNo" name="dno" value="${std.studNo}"></td>
 									<td>${ std.studNo }</td>
-									<td>${ std.korName }</td>
+									<td><a href="detail.st?studNo=${std.studNo}">${ std.korName }</a></td>
 									<td>${ std.studUniv }</td>
 									<td>${ std.studDepartment }</td>
 									<td>${ std.studMajor }</td>

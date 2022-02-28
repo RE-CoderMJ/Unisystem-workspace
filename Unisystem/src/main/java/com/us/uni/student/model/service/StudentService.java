@@ -28,6 +28,10 @@ public interface StudentService {
 	
 	// 학생 정보 변경
 	int studentUpdateInfo(Users student);
+	
 	// 비밀번호 변경
 	int studentUpdatePwd(HashMap map);
+	
+	// 관리자 - 개인정보 변경
+	int adminUpdateInfo(Users student);
 }

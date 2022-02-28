@@ -70,6 +70,13 @@ public class StudentServiceImpl implements StudentService{
 		return sDao.studentUpdatePwd(sqlSession, map);
 	}
 
+	@Override
+	public int adminUpdateInfo(Users student) {
+		return sDao.adminUpdateInfo(sqlSession, student);
+	}
+	
+	
+
 	
 
 	
