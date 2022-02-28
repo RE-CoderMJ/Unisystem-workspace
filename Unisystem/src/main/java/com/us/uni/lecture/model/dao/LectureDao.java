@@ -237,4 +237,28 @@ public class LectureDao {
 		return sqlSession.update("lectureMapper.deleteAttachProHomework", h);
 	}
 	
+	// 학생 - 과제업로드 : 제출가능한 과제 상세페이지 조회
+	public Homework selectStuHomeworkP(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuHomeworkP", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제에서 과제 등록 
+	public int insertStuHomeworkEnrollForm(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.insert("lectureMapper.insertStuHomeworkEnrollForm", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제등록 시 첨부파일 등록
+	public int insertStuAttachPHomework(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertStuAttachPHomework", at);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 조회 
+	public Homework selectStuHomeworkDetail(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuHomeworkDetail", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
+	public Attachment selectStuAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuAttachHomework", h);
+	}
 }

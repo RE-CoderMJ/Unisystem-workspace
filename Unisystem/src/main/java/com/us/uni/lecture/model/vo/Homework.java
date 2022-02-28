@@ -28,6 +28,7 @@ public class Homework {
 	private int score;						// 점수
 	private String feedback;				// 피드백
 	private String sstatus;					// 게시여부(Y|N)
+	private String homeworksContent;		// 내용
 	
 	private String korName;
 	private int rownum;

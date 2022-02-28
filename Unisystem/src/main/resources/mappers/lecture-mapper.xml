@@ -48,6 +48,7 @@
 	<resultMap type="Homework" id="homeworkResult">
 		<result column="rownum" property="rownum" />
 		<result column="homeworkp_no" property="homeworkpNo" />	
+		<result column="homeworks_no" property="homeworksNo" />
 		<result column="class_no" property="classNo" />	
 		<result column="homeworkp_name" property="homeworkpName" />	
 		<result column="homeworkp_category" property="homeworkpCategory" />	
@@ -55,12 +56,14 @@
 		<result column="grade_status" property="gradeStatus" />
 		<result column="score" property="score" />
 		<result column="homeworkp_content" property="homeworkpContent" />
+		<result column="homeworks_content" property="homeworksContent" />
 		<result column="제출상황" property="countHW" />	
 		<result column="채점상황" property="countGHW" />	
 		<result column="feedback" property="feedback" />
 		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
-		<result column="kor_name" property="korName" />				
+		<result column="kor_name" property="korName" />	
+					
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -669,6 +672,111 @@
            and ref_type = 'P'	
 	</update>
 	
+	<!-- 학생 - 과제업로드 : 제출가능한 과제 상세조회 -->
+	<select id="selectStuHomeworkP" resultMap="homeworkResult">
+		select
+		       homeworkp_no
+		     , homeworkp_name
+		     , to_char(to_date(homeworkp_enddatetime, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI') "마감일시"
+		     , homeworkp_content
+             , kor_name
+		  from homeworkp
+          join class using(class_no)
+          join professor using(prof_no)
+          join users on (prof_no = user_no)
+		 where homeworkp_no = #{homeworkpNo}
+		   and class_no = #{classNo}
+		   and status = 'Y'
+		   and homeworkp_category = 'P'	
+	</select>
+
+	<!-- 학생 - 과제업로드 : 제출가능한 과제등록 -->
+	<insert id="insertStuHomeworkEnrollForm">
+		insert
+		  into homeworks
+		  (
+		    homeworks_no
+		  , homeworkp_no
+		  , stud_no
+		  , grade_status
+		  , status
+		  , homeworks_content
+		  )
+		  values
+		  (
+		    seq_homeworks.nextval
+		  , #{homeworkpNo}
+		  , #{studNo}
+		  , 'B'
+		  , 'Y'
+		  , #{homeworksContent}
+		  )	
+	</insert>
+
+	<!-- 학생 - 과제업로드 : 제출가능한 과제등록 시 등록된 첨부파일 -->
+	<insert id="insertStuAttachPHomework">
+		insert
+		  into attachment
+		  (
+            attach_no
+          , ref_type
+          , ref_no
+          , origin_name
+          , change_name
+          , path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'S'
+		  , seq_homeworks.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )		
+	</insert>
+	
+	<!-- 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 조회 -->
+	<select id="selectStuHomeworkDetail" resultMap="homeworkResult">
+		select
+		       homeworks_no
+		     , homeworkp_no
+		     , stud_no
+		     , grade_status
+		     , score
+		     , feedback
+		     , homeworks_content
+		  from homeworks
+		 where homeworkp_no = #{homeworkpNo}
+		   and status = 'Y'	
+	</select>
+	
+	<!-- 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회  -->
+	<select id="selectStuAttachHomework" resultMap="attResult">
+		select
+               attach_no
+             , ref_type
+             , ref_no
+             , origin_name
+             , change_name
+             , path
+             , status
+          from attachment
+		 where ref_type = 'S'
+		   and ref_no = #{homeworksNo}
+		   and status = 'Y'		
+	</select>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

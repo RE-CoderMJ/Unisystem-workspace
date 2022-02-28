@@ -126,6 +126,40 @@
 	    color: #fff !important;
 	    background: RGB(26,86,162)!important;
 	}
+	
+	/* 파일 업로드 영역*/
+    .box-file-input{
+        width: 500px;
+        margin-top: 5px;
+    }
+    .box-file-input label{
+	    display:inline-block;
+	    background:rgb(21, 62, 115);
+	    color:#fff;
+	    padding:0px 15px;
+	    line-height:35px;
+	    cursor:pointer;
+    }
+
+    .box-file-input label:after{
+    	content:"파일등록";
+    }
+
+    .box-file-input .file-input{
+    	display:none;
+    }
+
+    .box-file-input .filename{
+    	display:inline-block;
+    	padding-left:10px;
+    }
+    
+    .filename{
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  width:400px; 
+    }
 </style>
 </head>
 <body>
@@ -148,46 +182,140 @@
 
                 <div id="contentBox_border">
                     <div id="contentBox_header">
-                        8주차 과제
-                        <span><i class="fas fa-paperclip"></i></span>
+                        ${ h.homeworkpName }
+                        <c:if test="${ not empty at.originName}">
+	                    	<span><i class="fas fa-paperclip"></i></span>
+                        </c:if>
                     </div>
 
                     <div id="contentBox_info">
                         <div><i class="fas fa-user-circle"></i></div>
                         <div id="pro_name">
-                            <div>김말똥<span>교수</span></div>
-                            <div>2022.01.01 15:44 <span>조회 13</span></div>
+                            <div>${ h.korName }<span>교수</span></div>
+                            <div>${ h.homeworkpEndDateTime }</div>
                         </div>
                     </div>
 
                     <div>
                         <div id="contentBox_file">
                             <i class="far fa-folder" style="float: left;"></i>
-                            <div style="float: left; margin-top: 12px; margin-left: 10px;">8주차 과제.docx</div>
+                            <div style="float: left; margin-top: 12px; margin-left: 10px;">
+                            
+							<c:choose>
+		                    	<c:when test="${ empty at.originName}">
+		                    		첨부파일이 없습니다.
+		                    	</c:when>
+		                    	<c:otherwise>
+	                        		<a href="${ at.path }" download="${ at.originName }">${ at.originName }</a>
+		                    	</c:otherwise>
+                        	</c:choose>
+                        	                           
+                            </div>
                         </div>
+                        <div>마감기한 : ${ h.homeworkpEndDateTime }</div>
                         <div id="contentBox_content">
-                            상단에 과제 다운로드 후 2022.01.01 12:00시까지 제출하시길 바랍니다.
+                            ${ h.homeworkpContent }
                         </div>
                     </div>
 
                     <div id="two_btn">
-                        <button type="button">목록</button>
-                        <button type="button">▲TOP</button>
+                        <button type="button" onclick="history.back()">목록</button>
+                        <button type="button" style="cursor:pointer;" onclick="window.scrollTo(0,0);">▲TOP</button>
                     </div>
    
                 </div>
-                <form action=""> 
+                <form id="enrollForm" method="post" action="stuHomeworkInsert.lec" enctype="multipart/form-data"> 
+                    <input type="hidden" name="homeworkpNo" id="homeworkpNo" value="${ h.homeworkpNo }" />
+                    <input type="hidden" name="studNo" value="${ loginUser.userNo }" />
                     <div id="contentBox_border_bottom">
                         <div id="contentBox_border_bottom_header">과제 제출</div>
                         <div>
-                            <div style="margin-bottom: 10px;"><input type="file"></div>
                             <div>
-                                <textarea name="" id="" rows="7" style="resize: none; width: 100%;"></textarea>
+                                <div class="box-file-input">
+                                    <label><input type="file" name="upfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
+                                    <span class="filename">
+                                    	
+                                    </span>
+                                </div>
+                            </div>   
+                        	<div>
+                                <textarea name="homeworksContent" id="homeworksContent" rows="7" style="resize: none; width: 100%;" placeholder="내용을 입력하세요."></textarea>
                                 <button type="submit">제출</button>
                             </div>
                         </div>
                     </div>
                 </form>
+                
+                <script>
+                    $(document).on("change", ".file-input", function(){
+                    
+                    $filename = $(this).val();
+
+                    if($filename == "")
+                        $filename = "파일을 선택해주세요.";
+
+                    $(".filename").text($filename);
+
+                    })
+                    
+                    $(function(){
+                    	selectStuHomeworkDetail();
+                    	selectStuAttachHomework();
+                    })
+                    
+                    function selectStuHomeworkDetail(){
+                    	
+                    	let homeworkpNo = $("#homeworkpNo").val();
+                    	
+                    	$.ajax({
+                    		url:"selectStuHomeworkDetail.lec",
+                    		data:{
+                    			homeworkpNo : homeworkpNo
+                    		},
+                    		success:function(h){
+                    			
+                    			console.log(h);
+                    			let value = "";
+                    			
+                    			value = h.homeworksContent;
+                    			$("#homeworksContent").html(value);
+                    		}, error:function(){
+                    			
+                    		}
+                    	})
+                    }
+                    
+                    function selectStuAttachHomework(){
+                    	
+                    	let homeworkpNo = $("#homeworkpNo").val();
+                    	
+                    	$.ajax({
+                    		url:"selectStuAttachHomework.lec",
+                    		data:{
+                    			homeworkpNo : homeworkpNo
+                    		},
+                    		success:function(att){
+                    			let value = "";
+                    			
+                    			if(att != null){
+									value = "<a href='" + att.path + "' download='" + att.originName + "' >" + att.originName  + "</a>";  
+									//$("#filename a").attr("href", "${ at.path }");
+									//$("#filename a").attr("download", "${ at.originName }");
+									//$("#filename a").html("${ at.originName }");
+									
+									$(".filename").html(value);
+                    			} else{
+                    				
+                    				value = "파일을 선택해주세요.";
+                    				$(".filename").html(value);
+                    			}
+                    			
+                    		}, error:function(){
+                    			
+                    		}
+                    	})
+                    }
+                </script>
                 
 
 
