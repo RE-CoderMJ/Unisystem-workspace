@@ -42,84 +42,58 @@
 								<tbody>
 									<tr>
 										<th>학적상태</th>
-										<td style="width:140px;">재학</td>
+										<c:choose>
+											<c:when test="${loginUser.studStatus eq 1 }">
+												<td>재학</td>
+											</c:when>
+											<c:when test="${loginUser.studStatus eq 2 }">
+												<td>휴학</td>
+											</c:when>
+											<c:when test="${loginUser.studStatus eq 3 }">
+												<td>졸업</td>
+											</c:when>
+											<c:otherwise>
+												<td>자퇴</td>
+											</c:otherwise>
+										</c:choose>
 										<th>신청일자</th>
-										<td>2021-07-01</td>
+										<td>${as.asDate}</td>
 										<th>복학희망년도</th>
-										<td></td>
+										<td>${as.offUntilYear}</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
 										<td>
-											
+											${as.offTypeT}
 										</td>
 										<th>신청년도</th>
-										<td></td>
+										<td>${as.offYear}</td>
 										<th>복학 희망 학기</th>
 										<td>
-											
+											${as.offSemester}
 										</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학사유</th>
 										<td>
-											
+											${as.reasonT}
 										</td>
 										<th>신청학기</th>
 										<td>
-											
+											${as.offSemester}
 										</td>
 										<th>첨부파일</th>
-										<td colspan="2" style="height:30px;"></td>
-									</tr>
-									<tr>
-										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						
-						<div id="backYearSelect" style="display:none;">
-							<table class="table table-bordered" style="width:1134px;">
-								<tbody>
-									<tr>
-										<th>학적상태</th>
-										<td style="width:140px;">휴학</td>
-										<th>신청일자</th>
-										<td>2021-07-01</td>
-										<th>복학신청년도</th>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<th>휴학뷴류</th>
-										<td>
-											일반휴학
-										</td>
-										<th>휴학 신청년도</th>
-										<td>2021</td>
-										<th>복학 신청 학기</th>
-										<td>
-											
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<th>휴학사유</th>
-										<td>
-											기타
-										</td>
-										<th>휴학 신청학기</th>
-										<td>
-											1학기
+										<td colspan="2" style="height:30px;">
+											<c:forEach var="att" items="${attList}">
+												<a href="${att.path}${att.changeName}" download="${att.originName}">${ att.originName }</a><br>
+											</c:forEach>
 										</td>
 									</tr>
 									<tr>
 										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6"></td>
+										<td colspan="6">${as.reasonDetail}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -139,7 +113,7 @@
 						</div>
 						
 						<div align="right" style="width:1130px;">
-							<button type="submit" id="apply-btn">목록</button>
+							<button type="submit" id="apply-btn" onclick="location.href='myStu.academic.apply'">목록</button>
 						</div>
              	</div>
 			</article>

@@ -72,7 +72,7 @@
 					
 					let value = "";
 					
-					if(result.length === 0){
+					if(result.list.length === 0){
 						value = "<tr><td colspan='4' style='text-align:center;'>증명서 발급내역이 없습니다.</td></tr>";
 						$("#empty").val('e');
 					}else{

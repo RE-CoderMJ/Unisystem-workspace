@@ -71,8 +71,8 @@
 				success:function(result){
 					
 					let value = "";
-					
-					if(result.list.length === 0){
+					console.log(result.list.length);
+					if(result.list.length == 0){
 						value = "<tr><td colspan='7' style='text-align:center;'>상담 신청내역이 없습니다.</td></tr>";
 					}else{
 						

@@ -197,8 +197,62 @@ text-decoration:none;
     left:20px;
 	top:20px;
 }
-
-
+.badge-pill{
+	border:2px solid RGB(26,86,162);
+	color:RGB(26,86,162);
+	width:45px;
+	height:25px;
+	margin-right:10px;
+}
+.baro{
+	position:relative;
+}
+.baro div{
+	width:200px;
+	display:block;
+	float:left;
+	margin-right:100px;
+	cursor:pointer;
+	font-size:18px;
+	font-weight:600;
+}
+#num1{
+	position:absolute;
+	left:40px;
+	top:80px;
+}
+#num2{
+	position:absolute;
+	left:40px;
+	top:140px;
+}
+#num3{
+	position:absolute;
+	left:40px;
+	top:200px;
+}
+#num4{
+	position:absolute;
+	left:330px;
+	top:80px;
+}
+#num5{
+	position:absolute;
+	left:330px;
+	top:140px;
+}
+#num6{
+	position:absolute;
+	left:330px;
+	top:200px;
+}
+#baro-title{
+	font-weight:700;
+	font-size: 20px;
+	position:absolute;
+	left:20px;
+	top:20px;
+}
 #calendar{
 width:260px;
 font-size:10px;
@@ -427,8 +481,31 @@ font-size:10px;
 		
 		<!-- 바로가기 -->
 		<div class="baro">
-		<h4>바로가기 서비스</h4>
-		
+			<div id="baro-title">바로가기 서비스</div>
+			<div id="num1" onclick="location.href='list.msg'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">01</span>
+				나의 쪽지함
+			</div>
+			<div id="num2" onclick="location.href='todoList'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">02</span>
+				TO-DO LIST
+			</div>
+			<div id="num3" onclick="location.href='list.bo'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">03</span>
+				커뮤니티
+			</div>
+			<div id="num4" onclick="location.href='myStu.appList'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">04</span>
+				상담신청
+			</div>
+			<div id="num5" onclick="location.href='myStu.cert.apply'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">05</span>
+				증명서 발급
+			</div>
+			<div id="num6" onclick="location.href='list.vbo'">
+				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">06</span>
+				대외활동 및 공모전
+			</div>
 		</div>
 		
 		<!-- 나의일정 -->

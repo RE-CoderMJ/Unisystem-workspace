@@ -115,8 +115,8 @@ a:hover {
 			<div class="side_title">
 				<b>학적변동</b>
 			</div>
-			<p>
-				<a href="">- 휴/복학 신청</a>
+			<p id="academic-status">
+				<a href="myStu.academic.apply">- 휴/복학 신청</a>
 			</p>
 
 			<div class="side_title">
