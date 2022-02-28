@@ -63,7 +63,6 @@
 		<result column="stud_no" property="studNo" />
 		<result column="status" property="pstatus" />	
 		<result column="kor_name" property="korName" />	
-					
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -74,6 +73,18 @@
 		<result column="change_name" property="changeName" />
 		<result column="path" property="path" />
 		<result column="status" property="status" />	
+	</resultMap>
+	
+	<resultMap id="classboardResult" type="Classboard">
+	<result column="CLASSBOARD_NO" property="classboardNo"/>
+	<result column="CLASS_NO" property="classNo"/>
+	<result column="CLASSBOARD_CATEGORY" property="classboardCategory"/>
+	<result column="CLASSBOARD_TITLE" property="classboardTitle"/>
+	<result column="CLASSBOARD_CONTENT" property="classboardContent"/>
+	<result column="CLASSBOARD_ENDDATETIME" property="classboardEndDateTime"/>
+	<result column="COUNT" property="count"/>
+	<result column="STATUS" property="status"/>
+	<result column="KOR_NAME" property="korName"/>
 	</resultMap>
 	
 	
@@ -766,13 +777,58 @@
 		   and ref_no = #{homeworksNo}
 		   and status = 'Y'		
 	</select>
+	
+	
+	<select id="selectLectureDataListCount" resultType="_int">
+		select 
+			count(*)
+		from classboard
+		where classboard_category = 'D'
+		  and status = 'Y'
+		  and class_no = #{classNo}
+	</select>
+	
+	<select id="selectLectureDataList" resultMap="classboardResult">
+		  select 
+			classboard_no
+			, class_no
+			, classboard_title
+			, classboard_content
+			, classboard_enddatetime
+			, count
+            , kor_name
+		from classboard
+        join class c using(class_no)
+        join users on (c.prof_no = user_no)
+		where classboard_category = 'D'
+		  and status = 'Y'
+		  and class_no = #{classNo}
+	</select>
 
 
+	<update id="increaseMatCount">
+	update 
+		classboard
+		set
+		count = count + 1 
+		where classboard_no = #{classboardNo}
+	</update>
 
-
-
-
-
+	<select id="selectLectureMaterialDetail" resultMap="classboardResult">
+	 select 
+			classboard_no
+			, classboard_title
+			, classboard_content
+			, classboard_enddatetime
+			, count
+            , kor_name
+		from classboard
+        join class c using(class_no)
+        join users on (c.prof_no = user_no)
+		where classboard_category = 'D'
+		  and status = 'Y'
+		  and classboard_no = #{classboardNo}
+	</select>
 
 
 

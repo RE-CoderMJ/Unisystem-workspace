@@ -151,10 +151,12 @@
         	<div id="header-up-line">
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
 	            
+	            <!-- 메시지 아이콘 -->
 	            <div style="float: left;" class="msg">
 	            <a href="list.msg"><img src="resources/images/msg_icon.png"></a>
-	            <div style="margin-top:-28px; margin-left: 42px;">
-	            <b>(&nbsp;<span id="msgCount"></span>&nbsp;)</b>
+	           
+	            <div id="msgArea" style="margin-top:-28px; margin-left: 42px;">
+	            <!-- <b>(&nbsp;<span id="msgCount"></span>&nbsp;)</b> -->
 	            </div>
 	            </div>
 	           
@@ -275,10 +277,23 @@
 				
 				console.log(data);
 				
+					let msgCount=""
 					let value=""
-					value += data;
-					$('#msgCount').html(value);
 					
+					msgCount += data;
+					
+		            if(msgCount == 0){
+		            
+		            }else{
+		            	 value 
+			            	 += '<b>(&nbsp;<span id="msgCount">'+data+'</span>&nbsp;)</b>';
+			           		 
+		            }
+		            
+					$('#msgArea').html(value);
+		        
+		            
+		            
 					}//success
 					
 			, error:function() {

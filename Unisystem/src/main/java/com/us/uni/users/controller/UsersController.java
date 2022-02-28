@@ -126,7 +126,7 @@ public class UsersController {
 	public String findId(Users m, HttpSession session, Model model) {
 		
 		Users findId = uService.findId(m);
-		System.out.println(m);
+		//System.out.println(m);
 		
 		//String dateDob = String.join("", findId.getBirthday().substring(2,10).split("-"));
 	

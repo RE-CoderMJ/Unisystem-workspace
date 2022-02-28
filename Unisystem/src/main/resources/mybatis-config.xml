@@ -33,6 +33,7 @@
 			<typeAlias type="com.us.uni.todo.model.vo.Todo" alias="Todo" />
 			<typeAlias type="com.us.uni.board.model.vo.Reply" alias="Reply" />
 			<typeAlias type="com.us.uni.message.model.vo.Message" alias="Message" />
+			
 		</typeAliases>
 		
 		<mappers>

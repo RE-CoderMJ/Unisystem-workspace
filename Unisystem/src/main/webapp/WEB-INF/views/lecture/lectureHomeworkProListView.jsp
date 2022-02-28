@@ -86,8 +86,8 @@
             <article id="content_header"><span>자료실 > </span>과제관리</article>
             <input type="hidden" id="studNo" name="studNo" value="${ loginUser.userNo }" />
 
+            
             <div id="contentBox">
-
                 <div id="possible_box">
                 
 					<button type="button" id="insertHomeworkp" onclick="location.href='proHomeworkEnrollForm.lec';">과제등록</button>

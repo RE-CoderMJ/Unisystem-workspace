@@ -161,7 +161,7 @@ li {
 
 
 	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
-			<jsp:include page="../student/smySidebar.jsp" />
+	<jsp:include page="../student/smySidebar.jsp" />
 
 		<div class="bo_content" >
 			<!-- title -->

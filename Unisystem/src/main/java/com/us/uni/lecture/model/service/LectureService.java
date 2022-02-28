@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Classboard;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -130,6 +131,17 @@ public interface LectureService {
 	
 	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
 	Attachment selectStuAttachHomework(Homework h);
+
+	//수업자료실 목록조회 
+	int selectLectureDataListCount(int classNo);
+	ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi);
+	
+	//수업자료실 상세조회 
+	int increaseMatCount(int bno);
+
+	Classboard selectLectureMaterialDetail(int bno);
+
+	Attachment selectAttachMaterial(int bno);
 
 }
 

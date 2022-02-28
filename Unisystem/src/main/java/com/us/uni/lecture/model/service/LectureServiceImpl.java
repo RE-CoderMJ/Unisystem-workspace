@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.lecture.model.dao.LectureDao;
+import com.us.uni.lecture.model.vo.Classboard;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -273,6 +274,38 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public Attachment selectStuAttachHomework(Homework h) {
 		return lDao.selectStuAttachHomework(sqlSession, h);
+	}
+
+	//자료실 리스트 갯수 조회 
+	@Override
+	public int selectLectureDataListCount(int classNo) {
+		
+		return lDao.selectLectureDataListCount(sqlSession, classNo);
+	}
+
+	//자료실 리스트 조회 
+	@Override
+	public ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi) {
+		
+		return lDao.selectLectureDataList(sqlSession, classNo, pi);
+	}
+
+	@Override
+	public int increaseMatCount(int bno) {
+		
+		return  lDao.increaseMatCount(sqlSession, bno);
+	}
+
+	@Override
+	public Classboard selectLectureMaterialDetail(int bno) {
+		
+		return lDao.selectLectureMaterialDetail(sqlSession,bno);
+	}
+
+	@Override
+	public Attachment selectAttachMaterial(int bno) {
+		
+		return lDao.selectAttachMaterial(sqlSession,bno);
 	}
 
 

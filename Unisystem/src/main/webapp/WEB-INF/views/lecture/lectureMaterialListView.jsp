@@ -99,11 +99,12 @@
         <div id="wrap_content" style="float: left;">
 
             <article id="content_header"><span>자료실 > </span>수업자료실</article>
-
             <div id="contentBox">
-                <div id="contentCount">총 <span>33</span>개의 글</div>
+			<!--<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"/>-->
+                <div id="contentCount">총 <span>${ pi.listCount }</span>개의 글</div>
                 
-                <table>
+            <table id="datalistBox" class="table">
+            <input type="hidden" id="classNo" name="classNo" value="1010" />  
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -113,124 +114,70 @@
                             <th>조회수</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
+                    <c:forEach var="d" items="${ list }">
                         <tr>
-                            <td>33</td>
+                            <td class="bno">${d.classboardNo}</td>
                             <td>
-                                <a href="lectureMatDetail.stu">X주차 PDF 수업자료</a>
+                                ${ d.classboardTitle }
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
+                            <td>${ d.korName }</td>
+                            <td>${ d.classboardEndDateTime }</td>
+                            <td>${ d.count }</td>
                         </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>33</td>
-                            <td>
-                                <a href="">X주차 PDF 수업자료</a>
-                                <span><i class="fas fa-paperclip"></i></span>
-                            </td>
-                            <td>김말똥</td>
-                            <td>2022.01.01</td>
-                            <td>13</td>
-                        </tr>
+                        
+                     </c:forEach>
                     </tbody>
                 </table>
 
-                <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a class="active" href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">&raquo;</a>
-                  </div>
+            
+             <div class="container">
+                    <ul class="pagination justify-content-center">
+                   
+                    <c:choose>
+						<c:when test="${ pi.currentPage eq 1 }">
+                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                      </c:when>
+						<c:otherwise>
+						<li class="page-item"><a
+								href="lectureMat.stu?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+						</c:otherwise>
+					</c:choose>
+					
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ empty condition }">
+						<li class="page-item"><a class="page-link" href="lectureMat.stu?cpage=${ p }">${ p }</a></li>
+					</c:if>
+				 
+					</c:forEach>
+							<c:choose>
+							
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+							</c:when>
+							
+							<c:otherwise>
+								<li class="page-item"><a
+									href="lectureMat.stu?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+							</c:otherwise>
+							</c:choose>
+                    </ul>
+                 </div>
+                 
+                 
             </div>
         </div>
     </div>
 
+		 <script>
+            	$(function(){
+            		$("#datalistBox>tbody>tr").click(function(){
+            			location.href = 'lectureMatDetail.stu?bno=' + $(this).children(".bno").text();
+            		});
+            	})
+            </script> 
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
 </body>

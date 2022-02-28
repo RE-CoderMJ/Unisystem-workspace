@@ -48,7 +48,6 @@ public class BoardDao {
 		}
 		
 		
-		
 		//board list count
 		public int selectKeywordListCount(SqlSessionTemplate sqlSession, int bokeyword) {
 			return sqlSession.selectOne("boardMapper.selectKeywordListCount");

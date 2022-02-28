@@ -103,15 +103,16 @@
 
                 <div id="contentBox_border">
                     <div id="contentBox_header">
-                        X주차 PDF 수업자료
+                     ${ b.classboardTitle }
                         <span><i class="fas fa-paperclip"></i></span>
                     </div>
+
 
                     <div id="contentBox_info">
                         <div><i class="fas fa-user-circle"></i></div>
                         <div id="pro_name">
-                            <div>김말똥<span>교수</span></div>
-                            <div>2022.01.01 15:44 <span>조회 13</span></div>
+                            <div>${ b.korName }<span>&nbsp;교수</span></div>
+                            <div>${ b.classboardEndDateTime }<span>&nbsp;<b>조회</b>&nbsp;${ b.count }</span></div>
                         </div>
                     </div>
 
@@ -121,13 +122,12 @@
                             <div style="float: left; margin-top: 12px; margin-left: 10px;">4주차 수업자료.PDF</div>
                         </div>
                         <div id="contentBox_content">
-                            수업자료 알아서 잘 다운받으세요~~
+                           ${ b.classboardContent }
                         </div>
                     </div>
-
                     <div id="two_btn">
-                        <button type="button">목록</button>
-                        <button type="button">▲TOP</button>
+                        <button type="button" onclick="history.back();" >목록</button>
+                        <button type="button" onclick="javascript:window.scrollTo(0,0);" >▲TOP</button>
                     </div>
                     
                 </div>

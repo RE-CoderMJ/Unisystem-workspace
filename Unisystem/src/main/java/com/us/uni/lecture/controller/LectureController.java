@@ -18,10 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.us.uni.board.model.vo.Board;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
 import com.us.uni.lecture.model.service.LectureService;
+import com.us.uni.lecture.model.vo.Classboard;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -301,7 +303,7 @@ public class LectureController {
 	@RequestMapping("insertAtt.lec")
 	public String insertAtt(int userNo, Lecture l, HttpSession session, Model model) {
 		
-		// 
+		
 		ArrayList<Lecture> studNoList = l.getStudsNo();						
 		//l.getStudsNo().get(0).getStudNo();
 		
@@ -336,7 +338,6 @@ public class LectureController {
 			return "redirect:lectureAttControl.stu?userNo=" + l.getUserNo() +"&classCode=" + l.getClassCode() + "&cpage=1";
 
 		}
-		
 	
 	}
 	
@@ -665,11 +666,6 @@ public class LectureController {
 		return new Gson().toJson(att);
 	}
 	
-	
-	
-	
-	
-	
 	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureHomeworkUpdate.stu")
 	public String selectLectureHomeworkUpdate() {
@@ -681,16 +677,6 @@ public class LectureController {
 	public String selectStuHomeworkDeti() {
 		return "lecture/lectureHomeworkResult";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/* 공지사항 리스트를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureNotice.stu")
@@ -730,15 +716,54 @@ public class LectureController {
 	
 	/* 수업자료실을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMat.stu")
-	public String selectLectureMaterial() {
-		return "lecture/lectureMaterialListView";
+	public ModelAndView selectLectureMaterial(@RequestParam(value="cpage",defaultValue="1")int currentPage, HttpSession session,ModelAndView mv) {
+		
+		//int classNo = ((Classboard)session.getAttribute("classInfo")).getClassNo();
+		int classNo = 1010; //임시 번호 
+		
+		int listCount = lService.selectLectureDataListCount(classNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Classboard> list = lService.selectLectureDataList(classNo, pi);
+		
+		//System.out.println(pi);
+		//System.out.println(list);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("lecture/lectureMaterialListView");
+		
+		return mv;
 	}
 	
 	/* 수업자료실 상세보기를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMatDetail.stu")
-	public String selectLectureMaterialDetail() {
-		return "lecture/lectureMaterialDetailView";
+	public ModelAndView selectLectureMaterialDetail(int bno, ModelAndView mv) {
+		System.out.println(bno);
+		//Attachment at = new Attachment();
+		
+		int result = lService.increaseMatCount(bno);	
+		
+		if(result > 0) {
+			Classboard b = lService.selectLectureMaterialDetail(bno);
+			//System.out.println(b);
+			//if(at != null) {
+			//	at = lService.selectAttachMaterial(bno);
+			//}
+		
+			mv.addObject("b", b)
+			  .setViewName("lecture/lectureMaterialDetailView");
+
+		}else {
+			mv.addObject("errorMsg", "상세조회 실패").setViewName("lecture/lectureMaterialListView");
+		}
+		return mv;
 	}
+		
+	
+	/*상세조회 조회 컨트롤러 */
+	
+	
 	
 	/* 영상자료실을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureVideoMat.stu")
@@ -752,6 +777,5 @@ public class LectureController {
 		return "lecture/lectureVideoMaterialDetailView";
 	}
 	
-
 	
 }

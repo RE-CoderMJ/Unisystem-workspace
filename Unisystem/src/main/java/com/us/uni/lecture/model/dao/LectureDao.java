@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.lecture.model.vo.Classboard;
 import com.us.uni.lecture.model.vo.Homework;
 import com.us.uni.lecture.model.vo.Lecture;
 import com.us.uni.users.model.vo.Users;
@@ -259,6 +260,38 @@ public class LectureDao {
 	
 	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
 	public Attachment selectStuAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
+		
 		return sqlSession.selectOne("lectureMapper.selectStuAttachHomework", h);
 	}
+
+	public int selectLectureDataListCount(SqlSessionTemplate sqlSession, int classNo) {
+		
+		return sqlSession.selectOne("lectureMapper.selectLectureDataListCount", classNo);
+	}
+
+	public ArrayList<Classboard> selectLectureDataList(SqlSessionTemplate sqlSession , int classNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("lectureMapper.selectLectureDataList", classNo , rowBounds);
+		
+	}
+
+	public int increaseMatCount(SqlSessionTemplate sqlSession, int classboardNo) {
+		
+		return sqlSession.update("lectureMapper.increaseMatCount", classboardNo);
+	}
+
+	public Classboard selectLectureMaterialDetail(SqlSessionTemplate sqlSession, int classboardNo) {
+		
+		return sqlSession.selectOne("lectureMapper.selectLectureMaterialDetail",classboardNo);
+	}
+
+	public Attachment selectAttachMaterial(SqlSessionTemplate sqlSession, int classboardNo) {
+		
+		return sqlSession.selectOne("lectureMapper.selectAttachMaterial" , classboardNo);
+	}
+	
 }
