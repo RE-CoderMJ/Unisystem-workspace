@@ -155,10 +155,20 @@
     }
     
     .filename{
-	  white-space: nowrap;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  width:400px; 
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width:400px; 
+    }
+    
+    #submitBtn button{
+    	float:right;
+    	margin:0;
+    	margin-top:30px;
+    	margin-left:5px;
+    }
+    #submitBtn button:last-child{
+    	display:inline-block;
     }
 </style>
 </head>
@@ -225,7 +235,11 @@
    
                 </div>
                 <form id="enrollForm" method="post" action="stuHomeworkInsert.lec" enctype="multipart/form-data"> 
+                    <span id="input_hidden">
+                    
+                    </span>
                     <input type="hidden" name="homeworkpNo" id="homeworkpNo" value="${ h.homeworkpNo }" />
+                    <input type="hidden" name="homeworkpNo" id="homeworksNo" value="${ h.homeworksNo }" />
                     <input type="hidden" name="studNo" value="${ loginUser.userNo }" />
                     <div id="contentBox_border_bottom">
                         <div id="contentBox_border_bottom_header">과제 제출</div>
@@ -233,14 +247,19 @@
                             <div>
                                 <div class="box-file-input">
                                     <label><input type="file" name="upfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
-                                    <span class="filename">
+                                    <div class="filename">
                                     	
-                                    </span>
+                                    </div>
                                 </div>
                             </div>   
                         	<div>
                                 <textarea name="homeworksContent" id="homeworksContent" rows="7" style="resize: none; width: 100%;" placeholder="내용을 입력하세요."></textarea>
-                                <button type="submit">제출</button>
+                                <div id="submitBtn">
+                                
+                                
+                                </div>
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -277,7 +296,12 @@
                     			console.log(h);
                     			let value = "";
                     			
-                    			value = h.homeworksContent;
+                    			if(h != null){
+                    				value = h.homeworksContent;
+                    			} else {
+                    				value= "";
+                    			}
+                    			
                     			$("#homeworksContent").html(value);
                     		}, error:function(){
                     			
@@ -296,24 +320,36 @@
                     		},
                     		success:function(att){
                     			let value = "";
+                    			let input = "";
                     			
                     			if(att != null){
 									value = "<a href='" + att.path + "' download='" + att.originName + "' >" + att.originName  + "</a>";  
 									//$("#filename a").attr("href", "${ at.path }");
 									//$("#filename a").attr("download", "${ at.originName }");
 									//$("#filename a").html("${ at.originName }");
-									
+									input = "<input type='hidden' name='originName' value='" + att.originName + "' /><input type='hidden' name='changeName' value='" +  att.changeName + "' /><input type='hidden' name='filePath' value='" +  att.path + "' />";
+		                            		
 									$(".filename").html(value);
+									
+									$("#input_hidden").html(input);
+									
+									$("#enrollForm").attr("action", "stuHomeworkUpdate.lec");
+									$("#submitBtn").html("<button type='submit'>수정</button><button type='submit' onclick='deleteStuHW()'>삭제</button>");
                     			} else{
                     				
                     				value = "파일을 선택해주세요.";
                     				$(".filename").html(value);
+                    				$("#submitBtn").html("<button type='submit'>제출</button>");
                     			}
                     			
                     		}, error:function(){
                     			
                     		}
                     	})
+                    }
+                    
+                    function deleteStuHW(){
+                    	$("#enrollForm").attr("action", "deleteStuHomework.lec");
                     }
                 </script>
                 
