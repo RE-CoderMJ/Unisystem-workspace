@@ -121,6 +121,7 @@ font-weight:700;
 background-color:rgb(41, 128, 185);
 border:none;
 height:50px;
+width: 245px;
 color:white;
 font-size:16px;
 }
@@ -208,7 +209,7 @@ text-decoration:none;
 	position:relative;
 }
 .baro div{
-	width:200px;
+	width:212px;
 	display:block;
 	float:left;
 	margin-right:100px;
@@ -472,7 +473,7 @@ font-size:10px;
 		  
 		   <!--<button id="group" style="">UNI SYSTEM 학사그룹 </button>  -->
 		 
-		 <div style="text-align:center;">
+		 <div style="text-align:center;margin-right: 20px;">
 		 <a href="">비밀번호 변경</a>&nbsp;|&nbsp;<a href="logout.me">로그아웃</a>
 		 
 		

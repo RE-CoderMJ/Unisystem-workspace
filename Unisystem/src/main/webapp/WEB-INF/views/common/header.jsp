@@ -50,7 +50,7 @@
         line-height: 43px;
     }
     #header-up-right{
-        margin-left: 967px;
+        margin-left: 996px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
