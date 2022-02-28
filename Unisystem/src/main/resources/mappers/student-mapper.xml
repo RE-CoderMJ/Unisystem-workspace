@@ -234,4 +234,11 @@
 		     , ADDRESS = #{address}
 		 WHERE USER_NO = #{userNo}
 	</update>
+	
+	<update id="studentUpdatePwd">
+		UPDATE 
+		       USERS
+		   SET PASSWORD = #{encPwd}
+		 WHERE USER_NO = #{userNo}
+	</update>
 </mapper>

@@ -63,7 +63,7 @@
 		margin-right:10px;
 		background:rgb(235, 235, 235);
 	}
-	.ads input{
+	.ads input, .modal input{
 		width:250px;
 		margin-right:10px;
 		height:40px;
@@ -91,10 +91,48 @@
 				</div>
 				<div class="btnTopBox">
 					<div class="btnBox">
-						<button type="button" class="btn btn-sm btn-outline-secondary">비밀번호 변경</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#updatePwd">비밀번호 변경</button>
 						<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#updateinfo">개인정보수정</button>
 					</div>
 					
+					<form action="updatePwd.st" method="post">
+					<!-- 비밀변경 모달 -->			
+					<div class="modal" id="updatePwd">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					
+					      <!-- Modal Header -->
+					      <div class="modal-header">
+					        <h4 class="modal-title">비밀번호 변경</h4>
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					      </div>
+					      
+					      <!-- Modal body -->
+					      <div class="modal-body">
+					        	<div id="pwd">
+					        	  <input type="hidden" name="userNo" value="${ stud.userNo }">
+					        	  <input type="hidden" id="currPwd" name="currPwd" value="${ stud.userPwd }">
+						          <label for="address"> * 현재 비밀번호 :</label>
+							      <input type="password" id="userPwd" name="checkPwd"> 
+							      <br><br>
+							      
+							      <label for="address"> * 비밀번호 변경 :</label>
+							      <input type="password" id="changePwd" name="userPwd">
+							      <label for="address"> * 비밀번호 확인 :</label>
+							      <input type="password" id="changeCheck">
+					        	</div>
+					      </div>
+					
+					      <!-- Modal footer -->
+					      <div class="modal-footer">
+					        <button type="submit" class="btn btn-primary" style="background:#A3C4F3; border:none;" onclick="return password();">변경</button>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">나가기</button>
+					      </div>
+					
+					    </div>
+					  </div>
+					</div>
+					</form>
 					
 					<!-- 정보수정 모달 -->
 					 <div class="modal fade" id="updateinfo">
@@ -141,6 +179,7 @@
 									<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="esc()" alt="접기 버튼">
 								</div>
 					      </div>
+					      
 					      <!-- Modal footer -->
 					      <div class="modal-footer">
 				      		
@@ -211,7 +250,15 @@
 								<th width="150">생년월일</th>
 								<td width="150">${ stud.birthday }</td>
 								<th width="150">성별</th>
-								<td width="120">${ stud.gender }</td>
+								<c:choose>
+									<c:when test="${ stud.gender eq 'M'}">
+										<td>남자</td>
+									</c:when>
+									<c:otherwise>
+										<td>여자</td>
+									</c:otherwise>
+								</c:choose>
+								
 							</tr>
 							<tr>
 								<th>대학</th>
@@ -290,6 +337,30 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
+	
+	 	//pwd currPwd userPwd changePwd checkPwd
+		
+		$(function(){
+			sidebar();
+			
+			$("#myPage").slideDown();
+			
+			
+		})
+	 	
+	 	
+	 	function password(){
+			// 비밀번호 변경
+			console.log($("#userPwd").val());
+			
+			if($("#changePwd").val() != $("#changeCheck").val()){
+				alertify.alert("주의", "변경할 비밀번호를 다시 입력해주세요.");
+				return false;
+			}
+	 	}
+			
+	 	
+	
 		// 사이드바 길이 조절
 		function sidebar(){
 			document.getElementById("content").style.marginBottom = "50px";
@@ -302,11 +373,6 @@
 				}
 		}
 		
-		$(function(){
-			sidebar();
-			
-			$("#myPage").slideDown();
-		})
 		
 		// 주소 api 닫기
 		function esc(){

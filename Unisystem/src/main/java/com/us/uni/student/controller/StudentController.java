@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +30,9 @@ public class StudentController {
 
 	@Autowired
 	private StudentService sService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("list.st")
 	public ModelAndView StudentInfo(HttpSession session, ModelAndView mv) {
@@ -183,6 +186,36 @@ public class StudentController {
 		
 		return "redirect:list.st";
 	}
+	
+	
+	@RequestMapping("updatePwd.st")
+	public String studentUpdatePwd(int userNo, String currPwd, String checkPwd, String userPwd, HttpSession session) {
+		int result = 0;
+		
+		if(bcryptPasswordEncoder.matches(checkPwd, currPwd)) {
+			//암호화
+			String encPwd = bcryptPasswordEncoder.encode(userPwd);
+			
+			HashMap map = new HashMap();
+			map.put("userNo", userNo);
+			map.put("encPwd", encPwd);
+			
+			result = sService.studentUpdatePwd(map); 
+			
+			if(result > 0) {
+				session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
+			}else {
+				session.setAttribute("alertMsg", "비밀번호 변경 실패했습니다.");
+			}
+			
+		}else {
+			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+		}
+		
+		return "redirect:list.st";
+	}
+	
+	
 	
 	// * 첨부파일 : 파일명 수정 작업 후 서버에 업로드
 	public String saveFile(MultipartFile upfile, HttpSession session) {
