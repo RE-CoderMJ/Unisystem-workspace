@@ -220,8 +220,7 @@ margin-left:10px;
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="submit" class="moBtn" id="sendModal"
-							>보내기</button>
+						<button type="submit" class="moBtn" id="sendModal">보내기</button>
 					</div>
 
 				</div>
@@ -231,6 +230,22 @@ margin-left:10px;
 
 
 	<jsp:include page="../common/links.jsp" />
+
+	<script>
+	$(document).on("click", ".moBtn", function(){
+		
+		console.debug("socket",socket)
+		if(socket != null){ 
+			let socketMsg = "message," + $("#msgReader").val() +","+ '${loginUser.userNo}'+","+$("#msgContent").val();
+			//가져올 변수들 홑따옴표로 감싸주기
+			
+			console.debug("jsp::socket>",socketMsg)
+			socket.send(socketMsg);
+		}
+			
+	})
+	
+	</script>
 
 
 

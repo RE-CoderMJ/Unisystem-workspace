@@ -124,5 +124,15 @@
 	</update>
 	
 	
+	<update id="updateDate">
+	update
+		message
+		set 
+		READ_DATE = SYSDATE
+		,READYN = 'Y'
+		where message_no = #{messageNo}
+	</update>
+	
+	
 	
 </mapper>

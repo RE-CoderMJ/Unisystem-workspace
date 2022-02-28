@@ -18,8 +18,8 @@ body {
 	padding-bottom: 30px;
 	width: 300px;
 	position: relative;
-	left: 240px;
-	top: 60px
+	left: 435px;
+    top: 83px;
 }
 
 /*로그인 영역*/
@@ -183,23 +183,41 @@ width:none;
 height:none;
 
 }
+.wrapper{
+	margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 </style>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
 </head>
 <body>
+
 	<c:if test="${ not empty alertMsg }">
 		<script>
-			alert("${alertMsg}");
+			alertify.alert("${alertMsg}");
 		</script>
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
 	
 	
 	<div class="back-color">
+	
 		<!--가로 로고 자리 -->
 		<div class="logo">
 			<img src="resources/images/LOGO_WIDTH.png" alt="">
 		</div>
 
+	<div class="wrapper" style="margin:auto;">
 		<div class="login-area">
 			<div class="login-box">
 			
@@ -271,9 +289,8 @@ height:none;
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon1.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href="findid"><span> 아이디 찾기 <br></span></a>
-						아이디를 잊어버리셨나요?</th>
-					</tr>
+					<th class="search-title"><a href="findid.me"><span> 아이디 찾기 <br></span></a>
+						아이디를 잊어버리셨나요?</th> 
 
 					<tr>
 					<th style="padding-bottom: 30px;"><img class="img-search"
@@ -287,7 +304,7 @@ height:none;
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon3.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href=""><span> 비회원 이용 <br></span></a>
+					<th class="search-title"><a href="enview"><span> 비회원 이용 <br></span></a>
 						게시글 조회만 가능합니다.</th>
 					</tr>
 					
@@ -295,9 +312,9 @@ height:none;
 			</table>
 
 
-		</div>
-
-
+		
+</div>
+</div>
 	</div>
 	</div>
 

@@ -77,9 +77,9 @@
     /* 하단 button 영역 */
     #two_btn{
         margin-top: 240px;
-        margin-left: 300px;
+        margin-left: 500px;
         float: right;
-        width: 190px;
+        width: 65px;
     }
     #two_btn button{
         border: none;
@@ -88,9 +88,7 @@
         background-color: lightgray;
     }
     #two_btn button:focus{outline: none;}
-    #two_btn button:first-child, #two_btn button:nth-child(2){margin-right: 5px;}
-    #two_btn button:nth-child(2){background-color: rgb(21, 62, 115); color: white;}
-	#two_btn button:nth-child(3){background-color: rgb(231, 76, 60); color: white;}
+
     /* 파일 업로드 영역*/
     .box-file-input{
         width: 500px;
@@ -188,7 +186,6 @@
                             <div id="pro_name">
                                 <div>${ loginUser.korName }<span>교수</span></div>
                                 <div>${ h.homeworkpEndDateTime }</div>
-                                <button type="button" id="endHomeworkBtn" onclick="updateHomeworkStatus();">과제마감</button>
                             </div>
                         </div>
     
@@ -202,7 +199,7 @@
 			                    		첨부파일이 없습니다.
 			                    	</c:when>
 			                    	<c:otherwise>
-		                        		<a href="${ at.changeName }" download="${ at.originName }">${ at.originName }</a>
+		                        		<a href="${ at.path }" download="${ at.originName }">${ at.originName }</a>
 			                    	</c:otherwise>
                         		</c:choose>
                         		
@@ -215,9 +212,7 @@
                         </div>
 							       
                         <div id="two_btn">
-                            <button type="button">목록</button>
-                            <button type=button>수정</button>
-                            <button type=button>삭제</button>
+                            <button type="button" onclick="location.href='homeworkProEndList.lec';">목록</button>
                         </div>
        
                     </div>
@@ -314,20 +309,6 @@
       
   					document.getElementById('meeting-time').value = new Date().toISOString().slice(0, 16);
                     
-                    function updateHomeworkStatus(){
-                    	
-                    	let answer;
-                    	answer = confirm("해당 과제를 마감상태로 변경하시겠습니까?");
-                    	if(answer == true){
-                    		postFormSubmit(1);
-                    	}
-                    }
-                    
-	                   function postFormSubmit(num){
-	                	   if(num == 1){ // 과제마감 클릭 시 
-	                		   $("#postForm").attr("action", "updatepHomeworkStatus.lec").submit();
-	                	   } 
-	                   }
 
                 </script>
 

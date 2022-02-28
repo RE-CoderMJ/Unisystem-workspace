@@ -194,4 +194,44 @@
 		     )
 	</insert>
 	
+	<select id="StudentInfo" resultMap="usersResult">
+		SELECT
+		       U.USER_NO
+		     , U.PASSWORD
+		     , U.KOR_NAME
+		     , U.ENG_NAME
+		     , U.BIRTHDAY
+		     , U.GENDER
+		     , U.EMAIL
+		     , U.PHONE
+		     , U.ADDRESS
+		     , U.NATION
+		     , U.WEBMAIL
+		     , U.USER_DIV
+		     , U.PROFILE_IMG
+		     , STUD_UNIV
+		     , STUD_DEPARTMENT
+		     , STUD_MAJOR
+		     , STUD_MINOR
+		     , STUD_INTO
+		     , STUD_GRAD
+		     , STUD_DIVISION
+		     , STUD_STATUS
+		     , TOTAL_SEMESTER
+		     , U2.KOR_NAME "SPROF_NO"
+		  FROM USERS U
+		  JOIN STUDENT ON (U.USER_NO = STUD_NO)
+		  JOIN USERS U2 ON (PROF_NO = U2.USER_NO)
+		 WHERE U.USER_NO = #{studNo}
+	</select>
+	
+	<update id="studentUpdateInfo">
+		UPDATE 
+		       USERS
+		   SET ENG_NAME = #{engName}
+		     , PHONE = #{phone}
+		     , EMAIL = #{email}
+		     , ADDRESS = #{address}
+		 WHERE USER_NO = #{userNo}
+	</update>
 </mapper>

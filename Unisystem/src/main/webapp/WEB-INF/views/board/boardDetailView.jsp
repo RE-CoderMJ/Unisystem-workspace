@@ -114,6 +114,7 @@
 	cursor: pointer;
 	position: relative;
 	right: 0px;
+	top: -20px;
 }
 
 .board-content textarea {
@@ -194,21 +195,25 @@
 			<!-- title -->
 			<div class="page_title">커뮤니티</div>
 
-			<c:if test="${ loginUser != null || loginUser.userNo == b.userNo }">
+			<c:if
+				test="${ loginUser != null && (loginUser.userNo eq b.userNo) }">
 				<div class="updel">
-					<a onclick="postFormSubmit(1);">수정</a> <a class="bdel"
-						onclick="postFormSubmit(2);">삭제</a>
+					<a onclick="postFormSubmit(1);">수정</a> 
+					<a class="bdel" onclick="postFormSubmit(2);">삭제</a>
 				</div>
 			</c:if>
 
 			<div class="grayWrap">
-				<input type="text" name="boardTitle" value="${ b.boardTitle }"
-					readonly /><br> <input type="hidden"
-					value="${loginUser.userNo}" name="userNo" />
+				<input type="text" name="boardTitle" value="${ b.boardTitle }" readonly />
+				
+				<br> 
+				
+				<input type="hidden" value="${loginUser.userNo}" name="userNo" />
 
 				<div class="ctg-area">
-					<span>날짜</span> ${ b.createDate } <span>작성자</span>
-					${b.userNo} <span>카테고리</span> ${ b.subCategory }
+					<span>날짜</span> ${ b.createDate } 
+					<span>작성자</span> ${b.boardWriter} 
+					<span>카테고리</span>${ b.subCategory }
 
 
 					<div class="b-count">
@@ -250,7 +255,7 @@
 
 				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
 
-				
+
 
 				<!-- ajax 댓글구현 -->
 				<div class="replyDiv">
@@ -264,12 +269,11 @@
 									<th style="vertical-align: middle"><button
 											class="btn btn-secondary" disabled>등록하기</button></th>
 								</c:when>
+								
+								
 								<c:otherwise>
-									<th colspan="2"><textarea class="form-control"
-											id="msg" cols="55" rows="2"
-											style="resize: none; width: 100%"></textarea></th>
-									<th style="vertical-align: middle"><button type="button"
-											id="btnSend" class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+									<th colspan="2"><textarea class="form-control" id="msg" cols="55" rows="2" style="resize: none; width: 100%"></textarea></th>
+									<th style="vertical-align: middle"><button type="button" id="btnSend" class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
 								</c:otherwise>
 							</c:choose>
 						</thead>
@@ -279,9 +283,9 @@
 				</div>
 				<br> <br>
 
-				
-				
-				
+
+
+
 				<script>
 				$(document).ready(function(){
 					
@@ -293,11 +297,10 @@
 				    });
 				});
 				</script>
-				
+
 				<script>
-				let ruserNo = '${loginUser.userNo}',
-				boardNo = ${b.boardNo},
-				boardWriter = ${b.boardWriter};
+				let ruserNo = '${loginUser.userNo}';
+				let boardNo = ${b.boardNo};
 			    
 			$(function(){
 	    		selectReplyList();
@@ -323,11 +326,11 @@
 	    						//websocket에 보내기(댓글작성자 게시글작성자 글번호)
 	    						console.debug("socket",socket)
 		    						if(socket != null){ 
-		    							let socketMsg = "reply,"+ '${loginUser.userNo}' +","+ '${b.boardWriter}' +","+'${b.boardNo}';
+		    							let socketMsg = "reply,"+ '${loginUser.userNo}' +","+ '${b.userNo}' +","+'${b.boardWriter}';
 		    							//가져올 변수들 홑따옴표로 감싸주기
 		    							
 			    						console.debug("jsp::socket>",socketMsg)
-		    							socket.send("socketMsg : "+ socketMsg);
+		    							socket.send(socketMsg);
 			    						
 			    						selectReplyList();
 			    						$('#msg').val("");
@@ -355,11 +358,15 @@
 	    					value += "<tr>"
 	    						  + "<th>" + list[i].replyWriter +"</th>"
 	    						  + "<td>" + list[i].replyContent + "</td>"
-	    						  + "<td>" + list[i].createDate 
-	    						  + "<span name='close' class='close'>x</span>"
-	    						  + "</td>"
-	    						  + "<input type='hidden' value='"+list[i].replyNo+"' name='replyNo' id='replyNo'/>";
-	    						  + "</tr>"
+	    						  + "<td>" + list[i].createDate; 
+	    						  
+	    						  if(list[i].ruserNo == ruserNo){
+	    							value += "<span name='close' class='close'>x</span>";
+	    						  }
+	    						  
+	    					value += "</td>"
+	    						  + "<input type='hidden' value='"+list[i].replyNo+"' name='replyNo' id='replyNo'/>"
+	    						  + "</tr>";
 	    						  
 	    				}
 	    				$("#replyArea tbody").html(value);

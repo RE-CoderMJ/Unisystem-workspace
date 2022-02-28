@@ -32,7 +32,7 @@ public class BoardDao {
 		//검색 리스트 갯수
 		public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 			
-			return sqlSession.selectOne("boardMapper.selectSearchCount");
+			return sqlSession.selectOne("boardMapper.selectSearchCount",map);
 		}
 		
 		
@@ -165,7 +165,7 @@ public class BoardDao {
 		//공지 대외활동 동아리
 		public int nselectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 			
-			return sqlSession.selectOne("boardMapper.nselectSearchCount");
+			return sqlSession.selectOne("boardMapper.nselectSearchCount",map);
 		}
 
 		public ArrayList<Board> nselectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
@@ -177,40 +177,7 @@ public class BoardDao {
 			
 			return (ArrayList)sqlSession.selectList("boardMapper.nselectSearchList", map, rowBounds);
 		}
-		
-		//봉사 검색
-		public int vselectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-			
-			return sqlSession.selectOne("boardMapper.nselectSearchCount");
-		}
 
-		public ArrayList<Board> vselectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
-				PageInfo pi) {
-			
-			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-			int limit = pi.getBoardLimit();
-			RowBounds rowBounds = new RowBounds(offset, limit);
-			
-			return (ArrayList)sqlSession.selectList("boardMapper.nselectSearchList", map, rowBounds);
-		}
-		
-		//동아리 검색
-		public int cselectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-			
-			return sqlSession.selectOne("boardMapper.cselectSearchCount");
-		}
-
-		public ArrayList<Board> cselectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
-				PageInfo pi) {
-			
-			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-			int limit = pi.getBoardLimit();
-			RowBounds rowBounds = new RowBounds(offset, limit);
-			
-			return (ArrayList)sqlSession.selectList("boardMapper.cselectSearchList", map, rowBounds);
-		}
-
-		
 		public int ninsertBoard(SqlSessionTemplate sqlSession, Board b) {
 			
 			return sqlSession.insert("boardMapper.ninsertBoard", b);
@@ -255,7 +222,36 @@ public class BoardDao {
 			
 			return sqlSession.update("boardMapper.deleteReply",replyNo);
 		}
+		
+		public int selectcSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+			
+			return sqlSession.selectOne("boardMapper.selectcSearchCount",map);
+		}
 
+		public ArrayList<Board> selectcSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+				PageInfo pi) {
+			
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			
+			return (ArrayList)sqlSession.selectList("boardMapper.selectcSearchList", map, rowBounds);
+		}
 
+		public int selectvSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+			
+			return sqlSession.selectOne("boardMapper.selectvSearchCount",map);
+		}
+
+		public ArrayList<Board> selectvSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+				PageInfo pi) {
+			
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			
+			return (ArrayList)sqlSession.selectList("boardMapper.selectvSearchList", map, rowBounds);
+		}
+		 
 		 
 }

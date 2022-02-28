@@ -258,14 +258,31 @@ li {
 						<c:when test="${ pi.currentPage eq 1 }">
                       <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
                       </c:when>
-						<c:otherwise>
+					
+					<c:otherwise>
 						<li class="page-item"><a
 								href="list.nbo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
+					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<li class="page-item"><a class="page-link" href="list.nbo?cpage=${ p }">${ p }</a></li>
+					
+					<c:if test="${ empty condition }">
+						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+					</c:if>
+					
+					<c:if test="${ not empty condition }">
+						<li class="page-item"><a class="page-link" href="search.nbo?cpage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+					</c:if>
+					
+					
 					</c:forEach>
+					 
+					 
+					 
+					 
+					 
+					 
 					 <c:choose>
 						<c:when test="${ pi.currentPage eq pi.maxPage }">
 							<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
@@ -283,7 +300,7 @@ li {
 			
            </div>
                        <!--로그인한 회원에게만 보여지도록 조건처리-->
-			<c:if test="${ not empty loginUser }">
+			<c:if test="${ not empty loginUser && loginUser.userDiv == 3}">
 				<a class="b_write btn-sm btn-secondary" href="enrollForm.nbo">글쓰기</a>
 			</c:if>
 	</div>

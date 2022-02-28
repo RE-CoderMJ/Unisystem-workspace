@@ -42,6 +42,7 @@
 	<resultMap id="usersResult" type="Users">
 		<result column="user_no" property="userNo" />
 		<result column="kor_name" property="korName" />
+		<result column="user_div" property="userDiv"/>
 	</resultMap>
 	
   <select id="selectListCount" resultType="_int">
@@ -64,6 +65,7 @@
 		  join users u on (b.user_no = u.user_no)
 		 where delete_yn = 'N'
 		 and bo_category = 4
+		 ORDER BY BOARD_NO DESC
 	</select>
 	
 	<!-- community 검색 기능 -->
@@ -74,15 +76,15 @@
 		  join users u on (b.user_no = u.user_no)
 		 where delete_yn = 'N'
 		 and bo_category = 4
-		<if test="condition == 'writer'">
+			<if test="condition == 'writer'">
 		   and u.kor_name like '%' || #{keyword} || '%'
-		  </if>
-		  <if test="condition == 'title'">
+		  	</if>
+		  	<if test="condition == 'title'">
 		  and board_title like '%' || #{keyword} || '%'
-		  </if>
-		  <if test="condition == 'content'">
+		 	 </if>
+		  	<if test="condition == 'content'">
 		  and board_content like '%' || #{keyword} || '%'
-		  </if>
+		 	 </if>
 		  
 	</select>
 	
@@ -220,7 +222,8 @@
 		select
 		       board_no
 		     , board_title
-		     , u.user_no as "board_writer"
+		     , u.kor_name as "board_writer"
+		     , u.user_no as"user_no"
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , board_content
 		     ,notice_yn
@@ -538,8 +541,8 @@
 		  )
 	</insert>
 
-<!-- 동아리 -->
-<select id="cselectListCount" resultType="_int">
+	<!-- 동아리 -->
+	<select id="cselectListCount" resultType="_int">
 		select
 		       count(*)
 		  from board
@@ -629,6 +632,7 @@
 		select
 			reply_no,
 			u.kor_name as "reply_writer",
+			u.user_no as "user_no",
 			board_no,
 			reply_content,
 			to_char(create_date,'YYYY-MM-DD') as "create_date",
@@ -665,5 +669,97 @@
 			set status = 'N'
 			where reply_no = #{replyNo}
 	</update>
+	
+	<!-- 공모전 검색 기능 -->
+	 <select id="selectcSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+		  
+	</select>
+	
+	<select id="selectcSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 3
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 대외활동 검색 기능 -->
+	 <select id="selectvSearchCount" resultType="_int">
+		select 
+		  count(*)
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+		<if test="condition == 'writer'">
+		   and u.kor_name like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'title'">
+		  and board_title like '%' || #{keyword} || '%'
+		  </if>
+		  <if test="condition == 'content'">
+		  and board_content like '%' || #{keyword} || '%'
+		  </if>
+		  
+	</select>
+	
+	<select id="selectvSearchList" parameterType="Board" resultMap="boardResult">
+			select 
+		      board_no
+		     , sub_category
+		     , board_title
+		     , u.kor_name as "board_writer"
+		     , to_char(create_date, 'YYYY.MM.DD') as "create_date"
+		     , bCount
+		  from board b
+		  join users u on (b.user_no = u.user_no)
+		 where delete_yn = 'N'
+		 and bo_category = 2
+		  <choose>
+		 	<when test="condition == 'writer'">
+		   and u.kor_name
+		   </when>
+		 	<when test="condition == 'title'">
+		    and board_title
+		   </when>
+		   	<otherwise>
+		   and board_content
+		    </otherwise>
+		    </choose>
+		   	 like '%' || #{keyword} || '%'
+	</select>
 	
 </mapper>

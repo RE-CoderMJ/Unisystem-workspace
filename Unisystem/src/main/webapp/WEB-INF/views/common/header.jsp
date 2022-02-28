@@ -19,9 +19,11 @@
 <!-- Semantic UI theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"> -->
+<script src="https://kit.fontawesome.com/5e10b477ce.js" crossorigin="anonymous"></script>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <style>
 	body *{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -48,14 +50,14 @@
         line-height: 43px;
     }
     #header-up-right{
-        margin-left: 1065px;
+        margin-left: 967px;
     }
     #header-up-right span, #header-up-right i{
         color: white;
         line-height: 43px;
         display: inline-block;
     }
-    #header-up-right #logout{
+    #header-up-right .logout{
         background-color: rgb(14, 43, 80);
         color: white;
         height: 43px;
@@ -121,6 +123,12 @@
     #searchBtn:focus{
         outline: none;
     }
+    .msg img{
+     height: 30px;
+    display: inline-block;
+    margin-top: 6px;
+    margin-left: 10px;
+    }
 </style>
 </head>
 <body>
@@ -139,10 +147,41 @@
         <div id="header-up">
         	<div id="header-up-line">
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
+	            
+	            <div style="float: left;" class="msg">
+	            <a href="list.msg"><img src="resources/images/msg_icon.png"></a>
+	            ${ message.pi.listCount }
+	            </div>
+	           
+	           
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
-	                <span>${loginUser.korName}(학생)님 환영합니다.</span>
-	                <a href="logout.me" id="logout">로그아웃 →</a>
+	                <span>${loginUser.korName}
+	                <c:choose>
+	                <c:when test="${loginUser.userDiv eq 1}">
+	                (학생)님 환영합니다.
+	                </c:when>
+	                <c:when test="${loginUser.userDiv eq 2}">
+	                 (교수)님 환영합니다.
+	                </c:when>
+	                <c:when test="${loginUser.userDiv eq 3}">
+	                페이지 입니다.
+	                </c:when>
+	                <c:otherwise>
+	             		로그인 후 이용해주세요.
+	                </c:otherwise>
+	                </c:choose>
+	                
+	                </span>
+	                
+	                <c:choose>
+	                <c:when test="${ not empty loginUser }">
+	                <a href="logout.me" class="logout">로그아웃 →</a>
+	                </c:when>
+	                <c:when test="${ empty loginUser }">
+	                <a href="loginMain" class="logout">로그인 →</a>
+	                </c:when>
+	                </c:choose>
 	            </div>
             </div>
         </div>
@@ -203,12 +242,12 @@
 	    ws.onmessage = function (event) {
 	        console.log("ReceiveMessage:", event.data+'\n');
 	       let $socketAlert =  $('div #socketAlert');
-	       $socketAlert.text(event.data);
+	       $socketAlert.html(event.data);
 	       $socketAlert.css('display','block');
 	       
 	       setTimeout(function(){
 	    	   $socketAlert.css('display','none');
-	       }, 3000);
+	       }, 5000);
 	    };
 	
 	

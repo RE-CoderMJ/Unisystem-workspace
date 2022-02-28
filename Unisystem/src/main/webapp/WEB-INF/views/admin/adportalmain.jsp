@@ -58,12 +58,18 @@
 	border-bottom: 1px solid #153e73;
 }
 
-.class a{
-	color : black;
+.class b{
+	color:#787878;
 }
-
-.class ul{
-	margin:0;
+.class li{
+list-style:none;
+font-weight:600;
+font-size:14px;
+}
+.room {
+	grid-area: room;
+	border-top:2px solid #fcaf17;
+	border-bottom:1px solid #fcaf17;
 }
 
 .inform {
@@ -197,161 +203,13 @@ text-decoration:none;
     left:20px;
 	top:20px;
 }
-.badge-pill{
-	border:2px solid RGB(26,86,162);
-	color:RGB(26,86,162);
-	width:45px;
-	height:25px;
-	margin-right:10px;
-}
-.baro{
-	position:relative;
-}
-.baro div{
-	width:200px;
-	display:block;
-	float:left;
-	margin-right:100px;
-	cursor:pointer;
-	font-size:18px;
-	font-weight:600;
-}
-#num1{
-	position:absolute;
-	left:40px;
-	top:80px;
-}
-#num2{
-	position:absolute;
-	left:40px;
-	top:140px;
-}
-#num3{
-	position:absolute;
-	left:40px;
-	top:200px;
-}
-#num4{
-	position:absolute;
-	left:330px;
-	top:80px;
-}
-#num5{
-	position:absolute;
-	left:330px;
-	top:140px;
-}
-#num6{
-	position:absolute;
-	left:330px;
-	top:200px;
-}
-#baro-title{
-	font-weight:700;
-	font-size: 20px;
-	position:absolute;
-	left:20px;
-	top:20px;
-}
+
+
 #calendar{
 width:260px;
 font-size:10px;
 }
 
-/* 시설 예약 */
-.room {
-	grid-area: room;
-	border-top:2px solid #fcaf17;
-	border-bottom:1px solid #fcaf17;
-	position:relative;
-}
-.room>h4{
-	position:absolute;
-	top:15px;
-	left:17px;
-}
-#reading{
-	width:105px;
-	height:105px;
-	background-color:RGB(235,242,252);
-	border-radius:200px;
-	position:absolute;
-	left:23px;
-	top:52px;
-	cursor:pointer;
-}
-#reading-title{
-	position:absolute;
-	left:10px;
-	top:115px;
-	font-size:16px;
-}
-#reading>img{
-	object-fit: contain;
-    width:65%;
-    height:65%;
-    position:absolute;
-    left:20px;
-	top:20px;
-}
-#study{
-	width:105px;
-	height:105px;
-	background-color:RGB(235,242,252);
-	border-radius:200px;
-	position:absolute;
-	left:160px;
-	top:52px;
-	cursor:pointer;
-}
-#study-title{
-	position:absolute;
-	left:0px;
-	top:115px;
-	font-size:16px;
-}
-#study>img{
-	object-fit: contain;
-    width:65%;
-    height:65%;
-    position:absolute;
-    left:20px;
-	top:20px;
-}
-/* 날씨 */
-#weather{
-	padding:0px;
-	width:100%;
-	height:100%;
-	display:block;
-	border:2px solid #BDE0FE;
-}
-
-#one{
-	width:100%;
-	height:70%;
-}
-#two{
-	width:100%;
-	height:30%;
-	background:#BDE0FE; 
-	padding:10px;
-	font-size:17px;
-	padding:12px;
-	align:center;
-	padding-left:35px;
-}
-#two>p{
-	display:inline;
-	padding:5px;
-}
-#weatherIcon{
-	margin-left:40px;
-	font-size:70px;
-}
-#city{
-	padding:20px;
-}
 </style>
  <!-- jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -359,38 +217,27 @@ font-size:10px;
   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
   <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
-  <!-- weather -->  	
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css" integrity="sha512-r/Gan7PMSRovDus++vDS2Ayutc/cSdl268u047n4z+k7GYuR7Hiw71FsT3QQxdKJBVHYttOJ6IGLnlM9IoMToQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  	
 <body>
 	<jsp:include page="../common/links.jsp" />
 	<div>
-		<jsp:include page="header.jsp" />
+		<jsp:include page="../common/header.jsp" />
 
 	</div>
 
 	<div class="gridWrap">
 	<div class="container1">
 	
-		<!-- 수강중인 과목 -->
-		<div class="class" style="overflow:auto; width:auto; height:auto;">
-			<!-- 학생일경우 -->
-			<c:if test="${ loginUser.userDiv eq  1}">
-				<h4 style="margin-bottom:20px;">수강중인 과목</h4>
-				<c:forEach var="l" items="${ list }" >
-		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
-		            </ul>
-				</c:forEach>
-			</c:if>
-			<c:if test="${ loginUser.userDiv eq  2}">
-				<h4>진행중인 과목</h4>
-				<c:forEach var="l" items="${ list }" >
-		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureProMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
-		            </ul>
-				</c:forEach>
-			</c:if>
-			
+		<div class="class" >
+		<h4>학사일정</h4>
+		 <ul style="margin-left:-22px; line-height: 24px;">
+		  <li style="padding:none;"><b>2022.03.02</b> &nbsp;&nbsp;&nbsp; 제1학기 개강 및 입학식 </li>
+		  <li style="padding:none;"><b>2022.03.12</b> &nbsp;&nbsp;&nbsp;개교기념일 </li>
+		  <li style="padding:none;"><b>2022.04.05</b> &nbsp;&nbsp;&nbsp;수업일수 1/3선 </li>
+		  <li style="padding:none;"><b>2022.04.23</b> &nbsp;&nbsp;&nbsp;수업일수 1/2선 </li>
+		  <li style="padding:none;"><b>2022.07.08</b> &nbsp;&nbsp;&nbsp;전과 신청 </li>
+		  <li style="padding:none;"><b>2022.07.25</b> &nbsp;&nbsp;&nbsp;부/복수/연계전공 신청 </li>
+		 </ul>
 		</div>
 		
 		<!-- 메일 -->
@@ -413,17 +260,7 @@ font-size:10px;
 		<!-- 시설예약 -->
 		<div class="room">
 		<h4>시설예약</h4>
-			<div id="reading" onclick="location.href='rsvdReading'">
-				<img src="resources/images/reading_icon.png" alt="">
-				<div id="reading-title">열람실 예약</div>
-			</div>
-			
-			<div id="line"></div>
-			
-			<div id="study" onclick="location.href='rsvdStudy'">
-				<img src="resources/images/study_icon.png" alt="">
-				<div id="study-title">스터디룸 예약</div>
-			</div>
+		
 		</div>
 	</div>
 
@@ -446,7 +283,7 @@ font-size:10px;
 		 	<c:if test="${loginUser.studStatus eq 3}">
 		 		(졸업)
 		 	</c:if>
-		 	<c:if test="${loginUser.studStatus eq 4}">
+		 	<c:if test="${loginUser.studStatus eq 3}">
 		 		(자퇴)
 		 	</c:if>
 		 	
@@ -481,31 +318,8 @@ font-size:10px;
 		
 		<!-- 바로가기 -->
 		<div class="baro">
-			<div id="baro-title">바로가기 서비스</div>
-			<div id="num1" onclick="location.href='list.msg'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">01</span>
-				나의 쪽지함
-			</div>
-			<div id="num2" onclick="location.href='todoList'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">02</span>
-				TO-DO LIST
-			</div>
-			<div id="num3" onclick="location.href='list.bo'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">03</span>
-				커뮤니티
-			</div>
-			<div id="num4" onclick="location.href='myStu.appList'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">04</span>
-				상담신청
-			</div>
-			<div id="num5" onclick="location.href='myStu.cert.apply'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">05</span>
-				증명서 발급
-			</div>
-			<div id="num6" onclick="location.href='list.vbo'">
-				<span class="badge badge-pill" style="font-size:15px; font-weight:900; line-height:10px;">06</span>
-				대외활동 및 공모전
-			</div>
+		<h4>바로가기 서비스</h4>
+		
 		</div>
 		
 		<!-- 나의일정 -->
@@ -515,19 +329,9 @@ font-size:10px;
 		</div>
 		
 		<!-- 날씨 -->
-		<div id="weather">
-		<!-- <h4>WEATHER</h4> -->
-				<div id="one">
-					<div id="weatherIcon" style="float:left; width:40%;">
-					</div>
-					<div id="city" style="text-align:right">
-						 <h2 style="font-weight:800"></h2>
-						<p>유니대학교, 서울<p>
-					</div>
-				</div>
-				<div id="two">
-					습도 : <p id="humidity"></p><i class="wi wi-humidity"></i> &nbsp;&nbsp;&nbsp;&nbsp; 바람 : <p id="wind"></p><i class="wi wi-windy"></i>
-				</div>
+		<div class="weather">
+		<h4>WEATHER</h4>
+		
 		</div>
 		
 		<!-- 공지사항 -->
@@ -544,7 +348,7 @@ font-size:10px;
 		
 	
 	</div>
-	</div> <!-- gridWrap -->
+	
 
 <script>
 
@@ -685,84 +489,11 @@ $(function(){
 	      } // success:function 끝
 	})  // ajax 끝  
 	
-	
-	$(function(){
-		
-		weather();
-	
-	})
-	
-	function weather(){
-	
-		var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=00a7ff3d1d0d1e0074be2b3daed50c29";
-		
-		$.ajax({
-			url:apiURL,
-			dataType:"json",
-			type:"get",
-			async:"false",
-			success:data => {
-				var main = "";		
-				var icon = data.weather[0].icon;
-				var disc = data.weather[0].description;
-				
-				//day
-				if(icon == '01d'){ //맑음
-				 	main = "<i class='wi wi-day-sunny'></i>";
-				}else if(icon == '02d'){ //보통
-					main = "<i class='wi wi-day-cloudy'></i>";
-				}else if(icon == '03d'){ //조금 흐림
-					main = "<i class='wi wi-cloud'></i>";
-				}else if(icon == '04d'){ //흐림
-					main = "<i class='wi wi-cloudy'></i>";
-				}else if(icon == '09d'){ //흐린비
-					main = "<i class='wi wi-hail'></i>";
-				}else if(icon == '10d'){ //맑은비
-					main = "<i class='wi wi-day-rain'></i>";
-				}else if(icon == '11d'){ //천둥번개
-					main = "<i class='wi wi-day-thunderstorm'></i>";
-				}else if(icon == '13d'){ //눈
-					main = "<i class='wi wi-day-snow-wind'></i>";
-				}else if(icon == '50d'){ //안개
-					main = "<i class='wi wi-fog'></i>";
-				}
-				//night
-				else if(icon == '01n'){ //맑음
-					main = "<i class='wi wi-night-clear'></i>";
-				}else if(icon == '02n'){ //보통
-					main = "<i class='wi wi-night-alt-cloudy'></i>";
-				}else if(icon == '03n'){ //조금 흐림
-					main = "<i class='wi wi-cloud'></i>";
-				}else if(icon == '04n'){ //흐림
-					main = "<i class='wi wi-cloudy'></i>";
-				}else if(icon == '09n'){ //흐린비
-					main = "<i class='wi wi-hail'></i>";
-				}else if(icon == '10n'){ //맑은비
-					main = "<i class='wi wi-night-alt-hail'></i>";
-				}else if(icon == '11n'){ //천둥번개
-					main = "<i class='wi wi-day-thunderstorm'></i>";
-				}else if(icon == '13n'){ //눈
-					main = "<i class='wi wi-night-snow'></i>";
-				}else if(icon == '50n'){ //안개
-					main = "<i class='wi wi-fog'></i>";
-				}
-				
-				$("#weatherIcon").html(main);
-				$("#city>h2").text(Math.floor(data.main.temp- 273.15) + "°C");
-				$("#humidity").text(data.main.humidity);
-				$("#wind").text(data.wind.speed);
-				
-				
-			},error:() => {
-				console.log("날씨 통신 실패");
-			}
-		})
-	}	
 	 
 }); //$function 끝
 
 </script>
  
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

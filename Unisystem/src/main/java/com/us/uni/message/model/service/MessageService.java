@@ -1,6 +1,7 @@
 package com.us.uni.message.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,6 @@ public interface MessageService {
 	int readDate(int messageNo);
 	Message rdetailMsg(int messageNo);
 	Message sdetailMsg(int messageNo);
-	int deleteMsg(Message m);
+	int deleteMsg(int messageNo);
+	int updateReadDate(int messageNo);
 }

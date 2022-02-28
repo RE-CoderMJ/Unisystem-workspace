@@ -30,7 +30,7 @@
 	font-weight: 800;
 	margin-top: 50px;
 	margin-bottom: 10px;
-	margin-left: 120px;
+	margin-left: 207px;
 }
 
 .search_wrap {
@@ -101,7 +101,7 @@
 .b_write {
 	border: none;
 	float: right;
-	margin-right: 120px;
+	margin-right: 209px;
     margin-top: -30px;
     background-color: rgb(15, 43, 80);
 	color: white;
@@ -118,7 +118,7 @@
     width: 850px;
     margin: auto;
     height: 650px;
-    margin-left: 126px;
+    margin-left: 212px;
     margin-top:20px;
 }
 .b-count{
@@ -129,13 +129,13 @@
     left: 490px;
 }
 
-#bfile{
-	margin-left: 126px;
+#upfile{
+	margin-left: 212px;
 	margin-top: 10px;
 }
 
-.bcheckbox{
-	margin-left: 126px;
+.checkBox{
+	margin-left: 212px;
 	margin-top: 10px;
 }
 </style>
@@ -187,10 +187,14 @@
 		</div>
 
 		<!-- 첨부파일 영역 -->
-		<input id="bfile" type="file"><br>
-		<input id="bcheckbox" type="checkbox"> 공지로 등록
+		<input id="upfile" name="upfile" type="file"><br>
+		<input id="bcheckbox" class="checkBox" type="checkbox"> 공지로 등록
 		<input type="hidden" name="noticeYN" id="YN"/>
-		<script>
+		
+		<button type="submit" class="b_write">등록하기</button>
+	</form>
+
+	<script>
 		 $("#bcheckbox").change(
 				  function() {
 
@@ -210,10 +214,6 @@
 
 				 );
 		</script>
-		
-		<button type="submit" class="b_write">등록하기</button>
-	</form>
-
 	</div>
 
 	<br clear="both">

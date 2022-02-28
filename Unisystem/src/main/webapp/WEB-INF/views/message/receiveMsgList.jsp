@@ -197,7 +197,7 @@ cursor:pointer;
 
 			<div class="btn-search">
 			<div class="btn-area">
-				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(231, 76, 60);">선택삭제</a> 
+				<a class="btn btn-sm" id="mdel" style="color:white; background-color:rgb(192, 57, 43);">선택삭제</a> 
 				<a class="btn btn-sm" href="" data-toggle="modal" data-target="#msgModal" style="background-color:rgb(44, 62, 80); color:white;">쪽지보내기</a>
 			</div>
 		 
@@ -214,7 +214,7 @@ cursor:pointer;
 			<table class="table" id="msgArea" style="width: 900px; text-align: center;">
 			<thead>
 				<tr>
-					<th width=""></th>
+					<th width=""><input type="checkbox" id="checkAll"></th>
 					<th width="100px">보낸사람</th>
 					<th width="300px">내용</th>
 					<th width="100px">상태</th>
@@ -230,7 +230,7 @@ cursor:pointer;
 			
 			<div class="modal" id="detailrecMsg">
 			<div class="modal-dialog">
-				<div class="modal-content" style="border-radius: 80px;">
+				<div class="modal-content" style="border-radius: 80px; padding-bottom:20px;">
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title" id="mtitle">받은메시지 조회</h4>
@@ -259,15 +259,15 @@ cursor:pointer;
 
 		<br clear="both">
 
-		<script>
-		
+		<!-- footer.jsp-->
+		<jsp:include page="../common/footer.jsp" />
+
+	</div>
+	
+	
+<script>
 		$(function(){
 			receiveMsgList(1);
-			
-			$(document).on("click", "#mdel", function(){
-				deleteMsg();
-			})
-				
 			
 			$(document).on("click", ".text-overflow > a", function(){
 				console.log();
@@ -294,15 +294,19 @@ cursor:pointer;
 						$('#mbody').html(value);
 						$('#detailrecMsg').modal('show');
 						
+						$('#detailrecMsg').on('hidden.bs.modal', function(){
+							location.reload();
+						})
+						
 						console.log(value);
 					}, error:function() {
 						console.log("쪽지디테일 조회용 ajax 통신실패");
 					}
 					
-				});
-			})
-			 
-		})
+				});//ajax
+			}) //document
+		})	 //$function
+			
 		
 		//쪽지 리스트 조회 ajax구현하기 
 		function receiveMsgList(cPageNo){
@@ -332,8 +336,8 @@ cursor:pointer;
   						  }
     					
     					value += "<tr>"
-    						  + "<td>" 
-    						  + "<input id='msgCheck' type='checkbox'>"
+    						  + "<td class='td ck'>" 
+    						  + "<input class='checkbox' name='checkBox' type='checkbox'>"
     						  + '<input type="hidden" name="deleteYN" id="mYN"/>'
     						  +"</td>"
     						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
@@ -371,48 +375,70 @@ cursor:pointer;
 					$(".pagination").html(piValue);
 					$("#cPage").val(data.pi.currentPage);
 					$("#msgArea tbody").html(value);
-    				},
-    				
-    			error:function(){
+    			},error:function(){
     				console.log("쪽지리스트 조회용 ajax 통신실패");
     			}
-    		});
-    	}
+    		}); //ajax 끝 
+		} //func
 		
-		function deleteMsg(){
 
-            if ( $("#msgCheck").is(":checked") ){
-                $("#mYN").val('Y');
-                
-                $.ajax({
-                	type: 'POST',  
-    				dataType:'json',
-        			url:"del.msg",
-        			data:{
-        				messageNo:$('#msgNo').val(),
-        				deleteYN:$('#mYN').val()
-        			},
-        			success:function(data){
-        				if(!confirm("메세지를 삭제하시겠습니까?")){
-        					return false;
-		 				}else{
-		 					alert('삭제가 완료되었습니다.');
-		 					location.reload();
-		 				}
-        			}
-                });
-            }else{
-            	 $("#mYN").val('N');
-            }
-            
+		
+		//체크박스 여러개 담는 ajax
+		 $(function(){
+		            $("#mdel").click(function(){
+		          let cknArr = [];
+		           	 let value;
+		           	 
+		           	$(".checkbox:checked").each(function(){
+		           		value = $(this).parent().siblings("input[name=messageNo]").val();
+		           		cknArr.push(value);
+		           	})
+		           	
+		           	let ckn;
+		               for(let i in cknArr){
+		                   console.log(cknArr[i]);
+		                   ckn = cknArr[i];
+		                   deleteMsg(cknArr[i]);
+		               }
+		           });
+		        })
+
+		
+		//메시지 삭제 ajax
+		
+		function deleteMsg(ckn){
+			
+			$.ajax({
+				type: 'POST',  
+				dataType:'json',
+    			url:"del.msg",
+    			data:{messageNo:ckn},
+    			success:function(data){
+    				console.log(data)
+	 					location.reload();
+    					}//success
+    			, error:function() {
+				console.log("선택삭제 ajax 통신실패");
+					}//error	
+			});//ajax끝
 		}
 		
-    </script>
+		
+		 /*전체 체크박스*/
+			$(document).on("click", "#checkAll", function(){
+				if($("#checkAll").is(":checked")){
+					$(".checkbox").prop("checked", true);
+				}else{
+					$(".checkbox").prop("checked", false);
+				}
+			});	
+		 
 
-		<!-- footer.jsp-->
-		<jsp:include page="../common/footer.jsp" />
+		 
+        </script>
 
-	</div>
+	
+	
 
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.us.uni.message.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -97,6 +99,7 @@ public class MessageController {
 	public String ajaxrDetailMsg(int messageNo){
 		
 		Message msg = mService.rdetailMsg(messageNo);
+		int result = mService.updateReadDate(messageNo);
 			//System.out.println(list);
 		return new Gson().toJson(msg);
 	}
@@ -112,10 +115,20 @@ public class MessageController {
 	
 	@ResponseBody
 	@RequestMapping(value="del.msg", produces="application/json; charset=UTF-8")
-	public int ajaxrdelMsg(Message m){
-		//System.out.println(m);
+	public int ajaxrdelMsg(int messageNo){
+		System.out.println(messageNo);
 		
-		int result = mService.deleteMsg(m);
+		int result = mService.deleteMsg(messageNo);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="read.update",produces="application/json; charset=UTF-8")
+	public int ajaxReadUpdate(int messageNo) {
+		System.out.println(messageNo);
+		
+		int result = mService.updateReadDate(messageNo);
+		
 		return result;
 	}
 	

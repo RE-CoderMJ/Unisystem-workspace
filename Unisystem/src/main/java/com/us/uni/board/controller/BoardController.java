@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,19 +60,23 @@ public class BoardController {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-			
-		int searchCount = bService.selectSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+		
+		int searchCount = bService.selectSearchCount(map); 
+		//현재 검색결과에 맞는 게시글 총갯수 
 
-		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 5);
 		ArrayList<Board> list = bService.selectSearchList(map, pi);
+			
+			//System.out.println(searchCount);
+			//System.out.println(map);
 			
 			mv.addObject("pi", pi)
 			  .addObject("list", list)
 			  .addObject("condition", condition)
 			  .addObject("keyword", keyword)
 			  .setViewName("board/boardListView");
-			
-			return mv;
+			  
+			  return mv;
 		}
 	
 	
@@ -79,12 +84,14 @@ public class BoardController {
 	@RequestMapping("keyword.bo")
 	public ModelAndView selectKeyword(@RequestParam(value="cpage",defaultValue="1")int currentPage,int bokeyword, ModelAndView mv) {
 		
+		
+		//System.out.println(bokeyword);
+		
+		
 		int listCount = bService.selectKeywordListCount(bokeyword);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Board> list = bService.selectKeyword(pi,bokeyword);
-		
-		//System.out.println(list);
 		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
@@ -127,28 +134,6 @@ public class BoardController {
 		
 	}
 	
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // "20220118103507"(년월일시분초)
-		int ranNum = (int)(Math.random() * 90000 + 10000); // 23152 (5자리 랜덤값)
-		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
-		
-		String changeName = currentTime + ranNum + ext;
-				
-		// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/board/");
-		
-			try {
-				upfile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-		
-		return changeName;
-	}
-	
 	
 	@RequestMapping("detail.bo")
 	public ModelAndView selectBoard(int bno, ModelAndView mv) {
@@ -160,7 +145,7 @@ public class BoardController {
 		if(result > 0) {
 		
 			Board b = bService.selectBoard(bno);
-			
+			System.out.println(b);
 			if(at != null) {
 				at = bService.selectAttachBoard(bno);
 			}
@@ -347,18 +332,18 @@ public class BoardController {
 				
 				@RequestMapping("insert.nbo")
 				public String ninsertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
-					
 					Attachment at = new Attachment();
 					
 					if(!upfile.getOriginalFilename().equals("")) {
 						String changeName = saveFile(upfile, session);
-						
+						// 원본명, 서버업로드된경로를 Attatchment 에 이어서 담기
 						at.setOriginName(upfile.getOriginalFilename());
 						at.setChangeName(changeName);
 						at.setPath("resources/uploadFiles/board/"+ changeName);
 					} 
 					
-					int result = bService.ninsertBoard(b, at);
+					int result = bService.insertBoard(b, at);
+					//System.out.println(b);
 					
 					if(result > 0) { // 성공 => 게시글 리스트페이지 (list.bo  url재요청)
 						session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
@@ -556,6 +541,52 @@ public class BoardController {
 					}
 				}
 	
+				//대외활동 검색
+				@RequestMapping("search.vbo")
+				public ModelAndView searchvList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
+						
+
+					HashMap<String, String> map = new HashMap<>();
+					map.put("condition", condition);
+					map.put("keyword", keyword);
+						
+					int searchCount = bService.selectvSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+
+					PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+					ArrayList<Board> list = bService.selectvSearchList(map, pi);
+						
+						mv.addObject("pi", pi)
+						  .addObject("list", list)
+						  .addObject("condition", condition)
+						  .addObject("keyword", keyword)
+						  .setViewName("volunteer/volListView");
+						
+						return mv;
+					}
+				
+				//대외활동 검색
+				@RequestMapping("search.cbo")
+				public ModelAndView searchcList(@RequestParam(value="cpage")int currentPage, String condition, String keyword, ModelAndView mv) {
+						
+
+					HashMap<String, String> map = new HashMap<>();
+					map.put("condition", condition);
+					map.put("keyword", keyword);
+						
+					int searchCount = bService.selectcSearchCount(map); // 현재 검색결과에 맞는 게시글 총갯수 
+
+					PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+					ArrayList<Board> list = bService.selectcSearchList(map, pi);
+						
+						mv.addObject("pi", pi)
+						  .addObject("list", list)
+						  .addObject("condition", condition)
+						  .addObject("keyword", keyword)
+						  .setViewName("volunteer/circleListView");
+						
+						return mv;
+					}
+				
 				
 				@RequestMapping("detail.cbo")
 				public ModelAndView cselectBoard(int bno, ModelAndView mv) {
@@ -733,7 +764,7 @@ public class BoardController {
 				public String ajaxSelectReplyList(int bno) {
 					
 					ArrayList<Reply> list =bService.selectReplyList(bno);
-					
+					//System.out.println(list);
 					return new Gson().toJson(list);
 				}
 				
@@ -741,7 +772,7 @@ public class BoardController {
 				@ResponseBody
 				@RequestMapping(value="rinsert.bo")
 				public String ajaxInsertReply(Reply r) {
-					System.out.println(r);
+					
 					int result = bService.insertReply(r);
 					
 					return result>0 ? "success":"fail";
@@ -755,9 +786,32 @@ public class BoardController {
 					
 					return result;
 				}
-				
-				
+ 	 
 		
+				
+				
+				public String saveFile(MultipartFile upfile, HttpSession session) {
+					String originName = upfile.getOriginalFilename(); // "flower.png"
+					
+					String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // "20220118103507"(년월일시분초)
+					int ranNum = (int)(Math.random() * 90000 + 10000); // 23152 (5자리 랜덤값)
+					String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
+					
+					String changeName = currentTime + ranNum + ext;
+							
+					// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
+					String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/board/");
+					
+						try {
+							upfile.transferTo(new File(savePath + changeName));
+						} catch (IllegalStateException | IOException e) {
+							e.printStackTrace();
+						}
+						
+					
+					return changeName;
+				}
+				
 	}
 	
 	

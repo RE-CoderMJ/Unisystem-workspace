@@ -55,6 +55,16 @@ public class StudentServiceImpl implements StudentService{
 		return sDao.studentInsert(sqlSession, student);
 	}
 
+	@Override
+	public Users StudentInfo(int studNo) {
+		return sDao.StudentInfo(sqlSession, studNo);
+	}
+
+	@Override
+	public int studentUpdateInfo(Users student) {
+		return sDao.studentUpdateInfo(sqlSession, student);
+	}
+
 	
 
 	

@@ -197,6 +197,11 @@ public class LectureDao {
 		return sqlSession.selectOne("lectureMapper.selectProHomework", h);
 	}
 	
+	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	public Homework selectProHomeworkI(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectProHomeworkI", h);
+	}
+	
 	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
 	public Attachment selectAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
 		return sqlSession.selectOne("lectureMapper.selectAttachHomework", h);
@@ -205,5 +210,55 @@ public class LectureDao {
 	// 교수 - 과제관리 : '과제마감'버튼 클릭을 통해 제출가능한과제 상태를 마감상태로 변경
 	public int updatepHomeworkStatus(SqlSessionTemplate sqlSession, Homework h) {
 		return sqlSession.update("lectureMapper.updatepHomeworkStatus", h);
+	}
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제를 수정
+	public int updateProHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.updateProHomework", h);
+	}
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정
+	public int updateProHwAtt(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("lectureMapper.updateProHwAtt", at);
+	}
+	
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존에 파일 x)
+	public int insertNewAtt(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertNewAtt", at);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글 삭제
+	public int deleteProHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.deleteProHomework", h);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글에 딸린 첨부파일 삭제
+	public int deleteAttachProHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.update("lectureMapper.deleteAttachProHomework", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 상세페이지 조회
+	public Homework selectStuHomeworkP(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuHomeworkP", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제에서 과제 등록 
+	public int insertStuHomeworkEnrollForm(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.insert("lectureMapper.insertStuHomeworkEnrollForm", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제등록 시 첨부파일 등록
+	public int insertStuAttachPHomework(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("lectureMapper.insertStuAttachPHomework", at);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 조회 
+	public Homework selectStuHomeworkDetail(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuHomeworkDetail", h);
+	}
+	
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
+	public Attachment selectStuAttachHomework(SqlSessionTemplate sqlSession, Homework h) {
+		return sqlSession.selectOne("lectureMapper.selectStuAttachHomework", h);
 	}
 }

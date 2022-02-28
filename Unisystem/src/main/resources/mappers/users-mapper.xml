@@ -120,6 +120,7 @@
 		     , password
 		     , kor_name
 		     , eng_name
+		     , user_div
 		     , birthday
 		     , gender
 		     , email

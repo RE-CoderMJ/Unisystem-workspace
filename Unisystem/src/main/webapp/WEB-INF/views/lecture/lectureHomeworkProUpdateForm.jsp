@@ -124,6 +124,12 @@
     #meeting-time{
    		margin-top : 10px;
     }
+    .filename{
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  width:400px; 
+    }
 </style>
 </head>
 <body>
@@ -144,11 +150,11 @@
 
             <div id="contentBox">
 
-                <form id="enrollForm" method="post" action="proHomeworkInsert.lec" enctype="multipart/form-data">
+                <form id="updateForm" method="post" action="updateProHomework.lec" enctype="multipart/form-data">
 
                     <div id="contentBox_border">
                         <div id="contentBox_header">
-                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력">
+                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력" value="${ h.homeworkpName }">
                         </div>
     
                         <div id="contentBox_info">
@@ -162,23 +168,38 @@
                         <div>
                             <div id="contentBox_file">
                                 <div class="box-file-input">
-                                    <label><input type="file" name="upfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
-                                    <span class="filename">파일을 선택해주세요.</div>
+                                
+                                <c:choose>
+			                    	<c:when test="${ empty at.originName}">
+				                    	<label><input type="file" name="reupfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
+	                                    <span class="filename">파일을 선택해주세요.</div>
+			                    	</c:when>
+			                    	<c:otherwise>
+										<label><input type="file" name="reupfile" class="file-input"  accept="image/*,.pdf" id="upfile"></label>
+		                        		<span class="filename"><a href="${ at.path }" download="${ at.originName }">${ at.originName }</a></div>
+		                        		
+		                        		<input type="hidden" name="originName" value="${ at.originName }" />
+			                            <input type="hidden" name="changeName" value="${ at.changeName }" />
+			                    	</c:otherwise>
+                        		</c:choose>
+
+			                            <input type="hidden" name="homeworkpNo" value="${ h.homeworkpNo }" />
+		                        	
                                 </div>      
                             </div>
                             <label for="meeting-time">마감기한 : </label>
 
 							<input type="datetime-local" id="meeting-time"
-							   	   name="homeworkpEndDateTime" min="2018-06-07T00:00" >
+							   	   name="homeworkpEndDateTime" value="${ h.homeworkpEndDateTime }" >
 							       
                             <div id="contentBox_content">
-                                <textarea name="homeworkpContent" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." ></textarea>
+                                <textarea name="homeworkpContent" id="contentBox_text" cols="30" rows="10" placeholder="내용을 입력하세요." >${ h.homeworkpContent }</textarea>
                             </div>
                         </div>
     
                         <div id="two_btn">
-                            <button type="button" onclick="history.back()">목록</button>
-                            <button type="submit">등록</button>
+                            <button type="button" onclick="location.href='homeworkProEndList.lec';">목록</button>
+                            <button type="submit">수정</button>
                         </div>
        
                     </div>

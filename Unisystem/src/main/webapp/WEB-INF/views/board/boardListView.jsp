@@ -200,18 +200,21 @@ li {
 				$(function(){
 					$("#searchForm option[value=${condition}]").attr("selected", true);
 				})
+				
+				
 			</script>
 		</c:if>
 			
-		<form action="keyword.bo" method="get">
-			<div class="ctg-area">
+		<form id="ctgForm" action="keyword.bo" method="get">
+		 <div class="ctg-area">
 				<input type="hidden" name="cpage" value="1"/>
 				<button class="bkeyword" name="bokeyword" value="5">자유</button>
 				<button class="bkeyword" name="bokeyword" value="6">취업</button>
 				<button class="bkeyword" name="bokeyword" value="7">정보공유</button>
-			</div>
+		</div> 
+			 
 		</form>
-
+			
 			<br clear="both"> <br> <br>
 
 
@@ -267,11 +270,14 @@ li {
             			location.href = 'detail.bo?bno=' + $(this).children(".bno").text();
             		});
             	})
+            	
+            	
             </script>
             
 			<!-- paging bar 영역-->
 			<div class="container">
                     <ul class="pagination justify-content-center">
+                   
                     <c:choose>
 						<c:when test="${ pi.currentPage eq 1 }">
                       <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
@@ -281,18 +287,33 @@ li {
 								href="list.bo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
+					
+					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ empty condition }">
 						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+					</c:if>
+					
+					<c:if test="${ not empty condition && not empty keyword }">
+						<li class="page-item"><a class="page-link" href="search.bo?cpage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+					</c:if>
+					
+					<c:if test="${ not empty condition && not empty bokeyword }">
+						<li class="page-item"><a class="page-link" href="keyword.bo?cpage=${ p }&condition=${condition}&keyword=${bokeyword}">${ p }</a></li>
+					</c:if>
+			 
 					</c:forEach>
-					 <c:choose>
-						<c:when test="${ pi.currentPage eq pi.maxPage }">
-							<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item"><a
-								href="list.bo?cpage=${ pi.currentPage+1 }">&gt;</a></li>
-						</c:otherwise>
-					</c:choose>
+							<c:choose>
+							
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+								<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+							</c:when>
+							
+							<c:otherwise>
+								<li class="page-item"><a
+									href="list.bo?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+							</c:otherwise>
+							</c:choose>
                     </ul>
                  </div>
                  

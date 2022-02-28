@@ -188,10 +188,16 @@ public class LectureServiceImpl implements LectureService{
 		return result1;
 	}
 	
-	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지)
+	// 교수 - 과제관리 : 상세페이지 조회 (제출가능한 과제 상세페이지)
 	@Override
 	public Homework selectProHomework(Homework h) {
 		return lDao.selectProHomework(sqlSession, h);
+	}
+	
+	// 교수 - 과제관리 : 상세페이지 조회 (마감된 과제 상세페이지)
+	@Override
+	public Homework selectProHomeworkI(Homework h) {
+		return lDao.selectProHomeworkI(sqlSession, h);
 	}
 
 	// 교수 - 과제관리 : 상세페이지 조회 (상단의 교수가 낸 과제 상세페이지에 필요한 첨부파일)
@@ -205,6 +211,70 @@ public class LectureServiceImpl implements LectureService{
 	public int updatepHomeworkStatus(Homework h) {
 		return lDao.updatepHomeworkStatus(sqlSession, h);
 	}
+
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제를 수정
+	@Override
+	public int updateProHomework(Homework h) {
+		return lDao.updateProHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정
+	@Override
+	public int updateProHwAtt(Attachment at) {
+		return lDao.updateProHwAtt(sqlSession, at);
+	}
+
+	// 교수 - 과제관리 : '수정'버튼을 통해 기존의 교수가 낸 과제의 첨부파일을 수정(기존에 파일 x)
+	@Override
+	public int insertNewAtt(Attachment at) {
+		return lDao.insertNewAtt(sqlSession, at);
+	}
+
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글 삭제
+	@Override
+	public int deleteProHomework(Homework h) {
+		return lDao.deleteProHomework(sqlSession, h);
+	}
+
+	// 교수 - 과제관리 : 상세페이지의 '삭제'버튼을 통해 게시글에 딸린 첨부파일 삭제
+	@Override
+	public int deleteAttachProHomework(Homework h) {
+		return lDao.deleteAttachProHomework(sqlSession, h);
+	}
+
+	// 학생 - 과제업로드 : 제출가능한 과제 상세페이지 조회
+	@Override
+	public Homework selectStuHomeworkP(Homework h) {
+		return lDao.selectStuHomeworkP(sqlSession, h);
+	}
+
+	// 학생 - 과제업로드 : 제출가능한 과제에서 과제 등록 
+	@Override
+	public int insertStuHomeworkEnrollForm(Homework h, Attachment at) {
+		int result1 = lDao.insertStuHomeworkEnrollForm(sqlSession, h);
+		
+		if(at.getOriginName() != null) {
+			
+			int result2 = lDao.insertStuAttachPHomework(sqlSession, at);
+
+			return result1*result2;
+		}
+		
+		return result1;
+	}
+
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 조회 
+	@Override
+	public Homework selectStuHomeworkDetail(Homework h) {
+		return lDao.selectStuHomeworkDetail(sqlSession, h);
+	}
+
+	// 학생 - 과제업로드 : 제출가능한 과제 제출 후 해당 부분 첨부파일 조회
+	@Override
+	public Attachment selectStuAttachHomework(Homework h) {
+		return lDao.selectStuAttachHomework(sqlSession, h);
+	}
+
 
 	
 }

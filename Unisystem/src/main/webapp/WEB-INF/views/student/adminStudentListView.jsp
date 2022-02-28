@@ -89,7 +89,6 @@
 		position:absolute;
 		right:45px;
 	}
-
 </style>
 </head>
 <body>
