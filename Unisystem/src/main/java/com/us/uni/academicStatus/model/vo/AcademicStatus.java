@@ -32,5 +32,5 @@ public class AcademicStatus {
 	private int progress;
 	private String progressT;
 	private String status;
-	
+	private String studName;
 }

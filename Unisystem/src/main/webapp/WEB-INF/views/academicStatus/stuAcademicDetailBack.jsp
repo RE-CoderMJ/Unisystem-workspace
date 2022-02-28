@@ -37,89 +37,44 @@
 			<article>
                 <div id="contents">
                 	<div class="titles">휴복학 신청 내용</div>
-	                	<div id="offYearSelect">
-		                	<table class="table table-bordered" style="width:1134px;">
-								<tbody>
-									<tr>
-										<th>학적상태</th>
-										<td style="width:140px;">재학</td>
-										<th>신청일자</th>
-										<td>2021-07-01</td>
-										<th>복학희망년도</th>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<th>휴학뷴류</th>
-										<td>
-											
-										</td>
-										<th>신청년도</th>
-										<td></td>
-										<th>복학 희망 학기</th>
-										<td>
-											
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<th>휴학사유</th>
-										<td>
-											
-										</td>
-										<th>신청학기</th>
-										<td>
-											
-										</td>
-										<th>첨부파일</th>
-										<td colspan="2" style="height:30px;"></td>
-									</tr>
-									<tr>
-										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						
-						<div id="backYearSelect" style="display:none;">
+						<div id="backYearSelect">
 							<table class="table table-bordered" style="width:1134px;">
 								<tbody>
 									<tr>
 										<th>학적상태</th>
 										<td style="width:140px;">휴학</td>
 										<th>신청일자</th>
-										<td>2021-07-01</td>
+										<td>${asBack.asDate}</td>
 										<th>복학신청년도</th>
-										<td></td>
+										<td>${asBack.backYear}</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
 										<td>
-											일반휴학
+											${asOff.offTypeT}
 										</td>
 										<th>휴학 신청년도</th>
-										<td>2021</td>
+										<td>${asOff.offYear}</td>
 										<th>복학 신청 학기</th>
 										<td>
-											
+											${asBack.backSemester}
 										</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학사유</th>
 										<td>
-											기타
+											${asOff.reasonT}
 										</td>
 										<th>휴학 신청학기</th>
 										<td>
-											1학기
+											${asOff.reasonT}
 										</td>
 									</tr>
 									<tr>
 										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6"></td>
+										<td colspan="6">${asOff.reasonDetail}</td>
 									</tr>
 								</tbody>
 							</table>

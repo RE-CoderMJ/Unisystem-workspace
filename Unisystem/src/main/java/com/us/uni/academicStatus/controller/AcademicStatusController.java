@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.us.uni.academicStatus.model.service.AcademicStatusService;
 import com.us.uni.academicStatus.model.vo.AcademicStatus;
 import com.us.uni.common.model.vo.Attachment;
+import com.us.uni.common.model.vo.PageInfo;
+import com.us.uni.common.template.Pagination;
 import com.us.uni.users.model.vo.Users;
 
 @Controller
@@ -45,6 +47,20 @@ public class AcademicStatusController {
 		m.addAttribute("asList", asList);
 		
 		return "academicStatus/academicStatusApply";
+	}
+	
+	/**
+	 * 복학신청시 휴학신청 데이터 불러오는 컨트롤러
+	 * @param userNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="myProf.selectOffApply", produces="application/json; charset=UTF-8")
+	public AcademicStatus selectOffAply(int userNo) {
+		
+		AcademicStatus as = acService.selectOffApply(userNo);
+		
+		return as;
 	}
 	
 	/**
@@ -106,14 +122,25 @@ public class AcademicStatusController {
 		return "academicStatus/stuAcademicDetail";
 	}
 	
+	/**
+	 * 교수 마이페이지 학적변동 신청내역 리스트 조회 페이지 컨트롤러
+	 * @param currentPage
+	 * @param session
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("myProf.academic.list")
-	public String selectProfAcademicList(HttpSession session, Model m) {
+	public String selectProfAcademicList(int currentPage, HttpSession session, Model m) {
+		
 		Users u = (Users)session.getAttribute("loginUser");
 		
 		int listCount = acService.selectProfAsListCount(u.getUserNo());
 		
-		ArrayList<AcademicStatus> asList = acService.selectProfAsList(u.getUserNo());
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<AcademicStatus> asList = acService.selectProfAsList(u.getUserNo(), pi);
 		m.addAttribute("asList", asList);
+		m.addAttribute("pi", pi);
+		
 		return "academicStatus/profAcademicList";
 	}
 	
@@ -123,11 +150,11 @@ public class AcademicStatusController {
 	}
 	
 	/**
-	 * 휴학신청내역 상세조회
+	 * 학생 휴학신청내역 상세조회
 	 * @return
 	 */
 	@RequestMapping("myStu.academic.detailOff")
-	public String selectAdminAcademicOff(int asNo, Model m) {
+	public String selectStudAcademicOff(int asNo, Model m) {
 		
 		AcademicStatus as = acService.selectAs(asNo);
 		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
@@ -137,11 +164,61 @@ public class AcademicStatusController {
 		return "academicStatus/stuAcademicDetailOff";
 	}
 	
+	/**
+	 * 교수 휴학신청내역 상세조회
+	 * @return
+	 */
+	/*
+	@RequestMapping("myProf.academic.detailOff")
+	public String selectProfAcademicOff(int asNo, Model m) {
+		
+		AcademicStatus as = acService.selectAs(asNo);
+		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
+		m.addAttribute("as", as);
+		m.addAttribute("attList", attList);
+		
+		return "academicStatus/profAcademicDetailOff";
+	}
+	*/
+	/**
+	 * 학생 복학신청내역 상세조회
+	 * @param session
+	 * @param asNo
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("myStu.academic.detailBack")
-	public String selectAdminAcademicBack() {
+	public String selectSutdAcademicBack(HttpSession session, int asNo, Model m) {
+		
+		Users u = (Users)session.getAttribute("loginUser");
+		AcademicStatus asOff = acService.selectOffApply(u.getUserNo());
+		AcademicStatus asBack = acService.selectAs(asNo);
+		m.addAttribute("asOff", asOff);
+		m.addAttribute("asBack", asBack);
+		
 		return "academicStatus/stuAcademicDetailBack";
 	}
 	
+	/**
+	 * 교수복학신청내역 상세조회
+	 * @param session
+	 * @param asNo
+	 * @param m
+	 * @return
+	 */
+	/*
+	@RequestMapping("myStu.academic.detailBack")
+	public String selectProfAcademicBack(HttpSession session, int asNo, Model m) {
+		
+		Users u = (Users)session.getAttribute("loginUser");
+		AcademicStatus asOff = acService.selectOffApply(u.getUserNo());
+		AcademicStatus asBack = acService.selectAs(asNo);
+		m.addAttribute("asOff", asOff);
+		m.addAttribute("asBack", asBack);
+		
+		return "academicStatus/profAcademicDetailBack";
+	}
+	*/
 	
 	/**
 	 * 서버에 첨부파일을 저장시키는 메소드

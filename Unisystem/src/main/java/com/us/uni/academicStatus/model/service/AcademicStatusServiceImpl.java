@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.us.uni.academicStatus.model.dao.AcademicStatusDao;
 import com.us.uni.academicStatus.model.vo.AcademicStatus;
 import com.us.uni.common.model.vo.Attachment;
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.student.model.vo.Student;
 
 @Service
@@ -63,13 +64,18 @@ public class AcademicStatusServiceImpl implements AcademicStatusService{
 	}
 
 	@Override
-	public ArrayList<AcademicStatus> selectProfAsList(int userNo) {
-		return acDao.selectProfAsList(sqlSession, userNo);
+	public int selectProfAsListCount(int userNo) {
+		return acDao.selectProfAsListCount(sqlSession, userNo);
 	}
 
 	@Override
-	public int selectProfAsListCount(int userNo) {
-		return acDao.selectProfAsListCount(sqlSession, userNo);
+	public ArrayList<AcademicStatus> selectProfAsList(int userNo, PageInfo pi) {
+		return acDao.selectProfAsList(sqlSession, userNo, pi);
+	}
+
+	@Override
+	public AcademicStatus selectOffApply(int userNo) {
+		return acDao.selectOffApply(sqlSession, userNo);
 	}
 
 }

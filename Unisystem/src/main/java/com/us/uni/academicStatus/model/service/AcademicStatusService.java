@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import com.us.uni.academicStatus.model.vo.AcademicStatus;
 import com.us.uni.common.model.vo.Attachment;
+import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.student.model.vo.Student;
 
 public interface AcademicStatusService {
 
 	// 학생 학적변동 페이지 서비스
 	String selectStuInfo(int userNo);
+	AcademicStatus selectOffApply(int userNo);
 	
 	// 휴학신청 서비스
 	int applyAsOff(AcademicStatus as, ArrayList<Attachment> attList);
@@ -26,7 +28,7 @@ public interface AcademicStatusService {
 	
 	// 교수페이지 휴복학 신청내역 리스트 조회
 	int selectProfAsListCount(int userNo);
-	ArrayList<AcademicStatus> selectProfAsList(int userNo);
-
+	ArrayList<AcademicStatus> selectProfAsList(int userNo, PageInfo pi);
+	
 
 }

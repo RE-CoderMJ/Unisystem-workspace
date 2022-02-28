@@ -22,6 +22,7 @@
 		<result column="PROGRESS" property="progress" />
 		<result column="PROGRESST" property="progressT" />
 		<result column="STATUS" property="status" />
+		<result column="stud_name" property="studName" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -67,6 +68,26 @@
 		  , #{offSemester}
 		  , #{offUntilYear}
 		  , #{offUntilSemester}
+		  )
+	</insert>
+	
+	<insert id="applyAsBack">
+		insert
+		  into academic_status
+		  (
+		    as_no
+		  , stud_no
+		  , as_type
+		  , back_year
+		  , back_semester
+		  )
+		  values
+		  (
+		    seq_acsno.nextval
+		  , #{studNo}
+		  , #{asType}
+		  , #{backYear}
+		  , #{backSemester}
 		  )
 	</insert>
 	
@@ -126,7 +147,7 @@
 		     , offuntil_semester
 		     , back_year
 		     , back_semester
-		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
 		  from academic_status
 		 where as_no = #{asNo}
 	</select>
@@ -158,15 +179,32 @@
 	<select id="selectProfAsList" resultMap="asResult">
 		select
 		       as_no
+		     , as_type
 		     , stud_no
-		     , kor_name
+		     , kor_name "stud_name"
 		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
 		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
-		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
 		  from academic_status
 		  join users on (user_no = stud_no)
           join student using (stud_no)
 		 where prof_no = #{userNo}
 		   and progress = 0
+		 order
+		    by as_no
+	</select>
+	
+	<select id="selectOffApply" resultMap="asResult">
+		select
+		       as_type
+		     , decode(off_type, 1, '일반휴학', 2, '군입대휴학', 3, '임신/출산휴학', 4, '육아휴학') "off_typeT"
+		     , decode(reason, 1, '개인사정', 2, '군입대', 3, '기타') "reasonT"
+		     , reason_detail
+		     , off_year
+		     , off_semester
+		  from academic_status
+		 where as_type = 1
+		   and stud_no = #{userNo}
+		   and rownum = 1
 	</select>
 </mapper>

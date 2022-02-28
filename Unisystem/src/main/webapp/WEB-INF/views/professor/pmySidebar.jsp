@@ -94,7 +94,7 @@ a:hover {
 				<a href="stlist.pr" id="">- 담당 학생 조회</a>
 			</div>
 			<div>
-				<a href="">- 학적변동 신청내역</a>
+				<a href="myProf.academic.list?currentPage=1">- 학적변동 신청내역</a>
 			</div>
 
 			<div class="side_title">

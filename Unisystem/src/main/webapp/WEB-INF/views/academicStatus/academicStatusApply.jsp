@@ -200,18 +200,18 @@
 										<th>학적상태</th>
 										<td style="width:140px;">휴학</td>
 										<th>신청일자</th>
-										<td>2021-07-01</td>
+										<td>${today}</td>
 										<th>복학신청년도</th>
 										<td><input type="number" name="backYear" style="height:30px; width:140px;"></td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
-										<td>
+										<td id="offType">
 											
 										</td>
 										<th>휴학 신청년도</th>
-										<td>2021</td>
+										<td id="offYear"></td>
 										<th>복학 신청 학기</th>
 										<td>
 											<select name="backSemester" style="height:30px; width:140px;">
@@ -223,17 +223,17 @@
 									</tr>
 									<tr>
 										<th>휴학사유</th>
-										<td>
-											기타
+										<td id="reason">
+											
 										</td>
 										<th>휴학 신청학기</th>
-										<td>
-											1학기
+										<td id="offSemester">
+											
 										</td>
 									</tr>
 									<tr>
 										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6"></td>
+										<td colspan="6" id="reasonDetail"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -318,6 +318,20 @@
     			$("#back-b").prop("checked", true);
     			$("#offYearSelect").hide();
     			$("#backYearSelect").show();
+    			
+    			$.ajax({
+    				url:"myProf.selectOffApply",
+    				data:{userNo:'${loginUser.userNo}'},
+    				success:function(as){
+    					$("#offType").text(as.offTypeT);
+    					$("#offYear").text(as.offYear);
+    					$("#reason").text(as.reasonT);
+    					$("#offSemester").text(as.offSemester);
+    					$("#reasonDetail").text(as.reasonDetail);
+    				},error:function(){
+    					console.log("복학신청내역 데이터 조회용 ajax 통신 실패");
+    				}
+    			})
     		}else{
     			alert("졸업한 학생은 휴복학 신청이 불가능합니다.");
     			location.href="list.st";
@@ -350,31 +364,6 @@
     		
     		if(option == 1){
     			$("#off").submit();
-    			/*
-	    		$.ajax({
-	    			url:"myStu.academic.applyAsOff",
-					data:{
-						studNo:'${loginUser.userNo}',
-						asType: option,
-						offType: $("select[name=offType]").val(),
-						reason: $("select[name=reason]").val(),
-						reasonDetail: $("#reason-area").val(),
-						offYear: $("input[name=offYear]").val(),
-						offSemester: $("select[name=offSemester]").val(),
-						offUntilYear: $("input[name=backYear]").val(),
-						offUntilSemester: $("select[name=backSemester]").val()
-					},
-					type:"POST",
-					success:function(result){
-						if(result>0){
-							//selectAsList();
-							console.log("휴학신청 성공!");
-						}
-					},error:function(){
-						console.log();
-					}
-	    		})
-	    		*/
     		}else{
     			$("#back").submit();
     		}
