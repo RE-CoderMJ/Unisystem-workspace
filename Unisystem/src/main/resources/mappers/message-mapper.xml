@@ -17,6 +17,7 @@
  	<result column="msg_alert" property="msgAlert" /> 	 	 		
   </resultMap>
 	
+	
 	<select id="recSelectListCount" resultType="_int">
 	 select
 	 	count(*)
@@ -132,6 +133,14 @@
 		,READYN = 'Y'
 		where message_no = #{messageNo}
 	</update>
+	
+	<select id="selectUnreadMsg" resultType="_int">
+	select 
+		count(*)
+		from message
+		where msg_reader = #{userNo}
+		and READYN = 'N'
+	</select>
 	
 	
 	

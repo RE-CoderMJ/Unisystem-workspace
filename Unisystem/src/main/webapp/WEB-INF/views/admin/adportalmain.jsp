@@ -209,7 +209,100 @@ text-decoration:none;
 width:260px;
 font-size:10px;
 }
+/* 시설 예약 */
+.room {
+	grid-area: room;
+	border-top:2px solid #fcaf17;
+	border-bottom:1px solid #fcaf17;
+	position:relative;
+}
+.room>h4{
+	position:absolute;
+	top:15px;
+	left:17px;
+}
+#reading{
+	width:105px;
+	height:105px;
+	background-color:RGB(235,242,252);
+	border-radius:200px;
+	position:absolute;
+	left:23px;
+	top:52px;
+	cursor:pointer;
+}
+#reading-title{
+	position:absolute;
+	left:10px;
+	top:115px;
+	font-size:16px;
+}
+#reading>img{
+	object-fit: contain;
+    width:65%;
+    height:65%;
+    position:absolute;
+    left:20px;
+	top:20px;
+}
+#study{
+	width:105px;
+	height:105px;
+	background-color:RGB(235,242,252);
+	border-radius:200px;
+	position:absolute;
+	left:160px;
+	top:52px;
+	cursor:pointer;
+}
+#study-title{
+	position:absolute;
+	left:0px;
+	top:115px;
+	font-size:16px;
+}
+#study>img{
+	object-fit: contain;
+    width:65%;
+    height:65%;
+    position:absolute;
+    left:20px;
+	top:20px;
+}
+/* 날씨 */
+#weather{
+	padding:0px;
+	width:100%;
+	height:100%;
+	display:block;
+	border:2px solid #BDE0FE;
+}
 
+#one{
+	width:100%;
+	height:70%;
+}
+#two{
+	width:100%;
+	height:30%;
+	background:#BDE0FE; 
+	padding:10px;
+	font-size:17px;
+	padding:12px;
+	align:center;
+	padding-left:35px;
+}
+#two>p{
+	display:inline;
+	padding:5px;
+}
+#weatherIcon{
+	margin-left:40px;
+	font-size:70px;
+}
+#city{
+	padding:20px;
+}
 </style>
  <!-- jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -260,7 +353,17 @@ font-size:10px;
 		<!-- 시설예약 -->
 		<div class="room">
 		<h4>시설예약</h4>
-		
+			<div id="reading" onclick="location.href='rsvdReading'">
+				<img src="resources/images/reading_icon.png" alt="">
+				<div id="reading-title">열람실 예약</div>
+			</div>
+			
+			<div id="line"></div>
+			
+			<div id="study" onclick="location.href='rsvdStudy'">
+				<img src="resources/images/study_icon.png" alt="">
+				<div id="study-title">스터디룸 예약</div>
+			</div>
 		</div>
 	</div>
 
@@ -329,10 +432,21 @@ font-size:10px;
 		</div>
 		
 		<!-- 날씨 -->
-		<div class="weather">
-		<h4>WEATHER</h4>
-		
+		<div id="weather">
+		<!-- <h4>WEATHER</h4> -->
+				<div id="one">
+					<div id="weatherIcon" style="float:left; width:40%;">
+					</div>
+					<div id="city" style="text-align:right">
+						 <h2 style="font-weight:800"></h2>
+						<p>유니대학교, 서울<p>
+					</div>
+				</div>
+				<div id="two">
+					습도 : <p id="humidity"></p><i class="wi wi-humidity"></i> &nbsp;&nbsp;&nbsp;&nbsp; 바람 : <p id="wind"></p><i class="wi wi-windy"></i>
+				</div>
 		</div>
+		
 		
 		<!-- 공지사항 -->
 		<div class="notice">
@@ -489,7 +603,78 @@ $(function(){
 	      } // success:function 끝
 	})  // ajax 끝  
 	
-	 
+	$(function(){
+		
+		weather();
+	
+	})
+	
+	function weather(){
+	
+		var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=00a7ff3d1d0d1e0074be2b3daed50c29";
+		
+		$.ajax({
+			url:apiURL,
+			dataType:"json",
+			type:"get",
+			async:"false",
+			success:data => {
+				var main = "";		
+				var icon = data.weather[0].icon;
+				var disc = data.weather[0].description;
+				
+				//day
+				if(icon == '01d'){ //맑음
+				 	main = "<i class='wi wi-day-sunny'></i>";
+				}else if(icon == '02d'){ //보통
+					main = "<i class='wi wi-day-cloudy'></i>";
+				}else if(icon == '03d'){ //조금 흐림
+					main = "<i class='wi wi-cloud'></i>";
+				}else if(icon == '04d'){ //흐림
+					main = "<i class='wi wi-cloudy'></i>";
+				}else if(icon == '09d'){ //흐린비
+					main = "<i class='wi wi-hail'></i>";
+				}else if(icon == '10d'){ //맑은비
+					main = "<i class='wi wi-day-rain'></i>";
+				}else if(icon == '11d'){ //천둥번개
+					main = "<i class='wi wi-day-thunderstorm'></i>";
+				}else if(icon == '13d'){ //눈
+					main = "<i class='wi wi-day-snow-wind'></i>";
+				}else if(icon == '50d'){ //안개
+					main = "<i class='wi wi-fog'></i>";
+				}
+				//night
+				else if(icon == '01n'){ //맑음
+					main = "<i class='wi wi-night-clear'></i>";
+				}else if(icon == '02n'){ //보통
+					main = "<i class='wi wi-night-alt-cloudy'></i>";
+				}else if(icon == '03n'){ //조금 흐림
+					main = "<i class='wi wi-cloud'></i>";
+				}else if(icon == '04n'){ //흐림
+					main = "<i class='wi wi-cloudy'></i>";
+				}else if(icon == '09n'){ //흐린비
+					main = "<i class='wi wi-hail'></i>";
+				}else if(icon == '10n'){ //맑은비
+					main = "<i class='wi wi-night-alt-hail'></i>";
+				}else if(icon == '11n'){ //천둥번개
+					main = "<i class='wi wi-day-thunderstorm'></i>";
+				}else if(icon == '13n'){ //눈
+					main = "<i class='wi wi-night-snow'></i>";
+				}else if(icon == '50n'){ //안개
+					main = "<i class='wi wi-fog'></i>";
+				}
+				
+				$("#weatherIcon").html(main);
+				$("#city>h2").text(Math.floor(data.main.temp- 273.15) + "°C");
+				$("#humidity").text(data.main.humidity);
+				$("#wind").text(data.wind.speed);
+				
+				
+			},error:() => {
+				console.log("날씨 통신 실패");
+			}
+		})
+	}	
 }); //$function 끝
 
 </script>

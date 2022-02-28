@@ -81,6 +81,12 @@ public class MessageServiceImpl implements MessageService{
 		return mDao.updateReadDate(sqlSession, messageNo);
 	}
 
+	@Override
+	public int selectUnreadMsg(int userNo) {
+		
+		return mDao.selectUnreadMsg(sqlSession, userNo);
+	}
+
 	 
 	
 

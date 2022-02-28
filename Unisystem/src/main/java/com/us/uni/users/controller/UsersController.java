@@ -80,23 +80,21 @@ public class UsersController {
 		//m.setUserPwd(encPwd);
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())&&(loginUser.getUserDiv() ==3)){
-			System.out.println(loginUser.getUserDiv());
-			
-						// 관리자 로그인 성공
-						session.setAttribute("loginUser", loginUser);
-						mv.setViewName("redirect:adenview");
-		
-		} else if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-							
-							// 로그인 성공
-							session.setAttribute("loginUser", loginUser);
-							mv.setViewName("redirect:enview");
-		}else{// 로그인 실패
-			model.addAttribute("alertMsg", "일치하는 회원정보가 없습니다.");
-			mv.setViewName("common/mainPage"); 
+				// 관리자 로그인 성공
+				session.setAttribute("loginUser", loginUser);
+				mv.setViewName("redirect:adenview");
+	
+			} else if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+				// 로그인 성공
+				session.setAttribute("loginUser", loginUser);
+				mv.setViewName("redirect:enview");
+				
+			}else{// 로그인 실패
+				model.addAttribute("alertMsg", "일치하는 회원정보가 없습니다.");
+				mv.setViewName("common/mainPage"); 
+					}
+			return mv;	
 		}
-		return mv;	
-	}
 	
 		
 	

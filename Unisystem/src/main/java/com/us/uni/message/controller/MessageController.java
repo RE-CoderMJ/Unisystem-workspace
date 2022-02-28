@@ -132,4 +132,11 @@ public class MessageController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="unread.msg",produces="application/json")
+	public int ajaxunReadMsg(int userNo) {
+		
+		int result = mService.selectUnreadMsg(userNo);
+		return result;
+	}
 }

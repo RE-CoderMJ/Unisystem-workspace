@@ -129,6 +129,9 @@
     margin-top: 6px;
     margin-left: 10px;
     }
+    .msg{
+    color:white;
+    }
 </style>
 </head>
 <body>
@@ -150,7 +153,9 @@
 	            
 	            <div style="float: left;" class="msg">
 	            <a href="list.msg"><img src="resources/images/msg_icon.png"></a>
-	            ${ message.pi.listCount }
+	            <div style="margin-top:-28px; margin-left: 42px;">
+	            <b>(&nbsp;<span id="msgCount"></span>&nbsp;)</b>
+	            </div>
 	            </div>
 	           
 	           
@@ -165,7 +170,7 @@
 	                 (교수)님 환영합니다.
 	                </c:when>
 	                <c:when test="${loginUser.userDiv eq 3}">
-	                페이지 입니다.
+	               	 페이지 입니다.
 	                </c:when>
 	                <c:otherwise>
 	             		로그인 후 이용해주세요.
@@ -228,6 +233,8 @@
 	
 	$(document).ready(function(){
 		connectWS();
+		
+		unreadMsg();
 	});
 	
 	function connectWS(){
@@ -257,6 +264,30 @@
 	    };
 	    ws.onerror = function (err) { console.log('Error',err); };
 	}
+	
+	function unreadMsg(){
+		$.ajax({
+			type: 'POST',  
+			dataType:'json',
+			url:"unread.msg",
+			data:{userNo:'${loginUser.userNo}'},
+			success:function(data){
+				
+				console.log(data);
+				
+					let value=""
+					value += data;
+					$('#msgCount').html(value);
+					
+					}//success
+					
+			, error:function() {
+			console.log("안읽은 메시지 갯수 ajax 통신조회실패");
+					}//error	
+			});//ajax끝
+	}
+	
+	
     </script>
     
   

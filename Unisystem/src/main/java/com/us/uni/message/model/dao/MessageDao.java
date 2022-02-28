@@ -75,5 +75,12 @@ public class MessageDao {
 		
 		return sqlSession.update("messageMapper.updateDate", messageNo);
 	}
+
+	public int selectUnreadMsg(SqlSessionTemplate sqlSession, int userNo) {
+		System.out.println(userNo);
+		
+		return sqlSession.selectOne("messageMapper.selectUnreadMsg",userNo);
+		
+	}
 	
 }

@@ -25,4 +25,5 @@ public interface MessageService {
 	Message sdetailMsg(int messageNo);
 	int deleteMsg(int messageNo);
 	int updateReadDate(int messageNo);
+	int selectUnreadMsg(int userNo);
 }
