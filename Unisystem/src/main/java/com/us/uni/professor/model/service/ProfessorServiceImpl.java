@@ -81,6 +81,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public ArrayList<Lecture> requestClassList(PageInfo pi) {
 		return pDao.requestClassList(sqlSession, pi);
 	}
+	@Override
+	public Lecture adminAppDetail(int classNo) {
+		return pDao.adminAppDetail(sqlSession, classNo);
+	}
+	@Override
+	public int classApprove(Lecture lec) {
+		return pDao.classApprove(sqlSession, lec);
+	}
 
 
 }

@@ -17,4 +17,6 @@ public interface FacilityService {
 	// 스터디룸별 예약 가능한 시간 조회
 	ArrayList<Facility> ableTime(String room);
 	int cancelStudy(int rsvdNo);
+	// 관리자 - 열람실 전체 퇴실
+	int cancelAllReading();
 }

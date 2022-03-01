@@ -131,7 +131,7 @@
 								<tr>
 									<td><input type="checkbox" class="deleteNo" name="dno" value="${prof.profNo}"></td>
 									<td>${ prof.profNo }</td>
-									<td>${ prof.korName }</td>
+									<td><a href="detail.st?profNo=${profNo}">${ prof.korName }</a></td>
 									<td>${ prof.profUniv }</td>
 									<td>${ prof.profDepartment }</td>
 									<td>${ prof.profMajor }</td>
@@ -232,18 +232,12 @@
 					}
 	
 					if(checkNum == 0) {
-						alertify.alert("삭제할 학생을 선택해주세요.");
-					} else if(checkNum > 0) {
-						if(checkPwd == adminPwd){
-							// 삭제 요청
-							delForm.action = "delete.pr";
-							delForm.submit();
-						}else{
-							alertify.alert("비밀번호를 잘못 입력하셨습니다.");
-							return false;
-						}
-					}
-
+						alertify.alert("삭제할 교수를 선택해주세요.");
+						return false;
+					}else{
+						delForm.action = "delete.pr";
+						delForm.submit();
+					} 
 				}
 				
 				// 사이드바 길이 조절
@@ -318,7 +312,7 @@
 	    						list += "<tr>" 
 			    							+ "<td><input type='checkbox' name='profNo' value='"+obj.profNo+"'></td>"
 	    									+ "<td>" + obj.profNo + "</td>"
-	    									+ "<td>" + obj.korName + "</td>"
+	    									+ "<td><a href='detail.st?studNo=" + obj.studNo + "'>" + obj.korName + "</a></td>"
 	    									+ "<td>" + obj.profUniv + "</td>"
 	    									+ "<td>" + obj.profDepartment + "</td>"
 	    									+ "<td>" + obj.profMajor + "</td>"
