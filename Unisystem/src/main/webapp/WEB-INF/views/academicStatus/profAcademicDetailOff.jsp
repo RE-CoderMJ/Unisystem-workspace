@@ -52,49 +52,72 @@
 					<div class="pageName"><p style="color:gray">마이페이지>담당학생관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">학적변동 신청내역</p></div>
 					<br><br>
 					<div id="pageName">학생 정보</div>
-					<button type="submit" id="list-btn">목록</button>
-	                <br>
+					<button type="submit" id="list-btn" onclick="location.href='myProf.academic.list?currentPage=1'">목록</button>
+	                <br><br><br>
 	                <table class="table table-bordered" style="width:1134px;">
 						<tbody>
 							<tr>
 								<th>학번</th>
-								<td>201112345</td>
+								<td>${s.userNo}</td>
 								<th>성명</th>
-								<td>김길동</td>
+								<td>${s.korName}</td>
 								<th>생년월일</th>
-								<td>1996-01-12</td>
+								<td>${s.birthday}</td>
 								<th>성별</th>
-								<td>남성</td>
+								<td>${s.gender}</td>
 							</tr>
 							<tr>
 								<th>대학</th>
-								<td>자연과학대학</td>
+								<td>${s.studUniv}</td>
 								<th>학과</th>
-								<td>물리학과</td>
+								<td>${s.studDepartment}</td>
 								<th>전공</th>
-								<td>물리학</td>
+								<td>${s.studMajor}</td>
 								<th>복수전공</th>
-								<td></td>
+								<td>${s.studMinor}</td>
 							</tr>
 							<tr>
 								<th>학년</th>
-								<td>2</td>
+								<td>${s.studSemester/2}</td>
 								<th>국적</th>
-								<td>대한민국</td>
+								<td>${s.nation}</td>
 								<th>입학일자</th>
-								<td>2011-02-06</td>
+								<td>${s.studInto}</td>
 								<th>졸업일자</th>
-								<td></td>
+								<td>${s.studGrad}</td>
 							</tr>
 							<tr>
 								<th>입학구분</th>
-								<td>신입</td>
+								<c:choose>
+									<c:when test="${s.studDivision eq 1 }">
+										<td>신입</td>
+									</c:when>
+									<c:when test="${s.studDivision eq 2 }">
+										<td>편입</td>
+									</c:when>
+									<c:otherwise>
+										<td>재입학</td>
+									</c:otherwise>
+								</c:choose>
 								<th>학적변동</th>
-								<td>재학</td>
+								<c:choose>
+									<c:when test="${s.studStatus eq 1 }">
+										<td>재학</td>
+									</c:when>
+									<c:when test="${s.studStatus eq 2 }">
+										<td>휴학</td>
+									</c:when>
+									<c:when test="${s.studStatus eq 3 }">
+										<td>졸업</td>
+									</c:when>
+									<c:otherwise>
+										<td>자퇴</td>
+									</c:otherwise>
+								</c:choose>
 								<th>담당교수</th>
-								<td>홍말동</td>
+								<td>${loginUser.korName }</td>
 								<th>이수학점</th>
-								<td>58</td>
+								<td>${s.studSemester}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -109,13 +132,13 @@
 									<tr>
 										<th>학적상태</th>
 										<c:choose>
-											<c:when test="${loginUser.studStatus eq 1 }">
+											<c:when test="${s.studStatus eq 1 }">
 												<td>재학</td>
 											</c:when>
-											<c:when test="${loginUser.studStatus eq 2 }">
+											<c:when test="${s.studStatus eq 2 }">
 												<td>휴학</td>
 											</c:when>
-											<c:when test="${loginUser.studStatus eq 3 }">
+											<c:when test="${s.studStatus eq 3 }">
 												<td>졸업</td>
 											</c:when>
 											<c:otherwise>
@@ -179,8 +202,8 @@
 						</div>
 						
 						<div align="right" style="width:1130px;">
-							<button type="submit" id="reject-btn">반려</button>
-							<button type="submit" id="approve-btn">승인</button>
+							<button id="reject-btn" onclick="changeStatus(4)">반려</button>
+							<button id="approve-btn" onclick="changeStatus(1)">승인</button>
 						</div>
   	
              	</div>
@@ -189,6 +212,22 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		function changeStatus(progress){
+			$.ajax({
+				url:"myProf.changeAsStatus",
+				data:{asNo:'${as.asNo}', progress:progress},
+				success:function(result){
+					if(result > 0){
+						location.href='myProf.academic.list?currentPage=1';							
+					}
+				},error:function(){
+					console.log("상태변경 ajax 통신 실패");
+				}
+			})		
+		}
+	</script>
 	
 	<script>
 		$(document).ready(function(){

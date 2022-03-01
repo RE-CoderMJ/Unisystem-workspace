@@ -63,5 +63,10 @@ public class AcademicStatusDao {
 		return sqlSession.selectOne("academicMapper.selectStudInfo", studNo);
 	}
 
+	public int changeAsStatus(SqlSessionTemplate sqlSession, AcademicStatus as) {
+		
+		return sqlSession.update("academicMapper.changeAsStatus", as);
+	}
+
 
 }

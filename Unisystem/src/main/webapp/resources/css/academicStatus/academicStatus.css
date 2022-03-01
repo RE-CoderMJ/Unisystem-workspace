@@ -69,6 +69,7 @@ section::after{display:block;content:"";clear:both;}
 	line-height:40px;
 	text-align:center;
 	width:140px;
+	vertical-align:middle;
 }
 #contents{
 	margin-left:50px;

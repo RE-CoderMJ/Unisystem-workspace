@@ -84,4 +84,9 @@ public class AcademicStatusServiceImpl implements AcademicStatusService{
 		return acDao.selectStudInfo(sqlSession, studNo);
 	}
 
+	@Override
+	public int changeAsStatus(AcademicStatus as) {
+		return acDao.changeAsStatus(sqlSession, as);
+	}
+
 }

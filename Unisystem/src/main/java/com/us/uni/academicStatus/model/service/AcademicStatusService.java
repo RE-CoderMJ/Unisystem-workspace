@@ -34,5 +34,8 @@ public interface AcademicStatusService {
 	// 학생정보 조회 컨트롤러
 	Users selectStudInfo(int studNo);
 	
+	// 교수 승인, 반려 컨트롤러
+	int changeAsStatus(AcademicStatus as);
+	
 
 }

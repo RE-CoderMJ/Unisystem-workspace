@@ -78,7 +78,7 @@
 							</tr>
 							<tr>
 								<th>학년</th>
-								<td>${s.studSemester}</td>
+								<td>${s.studSemester/2}</td>
 								<th>국적</th>
 								<td>${s.nation}</td>
 								<th>입학일자</th>
@@ -183,8 +183,8 @@
 						</div>
 						
 						<div align="right" style="width:1130px;">
-							<button type="submit" id="reject-btn">반려</button>
-							<button type="submit" id="approve-btn">승인</button>
+							<button id="reject-btn" onclick="changeStatus(4)">반려</button>
+							<button id="approve-btn" onclick="changeStatus(1)">승인</button>
 						</div>
   	
              	</div>
@@ -193,6 +193,22 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		function changeStatus(progress){
+			$.ajax({
+				url:"myProf.changeAsStatus",
+				data:{asNo:'${asBack.asNo}', progress:progress},
+				success:function(result){
+					if(result > 0){
+						location.href='myProf.academic.list?currentPage=1';							
+					}
+				},error:function(){
+					console.log("상태변경 ajax 통신 실패");
+				}
+			})		
+		}
+	</script>
 	
 	<script>
 		$(document).ready(function(){

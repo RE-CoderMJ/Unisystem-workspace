@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.us.uni.academicStatus.model.service.AcademicStatusService;
 import com.us.uni.academicStatus.model.vo.AcademicStatus;
+import com.us.uni.appointment.model.vo.Appointment;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.common.template.Pagination;
@@ -154,7 +155,7 @@ public class AcademicStatusController {
 	 * @return
 	 */
 	@RequestMapping("myStu.academic.detailOff")
-	public String selectStudAcademicOff(int asNo, int studNo, Model m) {
+	public String selectStudAcademicOff(int asNo, Model m) {
 	
 		AcademicStatus as = acService.selectAs(asNo);
 		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
@@ -179,7 +180,7 @@ public class AcademicStatusController {
 		m.addAttribute("s", s);
 		m.addAttribute("as", as);
 		m.addAttribute("attList", attList);
-		
+		System.out.println(s.getStudStatus());
 		return "academicStatus/profAcademicDetailOff";
 	}
 	
@@ -224,6 +225,20 @@ public class AcademicStatusController {
 		m.addAttribute("asBack", asBack);
 		
 		return "academicStatus/profAcademicDetailBack";
+	}
+	
+	/**
+	 * 상태변경용 ajax 컨트롤러
+	 * @param a
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="myProf.changeAsStatus", produces="application/json; charset=UTF-8")
+	public int changeAsStatus(AcademicStatus as) {
+		
+		int result = acService.changeAsStatus(as);
+		
+		return result;
 	}
 	
 	/**

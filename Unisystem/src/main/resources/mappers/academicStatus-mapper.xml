@@ -23,6 +23,7 @@
 		<result column="PROGRESST" property="progressT" />
 		<result column="STATUS" property="status" />
 		<result column="stud_name" property="studName" />
+		<result column="stud_status" property="studStatus" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -157,7 +158,7 @@
 		     , offuntil_semester
 		     , back_year
 		     , back_semester
-		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
 		  from academic_status
 		 where stud_no = #{userNo}
 	</select>
@@ -218,14 +219,14 @@
 		  join users on (user_no = stud_no)
           join student using (stud_no)
 		 where prof_no = #{userNo}
-		   and progress = 0
 		 order
-		    by as_no
+		    by as_no desc
 	</select>
 	
 	<select id="selectOffApply" resultMap="asResult">
 		select
-		       as_type
+		       as_no
+		     , as_type
 		     , decode(off_type, 1, '일반휴학', 2, '군입대휴학', 3, '임신/출산휴학', 4, '육아휴학') "off_typeT"
 		     , decode(reason, 1, '개인사정', 2, '군입대', 3, '기타') "reasonT"
 		     , reason_detail
@@ -266,5 +267,12 @@
 		  from users u
 			   join student s on (user_no = stud_no)
 		 where user_no = #{studNo}
-</select>
+	</select>
+	
+	<update id="changeAsStatus">
+		update
+		       academic_status
+		   set progress = #{progress}
+		 where as_no = #{asNo}
+	</update>
 </mapper>

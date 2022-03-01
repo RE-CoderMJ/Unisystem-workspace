@@ -17,6 +17,16 @@
 	#list>tbody tr{
 		cursor:pointer;
 	}
+	
+	.pending{
+		color:green;
+	}
+	.rejected{
+		color:red;
+	}
+	.accepted{
+		color:blue;	
+	}
 </style>
 </head>
 <body>
@@ -292,7 +302,20 @@
 				                            <td class="as-no">${a.asNo}</td>
 				                            <td>${a.asDate}</td> 
 				                            <td class="as-type">${a.asTypeT}</td>
-				                            <td>${a.progressT }</td>
+				                            <c:choose>
+				                            	<c:when test="${a.progressT eq '접수'}">
+						                            <td class="pending">${a.progressT}</td>
+				                            	</c:when>
+				                            	<c:when test="${a.progressT eq '담당교수승인'}">
+						                            <td class="accepted">${a.progressT}</td>
+				                            	</c:when>
+				                            	<c:when test="${a.progressT eq '학사지원과처리중'}">
+				                            		<td class="accepted">${a.progressT}</td>
+				                            	</c:when>
+				                            	<c:otherwise>
+						                            <td class="rejected">${a.progressT}</td>
+						                        </c:otherwise>
+				                            </c:choose>
 				                        </tr>
 				                        </c:forEach>
 		                        	</c:otherwise>

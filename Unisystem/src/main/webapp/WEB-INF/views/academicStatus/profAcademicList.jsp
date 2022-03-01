@@ -77,8 +77,8 @@
 					<div id="pageName">학적변동 신청내역</div>
 	                <br>
 	                <div id="tools" align="right">
-		                <button class="accepted">승인</button>
-		                <button class="rejected">반려</button>
+		                <button class="accepted" onclick="changeStatus(1)">승인</button>
+		                <button class="rejected" onclick="changeStatus(4)">반려</button>
 					</div>
 	            </div>
 			</header>
@@ -87,7 +87,7 @@
           			<table class="table table-hover" id="list">
           				<thead>
 	                    	<tr style="background:rgb(232, 232, 232);">
-	                    		<th><input type="checkbox" class="checkbox"></th>
+	                    		<th><input type="checkbox" id="checkAll"></th>
 	                    		<th>No.</th>
 	                    		<th>신청학생</th>
 	                    		<th>신청구분</th>
@@ -101,7 +101,7 @@
 		                            <td><input type="checkbox" class="checkbox"></td>
 		                            <td class="as-no">${as.asNo}</td>
 		                            <td>${as.studName}</td> 
-		                            <td>${as.asTypeT }</td>
+		                            <td class="as-type">${as.asTypeT }</td>
 		                            <td>${as.asDate}</td>
 		                            <input type="hidden" name="studNo" value="${ as.studNo}">
 		                            <c:choose>
@@ -171,6 +171,54 @@
     		})
     	})
     </script>
+    
+    <!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 상태 변경 -->
+	<script>
+		function changeStatus(progress){
+			
+			let count = 0;
+			let asNo;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count == 0){
+				alert("항목을 선택해주세요.");
+			}else{
+				$(".checkbox:checked").each(function(){
+					asNo = $(this).parent().siblings(".as-no").text();
+					ajaxChangeStatus(asNo, progress);
+					console.log(asNo);
+				});
+			}
+		}
+		
+		function ajaxChangeStatus(asNo, progress){
+			$.ajax({
+				url:"myProf.changeAsStatus",
+				data:{asNo:asNo, progress:progress},
+				success:function(result){
+					if(result > 0){
+						location.href='myProf.academic.list?currentPage=1';							
+					}
+				},error:function(){
+					console.log("상태변경 ajax 통신 실패");
+				}
+			})			
+		}
+	</script>
 	
 </body>
 </html>
