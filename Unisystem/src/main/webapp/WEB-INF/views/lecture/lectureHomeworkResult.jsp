@@ -71,7 +71,7 @@
         float: right;
         width: 200px;
         height: 40px;
-        left: 1150px;
+        left: 1100px;
         bottom: 0px;
     }
     #two_btn button{
@@ -82,7 +82,7 @@
     }
     #two_btn button:focus{outline: none;}
     #two_btn button:first-child{margin-right: 5px;}
-
+	#two_btn button:last-child{background-color:rgb(21, 62, 115); color:white;}
     /* 과제 제출 영역*/
     #contentBox_border_bottom{
         margin-top: 10px;
@@ -159,43 +159,58 @@
 
                 <div id="contentBox_border">
                     <div id="contentBox_header">
-                        8주차 과제
+                        201800101 성민석 과제제출입니다.
                         <span><i class="fas fa-paperclip"></i></span>
                     </div>
 
                     <div id="contentBox_info">
                         <div><i class="fas fa-user-circle"></i></div>
                         <div id="pro_name">
-                            <div>김말똥<span>교수</span></div>
-                            <div>2022.01.01 15:44 <span>조회 13</span></div>
+                            <div>성민석<span>학생</span></div>
+                            <div>2022.03.01 15:44</div>
                         </div>
                     </div>
 
                     <div>
                         <div id="contentBox_file">
                             <i class="far fa-folder" style="float: left;"></i>
-                            <div style="float: left; margin-top: 12px; margin-left: 10px;">8주차 과제.docx</div>
+                            <div style="float: left; margin-top: 12px; margin-left: 10px;">201800101 성민석.docx</div>
                         </div>
                         <div id="contentBox_content">
-                            상단에 과제 다운로드 후 2022.01.01 12:00시까지 제출하시길 바랍니다.
+                            201800101 성민석 과제제출입니다.
                         </div>
                     </div>
 
                     
                     <div id="feedback_header">과제피드백</div>
                     <div id="feedback_content">
-                        <div>어느 부분을 잘 작성했고 어느 부분을 조금 보충해야할 듯 합니다. 전반적으로 잘하셨습니다.</div>
+                        <div><input type="text" style="width:960px; border:none;"></div>
                     </div>
                     
                     <div style="margin-top: 50px;">
                         <span id="homework_score_title">과제 점수</span>
-                        <span id="homework_scorestyle" style="font-size: 20px;"><span style="margin-left: 10px; color: red;">80 </span>/ 100</span>
+                        <span id="homework_scorestyle" style="font-size: 20px;"><span style="margin-left: 10px; color: red;"><input type="text" style="width:50px;"> </span>/ 100</span>
                     </div>
 
                     <div id="two_btn">
-                        <button type="button">목록</button>
+                    	<button type="button">목록</button>
+                        <button type="button" onclick="confirmFunction()">등록</button>
                     </div>
                 </div>
+                
+                <script>
+                
+                function confirmFunction(){
+                	var answer;
+                	answer = confirm("과제 성적을 등록하시겠습니까?");
+                	
+            		if(answer == true){
+            			 location.replace('insertHomeworkScore.lec');
+            		}
+                	
+                }
+                
+                </script>
 
                 
 

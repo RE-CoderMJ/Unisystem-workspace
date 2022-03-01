@@ -75,12 +75,44 @@ public class StudentDao {
 		return 0;
 	}
 	
+	/**
+	 * 내 정보 조회하기
+	 */
 	public Users StudentInfo(SqlSessionTemplate sqlSession, int studNo){
 		return sqlSession.selectOne("studentMapper.StudentInfo", studNo);
 	}
 	
+	/**
+	 * 내 정보조회 - 정보 수정
+	 */
 	public int studentUpdateInfo(SqlSessionTemplate sqlSession, Users student) {
 		return sqlSession.update("studentMapper.studentUpdateInfo", student);
+	}
+	
+	/**
+	 * 내 정보조회 - 비밀번호 변경
+	 */
+	public int studentUpdatePwd(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.update("studentMapper.studentUpdatePwd", map);
+	}
+	
+	public int adminUpdateInfo(SqlSessionTemplate sqlSession, Users student) {
+
+		int result = 0;
+		
+		int result1 = sqlSession.insert("studentMapper.adminUpdateInfo1", student);
+		int result2 = sqlSession.insert("studentMapper.adminUpdateInfo2", student);		
+		
+		result = result1 * result2;
+		
+		if(result > 0) {
+			return result;
+		}else {
+			return 0;
+		}
+			
+		
+		
 	}
 	
 	

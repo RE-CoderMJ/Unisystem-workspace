@@ -65,6 +65,22 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public int professorInsert(Users professor) {
 		return pDao.professorInsert(sqlSession, professor);
 	}
+	@Override
+	public int selectMyStudentCount(int profNo) {
+		return pDao.selectMyStudentCount(sqlSession, profNo);
+	}
+	@Override
+	public ArrayList<Users> selectMyStudent(HashMap map, PageInfo pi) {
+		return pDao.selectMyStudent(sqlSession, map, pi);
+	}
+	@Override
+	public int requestClassCount() {
+		return pDao.requestClassCount(sqlSession);
+	}
+	@Override
+	public ArrayList<Lecture> requestClassList(PageInfo pi) {
+		return pDao.requestClassList(sqlSession, pi);
+	}
 
 
 }
