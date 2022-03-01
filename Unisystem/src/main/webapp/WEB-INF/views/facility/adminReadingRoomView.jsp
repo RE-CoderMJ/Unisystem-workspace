@@ -12,8 +12,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<script> $( function() { $( ".datepicker" ).datepicker(); } ); </script>
-
 <style>
 	div{box-sizing:border-box;}
 	#wrap{

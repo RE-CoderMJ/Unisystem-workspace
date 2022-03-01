@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -149,6 +150,33 @@ public class ProfessorController {
 		
 		return "redirect:app.pr";
 	}
+	
+	/**
+	 * 교수 : 강의 개설
+	 */
+	@RequestMapping("insertClass.ad")
+	public String adminclassInsert(Lecture lec, MultipartFile upfile, HttpSession session) {
+		
+		int result = 0;
+		
+			
+			if(!upfile.getOriginalFilename().equals("")) {
+				String changeName = saveFile(upfile, session);
+				
+				lec.setClassPlan("resources/uploadFiles/classPlan/" + changeName);
+			}
+			
+		result = pService.classInsert(lec);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "강의 개설 신청이 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "강의 개설 신청 실패했습니다.");
+		}
+		
+		return "redirect:clist.ad";
+	}
 				
 	/**
 	 * admin : 학생의 담당교수 조회/변경 페이지
@@ -207,7 +235,7 @@ public class ProfessorController {
 	public String professorInsert(Users professor, MultipartFile upfile, HttpSession session) {
 	
 		int result = 0;
-		
+		System.out.println(professor.getProfInto());
 	
 		// 학생 정보 등록 시 프로필 사진 파일을 Student에 경로 저장
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -258,19 +286,42 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("stlist.pr")
-	public String selectMyStudentList() {
+	public String selectMyStudent(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int profNo = (((Users)session.getAttribute("loginUser")).getUserNo());
+		int listCount = pService.selectMyStudentCount(profNo);
+
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		HashMap map = new HashMap();
+		map.put("profNo", profNo);
+		
+		ArrayList<Users> stud = pService.selectMyStudent(map, pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("stud", stud);
+		System.out.println(stud);
+		
 		return "professor/professorMyStudentListView";
 	}
 	
 	
-	
-	
-	
-
-	
-	
 	@RequestMapping("clist.ad")
-	public String requestClassList() {
+	public String requestClassList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int listCount = pService.requestClassCount();
+
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		ArrayList<Lecture> list = pService.requestClassList(pi);
+		System.out.println(list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
 		return "professor/adminRequestClassListView";
 	}
 	

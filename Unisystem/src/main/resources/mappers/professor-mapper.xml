@@ -32,7 +32,19 @@
 		<result column="prof_app_day" property="profAppDay" />
 		<result column="prof_app_time" property="profAppTime" />
 		
+		<!-- student -->
+		<result column="stud_no" property="studNo" />
+		<result column="STUD_MAJOR" property="studMajor" />
 	</resultMap>
+
+	<resultMap id="classResult" type="Lecture">
+		<!-- class -->
+		<result column="CLASS_NO" property="classNo" />
+		<result column="APPDATE" property="appdate" />
+		<result column="CLASS_KOR_NAME" property="classKorName" />
+		<result column="CLASS_STATUS" property="classStatus" />
+		<result column="KOR_NAME" property="korName"/>
+	</resultMap>		
 	
 	<select id="selectListCount" resultType="_int">
 		SELECT
@@ -196,8 +208,58 @@
 		     , #{profUniv}
 		     , #{profDepartment}
 		     , #{profMajor}
-		     , TO_CHAR(SYSDATE, 'YYYYMMDD')
+		     , #{profInto}
 		     , 'Y'
 		     )
 	</insert>
+	
+	<select id="selectMyStudentCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM STUDENT
+	     WHERE PROF_NO = #{profNo}
+	</select>
+	<select id="selectMyStudent" resultMap="usersResult">
+		  SELECT
+	             STUD_NO
+	           , TOTAL_SEMESTER
+	           , KOR_NAME
+	           , STUD_MAJOR
+	           , PHONE
+	           , EMAIL
+	        FROM STUDENT
+	        JOIN USERS ON (STUD_NO = USER_NO)
+	       WHERE PROF_NO = #{profNo}
+	       <if test="level == 1">
+	       ORDER
+	          BY TOTAL_SEMESTER DESC
+	       </if>
+	     	<if test="level == 2">
+	       ORDER
+	          BY TOTAL_SEMESTER ASC
+	     	</if>
+	</select>
+	
+	<select id="requestClassCount" resultType="_int">
+	   SELECT
+	    	  COUNT(*)
+		 FROM CLASS
+	</select>
+	
+	<select id="requestClassList" resultMap="classResult">
+		SELECT 
+		       ROWNUM
+		     , A.*
+		 FROM (SELECT 
+		       CLASS_NO
+		     , KOR_NAME
+		     , APPDATE
+		     , CLASS_KOR_NAME
+		     , CLASS_STATUS
+		  FROM CLASS
+		  JOIN USERS ON (USER_NO = PROF_NO)
+		 ORDER
+		    BY CLASS_NO ASC NULLS FIRST) A 
+		ORDER BY ROWNUM DESC
+	</select>
 </mapper>

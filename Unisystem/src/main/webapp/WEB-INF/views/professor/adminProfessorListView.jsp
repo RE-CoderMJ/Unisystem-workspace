@@ -201,7 +201,10 @@
 			
 			
 	<script>
+	$(function(){
+		
 			sidebar();
+	})
 			
 			// checkBox 전체 선택
 			$("#allCheck").click(function(){
