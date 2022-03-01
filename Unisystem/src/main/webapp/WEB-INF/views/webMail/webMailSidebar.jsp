@@ -161,7 +161,7 @@
             </div>
             <div id="top" align="center">
                 <div id="unread" onclick="location.href='webMail.unread'">
-                    <div id="unread-count">6</div><div>안읽음</div>
+                    <div id="unread-count"></div><div>안읽음</div>
                 </div>
                 <div id="important" onclick="location.href='webMail.important'">
                     <i class="fa fa-star fa-xs" aria-hidden="true"></i><div>중요</div>
@@ -172,7 +172,7 @@
             </div>
             <hr class="sidebar-lines">
             <div id="mail-boxes">
-                <div onclick="location.href='webMail.inbox'">받은메일함 <span>6</span></div>
+                <div onclick="location.href='webMail.inbox'">받은메일함 <span id="inbox-count"></span></div>
                 <div onclick="location.href='webMail.toMe'">내게쓴메일함</div>
                 <div><a href="webMail.sent" style="text-decoration:none; color:black;">보낸메일함</a><button onclick='location.href="webMail.sent.readReceipt"'>수신확인</button></div>
                 <div onclick="location.href='webMail.drafts'">임시보관함</div>
@@ -197,6 +197,21 @@
                 <span>주소록</span>
             </div>
         </nav>
+        
+        <script>
+        	$(function(){
+        			$.ajax({
+        				url:"webMail.selectInboxList",
+        				data:{currentPage:0, userNo:'${loginUser.userNo}'},
+        				success:function(result){
+    						$("#unread-count").text(result.unreadCount);
+    						$("#inbox-count").text(result.unreadCount);
+        				},error:function(){
+        					console.log("사이드바 안읽은 메일 목록 조회용 ajax 통신 실패");
+        				}
+        			});
+        	})
+        </script>
 
 </body>
 </html>

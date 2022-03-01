@@ -157,7 +157,7 @@
 				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;시설물 관리&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;스터디룸 관리</p></div>
 			</div>
 			<div class="topBar">
-				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
+				<span id="readingRoom"><a href="rsvdReading.ad">열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
 			</div>
 	
 						
@@ -370,9 +370,9 @@
 					<div class="logTop">
 						<!-- 
 						<input type="date" name="startDay" placeholder="시작날짜">
-						<input type="date" name="endDay" placeholder="마지막날짜">
-						<button id="search">검색</button>
 						 -->
+						<input type="date" name="endDay" placeholder="오늘의 날짜">
+						<button id="search">검색</button>
 						
 						<button id="rsvd" class="btn btn-outline-secondary" style="margin-left:34px; background:#FCBF49; color:white; border:none;" onclick="rsvd();">예약</button>
 						<button id="reset" class="btn btn-outline-secondary" style="background:#003049;color:white; border:none;" onclick="reset();">전체 퇴실</button>

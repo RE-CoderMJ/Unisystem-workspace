@@ -58,10 +58,12 @@ public class WebMailController {
 		Map<String, Object> map = new HashMap();
 		
 		int listCount = mService.selectInboxListCount(userNo);
-		
+		int unreadCount = mService.selectInboxUnreadCount(userNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<MailTo> list = mService.selectInboxList(userNo, pi);
 		
+		map.put("listCount", listCount);
+		map.put("unreadCount", unreadCount);
 		map.put("pi", pi);
 		map.put("list", list);
 		

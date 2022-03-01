@@ -20,9 +20,9 @@
             <header id="mail-boxes-header">
                 <div id="mailbox-name">받은 메일함</div>
                 <div id="mail-count">
-                	| <span id="unread-count">6</span><span> / 65</span>
-                </div>
-                <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
+                	| <span id="inbox-unread"></span><span id="total-count"></span>
+                </div> &nbsp;&nbsp;
+                <button id="refresh" onclick="refresh();"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
                         <input type="checkbox" id="checkAll">
@@ -156,6 +156,12 @@
 						$("#webMail-sidebar").css('height', $len + 22);
 						
 						$("#cPage").val(result.pi.currentPage);
+						
+						// 새로고침 영역 정보 업로드
+						$("#total-count").text(" / " + result.listCount);
+						$("#unread-count").text(result.unreadCount);
+						$("#inbox-count").text(result.unreadCount);
+						$("#inbox-unread").text(result.unreadCount);
 					}
 					
 					$("#list").html(value);
@@ -166,6 +172,12 @@
 				
 			});
 		}
+	</script>
+	
+	<script>
+		function refresh(){
+			selectInboxList($("#cPage").val());
+		}	
 	</script>
 	
 	<!-- 상세조회 -->

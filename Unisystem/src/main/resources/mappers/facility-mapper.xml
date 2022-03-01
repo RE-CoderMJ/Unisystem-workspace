@@ -22,7 +22,7 @@
 		  FROM RESERVED
 		 WHERE RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
            AND REGEXP_INSTR(RSVD_SPACE,'[^0-9]') = 0
-		   AND RSVD_END IS NULL
+		   AND RSVD_STATUS = 1
 	</select>
 
 	<!-- 열람실 예약  -->
@@ -119,5 +119,14 @@
 		  WHERE RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
 		    AND RSVD_SPACE = #{room}
 	</select>
+	
+	<!-- 열람실 전체 퇴실 -->
+	<update id="cancelAllReading">
+       UPDATE 
+              RESERVED
+          SET RSVD_STATUS = 2
+    WHERE REGEXP_INSTR(RSVD_SPACE,'[^0-9]') = 0
+      AND RSVD_DATE = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+	</update>
 	
 </mapper>

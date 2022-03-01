@@ -21,6 +21,10 @@ public class MailDao {
 	public int selectInboxListCount(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("mailMapper.selectInboxListCount", userNo);
 	}
+	
+	public int selectInboxUnreadCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("mailMapper.selectInboxUnreadCount", userNo);
+	}
 
 	public ArrayList<MailTo> selectInboxList(SqlSessionTemplate sqlSession, int userNo, PageInfo pi) {
 		
@@ -362,5 +366,5 @@ public class MailDao {
 	public int deleteContact(SqlSessionTemplate sqlSession, int contactNo) {
 		return sqlSession.delete("mailMapper.deleteContact", contactNo);
 	}
-	
+
 }

@@ -90,7 +90,7 @@
 					let value = "";
 					
 					if(result.list.length === 0){
-						value = "<tr><td style='text-align:center;'>주소록이 비어있습니다.</td></tr>"
+						value = "<tr><td colspan='5' style='text-align:center;'>주소록이 비어있습니다.</td></tr>"
 					}else{
 						
 						for(let i in result.list){

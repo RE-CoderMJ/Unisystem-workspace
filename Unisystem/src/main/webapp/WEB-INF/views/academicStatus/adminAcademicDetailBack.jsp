@@ -52,7 +52,7 @@
 					<div class="pageName"><p style="color:gray">마이페이지>담당학생관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">학적변동 신청내역</p></div>
 					<br><br>
 					<div id="pageName">학생 정보</div>
-					<button type="submit" id="list-btn" onclick="location.href='myProf.academic.list?currentPage=1'">목록</button>
+					<button type="submit" id="list-btn" onclick="location.href='admin.academic.list?currentPage=1'">목록</button>
 	                <br><br><br>
 	                <table class="table table-bordered" style="width:1134px;">
 						<tbody>
@@ -184,7 +184,7 @@
 						
 						<div align="right" style="width:1130px;">
 							<button id="reject-btn" onclick="changeStatus(4)">반려</button>
-							<button id="approve-btn" onclick="changeStatus(1)">승인</button>
+							<button id="approve-btn" onclick="changeStatus(3)">승인</button>
 						</div>
   	
              	</div>
@@ -198,10 +198,14 @@
 		function changeStatus(progress){
 			$.ajax({
 				url:"academic.changeAsStatus",
-				data:{asNo:'${asBack.asNo}', progress:progress},
+				data:{asNo:'${as.asNo}', 
+					progress:progress, 
+					asType:2,
+					studNo:'${s.userNo}'
+				 },
 				success:function(result){
 					if(result > 0){
-						location.href='myProf.academic.list?currentPage=1';							
+						location.href='admin.academic.list?currentPage=1';							
 					}
 				},error:function(){
 					console.log("상태변경 ajax 통신 실패");

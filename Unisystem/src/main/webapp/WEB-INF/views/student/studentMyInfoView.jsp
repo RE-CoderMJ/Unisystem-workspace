@@ -199,10 +199,10 @@
 				</div>
 				<div class="profileBox">
 					<div class="imgBox">
-						<c:if test="${ empty profileImg }">
+						<c:if test="${ empty stud.profileImg }">
 							<div></div>
 						</c:if>
-						<c:if test="${ not empty profileImg }">
+						<c:if test="${ not empty stud.profileImg }">
 							<img src="${ stud.profileImg }">
 						</c:if>
 						

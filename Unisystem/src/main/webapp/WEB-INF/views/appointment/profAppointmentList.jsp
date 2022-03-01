@@ -18,12 +18,40 @@
 		font-weight:800;
 		font-size:18px;
 	}
+	.md-box input{
+    font-size: 15px!important;
+    padding: 5px 0;
+    border: 1px solid gray;
+    border-radius:3px;
+    width: 20px;
+    margin-bottom: 20px;
+    margin-left:20px;
+    padding-left:2px;
+	}
+	.md-box p{
+	    font-size: 14px;
+		color: rgb(26, 86, 162);
+	    font-weight: 700;
+	    margin-bottom:10px;
+	    margin-left:20px;
+	}
+	.md-box label{
+		margin-right:5px;
+		margin-bottom:20px;
+		font-weight:300!important;
+	}
+	.modal-body{
+		width:370px!important;
+	}
+	.modal-content{
+		width:380px!important;
+	}
 </style>
 </head>
 <body>
 
-	<jsp:include page="../common/links.jsp" />
 	<jsp:include page="../common/header.jsp" />	
+	<jsp:include page="../common/links.jsp" />
 	
 	<div id="wrapper">
 		<jsp:include page="../professor/pmySidebar.jsp" />
@@ -125,7 +153,7 @@
 	                </div>
 	            
 		            <!-- Modal footer -->
-		             <div id="timeSet-btnArea">
+		             <div id="timeSet-btnArea" style="padding-left:32px;">
 		                 <button type="button" id="timeSetClose-btn" class="btn" data-dismiss="modal">취소</button>
 		                 <button type="submit" id="timeSet-btn" class="btn" data-toggle="modal">등록하기</button>
 		             </div>

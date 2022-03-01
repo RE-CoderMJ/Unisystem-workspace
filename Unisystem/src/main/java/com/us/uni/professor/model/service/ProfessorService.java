@@ -38,5 +38,9 @@ public interface ProfessorService {
 	// 신청 강의 목록
 	int requestClassCount();
 	ArrayList<Lecture> requestClassList(PageInfo pi);
-
-}
+	
+	// 강의신청서
+	Lecture adminAppDetail(int classNo);
+	// 승인/반려
+	int classApprove(Lecture lec);
+	}

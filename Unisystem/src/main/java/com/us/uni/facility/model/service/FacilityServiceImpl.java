@@ -55,6 +55,13 @@ public class FacilityServiceImpl implements FacilityService {
 		return fDao.cancelStudy(sqlSession, rsvdNo);
 	}
 
+	@Override
+	public int cancelAllReading() {
+		return fDao.cancelAllReading(sqlSession);
+	}
+	
+	
+
 
 	
 	

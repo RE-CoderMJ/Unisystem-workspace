@@ -15,6 +15,7 @@ public interface MailService {
 	// 받은 메일함 리스트 페이지 서비스
 	int selectInboxListCount(int userNo);
 	ArrayList<MailTo> selectInboxList(int userNo, PageInfo pi);
+	int selectInboxUnreadCount(int userNo);
 	
 	// 보낸 메일함 리스트 페이지 서비스
 	int selectSentListCount(int userNo);

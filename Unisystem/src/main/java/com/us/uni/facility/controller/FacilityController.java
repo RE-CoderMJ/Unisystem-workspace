@@ -138,5 +138,20 @@ public class FacilityController {
 		
 		return "redirect:rsvdStudy";
 	}
+	
+	@RequestMapping("reset.rr")
+	public String cancelAllReading(HttpSession session) {
+		
+		int result = fService.cancelAllReading();
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "전체 열람실이 퇴실되었습니다.");
+		} else{
+			session.setAttribute("alertMsg", "실패했습니다.");
+		}
+		
+		return "redirect:rsvdReading.ad";
+		
+	}
 
 }

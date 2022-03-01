@@ -6,6 +6,7 @@ import com.us.uni.academicStatus.model.vo.AcademicStatus;
 import com.us.uni.common.model.vo.Attachment;
 import com.us.uni.common.model.vo.PageInfo;
 import com.us.uni.student.model.vo.Student;
+import com.us.uni.users.model.vo.Users;
 
 public interface AcademicStatusService {
 
@@ -29,6 +30,16 @@ public interface AcademicStatusService {
 	// 교수페이지 휴복학 신청내역 리스트 조회
 	int selectProfAsListCount(int userNo);
 	ArrayList<AcademicStatus> selectProfAsList(int userNo, PageInfo pi);
+	
+	// 학생정보 조회 컨트롤러
+	Users selectStudInfo(int studNo);
+	
+	// 교수 승인, 반려 컨트롤러
+	int changeAsStatus(AcademicStatus as);
+	
+	// 관리자 페이지 휴복학 신청내역 리스트 조회
+	int selectAdminAsListCount();
+	ArrayList<AcademicStatus> selectAdminAsList(PageInfo pi);
 	
 
 }

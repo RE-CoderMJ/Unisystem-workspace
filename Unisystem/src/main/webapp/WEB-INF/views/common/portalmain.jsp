@@ -154,7 +154,7 @@ text-decoration:none;
 }
 #inbox-title{
 	position:absolute;
-	left:10px;
+	left:25px;
 	top:115px;
 	font-size:16px;
 }
@@ -186,7 +186,7 @@ text-decoration:none;
 }
 #unread-title{
 	position:absolute;
-	left:0px;
+	left:20px;
 	top:115px;
 	font-size:16px;
 }
@@ -399,14 +399,14 @@ font-size:10px;
 		<h4>웹메일</h4>
 			<div id="inbox" onclick="location.href='webMail.inbox'">
 				<img src="resources/images/inbox.png" alt="">
-				<div id="inbox-title">받은메일<span style="color:blue; font-weight:900;">&nbsp;0</span>건</div>
+				<div id="inbox-title">받은메일</div>
 			</div>
 			
 			<div id="line"></div>
 			
 			<div id="unread" onclick="location.href='webMail.unread'">
 				<img src="resources/images/unread.png" alt="">
-				<div id="unread-title">미확인메일<span style="color:blue; font-weight:900;">&nbsp;0</span>건</div>
+				<div id="unread-title">미확인메일</div>
 			</div>
 			
 		</div>

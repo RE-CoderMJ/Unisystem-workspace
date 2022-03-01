@@ -36,7 +36,16 @@
 
 		<result column="total_semester" property="totalSemester" />
 		<result column="appdate" property="appdate" />
-
+		<result column="CLASS_KOR_OUTLINE" property="classKorOutline" />
+		<result column="CLASS_ENG_OUTLINE" property="classEngOutline" />
+		<result column="class_goal" property="classGoal" />
+		<result column="prof_major" property="profMajor" />
+		<result column="class_phone" property="classPhone" />		
+		<result column="profLocation" property="profLocation" />
+		<result column="class_start" property="classStart" />
+		<result column="class_time" property="classTime" />
+		<result column="class_division" property="classDivision" />
+	
 	</resultMap>
 	
 	<resultMap type="Users" id="usersResult">
@@ -1082,7 +1091,7 @@
 		    BY CLASS_NO ASC NULLS FIRST) A 
 		ORDER BY ROWNUM DESC
 	</select>
-	
+
 	<update id="deletelecData">
 	update
 		classboard
@@ -1097,7 +1106,54 @@
 		 where ref_no = #{classboardNo}
 	</update>
 	
+
+	<select id="adminAppDetail" resultMap="lectureResult">
+        SELECT  
+               CLASS_NO
+		     , C.PROF_NO
+             , U2.KOR_NAME
+		     , CLASS_CODE
+		     , CLASS_KOR_NAME
+		     , CLASS_ENG_NAME
+		     , CLASS_CATEGORY
+		     , CLASS_YEAR
+		     , C.CLASS_SEMESTER
+		     , CLASS_CREDIT
+		     , CLASS_LOCATION
+		     , CLASS_DAY
+		     , CLASS_TIME
+		     , CLASS_START
+		     , CLASS_DIVISION
+		     , CLASS_KOR_OUTLINE
+		     , CLASS_ENG_OUTLINE
+		     , CLASS_GOAL
+		     , CLASS_STATUS
+		     , CLASS_PHONE
+		     , C.PROF_LOCATION
+		     , CLASS_PLAN
+		     , SCORE_ATT
+		     , SCORE_TASK
+		     , SCORE_MID
+		     , SCORE_FIN
+		     , MAX_STUD
+		     , APPDATE
+             , P.PROF_MAJOR
+        FROM CLASS C
+   LEFT JOIN PROFESSOR P ON (C.PROF_NO = P.PROF_NO)
+   LEFT JOIN USERS U ON (U.USER_NO = C.PROF_NO)
+   LEFT JOIN USERS U2 ON (U2.USER_NO = C.PROF_NO)
+        WHERE CLASS_NO = #{classNo}
+	</select>
 	
-	
-	
+	<update id="classApprove">
+	 UPDATE
+			CLASS
+		SET CLASS_STATUS = #{classStatus}
+		  , CLASS_LOCATION = #{classLocation}
+		  , CLASS_DAY = #{classDay}
+		  , CLASS_START = #{classStart}
+		  , CLASS_TIME = #{classTime}
+	  WHERE CLASS_NO = #{classNo} 
+	</update>
+
 </mapper>

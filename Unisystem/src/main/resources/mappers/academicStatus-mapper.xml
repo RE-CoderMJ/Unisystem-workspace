@@ -23,6 +23,7 @@
 		<result column="PROGRESST" property="progressT" />
 		<result column="STATUS" property="status" />
 		<result column="stud_name" property="studName" />
+		<result column="stud_status" property="studStatus" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attResult">
@@ -32,6 +33,35 @@
 		<result column="change_name" property="changeName" />
 		<result column="path" property="path" />
 	</resultMap>
+	
+	<resultMap id="usersResult" type="Users">
+				<result column="user_no" property="userNo" />
+				<result column="password" property="userPwd" />
+				<result column="kor_name" property="korName" />
+				<result column="eng_name" property="engName" />
+				<result column="birthday" property="birthday" />
+				<result column="gender" property="gender" />
+				<result column="email" property="email" />
+				<result column="phone" property="phone" />
+				<result column="address" property="address" />
+				<result column="nation" property="nation" />
+				<result column="webmail" property="webMail" />
+				<result column="user_div" property="userDiv" />
+				<result column="profile_img" property="profileImg" />
+				
+				<!-- STUDENT -->
+				<result column="stud_no" property="studNo" />
+				<result column="sprof_no" property="sprofNo" />
+				<result column="stud_univ" property="studUniv" />
+				<result column="stud_department" property="studDepartment" />
+				<result column="stud_major" property="studMajor" />
+				<result column="stud_minor" property="studMinor" />
+				<result column="stud_into" property="studInto" />
+				<result column="stud_grad" property="studGrad" />
+				<result column="stud_division" property="studDivision" />
+				<result column="stud_status" property="studStatus" />
+				<result column="stud_semester" property="studSemester" />
+			</resultMap>
 
 	<select id="selectStuInfo" resultType="string">
 		select
@@ -128,7 +158,7 @@
 		     , offuntil_semester
 		     , back_year
 		     , back_semester
-		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인') "progressT"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
 		  from academic_status
 		 where stud_no = #{userNo}
 	</select>
@@ -172,8 +202,7 @@
 		  from academic_status
 		  join users on (user_no = stud_no)
           join student using (stud_no)
-		 where prof_no = #{userNo}
-		   and progress = 0    
+		 where prof_no = #{userNo}  
 	</select>
 	
 	<select id="selectProfAsList" resultMap="asResult">
@@ -189,14 +218,46 @@
 		  join users on (user_no = stud_no)
           join student using (stud_no)
 		 where prof_no = #{userNo}
-		   and progress = 0
 		 order
-		    by as_no
+		    by as_no desc
+	</select>
+	
+	<select id="selectAdminAsListCount" resultType="_int">
+		select
+		       count(*)
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+         where progress = 1
+            or progress = 2
+            or progress = 3
+            or progress = 4
+	</select>
+	
+	<select id="selectAdminAsList" resultMap="asResult">
+		select
+		       as_no
+		     , as_type
+		     , stud_no
+		     , kor_name "stud_name"
+		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
+		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+         where progress = 1
+            or progress = 2
+            or progress = 3
+            or progress = 4
+		 order
+		    by as_no desc
 	</select>
 	
 	<select id="selectOffApply" resultMap="asResult">
 		select
-		       as_type
+		       as_no
+		     , as_type
 		     , decode(off_type, 1, '일반휴학', 2, '군입대휴학', 3, '임신/출산휴학', 4, '육아휴학') "off_typeT"
 		     , decode(reason, 1, '개인사정', 2, '군입대', 3, '기타') "reasonT"
 		     , reason_detail
@@ -207,4 +268,49 @@
 		   and stud_no = #{userNo}
 		   and rownum = 1
 	</select>
+	
+	<select id="selectStudInfo" resultMap="usersResult">
+		select
+		       user_no
+		     , password
+		     , kor_name
+		     , eng_name
+		     , birthday
+		     , gender
+		     , email
+		     , phone
+		     , address
+		     , nation
+		     , WEBMAIL
+		     , user_div
+		     , profile_img
+		     , stud_no
+		     , prof_no as "sprof_no"
+		     , stud_univ
+		     , stud_department
+		     , stud_major
+		     , stud_minor
+		     , stud_into
+		     , stud_grad
+		     , stud_division
+		     , stud_status
+		     , total_semester as "stud_semester"
+		  from users u
+			   join student s on (user_no = stud_no)
+		 where user_no = #{studNo}
+	</select>
+	
+	<update id="changeAsStatus">
+		update
+		       academic_status
+		   set progress = #{progress}
+		 where as_no = #{asNo}
+	</update>
+	
+	<update id="changeAsFinalStatus">
+		update
+		       student
+		   set stud_status = #{asType}
+		 where stud_no = #{studNo}
+	</update>
 </mapper>
