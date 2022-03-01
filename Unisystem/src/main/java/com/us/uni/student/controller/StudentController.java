@@ -137,6 +137,8 @@ public class StudentController {
 		
 			result = sService.studentInsert(student);		
 			
+			System.out.println(student);
+			
 		if(result > 0) {
 			session.setAttribute("alertMsg", "학생 등록이 되었습니다!");
 			return "redirect:student.ad";

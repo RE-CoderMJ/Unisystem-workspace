@@ -83,6 +83,12 @@
 	input:focus{
 		background:#ebf2fc;
 	}
+	.imgBox>img{
+		width:220px;
+		height:266px;
+		margin-left:50px;
+		margin-top:10px;
+	}
 </style>
 </head>
 <body style="background-color:#ebf2fc">
@@ -106,10 +112,10 @@
 				
 				<div class="profileBox">
 					<div class="imgBox">
-						<c:if test="${ empty profileImg }">
+						<c:if test="${ empty stud.profileImg }">
 							<div></div>
 						</c:if>
-						<c:if test="${ not empty profileImg }">
+						<c:if test="${ not empty stud.profileImg }">
 							<img src="${ stud.profileImg }">
 						</c:if>
 						
