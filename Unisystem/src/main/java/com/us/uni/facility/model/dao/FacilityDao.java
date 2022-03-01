@@ -41,4 +41,8 @@ public class FacilityDao {
 		return sqlSession.update("facilityMapper.cancelStudy", rsvdNo);
 	}
 	
+	public int cancelAllReading(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("facilityMapper.cancelAllReading");
+	}
+	
 }

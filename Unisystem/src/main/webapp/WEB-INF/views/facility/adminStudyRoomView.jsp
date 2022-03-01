@@ -157,7 +157,7 @@
 				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;시설물 관리&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;스터디룸 관리</p></div>
 			</div>
 			<div class="topBar">
-				<span id="readingRoom"><a>열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
+				<span id="readingRoom"><a href="rsvdReading.ad">열람실 예약</a></span><span id="studyRoom"><a>스터디룸 예약</a></span>
 			</div>
 	
 						
