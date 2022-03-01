@@ -4,32 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="resources/css/pages/wrapperStyle.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <meta charset="UTF-8">
 <title>UNI SYSTEM</title>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <style>
-	div{box-sizing:border-box;}
-	#wrap{
-		margin:auto;
-		width:1500px;
-		height:922px;
-	}
-	#sidebar{
-		width:230px;
-		height:700px;
-	}
-	#content{
-		width:1270px;
-		height:780px;
-		margin-top:50px;
-		margin-bottom:50px;
-		background-color:white;
-	}
-	.pageName{padding:7px;}
-	.pageName>p{
-		margin:0px;
-		float:left;
-	}
 	.TopBox{
 		width:100%;
 		height:50px;
@@ -59,38 +38,13 @@
 	.studBox{
 		width:100%;
 	}
-	.table{
-		border-top:2px solid lightgray;
-		border-bottom:2px solid lightgray;
-		
-	}
-	.table th{
-		border-bottom:2px solid lightgray;
-		background:rgb(235, 235, 235);
-	}
-	.table th, .table td{
-		text-align:center;
-		padding:0;
-		padding-left:10px;
-		height:18px;
-		line-height:18px;
-	}
+
 	.sort{
 		position:absolute;
-		top:105px;
-		right:80px;
+		top:325px;
+		right:126px;
+		cursor:pointer;
 	}
-	.pagebar{
-		margin-top:30px;
-		width:100%;
-		height:50px;
-	}
-	.pagebar>.btn-basic{
-		color:white;
-		background-color:rgb(21, 62, 115);
-	}
-	
-	
 </style>
 
 </head>
@@ -103,9 +57,9 @@
 	<div id="wrap">
 		<div id="sidebar" style="float:left;"><jsp:include page="pmySidebar.jsp" /></div>
 		<div id="content" style="float:left;">
-					<div class="TopBox">
-						<div class="pageName"><p style="color:gray">마이페이지>담당 학생 관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">담당 학생 조회</p></div>
-						<div class="sort">
+					<div class="topBox">
+				<div class="pageName"><p>마이페이지&nbsp;>&nbsp;담당학생 관리&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;담당 학생 조회</p></div>
+					<div class="sort">
 							<a>전공</a> | <a>학년</a>
 						</div>
 					</div>
@@ -126,103 +80,67 @@
 										<th>연락처</th>
 										<th>이메일</th>
 									</tr>
+									<c:forEach var="stud" items="${ stud }">
 									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
+										<td>${ stud.studNo }</td>
+										 <c:choose>
+											<c:when test="${ stud.studSemester < 2 }">
+												<td>1학년</td>
+											</c:when>
+											<c:when test="${ stud.studSemester < 4 }">
+												<td>2학년</td>
+											</c:when>
+											<c:when test="${ stud.studSemester < 6 }">
+												<td>3학년</td>
+											</c:when>
+											<c:otherwise>
+												<td>4학년</td>
+											</c:otherwise>
+										</c:choose>
+										<td>${ stud.korName }</td>
+										<td>${ stud.studUniv }</td>
+										<td>${ stud.phone }</td>
+										<td>${ stud.email }</td>
 									</tr>
-									<!-- 반복 -->
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<tr>
-										<td>201610542</td>
-										<td>4</td>
-										<td>김길동</td>
-										<td>물리학</td>
-										<td>010-1234-4567</td>
-										<td>gildong@mail.com</td>
-									</tr>
-									<!-- 끝 -->
+									</c:forEach>
+									
 								</tbody>
 							</table>
 						</div>
-						<div class="pagebar" align="center">
-							<button type="button" class="btn btn-light">&lt;</button>
-							<button type="button" class="btn btn-light">1</button>
-							<button type="button" class="btn btn-basic">2</button>
-							<button type="button" class="btn btn-light">3</button>
-							<button type="button" class="btn btn-light">4</button>
-							<button type="button" class="btn btn-light">5</button>
-							<button type="button" class="btn btn-light">&gt;</button>
-							
-							
-						</div>
-					</div>
+						<div class="container">
+                    <ul class="pagination justify-content-center">
+		                   <c:choose>
+		    				<c:when test="${ pi.currentPage eq 1 }">            
+			                    <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="stlist.pr?cpage=${pi.currentPage-1}">&lt;</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    
+                    	<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                   		  <c:choose>
+                    		<c:when test="${ pi.currentPage == p }">
+                    			<li class="page-item active"><a class="page-link" href="stlist.pr?cpage=${p}">${p}</a></li>
+            			        <!-- $(".pagination a").text() 와 ${ pi.currentPage } 가 일치할 경우 a의 부모요소 li에 active 부여   -->
+                    		</c:when>		    			
+		                    <c:otherwise>
+		                   		<li class="page-item"><a class="page-link" href="stlist.pr?cpage=${p}">${p}</a></li>
+		                    </c:otherwise>
+		                   </c:choose>
+                    	</c:forEach>
+                    
+                    		<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item "><a class="page-link" href="#">&gt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link" href="stlist.pr?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+						</c:otherwise>						
+						</c:choose>	
+                    </ul>
+                 </div>
+				</div>
 			
 		
 		</div>
@@ -230,5 +148,25 @@
 	</div>
 	<jsp:include page="../common/footer.jsp" />
 
+
+	<script>
+
+	$(function(){
+		sidebar();
+	})
+	
+	// 사이드바 길이 조절
+	function sidebar(){
+		document.getElementById("content").style.marginBottom = "50px";
+		let $len = $("#content").height();
+		let side = $(".wrap_sidebar").height();
+			if($len > 750){
+				$(".wrap_sidebar").css('height', $len);
+			}else{
+				$(".wrap_sidebar").css('height', 270);
+				$("#content").css('height', side);
+			}
+	}
+	</script>
 </body>
 </html>

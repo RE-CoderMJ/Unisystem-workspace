@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -258,19 +259,44 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping("stlist.pr")
-	public String selectMyStudentList() {
+	public String selectMyStudent(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int profNo = (((Users)session.getAttribute("loginUser")).getUserNo());
+		int listCount = pService.selectMyStudentCount(profNo);
+
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		HashMap map = new HashMap();
+		map.put("profNo", profNo);
+		
+		ArrayList<Users> stud = pService.selectMyStudent(map, pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("stud", stud);
+		System.out.println(stud);
+		
 		return "professor/professorMyStudentListView";
 	}
 	
 	
-	
-	
-	
-
-	
-	
 	@RequestMapping("clist.ad")
-	public String requestClassList() {
+	public String requestClassList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int listCount = pService.requestClassCount();
+
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		HashMap map = new HashMap();
+		map.put("profNo", profNo);
+		
+		ArrayList<Users> stud = pService.selectMyStudent(map, pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("stud", stud);
+		System.out.println(stud);
+		
 		return "professor/adminRequestClassListView";
 	}
 	

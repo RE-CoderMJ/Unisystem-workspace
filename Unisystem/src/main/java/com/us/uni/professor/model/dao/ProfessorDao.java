@@ -86,4 +86,15 @@ public class ProfessorDao {
 		}
 		return 0;
 	}
+	public int selectMyStudentCount(SqlSessionTemplate sqlSession, int profNo) {
+		return sqlSession.selectOne("professorMapper.selectMyStudentCount", profNo);
+	}
+	
+	public ArrayList<Users> selectMyStudent(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi){
+		int offset = ((pi.getCurrentPage()-1) * pi.getBoardLimit());
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("professorMapper.selectMyStudent", map, rowBounds);
+	}
 }

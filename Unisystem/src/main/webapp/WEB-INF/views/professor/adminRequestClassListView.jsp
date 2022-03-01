@@ -46,21 +46,17 @@
 		<div id="sidebar" style="float:left;"><jsp:include page="../common/adminSidebar.jsp" /></div>
 		<div id="content" style="float:left;">
 			<div class="topBox">
-				<div class="pageName"><p style="color:gray">마이페이지>강의>&nbsp;</p><p style="font-size:19px; font-weight:600;">강의 신청내역</p></div>
+				<div class="pageName"><p>관리자페이지&nbsp;>&nbsp;강의&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;강의 신청내역</p></div>
 			</div>
 			
 			
 			<div class="searchList">
-				<div class="searchBox">
+				<div class="searchBox" style="padding:18px">
 					<span class="nameTag">강의 개설 신청 현황</span>
 				</div>
-				
-				
 			</div>	
 
-
-					<div class="appList">
-
+				<div class="appList">
 				<div class="btnBox">
 					<div class="btnDiv">
 						<button class="btn btn-sm btn-outline-secondary">강의 생성</button>
@@ -89,89 +85,7 @@
 								<td>홍길동</td>
 								<td><button class="btn btn-sm btn-primary" >승인</button></td>
 							</tr>
-							<!-- 시작 -->
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>1</td>
-								<td>2012-12345</td>
-								<td>2012-02-10</td>
-								<td>미생물 유전체</td>
-								<td>홍길동</td>
-								<td><button class="btn btn-sm btn-primary" >승인</button></td>
-							</tr>
-							<!-- 끝 -->
+							
 						</tbody>
 					</table>
 					

@@ -30,7 +30,10 @@ public interface ProfessorService {
 	
 	// 담당 교수 변경
 	int changeProfessorJoin(HashMap map);
-
+	// 담당 학생 카운트
+	int selectMyStudentCount(int profNo);
+	// 담당 학생 조회
+	ArrayList<Users> selectMyStudent(HashMap map, PageInfo pi);
 	
 
 }
