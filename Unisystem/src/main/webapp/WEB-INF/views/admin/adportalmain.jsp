@@ -38,6 +38,7 @@
 	'weather notice calendar'
 	'weather unischedule resite' ;
 }
+
 .gridWrap{
  	display: grid;
   	place-items: center;
@@ -66,6 +67,7 @@ list-style:none;
 font-weight:600;
 font-size:14px;
 }
+
 .room {
 	grid-area: room;
 	border-top:2px solid #fcaf17;

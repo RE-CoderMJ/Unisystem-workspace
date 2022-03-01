@@ -165,7 +165,10 @@ margin-right:87px;
 .page-link{
 cursor:pointer;
 }
-   
+
+.wrap_sidebar{
+height: 981px !important;
+}  
 </style>
 <body>
 
@@ -179,10 +182,20 @@ cursor:pointer;
 
 
 	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
-		<div class="sidewrap">
-			<jsp:include page="../student/smySidebar.jsp" />
-		</div>
+				
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+				</c:choose>
 
+	
 		<div class="bo_content">
 			<!-- title -->
 
@@ -258,11 +271,11 @@ cursor:pointer;
 		<!-- side바 div영역 끝 -->
 
 		<br clear="both">
+	</div>
 
 		<!-- footer.jsp-->
 		<jsp:include page="../common/footer.jsp" />
 
-	</div>
 	
 	
 <script>
@@ -438,8 +451,7 @@ cursor:pointer;
 
 		 
         </script>
-
-	
+		
 	
 
 </body>

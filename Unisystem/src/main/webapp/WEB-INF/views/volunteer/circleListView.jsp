@@ -154,16 +154,33 @@ li {
 	
 	<!-- header.jsp 영역 -->
 	 <jsp:include page="../common/header.jsp" />
-
+	<jsp:include page="../common/links.jsp"/>
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
 	
 	
 	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
-	<div class="sidewrap">
-	<jsp:include page="../student/smySidebar.jsp" />
-	</div>
+		<div class="sidewrap">
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+				</c:choose>
+			</div>
+
+			<script>
+			      $(document).ready(function(){
+			         let $len = $(".bo_content").height();
+			         $(".wrap_sidebar").css('height', $len + 50);
+			      })
+		   	</script>
 	
 	<div class="bo_content">
 		<!-- title -->
@@ -258,7 +275,7 @@ li {
 					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:if test="${ empty condition }">
-							<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+							<li class="page-item"><a class="page-link" href="list.cbo?cpage=${ p }">${ p }</a></li>
 						</c:if>
 						
 						<c:if test="${ not empty condition }">

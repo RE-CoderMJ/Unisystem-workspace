@@ -858,6 +858,8 @@
 		count = count + 1 
 		where classboard_no = #{classboardNo}
 	</update>
+	
+	<!-- AUTHOR SEGYEONG  -->
 
 	<select id="selectLectureMaterialDetail" resultMap="classboardResult">
 	 select 
@@ -929,6 +931,67 @@
 			   and homeworkp_no = #{homeworkpNo}	
 	</select>
 
+
+	<!-- AUTHOR SEGYEONG  -->
+	
+	<insert id="lectureMaterialInSert">
+	insert
+		into classboard
+		(
+		CLASSBOARD_NO
+		,CLASS_NO
+		,CLASSBOARD_CATEGORY
+		,CLASSBOARD_TITLE
+		,CLASSBOARD_CONTENT
+		)
+		values
+		(
+		SEQ_CLASSBOARD.NEXTVAL
+		,#{classNo}
+		,'D'
+		,#{classboardTitle}
+		,#{classboardContent}
+		)
+	</insert>
+	
+	<insert id="lectureMaterialInSertAttach">
+	insert
+		  into ATTACHMENT
+		  (
+		 	ATTACH_NO
+			,REF_TYPE
+			,REF_NO
+			,ORIGIN_NAME
+			,CHANGE_NAME
+			,path
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , 'D'
+		  , SEQ_CLASSBOARD.CURRVAL
+		  , #{originName}
+		  , #{changeName}
+		  , #{path}
+		  )
+	</insert>
+	
+	
+	<!-- 수업자료실 첨부파일 조회  -->
+	<select id="selectAttachMaterial" resultMap="attResult">
+			select
+				attach_no
+				,REF_TYPE
+				,ref_no
+				,ORIGIN_NAME
+				,CHANGE_NAME
+				,PATH
+				,status
+		  from attachment
+		 where ref_type = 'D'
+		 and ref_no = #{classboardNo} 
+	</select>
+	
 
 	<!-- AUTHOR DAHYUN -->
 	<insert id="classInsert">
@@ -1019,5 +1082,22 @@
 		    BY CLASS_NO ASC NULLS FIRST) A 
 		ORDER BY ROWNUM DESC
 	</select>
+	
+	<update id="deletelecData">
+	update
+		classboard
+		set STATUS = 'N'
+		where CLASSBOARD_NO = #{classboardNo}
+	</update>
+	
+	<update id="deletelecDataAttach">
+		update
+		       attachment
+		   set status = 'N'
+		 where ref_no = #{classboardNo}
+	</update>
+	
+	
+	
 	
 </mapper>

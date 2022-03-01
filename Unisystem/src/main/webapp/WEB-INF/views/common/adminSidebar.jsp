@@ -118,10 +118,16 @@ a:hover {
 			</div>
 
 			<div class="side_title">
-				 <b>공지사항</b> 
+				 <b>게시글 관리</b> 
 			</div>
 			<div>
-				<a href="">- 공지사항 관리</a>
+				<a href="list.nbo">- 공지사항 관리</a>
+			</div>
+			<div>
+				<a href="list.vbo">- 대외활동 관리</a>
+			</div>
+			<div>
+				<a href="list.cbo">- 동아리 관리</a>
 			</div>
 		
 

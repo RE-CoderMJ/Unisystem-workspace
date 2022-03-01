@@ -138,16 +138,7 @@ a:hover {
 				<a href="list.smsg">- 보낸 메시지</a>
 			</div>
 			
-			<div class="side_title">
-				<b>게시판</b>
-			</div>
 			
-			<div>
-				<a href="list.nbo">- 공지사항</a>
-				<a href="list.bo">- 커뮤니티</a>
-				<a href="list.vbo">- 대외활동</a>
-				<a href="list.cbo">- 동아리 </a>
-			</div>
 			<form id="myForm" action="" method="post">
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }" />
 			</form>

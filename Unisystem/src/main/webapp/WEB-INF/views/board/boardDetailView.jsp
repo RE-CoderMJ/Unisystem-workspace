@@ -187,10 +187,28 @@
 
 	<div
 		style="background-color: rgb(235, 242, 252); width: 1500px; margin: auto; margin-top: 30px;">
-		<div class="sidewrap">
-			<jsp:include page="../student/smySidebar.jsp" />
-		</div>
+			
+			<div class="sidewrap">
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+				</c:choose>
+			</div>
 
+			<script>
+			      $(document).ready(function(){
+			         let $len = $(".bo_content").height();
+			         $(".wrap_sidebar").css('height', $len + 50);
+			      })
+		   	</script>
+ 
 		<div class="bo_content">
 			<!-- title -->
 			<div class="page_title">커뮤니티</div>
@@ -213,8 +231,19 @@
 				<div class="ctg-area">
 					<span>날짜</span> ${ b.createDate } 
 					<span>작성자</span> ${b.boardWriter} 
-					<span>카테고리</span>${ b.subCategory }
-
+					<span>카테고리</span>
+					
+					<c:choose>
+					<c:when test="${ b.subCategory eq 5}">
+					자유
+					</c:when>
+					<c:when test="${ b.subCategory eq 6}">
+					취업
+					</c:when>
+					<c:when test="${ b.subCategory eq 7}">
+					정보공유
+					</c:when>
+					</c:choose>
 
 					<div class="b-count">
 						<b style="color: rgb(231, 76, 60); font-size: 16px;">조회수</b> ${ b.boCount }
@@ -253,7 +282,7 @@
 	            	}
 	            </script>
 
-				<button onclick="javascript:history.go(-1);" class="b_write">목록으로</button>
+				<button onclick="location.href='list.bo';" class="b_write">목록으로</button>
 
 
 
@@ -403,8 +432,7 @@
 			}
 			
 	    	</script>
-
-
+ 
 			</div>
 		</div>
 	</div>

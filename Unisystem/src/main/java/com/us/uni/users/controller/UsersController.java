@@ -50,7 +50,7 @@ public class UsersController {
 		if(userDiv == 1) {
 			ArrayList<Lecture> list = lService.selectStudentClassList(userNo);			
 			mv.addObject("list", list).setViewName("common/portalmain");
-		} else {
+		} else if(userDiv == 2) {
 			ArrayList<Lecture> list = lService.selectProfessorClassList(userNo);
 			mv.addObject("list", list).setViewName("common/portalmain");
 		}
@@ -158,6 +158,7 @@ public class UsersController {
 		
 		@RequestMapping(value = "/pwdFind", method = RequestMethod.POST)
 		public void findPwPOST(@ModelAttribute Users m, HttpServletResponse response) throws Exception{
+			
 			uService.findPwd(response, m);
 		}
 		

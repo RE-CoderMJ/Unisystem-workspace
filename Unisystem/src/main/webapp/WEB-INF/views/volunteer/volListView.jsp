@@ -170,15 +170,34 @@ li {
 	
 	<!-- header.jsp 영역 -->
 	 <jsp:include page="../common/header.jsp" />
-
+	 <jsp:include page="../common/links.jsp"/>
 	<!-- sidebar.jsp 영역 
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
 	
 	
 	<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
-	<jsp:include page="../student/smySidebar.jsp" />
-	
+		<div class="sidewrap">
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+				</c:choose>
+			</div>
+
+			<script>
+			      $(document).ready(function(){
+			         let $len = $(".bo_content").height();
+			         $(".wrap_sidebar").css('height', $len + 50);
+			      })
+		   	</script>
+		   	
 	<div class="bo_content">
 		<!-- title -->
 
@@ -306,11 +325,11 @@ li {
 	<!-- side바 div영역 끝 -->
 	<br clear="both">
 		
-	<!-- footer.jsp-->
-	<jsp:include page="../common/footer.jsp" />
 	
 	</div>
 
+	<!-- footer.jsp-->
+	<jsp:include page="../common/footer.jsp" />
 	</div>
    
 </body>

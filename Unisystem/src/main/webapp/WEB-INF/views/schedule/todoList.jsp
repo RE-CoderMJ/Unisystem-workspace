@@ -43,6 +43,7 @@ margin-left: 66px;
 	background-color: white;
 	padding-bottom: 50px;
 	min-height: 700px;
+	margin-bottom:50px;
 }
 
 
@@ -175,8 +176,26 @@ input {
 		  교수가 로그인하면 pmySidebar
 		  학생이 로그인하면 smySidebar -->
 		<div id="todoOuter" style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">  
-		<br clear="both">
-				<jsp:include page="../student/smySidebar.jsp" />
+			
+			<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+			</c:choose>
+
+			<script>
+			      $(document).ready(function(){
+			         let $len = $(".bo_content").height();
+			         $(".wrap_sidebar").css('height', $len + 83);
+			      })
+		   	</script>
+		   	
 			 <jsp:include page="../common/links.jsp"/>
 
 			<div class="bo_content"  >
@@ -212,8 +231,20 @@ input {
 		todoSelect();
 		
 		$(document).on("click", ".close", function(){
-			let todoNo = $(this).children("span[name=close]").val();
-			todoDelete();
+			let todoNo = $(this).siblings("input[name=todoNo]").val();
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:"todoDelete",
+				data : {
+					todoNo : todoNo,
+					tuserNo : $('#tuserNo').val()
+				},
+			 	success:function(){
+			 	 	location.reload();
+			 		}
+			 	
+			});
 		})
 		
 		
@@ -270,33 +301,19 @@ input {
 		 			 }
 		 			 
 			 			 value += '<input type="hidden" name="todoNo" class="todoNo" value="'+data[i].todoNo+'"/>'
-								 + data[i].todoContent + "<span name='close' class='close'>x</span> </li>"
-			 			 	     + "<input type='hidden' name='todoCheck' id='todoCheck' value='"+data[i].todoCheck+"'/>"
+								 	+ data[i].todoContent 
+								 	+ "<span name='close' class='close'>x</span></li>"
+			 			 	     	+ "<input type='hidden' name='todoCheck' id='todoCheck' value='"+data[i].todoCheck+"'/>"
 			 			         + "</li>";
 		 		 }
 		 		 $('#myUL').html(value);
-		 		 
 		 		 
 		 		 console.log(value);
 		 	}
 		});
 	}
 	
-		function todoDelete(){
-			$.ajax({
-				type:'POST',
-				dataType:'json',
-				url:"todoDelete",
-				data : {
-					todoNo : $('.todoNo').val(),
-					tuserNo : $('#tuserNo').val()
-				},
-			 	success:function(){
-			 	 	location.reload();
-			 		}
-			 	
-			});
-		}
+		 
 		
 		function todoCheck(todoNo,type){
 			$.ajax({
@@ -378,14 +395,11 @@ input {
 	
 	
 	 
-     		
+     
 	</div>
+	
 	<!-- footer.jsp-->
 	<jsp:include page="../common/footer.jsp" />
-	<script>
-	
-
-</script>
 
 </body>
 </html>
