@@ -157,200 +157,6 @@
 			<div class="topBox">
 				<div class="pageName"><p>관리자페이지&nbsp;>&nbsp;강의&nbsp;>&nbsp;</p><p style="color:black; font-size:24px; font-weight:900;">&nbsp;강의 신청내역</p></div>
 			</div>
-			
-			  <!-- The Modal -->
-			  <div class="modal fade" id="class">
-			    <div class="modal-dialog modal-lg" style="max-width:1300px;">
-			      <div class="modal-content" style="width:1300px;height:auto">
-			      
-			        <!-- Modal Header -->
-			        <div class="modal-header">
-			          <h4 class="modal-title">Modal Heading</h4>
-			          <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        </div>
-			        
-			        <!-- Modal body -->
-			        <div class="modal-body" style="height:auto;">
-			      		
-							<div class="createClassModal">
-								<label>* 교과목 개설 신청</label>
-								
-								<form action="insertClass.ad" method="post" enctype="multipart/form-data">
-									<div align="center">
-										<table class="table1 table table-bordered" style="width:1090px">
-											<tr>
-												<th width="200px">개설년도</th>
-												<td width="200px"><input class="input" id="year" name="classYear" value="0"></td>
-												<th width="200px">학기</th>
-												<td width="200px" style="padding:5px 10px;">
-												<select name="classSemester">
-													<option value="1">1학기</option>
-													<option value="2">2학기</option>
-												</select>
-												</td>
-												<th width="200px">수업유형</th>
-												<td width="200px" style="padding:5px 10px;">
-												<select name="classCategory">
-													<option value="1">대면</option>
-													<option value="2">비대면</option>
-												</select>
-												</td>
-											</tr>
-											<tr>
-												<th colspan="2">과목명(한글)</th>
-												<td colspan="4"><input class="input" name="classKorName" required></td>
-											</tr>	
-											<tr>
-												<th colspan="2">과목명(영문)</th>
-												<td colspan="4"><input class="input" name="classEngName"></td>
-											</tr>
-											<tr>
-												<th colspan="2">개요(한글)</th>
-												<td colspan="4">
-												<textarea class="textarea" name="classKorOutline" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
-												<!-- 공학입문 설계 교과목의 목표는 공학문제를 설계문제로 정의하고 이를 해결하는 설계과정을 계획하고 문제의 해를 도출할 수 있는 문제해결 능력을 제공하는 데 있다. 또한 팀웍과 다양한 공학문제 해결 도구에 익숙하도록 하는데 교과목의 목표가 있다. 공학문제 해결 과정을 이해하고, 이에 대한 최선의 해를 도출하기 위한 체계적인 문제해결방법의 원리 및 이론을 공부한다. 설계문제의 정식화를 공부하며 정식화된 설계문제를 체계적으로 해결하기 위한 방법을 공부한다. -->
-											</tr>
-											<tr>
-												<th colspan="2">개요(영문)</th>
-												<td colspan="4">
-												<textarea class="textarea" name="classEngOutline" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
-												<!-- To provide students with the use of problem-solving skills for solving realistic engineering problems using problem-based learning techniques, including definition of problem, creative problem solving, design of experiments, and optimization. To familiarize students with experience working as a member of an engineering work team, with experience using several modern tools and techniques to solve engineering problems. This course will help you develop the skills necessary to solve the real engineering problems facing engineers today. You will learn underlying principles an master techniques to solve engineering problems. --></td>
-											</tr>
-											<tr>
-												<th colspan="2">수업목표</th>
-												<td colspan="4">
-												<textarea class="textarea" name="classGoal" onkeydown="resize(this)" onkeyup="resize(this)"></textarea></td>
-											</tr>
-											<tr>
-												<th>과목코드</th>
-												<td><input class="input" placeholder="입력 제외" disabled></td>
-												<th>전공</th>
-												<td><input class="input" name="profMajor" value="${ loginUser.profMajor }"></td>
-												<th>정원</th>
-												<td><input type="number" class="input" name="maxStud"></td>
-											</tr>
-											<tr>
-												<th>이수구분</th>
-												<td style="padding:5px 5px 0px 0px;">
-													<select name="classDivision" style="margin-right:90px">
-														<option value="1">전공필수</option>
-														<option value="2">전공선택</option>
-														<option value="3">교양</option>
-													</select>
-												</td>
-												<th>학점</th>
-												<td><input type="number" class="input" name="classCredit"></td>
-												<th>강의실</th>
-												<td><input type="text" class="input" name="classLocation"></td>
-											</tr>
-											<tr>
-												<th>주관교수 교번</th>
-												<td>
-												<input class="input" name="profNo"">
-												</td>
-												<th>연락처</th>
-												<td><input type="tel" class="input" name="classPhone"></td>
-												<th>교수실</th>
-												<td><input class="input" name="profLocation"></td>
-											</tr>
-										</table>
-									</div>
-									
-									
-									
-									<div class="secBox">
-										<div style="float:left;">
-											<p>* 항목별 점수비율(100%)</p>
-										<table class="table2 table table-bordered" style="width:300px">
-												<tr>
-													<th>출석</th>
-													<th>과제</th>
-													<th>중간</th>
-													<th>기말</th>
-												</tr>
-												<tr>
-													<td><input type="number" class="input" name="scoreAtt"></td>
-													<td><input type="number" class="input" name="scoreTask"></td>
-													<td><input type="number" class="input" name="scoreMid"></td>
-													<td><input type="number" class="input" name="scoreFin"></td>
-												</tr>
-											</table>
-										</div>
-										
-										
-										<div class="plan" style="float:left">
-											<div class="plan-top">
-												<p>* 강의계획서</p>
-												<label for="planPDF" class="button btn-sm btn-secondary" style="font-size:14px; margin-left:40px">파일첨부</label>
-											<div class="pdfBox" style="padding:10px;"></div>
-											<input type="file" name="upfile" id="planPDF">
-											</div>
-										</div>
-										
-										<div id="timetable" style="float:left">
-											<table class="table table-bordered">
-												<tr>
-													<th colspan="2">시간표</th>
-												</tr>
-												<tr>
-													<th width="80">요일</th>
-													<td width="100">
-														<select name="classDay">
-															<option>월</option>
-															<option>화</option>
-															<option>수</option>
-															<option>목</option>
-															<option>금</option>
-														</select>
-													</td>
-												</tr>
-												<tr>
-													<th>교시</th>
-													<td>
-														<select name="classStart">
-														<option value="1">1교시</option>
-														<option value="2">2교시</option>
-														<option value="3">3교시</option>
-														<option value="4">4교시</option>
-														<option value="5">5교시</option>
-														<option value="6">6교시</option>
-														<option value="7">7교시</option>
-														<option value="8">8교시</option>
-														</select>
-													</td>	
-												</tr>
-												<tr>
-													<th>시간</th>
-													<td>
-														<select name="classTime">
-														<option value="1">1시간</option>
-														<option value="2">2시간</option>
-														<option value="3">3시간</option>
-														</select>
-													</td>
-													
-												</tr>
-											</table>
-										</div>
-									</div>
-								</form>
-							</div>
-			      		
-			      		
-			      		
-			        </div> <!-- modal-body -->
-			        
-			        <!-- Modal footer -->
-			        <div class="modal-footer">
-			         <button type="button" class="btn btn-secondary" style="background:#FFBF69;color:white;border:none;">승인</button>
-		        	 <button type="button" class="btn btn-secondary" style="background:#432818;color:white;border:none;">반려</button>
-			          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-			        </div>
-			        
-			      </div>
-			    </div>
-			  </div>
-			  
 						
 			<div>
 				<div class="searchBox" style="padding:18px">
@@ -387,13 +193,13 @@
 								<td>${ c.korName }</td>
 								<c:choose>
 									<c:when test="${ empty c.classStatus }">
-										<td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#class" style="background:#0466C8;color:white;border:white;" >대기</button></td>
+										<td><button class="btn btn-sm btn-primary detail" style="background:#0466C8;color:white;border:white;">대기</button></td>
 									</c:when>
 									<c:when test="${ c.classStatus eq 'Y' }">
-										<td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#class" style="background:#F8F7FF;color:black;border:white;">승인</button></td>
+										<td><button class="btn btn-sm btn-primary detail" style="background:#F8F7FF;color:black;border:white;">승인</button></td>
 									</c:when>
 									<c:otherwise>
-										<td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#class" style="background:#E2EAFC;color:black;border:white;">반려</button></td>
+										<td><button class="btn btn-sm btn-primary detail" style="background:#E2EAFC;color:black;border:white;">반려</button></td>
 									</c:otherwise>
 								</c:choose>
 							</tr>
@@ -449,7 +255,7 @@
 							<table class="table1 table table-bordered" style="width:1090px">
 								<tr>
 									<th width="200px">개설년도</th>
-									<td width="200px"><input class="input" id="year" name="classYear" value="0"></td>
+									<td width="200px"><input class="input" id="year" name="classYear" maxlength="4" required></td>
 									<th width="200px">학기</th>
 									<td width="200px" style="padding:5px 10px;">
 									<select name="classSemester">
@@ -619,6 +425,11 @@
 			<script>
 			$(function(){
 				sidebar();
+				
+				$(".detail").on("click", function(){
+					var cno = $(this).parent().siblings().eq(2).text();
+					location.href="cdetail?classNo=" + cno;
+				})
 				
 				// 개설년도에 현재 년도 자동 불러오기
 				let year = new Date().getFullYear();

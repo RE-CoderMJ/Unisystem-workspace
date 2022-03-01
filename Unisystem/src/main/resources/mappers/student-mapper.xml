@@ -48,7 +48,7 @@
 		     , STUD_STATUS
 		  FROM STUDENT S
 		  JOIN USERS U ON(STUD_NO = U.USER_NO)
-          JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
+     LEFT JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
 		 WHERE STUD_STATUS != 4
 		 ORDER
 	        BY STUD_NO DESC
@@ -98,7 +98,7 @@
 		     , U.EMAIL
 		  FROM STUDENT S
 		  JOIN USERS U ON(STUD_NO = U.USER_NO)
-          JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
+     LEFT JOIN USERS U2 ON(PROF_NO = U2.USER_NO)
 		 <choose>
 		 	<when test="univ.equals('')">
 		 	 	WHERE U.KOR_NAME LIKE '%'||#{keyword}||'%'
@@ -221,7 +221,7 @@
 		     , U2.KOR_NAME "SPROF_NAME"
 		  FROM USERS U
 		  JOIN STUDENT ON (U.USER_NO = STUD_NO)
-		  JOIN USERS U2 ON (PROF_NO = U2.USER_NO)
+	 LEFT JOIN USERS U2 ON (PROF_NO = U2.USER_NO)
 		 WHERE U.USER_NO = #{studNo}
 	</select>
 	
