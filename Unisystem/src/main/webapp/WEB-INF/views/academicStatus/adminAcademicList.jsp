@@ -63,8 +63,8 @@
 					<div id="pageName">학적변동 신청내역</div>
 	                <br>
 	                <div id="tools" align="right">
-		                <button class="accepted">승인</button>
-		                <button class="rejected">반려</button>
+		                <button class="accepted" onclick="changeStatus(3)">승인</button>
+		                <button class="rejected" onclick="changeStatus(4)">반려</button>
 					</div>
 	            </div>
 			</header>
@@ -86,20 +86,20 @@
 		                        <tr>
 		                            <td><input type="checkbox" class="checkbox"></td>
 		                            <td class="as-no">${as.asNo}</td>
-		                            <td>${as.studName}</td> 
+		                            <td class='stud-name'>${as.studName}</td> 
 		                            <td class="as-type">${as.asTypeT }</td>
 		                            <td>${as.asDate}</td>
 		                            <input type="hidden" name="studNo" value="${ as.studNo}">
 		                            <c:choose>
-		                            	<c:when test="${as.progressT eq '접수'}">
-				                            <td class="pending">${as.progressT}</td>
-		                            	</c:when>
 		                            	<c:when test="${as.progressT eq '담당교수승인'}">
-				                            <td class="accepted">${as.progressT}</td>
+				                            <td class="progressT accepted">${as.progressT}</td>
 		                            	</c:when>
-		                            	<c:when test="${as.progressT eq '반려'}">
-				                            <td class="rejected">${as.progressT}</td>
+		                            	<c:when test="${as.progressT eq '최종승인'}">
+		                            		<td class="progressT accepted">${as.progressT}</td>
 		                            	</c:when>
+		                            	<c:otherwise>
+				                            <td class="progressT rejected">${as.progressT}</td>
+				                        </c:otherwise>
 		                            </c:choose>
 		                        </tr>
 	                        </c:forEach>
@@ -145,6 +145,82 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
+	
+	<!-- 상세보기 -->
+    <script>
+    	$(function(){
+    		$(".stud-name").click(function(){
+    			if($(this).siblings(".as-type").text() == "휴학"){
+	    			location.href="admin.academic.detailOff?asNo=" + $(this).siblings(".as-no").text() + "&studNo=" + $(this).siblings("input[name=studNo]").val();     				
+    			}else{
+    				location.href="admin.academic.detailBack?asNo=" + $(this).siblings(".as-no").text() + "&studNo=" + $(this).siblings("input[name=studNo]").val();  
+    			}
+    		})
+    	})
+    </script>
+    
+    <!-- 전체 선택/해제 -->
+	<script>
+		$(document).on("click", "#checkAll", function(){
+			if($("#checkAll").is(":checked")){
+				$(".checkbox").prop("checked", true);
+			}else{
+				$(".checkbox").prop("checked", false);
+			}
+		});		
+	</script>
+	
+	<!-- 상태 변경 -->
+	<script>
+		function changeStatus(progress){
+			
+			let count = 0;
+			let asNo;
+			let stuNo;
+			let asType;
+			
+			$(".checkbox:checked").each(function(){
+				count++;
+			});
+			
+			if(count == 0){
+				alert("항목을 선택해주세요.");
+			}else{
+				$(".checkbox:checked").each(function(){
+					if($(this).parent().siblings(".progressT").text() == '반려'){
+						alert("교수 반려된 내역을 제외하고 반려처리 됩니다.");
+					}else{
+						asNo = $(this).parent().siblings(".as-no").text();
+						stuNo = $(this).parent().siblings("input[name=studNo]").val();
+						if($(this).parent().siblings(".as-type").val() == '휴학'){
+							asType = 2;
+						}else{
+							asType = 1;
+						}
+						ajaxChangeStatus(asNo, progress, stuNo, asType);						
+					}
+				});
+			}
+		}
+		
+		function ajaxChangeStatus(asNo, progress, stuNo, asType){
+			$.ajax({
+				url:"academic.changeAsStatus",
+				data:{asNo:asNo, 
+					progress:progress, 
+					asType:asType,
+					studNo:stuNo
+				 },
+				success:function(result){
+					if(result > 0){
+						location.href='admin.academic.list?currentPage=1';							
+					}
+				},error:function(){
+					console.log("상태변경 ajax 통신 실패");
+				}
+			})			
+		}
+	</script>
 	
 	
 </body>

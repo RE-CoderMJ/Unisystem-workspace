@@ -86,6 +86,9 @@ public class AcademicStatusServiceImpl implements AcademicStatusService{
 
 	@Override
 	public int changeAsStatus(AcademicStatus as) {
+		if(as.getProgress() == 3) {
+			acDao.changeAsFinalStatus(sqlSession, as);
+		}
 		return acDao.changeAsStatus(sqlSession, as);
 	}
 

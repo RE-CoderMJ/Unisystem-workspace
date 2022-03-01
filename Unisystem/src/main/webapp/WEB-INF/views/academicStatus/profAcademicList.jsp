@@ -100,7 +100,7 @@
 		                        <tr>
 		                            <td><input type="checkbox" class="checkbox"></td>
 		                            <td class="as-no">${as.asNo}</td>
-		                            <td>${as.studName}</td> 
+		                            <td class="stud-name">${as.studName}</td> 
 		                            <td class="as-type">${as.asTypeT }</td>
 		                            <td>${as.asDate}</td>
 		                            <input type="hidden" name="studNo" value="${ as.studNo}">
@@ -109,6 +109,12 @@
 				                            <td class="pending">${as.progressT}</td>
 		                            	</c:when>
 		                            	<c:when test="${as.progressT eq '담당교수승인'}">
+				                            <td class="accepted">${as.progressT}</td>
+		                            	</c:when>
+		                            	<c:when test="${as.progressT eq '최종승인'}">
+				                            <td class="accepted">${as.progressT}</td>
+		                            	</c:when>
+		                            	<c:when test="${as.progressT eq '학사지원과처리중'}">
 				                            <td class="accepted">${as.progressT}</td>
 		                            	</c:when>
 		                            	<c:when test="${as.progressT eq '반려'}">
@@ -162,11 +168,11 @@
 	<!-- 상세보기 -->
     <script>
     	$(function(){
-    		$("#list>tbody tr").click(function(){
-    			if($(this).children(".as-type").text() == "휴학"){
-	    			location.href="myProf.academic.detailOff?asNo=" + $(this).children(".as-no").text() + "&studNo=" + $(this).children("input[name=studNo]").val();     				
+    		$(".stud-name").click(function(){
+    			if($(this).siblings(".as-type").text() == "휴학"){
+	    			location.href="myProf.academic.detailOff?asNo=" + $(this).siblings(".as-no").text() + "&studNo=" + $(this).siblings("input[name=studNo]").val();     				
     			}else{
-    				location.href="myProf.academic.detailBack?asNo=" + $(this).children(".as-no").text() + "&studNo=" + $(this).children("input[name=studNo]").val();  
+    				location.href="myProf.academic.detailBack?asNo=" + $(this).siblings(".as-no").text() + "&studNo=" + $(this).siblings("input[name=studNo]").val();  
     			}
     		})
     	})
@@ -207,7 +213,7 @@
 		
 		function ajaxChangeStatus(asNo, progress){
 			$.ajax({
-				url:"myProf.changeAsStatus",
+				url:"academic.changeAsStatus",
 				data:{asNo:asNo, progress:progress},
 				success:function(result){
 					if(result > 0){

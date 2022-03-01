@@ -306,4 +306,11 @@
 		   set progress = #{progress}
 		 where as_no = #{asNo}
 	</update>
+	
+	<update id="changeAsFinalStatus">
+		update
+		       student
+		   set stud_status = #{asType}
+		 where stud_no = #{studNo}
+	</update>
 </mapper>

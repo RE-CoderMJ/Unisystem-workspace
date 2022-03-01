@@ -52,7 +52,7 @@
 					<div class="pageName"><p style="color:gray">마이페이지>담당학생관리>&nbsp;</p><p style="font-size:19px; font-weight:600;">학적변동 신청내역</p></div>
 					<br><br>
 					<div id="pageName">학생 정보</div>
-					<button type="submit" id="list-btn" onclick="location.href='myProf.academic.list?currentPage=1'">목록</button>
+					<button type="submit" id="list-btn" onclick="location.href='admin.academic.list?currentPage=1'">목록</button>
 	                <br><br><br>
 	                <table class="table table-bordered" style="width:1134px;">
 						<tbody>
@@ -126,44 +126,63 @@
 			<article>
                 <div id="contents">
                 	<div class="titles">휴복학 신청 내용</div>
-						<div id="backYearSelect">
-							<table class="table table-bordered" style="width:1134px;">
+	                	<div id="offYearSelect">
+		                	<table class="table table-bordered" style="width:1134px;">
 								<tbody>
 									<tr>
 										<th>학적상태</th>
-										<td style="width:140px;">휴학</td>
+										<c:choose>
+											<c:when test="${s.studStatus eq 1 }">
+												<td>재학</td>
+											</c:when>
+											<c:when test="${s.studStatus eq 2 }">
+												<td>휴학</td>
+											</c:when>
+											<c:when test="${s.studStatus eq 3 }">
+												<td>졸업</td>
+											</c:when>
+											<c:otherwise>
+												<td>자퇴</td>
+											</c:otherwise>
+										</c:choose>
 										<th>신청일자</th>
-										<td>${asBack.asDate}</td>
-										<th>복학신청년도</th>
-										<td>${asBack.backYear}</td>
+										<td>${as.asDate}</td>
+										<th>복학희망년도</th>
+										<td>${as.offUntilYear}</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학뷴류</th>
 										<td>
-											${asOff.offTypeT}
+											${as.offTypeT}
 										</td>
-										<th>휴학 신청년도</th>
-										<td>${asOff.offYear}</td>
-										<th>복학 신청 학기</th>
+										<th>신청년도</th>
+										<td>${as.offYear}</td>
+										<th>복학 희망 학기</th>
 										<td>
-											${asBack.backSemester}
+											${as.offSemester}
 										</td>
 										<td></td>
 									</tr>
 									<tr>
 										<th>휴학사유</th>
 										<td>
-											${asOff.reasonT}
+											${as.reasonT}
 										</td>
-										<th>휴학 신청학기</th>
+										<th>신청학기</th>
 										<td>
-											${asOff.reasonT}
+											${as.offSemester}
+										</td>
+										<th>첨부파일</th>
+										<td colspan="2" style="height:30px;">
+											<c:forEach var="att" items="${attList}">
+												<a href="${att.path}${att.changeName}" download="${att.originName}">${ att.originName }</a><br>
+											</c:forEach>
 										</td>
 									</tr>
 									<tr>
 										<th rowspan="3">휴학사유상세</th>
-										<td colspan="6">${asOff.reasonDetail}</td>
+										<td colspan="6">${as.reasonDetail}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -184,7 +203,7 @@
 						
 						<div align="right" style="width:1130px;">
 							<button id="reject-btn" onclick="changeStatus(4)">반려</button>
-							<button id="approve-btn" onclick="changeStatus(1)">승인</button>
+							<button id="approve-btn" onclick="changeStatus(3)">승인</button>
 						</div>
   	
              	</div>
@@ -198,10 +217,14 @@
 		function changeStatus(progress){
 			$.ajax({
 				url:"academic.changeAsStatus",
-				data:{asNo:'${asBack.asNo}', progress:progress},
+				data:{asNo:'${as.asNo}', 
+						progress:progress, 
+						asType:2,
+						studNo:'${s.userNo}'
+					 },
 				success:function(result){
 					if(result > 0){
-						location.href='myProf.academic.list?currentPage=1';							
+						location.href='admin.academic.list?currentPage=1';							
 					}
 				},error:function(){
 					console.log("상태변경 ajax 통신 실패");

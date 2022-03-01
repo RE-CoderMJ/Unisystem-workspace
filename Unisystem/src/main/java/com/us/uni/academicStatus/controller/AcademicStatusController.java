@@ -180,6 +180,24 @@ public class AcademicStatusController {
 	}
 	
 	/**
+	 * 관리자 휴학신청내역 상세조회
+	 * @return
+	 */
+	@RequestMapping("admin.academic.detailOff")
+	public String selectAdminAcademicOff(int asNo, int studNo, Model m) {
+		
+		Users s = acService.selectStudInfo(studNo);
+		AcademicStatus as = acService.selectAs(asNo);
+		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
+		
+		m.addAttribute("s", s);
+		m.addAttribute("as", as);
+		m.addAttribute("attList", attList);
+		System.out.println(s.getStudStatus());
+		return "academicStatus/adminAcademicDetailOff";
+	}
+	
+	/**
 	 * 학생 복학신청내역 상세조회
 	 * @param session
 	 * @param asNo
@@ -223,6 +241,28 @@ public class AcademicStatusController {
 	}
 	
 	/**
+	 * 관리자복학신청내역 상세조회
+	 * @param session
+	 * @param asNo
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("admin.academic.detailBack")
+	public String selectAdminAcademicBack(HttpSession session, int studNo, int asNo, Model m) {
+		
+		Users s = acService.selectStudInfo(studNo);
+		Users u = (Users)session.getAttribute("loginUser");
+		AcademicStatus asOff = acService.selectOffApply(u.getUserNo());
+		AcademicStatus asBack = acService.selectAs(asNo);
+		
+		m.addAttribute("s", s);
+		m.addAttribute("asOff", asOff);
+		m.addAttribute("asBack", asBack);
+		
+		return "academicStatus/adminAcademicDetailBack";
+	}
+	
+	/**
 	 * 관리자 학적변동 신청내역 리스트 조회 페이지 컨트롤러
 	 * @param currentPage
 	 * @param session
@@ -248,7 +288,7 @@ public class AcademicStatusController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="myProf.changeAsStatus", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="academic.changeAsStatus", produces="application/json; charset=UTF-8")
 	public int changeAsStatus(AcademicStatus as) {
 		
 		int result = acService.changeAsStatus(as);

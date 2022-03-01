@@ -216,7 +216,7 @@
 	<script>
 		function changeStatus(progress){
 			$.ajax({
-				url:"myProf.changeAsStatus",
+				url:"academic.changeAsStatus",
 				data:{asNo:'${as.asNo}', progress:progress},
 				success:function(result){
 					if(result > 0){

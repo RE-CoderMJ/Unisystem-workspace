@@ -64,9 +64,12 @@ public class AcademicStatusDao {
 	}
 
 	public int changeAsStatus(SqlSessionTemplate sqlSession, AcademicStatus as) {
-		
-		return sqlSession.update("academicMapper.changeAsStatus", as);
+		return sqlSession.update("academicMapper.changeAsStatus", as);			
 	}
+	
+	public int changeAsFinalStatus(SqlSessionTemplate sqlSession, AcademicStatus as) {		
+		return sqlSession.update("academicMapper.changeAsFinalStatus", as);
+	}	
 
 	public int selectAdminAsListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("academicMapper.selectAdminAsListCount");
