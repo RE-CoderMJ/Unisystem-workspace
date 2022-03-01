@@ -860,27 +860,92 @@ public class LectureController {
 	/* 학생 - 수업자료실 상세보기를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMatDetail.stu")
 	public ModelAndView selectLectureMaterialDetail(int bno, ModelAndView mv) {
-		System.out.println(bno);
-		//Attachment at = new Attachment();
-		
+		Attachment at = new Attachment();
+
 		int result = lService.increaseMatCount(bno);	
 		
 		if(result > 0) {
 			Classboard b = lService.selectLectureMaterialDetail(bno);
-			//System.out.println(b);
-			//if(at != null) {
-			//	at = lService.selectAttachMaterial(bno);
-			//}
+			
+			if(at != null) {
+				at = lService.selectAttachMaterial(bno);
+			}
+			
 			mv.addObject("b", b)
+			  .addObject("at",at)
 			  .setViewName("lecture/lectureMaterialDetailView");
+			
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("lecture/lectureMaterialListView");
 		}
+		
 		return mv;
 	}
 		
 	
-	/*상세조회 조회 컨트롤러 */
+	
+	/* 교수 - 수업자료실 등록 화면 보여지는 컨트롤러 */
+	@RequestMapping("lectureMaterialInSertView")
+	public String lectureMaterialInSertView() {
+		return "lecture/lectureMaterialInSertView";
+	}
+	
+	/*학생 - 수업자료실 등록*/
+	@RequestMapping("lectureMaterialInSertView.lec")
+	public String lectureMaterialInSertViewInsert(Classboard c, MultipartFile upfile, HttpSession session, Model model ) {
+		
+		int classNo = ((Lecture)session.getAttribute("classInfo")).getClassNo();
+		c.setClassNo(classNo);
+		System.out.println(c);
+		
+		Attachment at = new Attachment();
+		
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(upfile, session);
+			
+			at.setOriginName(upfile.getOriginalFilename());
+			at.setChangeName(changeName);
+			at.setPath("resources/uploadFiles/classData/"+ changeName);
+		} 
+		System.out.println(at);
+		int result = lService.lectureMaterialInSert(c,at);
+		System.out.println(result);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "수업자료가 등록되었습니다.");
+			return "redirect:lectureMat.stu";
+		}else {
+			model.addAttribute("errorMsg","게시글 등록실패");
+			return "lecture/lectureMaterialListView";
+		}
+	}
+	
+	/*수업자료실 삭제 컨트롤러 */
+	
+	@RequestMapping("lecdata.del")
+	public String deletelecData(int classboardNo, String filePath, HttpSession session, Model model) {
+		
+		int result = lService.deletelecData(classboardNo);
+		
+		if(result>0) {
+			
+			if(!filePath.equals("")) {  
+				int atresult = lService.deletelecDataAttach(classboardNo);
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "성공적으로 자료가 삭제되었습니다.");
+			return "redirect:lectureMat.stu";
+		} else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "redirect:/";
+		}
+	}
+		
+		
+		
+	
 	
 	
 	

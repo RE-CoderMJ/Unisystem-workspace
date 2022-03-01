@@ -143,7 +143,6 @@ public interface LectureService {
 
 	Attachment selectAttachMaterial(int bno);
 
-
 	
 	// 학생 - 과제업로드 : 제출가능한 과제등록 시 첨부파일 등록
 	int insertStuAttachPHomework(Attachment at);
@@ -165,6 +164,13 @@ public interface LectureService {
 	
 	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 조회
 	ArrayList<Homework> selectStuHomeworkList(PageInfo pi, Homework h);
+	
+	//교수 - 수업자료등록
+	int lectureMaterialInSert(Classboard c, Attachment at);
+
+	//수업자료 삭제 
+	int deletelecData(int classboardNo);
+	int deletelecDataAttach(int classboardNo);
 
 }
 

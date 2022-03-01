@@ -331,6 +331,27 @@ public class LectureDao {
 		
 		return (ArrayList)sqlSession.selectList("lectureMapper.selectStuHomeworkList", h, rowBounds);
 	}
+
+	//수업자료실 - 자료등록 
+	public int lectureMaterialInSert(SqlSessionTemplate sqlSession, Classboard c) {
+		
+		return sqlSession.insert("lectureMapper.lectureMaterialInSert",c);
+	}
+	
+	public int lectureMaterialInSertAttach(SqlSessionTemplate sqlSession, Attachment at) {
+		
+		return sqlSession.insert("lectureMapper.lectureMaterialInSertAttach", at);
+	}
+
+	public int deletelecData(SqlSessionTemplate sqlSession,int classboardNo) {
+		
+		return sqlSession.update("lectureMapper.deletelecData",classboardNo);
+	}
+
+	public int deletelecDataAttach(SqlSessionTemplate sqlSession, int classboardNo) {
+		
+		return sqlSession.update("lectureMapper.deletelecDataAttach", classboardNo);
+	}
 	
 	
 

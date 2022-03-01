@@ -340,15 +340,36 @@ public class LectureServiceImpl implements LectureService{
 	}
 
 	@Override
-	public Classboard selectLectureMaterialDetail(int bno) {
+	public Classboard selectLectureMaterialDetail(int classboardNo) {
 		
-		return lDao.selectLectureMaterialDetail(sqlSession,bno);
+		return lDao.selectLectureMaterialDetail(sqlSession,classboardNo);
 	}
 
 	@Override
-	public Attachment selectAttachMaterial(int bno) {
+	public Attachment selectAttachMaterial(int classboardNo) {
 		
-		return lDao.selectAttachMaterial(sqlSession,bno);
+		return lDao.selectAttachMaterial(sqlSession, classboardNo);
+	}
+
+	@Override
+	public int lectureMaterialInSert(Classboard c, Attachment at) {
+		
+		int result1 = lDao.lectureMaterialInSert(sqlSession, c);
+		int result2 = lDao.lectureMaterialInSertAttach(sqlSession, at);
+		
+		return result1*result2;
+	}
+
+	@Override
+	public int deletelecData(int classboardNo) {
+		
+		return lDao.deletelecData(sqlSession,classboardNo);
+	}
+
+	@Override
+	public int deletelecDataAttach(int classboardNo) {
+		
+		return lDao.deletelecDataAttach(sqlSession,classboardNo);
 	}
 
 
