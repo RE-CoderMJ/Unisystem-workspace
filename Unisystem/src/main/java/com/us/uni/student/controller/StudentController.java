@@ -100,20 +100,25 @@ public class StudentController {
 	}
 	
 	@RequestMapping("delete.st")
-	public String studentDelete(String[] dno, HttpSession session) {
+	public String studentDelete(String[] dno, String userPwd, HttpSession session) {
 		int result = 0;
-		for(int i=0; i<dno.length; i++) {
-			result = sService.studentDelete(dno[i]);
-		}
+		String currPwd = (((Users)session.getAttribute("loginUser")).getUserPwd());
 		
+		if(bcryptPasswordEncoder.matches(userPwd, currPwd)) {
+			for(int i=0; i<dno.length; i++) {
+				result = sService.studentDelete(dno[i]);
+			}
+			
+			if(result > 0) {
+				session.setAttribute("alertMsg", "삭제되었습니다!");
+			}else {
+				session.setAttribute("alertMsg", "학생 삭제를 실패했습니다.");
+			}
 		
-		if(result > 0) {
-			session.setAttribute("alertMsg", "삭제되었습니다!");
-			return "redirect:student.ad";
 		}else {
-			session.setAttribute("alertMsg", "학생 삭제를 실패했습니다.");
-			return "common/errorPage";
+			session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
 		}
+			return "redirect:student.ad";
 		
 	}
 	

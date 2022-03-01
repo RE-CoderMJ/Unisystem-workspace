@@ -123,16 +123,19 @@
 				</div>
 				
 				
-			  <form id="studDelete">
+			  <form id="studDelete" method="post">
 				<div class="btnBox">
+			  	<!--
 					<div class="switchBox">
 						<label class="switch">
 							<input type="checkbox">
 							<span class="slider round"></span>
 						</label>
+					  
 						<p >&nbsp;모두 보기</p><p style="display:none;">&nbsp;재학생만 보기</p>
+						
 					</div>
-
+-->
 					
 					<div class="btnDiv">
 						<a class="btn btn-sm btn-outline-secondary" href="enrollForm.st">새로 등록</a>
@@ -147,26 +150,24 @@
 			  <div class="modal" id="delete">
 			    <div class="modal-dialog">
 			      <div class="modal-content">
-			      
+s					
 			        <!-- Modal Header -->
 			        <div class="modal-header">
 			          <h4 class="modal-title">삭제하시겠습니까?</h4>
 			          <button type="button" class="close" data-dismiss="modal">&times;</button>
 			        </div>
-			      	
 			        <!-- Modal body -->
 			        <div class="modal-body">
-					 	<input type="hidden" id="adminPwd" value="${loginUser.userPwd}"> 
 					        삭제 시 다시 복구하실 수 없습니다.<br>
 			          	관리자의 승인이 필요합니다. <br><br>
 			          	* 비밀번호 : 
 			          	<input type="password" name="userPwd">
 			        </div>
-			        
 			        <!-- Modal footer -->
 			        <div class="modal-footer">
-			          <button type="submit" onclick="studentDelete();" class="btn btn-danger" data-dismiss="modal">삭제</button>
+			          <button type="button" onclick="return studentDelete();" class="btn btn-danger">삭제</button>
 			        </div>
+		       
 			      
 			        
 			      </div>
@@ -285,8 +286,6 @@
 					const checkboxes = document.getElementsByClassName('deleteNo');
 					var checkNum = 0;
 					var delForm = document.getElementById('studDelete');
-					let checkPwd = $("input[name=userPwd]").val();
-					let adminPwd = $("#adminPwd").val();
 					
 					for(var i=0; i<checkboxes.length; i++) {
 						if(checkboxes[i].checked == true) {
@@ -298,18 +297,11 @@
 
 					if(checkNum == 0) {
 						alertify.alert("삭제할 학생을 선택해주세요.");
-					} else if(checkNum > 0) {
-						if(checkPwd == adminPwd){
-							
-							// 삭제 요청
-							delForm.action = "delete.st";
-							delForm.submit();
-						}else{
-							alertify.alert("비밀번호를 잘못 입력하셨습니다.");
-							return false;
-						}
-					}
-
+						return false;
+					}else{
+						delForm.action = "delete.st";
+						delForm.submit();
+					} 
 				}
 				
 				
@@ -392,7 +384,7 @@
 	    						list += "<tr>" 
 			    							+ "<td><input type='checkbox'></td>"
 	    									+ "<td>" + obj.studNo + "</td>"
-	    									+ "<td>" + obj.korName + "</td>"
+	    									+ "<td><a href='detail.st?studNo=" + obj.studNo + "'>" + obj.korName + "</a></td>"
 	    									+ "<td>" + obj.studUniv + "</td>"
 	    									+ "<td>" + obj.studDepartment + "</td>"
 	    									+ "<td>" + obj.studMajor + "</td>"
