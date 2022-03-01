@@ -296,10 +296,6 @@ public class LectureDao {
 	}
 	
 
-		System.out.println(h);
-		return sqlSession.selectOne("lectureMapper.selectStuAttachHomework", h);
-	}
-	
 	// 학생 - 과제업로드 : 과제 수정
 	public int updateStuHomework(SqlSessionTemplate sqlSession, Homework h) {
 		return sqlSession.update("lectureMapper.updateStuHomework", h);
