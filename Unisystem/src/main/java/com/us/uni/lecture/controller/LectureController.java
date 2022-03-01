@@ -714,17 +714,22 @@ public class LectureController {
 		return "lecture/lecturePlan";
 	}
 	
-	/* 수업자료실을 띄워주는 컨트롤러 */
+	/* 학생 - 수업자료실을 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMat.stu")
-	public ModelAndView selectLectureMaterial(@RequestParam(value="cpage",defaultValue="1")int currentPage, HttpSession session,ModelAndView mv) {
+	public ModelAndView selectLectureMaterial(@RequestParam(value="cpage",defaultValue="1")int currentPage, HttpSession session, ModelAndView mv) {
 		
-		//int classNo = ((Classboard)session.getAttribute("classInfo")).getClassNo();
-		int classNo = 1010; //임시 번호 
+		Classboard c = new Classboard();
+		int classNo = ((Lecture)session.getAttribute("classInfo")).getClassNo();
 		
+		c.setClassNo(classNo);
+		//int classNo = 1010; //임시 번호 
+		
+		//System.out.println("classNo	:"+classNo);
 		int listCount = lService.selectLectureDataListCount(classNo);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		ArrayList<Classboard> list = lService.selectLectureDataList(classNo, pi);
+		
+		 PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		 ArrayList<Classboard> list = lService.selectLectureDataList(classNo, pi);
 		
 		//System.out.println(pi);
 		//System.out.println(list);
@@ -736,7 +741,7 @@ public class LectureController {
 		return mv;
 	}
 	
-	/* 수업자료실 상세보기를 띄워주는 컨트롤러 */
+	/* 학생 - 수업자료실 상세보기를 띄워주는 컨트롤러 */
 	@RequestMapping("lectureMatDetail.stu")
 	public ModelAndView selectLectureMaterialDetail(int bno, ModelAndView mv) {
 		System.out.println(bno);
@@ -750,10 +755,8 @@ public class LectureController {
 			//if(at != null) {
 			//	at = lService.selectAttachMaterial(bno);
 			//}
-		
 			mv.addObject("b", b)
 			  .setViewName("lecture/lectureMaterialDetailView");
-
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("lecture/lectureMaterialListView");
 		}

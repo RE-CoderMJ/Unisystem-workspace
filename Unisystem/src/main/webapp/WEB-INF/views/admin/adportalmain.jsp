@@ -184,6 +184,7 @@ border:none;
 height:50px;
 color:white;
 font-size:16px;
+width: 245px;
 }
 
 a{

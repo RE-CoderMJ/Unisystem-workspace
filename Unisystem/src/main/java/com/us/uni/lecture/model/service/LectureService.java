@@ -134,7 +134,7 @@ public interface LectureService {
 
 	//수업자료실 목록조회 
 	int selectLectureDataListCount(int classNo);
-	ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi);
+	 ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi);
 	
 	//수업자료실 상세조회 
 	int increaseMatCount(int bno);

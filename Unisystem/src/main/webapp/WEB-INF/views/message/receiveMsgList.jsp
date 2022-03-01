@@ -330,9 +330,11 @@ cursor:pointer;
     					let readYN = "";
     					
     					if(data.list[i].readYN == 'Y'){
-  						  readYN = "읽음 ";
+    						readYN += "<td><b style='color:rgb(15,43,80);'>읽음<b></td>";
+  						 	// readYN = "읽음";
   						  }else if(data.list[i].readYN =='N'){
-  							readYN = "안읽음";
+  							readYN += "<td><b style='color:rgb(192, 57, 43);'>안읽음<b></td>";
+  							//readYN = "안읽음";
   						  }
     					
     					value += "<tr>"
@@ -343,7 +345,7 @@ cursor:pointer;
     						  + "<input type='hidden' name='messageNo' id='msgNo' value='"+ data.list[i].messageNo +"'>"
     						  + "<td>" + data.list[i].msgWriter + "</td>"
     						  + "<td class='text-overflow'>" +"<a>" + data.list[i].msgContent +"</a>"+"</td>"
-    						  + "<td>"+readYN+ "</td>"
+    						  + readYN
     						  + "<td>" + data.list[i].sendDate + "</td>"
     						  + "</tr>";
     					}

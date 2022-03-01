@@ -285,7 +285,7 @@ public class LectureServiceImpl implements LectureService{
 
 	//자료실 리스트 조회 
 	@Override
-	public ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi) {
+	public  ArrayList<Classboard> selectLectureDataList(int classNo, PageInfo pi) {
 		
 		return lDao.selectLectureDataList(sqlSession, classNo, pi);
 	}

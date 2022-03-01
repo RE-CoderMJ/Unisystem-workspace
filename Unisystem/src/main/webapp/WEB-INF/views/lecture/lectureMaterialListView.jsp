@@ -94,17 +94,24 @@
             
             <!-- 로그인한 계정이 교수일 경우 -->
             <!--<jsp:include page="../professor/pclassSidebar.jsp" />-->
+            
         </div>
 
         <div id="wrap_content" style="float: left;">
 
             <article id="content_header"><span>자료실 > </span>수업자료실</article>
+            
+             
             <div id="contentBox">
 			<!--<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"/>-->
                 <div id="contentCount">총 <span>${ pi.listCount }</span>개의 글</div>
                 
+                 <a href="" class="btn btn-sm" 
+                 style="background-color:rgb(15,43,80);color:white; float:right; margin-right: 33px; margin-bottom: 16px;">
+                 	등록하기</a>
+                
             <table id="datalistBox" class="table">
-            <input type="hidden" id="classNo" name="classNo" value="1010" />  
+            <input type="hidden" id="classNo" name="classNo" value="${ classInfo.classNo }" /> 
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -164,9 +171,12 @@
 							</c:otherwise>
 							</c:choose>
                     </ul>
+                    
+                    
                  </div>
                  
                  
+               
             </div>
         </div>
     </div>

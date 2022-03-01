@@ -102,7 +102,7 @@ a:hover {
 				 <b>자료실</b> 
 			</div>
 			<div>
-				<a href="">- 수업 자료실</a>
+				<a href="lectureMat.stu">- 수업 자료실</a>
 			</div>
 			<div>
 				<a href="">- 영상 자료실</a>
