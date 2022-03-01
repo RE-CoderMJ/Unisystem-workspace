@@ -109,4 +109,12 @@ public class ProfessorDao {
 		
 		return (ArrayList)sqlSession.selectList("professorMapper.requestClassList", null, rowBounds);
 	}
+	
+	public Lecture adminAppDetail(SqlSessionTemplate sqlSession, int classNo) {
+		return sqlSession.selectOne("lectureMapper.adminAppDetail", classNo);
+	}
+	
+	public int classApprove(SqlSessionTemplate sqlSession, Lecture lec) {
+		return sqlSession.update("lectureMapper.classApprove", lec);
+	}
 }

@@ -159,7 +159,10 @@ public class ProfessorController {
 		
 		int result = 0;
 		
-			
+		// 관리자가 생성한 강의는 바로 승인으로 변경되게 설정
+		lec.setClassStatus("Y");
+		
+		
 			if(!upfile.getOriginalFilename().equals("")) {
 				String changeName = saveFile(upfile, session);
 				
@@ -235,7 +238,6 @@ public class ProfessorController {
 	public String professorInsert(Users professor, MultipartFile upfile, HttpSession session) {
 	
 		int result = 0;
-		System.out.println(professor.getProfInto());
 	
 		// 학생 정보 등록 시 프로필 사진 파일을 Student에 경로 저장
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -291,8 +293,6 @@ public class ProfessorController {
 		int profNo = (((Users)session.getAttribute("loginUser")).getUserNo());
 		int listCount = pService.selectMyStudentCount(profNo);
 
-		System.out.println(listCount);
-		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		
 		HashMap map = new HashMap();
@@ -301,7 +301,6 @@ public class ProfessorController {
 		ArrayList<Users> stud = pService.selectMyStudent(map, pi);
 		model.addAttribute("pi", pi);
 		model.addAttribute("stud", stud);
-		System.out.println(stud);
 		
 		return "professor/professorMyStudentListView";
 	}
@@ -312,12 +311,9 @@ public class ProfessorController {
 		
 		int listCount = pService.requestClassCount();
 
-		System.out.println(listCount);
-		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		
 		ArrayList<Lecture> list = pService.requestClassList(pi);
-		System.out.println(list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
@@ -325,7 +321,39 @@ public class ProfessorController {
 		return "professor/adminRequestClassListView";
 	}
 	
+	@RequestMapping("cdetail")
+	public String adminAppDetail(int classNo, Model model) {
+		
+		Lecture lec = pService.adminAppDetail(classNo);
+		
+		model.addAttribute("lec", lec);
+		
+		return "professor/adminRequestClassDetail";
+	}
 	
+	@RequestMapping("cupdate")
+	public String classApprove(Lecture lec, int app, HttpSession session) {
+		System.out.println(app);
+		
+		if(app == 1) {
+			lec.setClassStatus("Y");
+		}else if(app == 2) {
+			lec.setClassStatus("N");
+		}
+		
+		System.out.println(lec);
+		
+		int result = pService.classApprove(lec);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "처리되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "처리 실패했습니다.");
+		}
+		
+		return "redirect:clist.ad";
+	}
+		
 	
 	// * 강의 개설 시 첨부하는 강의계획서 첨부파일 : 파일명 수정 작업 후 서버에 업로드
 		public String saveFile(MultipartFile upfile, HttpSession session) {

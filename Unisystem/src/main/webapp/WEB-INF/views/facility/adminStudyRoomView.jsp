@@ -370,9 +370,9 @@
 					<div class="logTop">
 						<!-- 
 						<input type="date" name="startDay" placeholder="시작날짜">
-						<input type="date" name="endDay" placeholder="마지막날짜">
-						<button id="search">검색</button>
 						 -->
+						<input type="date" name="endDay" placeholder="오늘의 날짜">
+						<button id="search">검색</button>
 						
 						<button id="rsvd" class="btn btn-outline-secondary" style="margin-left:34px; background:#FCBF49; color:white; border:none;" onclick="rsvd();">예약</button>
 						<button id="reset" class="btn btn-outline-secondary" style="background:#003049;color:white; border:none;" onclick="reset();">전체 퇴실</button>
