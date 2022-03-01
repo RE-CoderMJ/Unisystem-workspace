@@ -68,5 +68,18 @@ public class AcademicStatusDao {
 		return sqlSession.update("academicMapper.changeAsStatus", as);
 	}
 
+	public int selectAdminAsListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("academicMapper.selectAdminAsListCount");
+	}
+
+	public ArrayList<AcademicStatus> selectAdminAsList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("academicMapper.selectAdminAsList", rowBounds);
+	}
+
 
 }

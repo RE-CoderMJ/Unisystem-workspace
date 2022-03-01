@@ -71,66 +71,70 @@
 			<article>
                 <div id="contents">
           			<table class="table table-hover" id="list">
-	                    <tbody>
+          				<thead>
 	                    	<tr style="background:rgb(232, 232, 232);">
-	                    		<th><input type="checkbox" class="checkbox"></th>
+	                    		<th><input type="checkbox" id="checkAll"></th>
 	                    		<th>No.</th>
 	                    		<th>신청학생</th>
 	                    		<th>신청구분</th>
 	                    		<th>신청날짜</th>
 	                    		<th>상태</th>
-	                    	</tr>
-	                        <tr>
-	                            <td><input type="checkbox" class="checkbox"></td>
-	                            <td>5</td>
-	                            <td>김나다</td> 
-	                            <td>휴학</td>
-	                            <td>2022-01-19</td>
-	                            <td class="pending">대기</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" class="checkbox"></td>
-	                            <td>5</td>
-	                            <td>김나다</td> 
-	                            <td>휴학</td>
-	                            <td>2022-01-19</td>
-	                            <td class="pending">대기</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" class="checkbox"></td>
-	                            <td>5</td>
-	                            <td>김나다</td> 
-	                            <td>휴학</td>
-	                            <td>2022-01-19</td>
-	                            <td class="pending">대기</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" class="checkbox"></td>
-	                            <td>5</td>
-	                            <td>김나다</td> 
-	                            <td>휴학</td>
-	                            <td>2022-01-19</td>
-	                            <td class="pending">대기</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" class="checkbox"></td>
-	                            <td>5</td>
-	                            <td>김나다</td> 
-	                            <td>휴학</td>
-	                            <td>2022-01-19</td>
-	                            <td class="pending">대기</td>
-	                        </tr>
+	                    	</tr>          					
+          				</thead>
+	                    <tbody>
+	                    	<c:forEach var="as" items="${asList}">
+		                        <tr>
+		                            <td><input type="checkbox" class="checkbox"></td>
+		                            <td class="as-no">${as.asNo}</td>
+		                            <td>${as.studName}</td> 
+		                            <td class="as-type">${as.asTypeT }</td>
+		                            <td>${as.asDate}</td>
+		                            <input type="hidden" name="studNo" value="${ as.studNo}">
+		                            <c:choose>
+		                            	<c:when test="${as.progressT eq '접수'}">
+				                            <td class="pending">${as.progressT}</td>
+		                            	</c:when>
+		                            	<c:when test="${as.progressT eq '담당교수승인'}">
+				                            <td class="accepted">${as.progressT}</td>
+		                            	</c:when>
+		                            	<c:when test="${as.progressT eq '반려'}">
+				                            <td class="rejected">${as.progressT}</td>
+		                            	</c:when>
+		                            </c:choose>
+		                        </tr>
+	                        </c:forEach>
 	                    </tbody>
                 	</table>
   					<div class="container">
 	                    <ul class="pagination justify-content-center">
-	                      <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-	                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-	                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-	                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-	                      <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+	                    	<c:choose>
+		                    	<c:when test="${ pi.currentPage eq 1 }">
+		                    		<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item"><a class="page-link" href="admin.academic.list?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
+		                    
+		                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                    	<c:choose>
+		                    		<c:when test="${pi.currentPage == pi.maxPage}">
+		                    			<li class="page-item active"><a class="page-link" href="admin.academic.list?currentPage=${ p }">${ p }</a></li>
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<li class="page-item"><a class="page-link" href="admin.academic.list?currentPage=${ p }">${ p }</a></li>
+		                    		</c:otherwise>
+		                    	</c:choose>
+		                    </c:forEach>
+		                    
+		                    <c:choose>
+		                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    		<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item"><a class="page-link" href="admin.academic.list?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
 	                    </ul>
                 	</div>
                 

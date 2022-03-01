@@ -202,8 +202,7 @@
 		  from academic_status
 		  join users on (user_no = stud_no)
           join student using (stud_no)
-		 where prof_no = #{userNo}
-		   and progress = 0    
+		 where prof_no = #{userNo}  
 	</select>
 	
 	<select id="selectProfAsList" resultMap="asResult">
@@ -219,6 +218,38 @@
 		  join users on (user_no = stud_no)
           join student using (stud_no)
 		 where prof_no = #{userNo}
+		 order
+		    by as_no desc
+	</select>
+	
+	<select id="selectAdminAsListCount" resultType="_int">
+		select
+		       count(*)
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+         where progress = 1
+            or progress = 2
+            or progress = 3
+            or progress = 4
+	</select>
+	
+	<select id="selectAdminAsList" resultMap="asResult">
+		select
+		       as_no
+		     , as_type
+		     , stud_no
+		     , kor_name "stud_name"
+		     , decode(as_type, 1, '휴학', 2, '복학') "as_typeT"
+		     , to_char(as_date, 'yyyy-mm-dd') "as_date"
+		     , decode(progress, 0, '접수', 1, '담당교수승인', 2, '학사지원과처리중', 3, '최종승인', 4, '반려') "progressT"
+		  from academic_status
+		  join users on (user_no = stud_no)
+          join student using (stud_no)
+         where progress = 1
+            or progress = 2
+            or progress = 3
+            or progress = 4
 		 order
 		    by as_no desc
 	</select>

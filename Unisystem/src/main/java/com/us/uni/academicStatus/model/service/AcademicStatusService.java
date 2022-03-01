@@ -37,5 +37,9 @@ public interface AcademicStatusService {
 	// 교수 승인, 반려 컨트롤러
 	int changeAsStatus(AcademicStatus as);
 	
+	// 관리자 페이지 휴복학 신청내역 리스트 조회
+	int selectAdminAsListCount();
+	ArrayList<AcademicStatus> selectAdminAsList(PageInfo pi);
+	
 
 }

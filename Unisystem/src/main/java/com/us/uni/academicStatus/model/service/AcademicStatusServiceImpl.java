@@ -89,4 +89,14 @@ public class AcademicStatusServiceImpl implements AcademicStatusService{
 		return acDao.changeAsStatus(sqlSession, as);
 	}
 
+	@Override
+	public int selectAdminAsListCount() {
+		return acDao.selectAdminAsListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<AcademicStatus> selectAdminAsList(PageInfo pi) {
+		return acDao.selectAdminAsList(sqlSession, pi);
+	}
+
 }

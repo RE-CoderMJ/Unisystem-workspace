@@ -97,7 +97,7 @@ a:hover {
 				 <b>학적변동</b> 
 			</div>
 			<div>
-				<a href="">- 학적변동 신청내역</a>
+				<a href="admin.academic.list?currentPage=1">- 학적변동 신청내역</a>
 			</div>
 
 			<div class="side_title">

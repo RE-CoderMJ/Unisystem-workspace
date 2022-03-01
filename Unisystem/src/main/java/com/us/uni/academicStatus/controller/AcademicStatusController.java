@@ -145,11 +145,6 @@ public class AcademicStatusController {
 		return "academicStatus/profAcademicList";
 	}
 	
-	@RequestMapping("admin.academic.list")
-	public String selectAdminAcademicList() {
-		return "academicStatus/adminAcademicList";
-	}
-	
 	/**
 	 * 학생 휴학신청내역 상세조회
 	 * @return
@@ -227,6 +222,26 @@ public class AcademicStatusController {
 		return "academicStatus/profAcademicDetailBack";
 	}
 	
+	/**
+	 * 관리자 학적변동 신청내역 리스트 조회 페이지 컨트롤러
+	 * @param currentPage
+	 * @param session
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("admin.academic.list")
+	public String selectAdminAcademicList(int currentPage, Model m) {
+		
+		int listCount = acService.selectAdminAsListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<AcademicStatus> asList = acService.selectAdminAsList(pi);
+		m.addAttribute("asList", asList);
+		m.addAttribute("pi", pi);
+		
+		return  "academicStatus/adminAcademicList";
+	}
+		
 	/**
 	 * 상태변경용 ajax 컨트롤러
 	 * @param a
