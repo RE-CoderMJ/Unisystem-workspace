@@ -373,6 +373,16 @@
 		   and spam_status = 'N'
 	</select>
 	
+	<select id="selectInboxUnreadCount" resultType="_int">
+		select
+			   count(*)
+		  from mail_to
+		 where to_user = #{userNo}
+		   and read_date is null
+		   and status = 'N'
+		   and spam_status = 'N'
+	</select>
+	
 	<select id="selectInboxList" resultMap="toResult">
 		select
 			   mail_to_no

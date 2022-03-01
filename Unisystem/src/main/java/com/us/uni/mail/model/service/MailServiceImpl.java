@@ -31,6 +31,12 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public int selectInboxUnreadCount(int userNo) {
+		int result = mDao.selectInboxUnreadCount(sqlSession, userNo);
+		return result;
+	}
+	
+	@Override
 	public ArrayList<MailTo> selectInboxList(int userNo, PageInfo pi) {
 		ArrayList<MailTo> list = mDao.selectInboxList(sqlSession, userNo, pi);
 		return list;
@@ -343,7 +349,6 @@ public class MailServiceImpl implements MailService {
 		int result = mDao.deleteContact(sqlSession, contactNo);
 		return result;
 	}
+
 	
-
-
 }

@@ -163,7 +163,7 @@
 			if(!$(".cert-type").hasClass("selected")){
 				alert("출력하실 증명서의 종류를 선택해주세요.");
 			}else{
-				if(${loginUser.studGrad == null} && ($(".selected").hasClass("kor-grad") || $(".selected").hasClass("kor-grad"))){
+				if(${loginUser.studGrad == null} && ($(".selected").hasClass("kor-grad") || $(".selected").hasClass("eng-grad"))){
 					alert("졸업을 한 학생만 해당 증명서 출력이 가능합니다.");
 				}else if(${loginUser.studGrad != null} && ($(".selected").hasClass("kor-enroll") || $(".selected").hasClass("eng-enroll"))){
 					alert("재학중인 학생만 해당 증명서 출력이 가능합니다.");
@@ -197,7 +197,7 @@
 							},error:function(){
 								console.log("상태변경 ajax 통신 실패");
 							}
-						})
+						});
 					}
 				}
 			}

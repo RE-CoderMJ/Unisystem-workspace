@@ -103,6 +103,7 @@
 		                            <td>${as.studName}</td> 
 		                            <td>${as.asTypeT }</td>
 		                            <td>${as.asDate}</td>
+		                            <input type="hidden" name="studNo" value="${ as.studNo}">
 		                            <c:choose>
 		                            	<c:when test="${as.progressT eq '접수'}">
 				                            <td class="pending">${as.progressT}</td>
@@ -163,9 +164,9 @@
     	$(function(){
     		$("#list>tbody tr").click(function(){
     			if($(this).children(".as-type").text() == "휴학"){
-	    			location.href="myProf.academic.detailOff?asNo=" + $(this).children(".as-no").text();     				
+	    			location.href="myProf.academic.detailOff?asNo=" + $(this).children(".as-no").text() + "&studNo=" + $(this).children("input[name=studNo]").val();     				
     			}else{
-    				location.href="myProf.academic.detailBack?asNo=" + $(this).children(".as-no").text();
+    				location.href="myProf.academic.detailBack?asNo=" + $(this).children(".as-no").text() + "&studNo=" + $(this).children("input[name=studNo]").val();  
     			}
     		})
     	})

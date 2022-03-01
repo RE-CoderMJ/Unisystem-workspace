@@ -22,7 +22,7 @@
                 <div id="mail-count">
                 	| <span id="unread-count">3</span><span> / 65</span>
                 </div>
-                <button id="redo"><i class="fas fa-redo fa-xs"></i></button>
+                <button id="refresh"><i class="fas fa-redo fa-xs"></i></button>
                 <div id="tools">
                     <div id="tools-left">
                         <input type="checkbox" id="checkAll">

@@ -154,10 +154,11 @@ public class AcademicStatusController {
 	 * @return
 	 */
 	@RequestMapping("myStu.academic.detailOff")
-	public String selectStudAcademicOff(int asNo, Model m) {
-		
+	public String selectStudAcademicOff(int asNo, int studNo, Model m) {
+	
 		AcademicStatus as = acService.selectAs(asNo);
 		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
+		
 		m.addAttribute("as", as);
 		m.addAttribute("attList", attList);
 		
@@ -168,18 +169,20 @@ public class AcademicStatusController {
 	 * 교수 휴학신청내역 상세조회
 	 * @return
 	 */
-	/*
 	@RequestMapping("myProf.academic.detailOff")
-	public String selectProfAcademicOff(int asNo, Model m) {
+	public String selectProfAcademicOff(int asNo, int studNo, Model m) {
 		
+		Users s = acService.selectStudInfo(studNo);
 		AcademicStatus as = acService.selectAs(asNo);
 		ArrayList<Attachment> attList = acService.selectAttachmentList(asNo);
+		
+		m.addAttribute("s", s);
 		m.addAttribute("as", as);
 		m.addAttribute("attList", attList);
 		
 		return "academicStatus/profAcademicDetailOff";
 	}
-	*/
+	
 	/**
 	 * 학생 복학신청내역 상세조회
 	 * @param session
@@ -196,6 +199,8 @@ public class AcademicStatusController {
 		m.addAttribute("asOff", asOff);
 		m.addAttribute("asBack", asBack);
 		
+		System.out.println(asOff);
+		System.out.println(asBack);
 		return "academicStatus/stuAcademicDetailBack";
 	}
 	
@@ -206,19 +211,20 @@ public class AcademicStatusController {
 	 * @param m
 	 * @return
 	 */
-	/*
-	@RequestMapping("myStu.academic.detailBack")
-	public String selectProfAcademicBack(HttpSession session, int asNo, Model m) {
+	@RequestMapping("myProf.academic.detailBack")
+	public String selectProfAcademicBack(HttpSession session, int studNo, int asNo, Model m) {
 		
+		Users s = acService.selectStudInfo(studNo);
 		Users u = (Users)session.getAttribute("loginUser");
 		AcademicStatus asOff = acService.selectOffApply(u.getUserNo());
 		AcademicStatus asBack = acService.selectAs(asNo);
+		
+		m.addAttribute("s", s);
 		m.addAttribute("asOff", asOff);
 		m.addAttribute("asBack", asBack);
 		
 		return "academicStatus/profAcademicDetailBack";
 	}
-	*/
 	
 	/**
 	 * 서버에 첨부파일을 저장시키는 메소드
