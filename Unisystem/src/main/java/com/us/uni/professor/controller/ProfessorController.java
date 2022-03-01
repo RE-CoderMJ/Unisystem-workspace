@@ -150,6 +150,33 @@ public class ProfessorController {
 		
 		return "redirect:app.pr";
 	}
+	
+	/**
+	 * 교수 : 강의 개설
+	 */
+	@RequestMapping("insertClass.ad")
+	public String adminclassInsert(Lecture lec, MultipartFile upfile, HttpSession session) {
+		
+		int result = 0;
+		
+			
+			if(!upfile.getOriginalFilename().equals("")) {
+				String changeName = saveFile(upfile, session);
+				
+				lec.setClassPlan("resources/uploadFiles/classPlan/" + changeName);
+			}
+			
+		result = pService.classInsert(lec);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "강의 개설 신청이 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "강의 개설 신청 실패했습니다.");
+		}
+		
+		return "redirect:clist.ad";
+	}
 				
 	/**
 	 * admin : 학생의 담당교수 조회/변경 페이지
@@ -289,13 +316,11 @@ public class ProfessorController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		
-		HashMap map = new HashMap();
-		map.put("profNo", profNo);
+		ArrayList<Lecture> list = pService.requestClassList(pi);
+		System.out.println(list);
 		
-		ArrayList<Users> stud = pService.selectMyStudent(map, pi);
+		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-		model.addAttribute("stud", stud);
-		System.out.println(stud);
 		
 		return "professor/adminRequestClassListView";
 	}

@@ -98,7 +98,7 @@
 											</c:otherwise>
 										</c:choose>
 										<td>${ stud.korName }</td>
-										<td>${ stud.studUniv }</td>
+										<td>${ stud.studMajor }</td>
 										<td>${ stud.phone }</td>
 										<td>${ stud.email }</td>
 									</tr>
@@ -107,7 +107,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="container">
+					<div class="container">
                     <ul class="pagination justify-content-center">
 		                   <c:choose>
 		    				<c:when test="${ pi.currentPage eq 1 }">            

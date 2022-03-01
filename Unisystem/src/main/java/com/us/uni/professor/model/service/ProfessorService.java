@@ -35,5 +35,8 @@ public interface ProfessorService {
 	// 담당 학생 조회
 	ArrayList<Users> selectMyStudent(HashMap map, PageInfo pi);
 	
+	// 신청 강의 목록
+	int requestClassCount();
+	ArrayList<Lecture> requestClassList(PageInfo pi);
 
 }
