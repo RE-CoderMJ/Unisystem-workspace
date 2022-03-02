@@ -209,7 +209,7 @@ margin-top: 10px;
 					
 						<div class="ctg-area">
 							<span>날짜</span> ${ b.createDate }
-							<span>작성자</span> ${loginUser.korName}
+							<span>작성자</span> 관리자
 							<span>카테고리</span> ${ b.subCategory }
 					
 							

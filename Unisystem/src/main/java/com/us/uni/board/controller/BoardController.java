@@ -208,11 +208,17 @@ public class BoardController {
 		@RequestMapping("update.bo")
 		public String updateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
 		
+			System.out.println(reupfile);
+			System.out.println(at);
+			System.out.println(b);
 			int newAtInsert = 1;
+			
+			if(at.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(at.getPath())).delete();
+			}
 			
 			// 새로 넘어온 첨부파일이 있을 경우 
 			if(!reupfile.getOriginalFilename().equals("")) {
-				
 				// 새로넘어온 첨부파일 서버 업로드 시키기 
 				String changeName = saveFile(reupfile, session);
 				// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
@@ -222,13 +228,13 @@ public class BoardController {
 				
 				// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기 
 				if(at.getOriginName() != null) {
-					new File(session.getServletContext().getRealPath(at.getPath())).delete();
 					newAtInsert = bService.updateAttachBoard(at);
-				}else {
+					System.out.println("not null at : "+newAtInsert);
+				} else if(at.getOriginName() == null) {
 					at.setRefNo(b.getBoardNo());
 					newAtInsert = bService.newUpdateAttachBoard(at);
+					System.out.println("null at :"+newAtInsert);
 				}
-								
 			}
 			
 			int result = bService.updateBoard(b);
@@ -390,10 +396,10 @@ public class BoardController {
 				public String nupdateBoard(Board b, Attachment at, MultipartFile reupfile, HttpSession session, Model model) {
 				
 					int newAtInsert = 1;
+					System.out.println(reupfile);
 					
 					// 새로 넘어온 첨부파일이 있을 경우 
 					if(!reupfile.getOriginalFilename().equals("")) {
-						
 						// 새로넘어온 첨부파일 서버 업로드 시키기 
 						String changeName = saveFile(reupfile, session);
 						// b에 새로 넘어온 첨부파일에 대한 원본명, 저장경로 담기 
@@ -405,11 +411,10 @@ public class BoardController {
 						if(at.getOriginName() != null) {
 							new File(session.getServletContext().getRealPath(at.getPath())).delete();
 							newAtInsert = bService.updateAttachBoard(at);
-						}else {
+						} else {
 							at.setRefNo(b.getBoardNo());
 							newAtInsert = bService.newUpdateAttachBoard(at);
 						}
-										
 					}
 					
 					int result = bService.nupdateBoard(b);

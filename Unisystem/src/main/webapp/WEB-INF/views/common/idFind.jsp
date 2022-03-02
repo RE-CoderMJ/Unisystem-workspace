@@ -20,10 +20,8 @@
 /*아이디찾기(idfind)*/
 
 .back-color {
-	width: 1500px;
 	height: 1300px;
 	background-color: rgb(235, 242, 252);
-	background-size: 1500px 1300px;
 }
 
 .logo {
@@ -31,13 +29,9 @@
 }
 
 /*로그인 영역*/
-.login-area {
-	margin-left: 297px;
-}
-
 .login-box {
 	width: 465px;
-	height: 480px;
+	height: 530px;
 	background-color: #fff;
 	border-bottom: 3px solid #dfe6ef;
 	margin-top: 50px;
@@ -62,7 +56,6 @@
 	font-weight: 900;
 	color: rgb(15, 43, 80);
 }
-
 #text {
 	display: inline-block;
 	font-size: 18x;
@@ -196,6 +189,25 @@ li {
 	text-decoration: underline;
 }
 
+.wrapper{
+	margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo img {
+	width: 300px;
+	/*position: relative;
+	padding-bottom: 30px;
+	left: 435px;
+    top: 83px;*/
+}
+.logo{
+width:900px;
+margin:auto;
+position:relative;
+top:122px;
+}
 </style>
 
 <body>
@@ -210,10 +222,12 @@ li {
 	
 	<div class="back-color">
 		<!--가로 로고 자리 -->
+				<!--가로 로고 자리 -->
 		<div class="logo">
-			<img src="" alt="">
+			<img src="resources/images/LOGO_WIDTH.png" alt="">
 		</div>
-
+		
+		<div class="wrapper" style="margin:auto;">
 		<div class="login-area">
 			<div class="login-box">
 
@@ -280,13 +294,13 @@ li {
 					<th class="search-title"><a href="findpwd"><span>비밀번호 찾기 <br></span></a>
 						비밀번호를 잊어버리셨나요?</th>
 
-					<tr></tr>
+					<tr>
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon3.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href="enview"><span> 비회원 이용 <br></span></a>
-						게시글 조회만 가능합니다.</th>
-
+					<th class="search-title"><a href="/uni"><span>로그인 페이지 <br></span></a>
+						로그인 페이지로 이동합니다</th>
+					</tr>
 				</tbody>
 			</table>
 		</div>

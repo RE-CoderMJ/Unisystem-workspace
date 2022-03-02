@@ -210,7 +210,19 @@ margin-top: 10px;
 						<div class="ctg-area">
 							<span>날짜</span> ${ b.createDate }
 							<span>작성자</span> ${loginUser.korName}
-							<span>카테고리</span> ${ b.subCategory }
+							<span>카테고리</span>
+
+					<c:choose>
+					<c:when test="${ b.subCategory eq 5}">
+					자유
+					</c:when>
+					<c:when test="${ b.subCategory eq 6}">
+					취업
+					</c:when>
+					<c:when test="${ b.subCategory eq 7}">
+					정보공유
+					</c:when>
+					</c:choose>
 					
 							
 							<div class="b-count"><b style="color:rgb(231, 76, 60);font-size:16px;">조회수</b> ${ b.boCount } </div>
@@ -226,7 +238,6 @@ margin-top: 10px;
 		<div class="upload-area">
 							<input type="file" id="upfile" class="form-control-file border" name="reupfile" style="width:300px;">
 							
-                    		
 	                    	 <c:if test="${ not empty at.originName }">
 	                    		현재파일 :
 	                        	<a href="${at.path}" download="${at.originName}">${at.originName}</a>

@@ -306,7 +306,7 @@
 		  (
 		    seq_attno.nextval
 		  , 'B'
-		  , #{refNo}
+		  , #{boardNo}
 		  , #{originName}
 		  , #{changeName}
 		  , #{path}

@@ -253,7 +253,7 @@ li {
 							<td>${ b.boardTitle }</td>
 							<td>${ b.boardWriter }</td>
 							<td>${ b.createDate }</td>
-			                <td></td>
+	                        <td> <span><i class="fas fa-paperclip"></i></span></td>
 							<td>${ b.boCount }</td>
 						</tr>				
 					</c:forEach>

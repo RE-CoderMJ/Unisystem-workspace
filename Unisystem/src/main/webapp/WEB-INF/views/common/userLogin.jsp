@@ -8,23 +8,37 @@
 <title>UNI SYSTEM</title>
 <style>
 body {
-	width: 1500px;
-	height: 900;
+	height: 1300px;
 	background-color: rgb(235, 242, 252);
-	background-size: 1500px 900px;
 }
 
 .logo img {
-	padding-bottom: 30px;
 	width: 300px;
-	position: relative;
+	/*position: relative;
+	padding-bottom: 30px;
 	left: 435px;
-    top: 83px;
+    top: 83px;*/
+}
+.logo{
+width:900px;
+margin:auto;
+position:relative;
+top:122px;
+}
+.logo{
+width:900px;
+margin:auto;
+position:relative;
+top:122px;
+}
+
+.logo {
+	height: 150px;
 }
 
 /*로그인 영역*/
 .login-area {
-	margin-left: 297px;
+	/*margin-left: 297px;*/
 }
 
 .login-box {
@@ -181,7 +195,6 @@ li {
 #radioSt{
 width:none;
 height:none;
-
 }
 .wrapper{
 	margin: auto;
@@ -212,15 +225,17 @@ height:none;
 	
 	<div class="back-color">
 	
-		<!--가로 로고 자리 -->
+		
+			<!--가로 로고 자리 -->
 		<div class="logo">
 			<img src="resources/images/LOGO_WIDTH.png" alt="">
 		</div>
-
+		
 	<div class="wrapper" style="margin:auto;">
+	
 		<div class="login-area">
+		
 			<div class="login-box">
-			
 				<div>
 					<div class="login-title">LOGIN</div>
 					<div id="text" style="font-size: 16px;">
@@ -229,16 +244,13 @@ height:none;
 				</div>
 				<br>
 				<br>
-				
 				<form action="login.me" id="log-input" method="post">
-				
 				<div id="divCheck" style="font-size:14px; margin-bottom:10px; margin-top:-25px;">
 			<input id="radioSt1"  name="userDiv" type="radio" value="1" required>학생 
 			<input id="radioSt2"  name="userDiv" type="radio" value="2">교수
 				</div>
 				
 					
-				
 				 
 			<script>
 						$(function(){
@@ -247,7 +259,6 @@ height:none;
 					
 						
 			</script>
-		 
 			
 				
 					<input id="log-form" type="text" name="userNo" id="userNo" placeholder="  아이디"> 	<br>
@@ -272,7 +283,6 @@ height:none;
 		</div>
 		<!-- login area 끝 -->
 
-
 		<div class="service-zone">
 			<div>
 				<div class="svs-large">UNI PORTAL SYSTEM</div>
@@ -280,8 +290,6 @@ height:none;
 					<b>SERVICE</b> ZONE
 				</div>
 			</div>
-
-
 
 			<table id="svs-table">
 				<tbody style="border: 1px solid white;">
@@ -304,8 +312,8 @@ height:none;
 					<th style="padding-bottom: 30px;"><img class="img-search"
 						src="resources/images/login_icon3.png" alt=""></th>
 					<th style="width: 20px;"></th>
-					<th class="search-title"><a href="enview"><span> 비회원 이용 <br></span></a>
-						게시글 조회만 가능합니다.</th>
+					<th class="search-title"><a href="/uni"><span>로그인 페이지<br></span></a>
+						로그인 페이지로 이동합니다</th>
 					</tr>
 					
 				</tbody>
@@ -316,9 +324,7 @@ height:none;
 </div>
 </div>
 	</div>
-	</div>
 
 
-	</div>
 </body>
 </html>

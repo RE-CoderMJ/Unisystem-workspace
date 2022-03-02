@@ -112,7 +112,7 @@ public class BoardDao {
 			
 		}
 		
-		public int newUpdateAttachBoard(SqlSessionTemplate sqlSession, Attachment at) {
+		public int newUpdateAttachBoard(SqlSessionTemplate sqlSession,Attachment at) {
 			
 			return sqlSession.insert("boardMapper.newUpdateAttachBoard", at);
 		}
