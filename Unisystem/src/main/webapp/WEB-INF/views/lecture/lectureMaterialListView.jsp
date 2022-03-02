@@ -78,6 +78,8 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     }    
+    .bTitle{
+    cursor:pointer;}
 </style>
 </head>
 <body>
@@ -106,9 +108,11 @@
 			<!--<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"/>-->
                 <div id="contentCount">총 <span>${ pi.listCount }</span>개의 글</div>
                 
-                 <a href="" class="btn btn-sm" 
+                 <c:if test="${loginUser.userDiv == 2 }">
+                 <a href="lectureMaterialInSertView" class="btn btn-sm" 
                  style="background-color:rgb(15,43,80);color:white; float:right; margin-right: 33px; margin-bottom: 16px;">
                  	등록하기</a>
+                </c:if>
                 
             <table id="datalistBox" class="table">
             <input type="hidden" id="classNo" name="classNo" value="${ classInfo.classNo }" /> 
@@ -126,7 +130,7 @@
                     <c:forEach var="d" items="${ list }">
                         <tr>
                             <td class="bno">${d.classboardNo}</td>
-                            <td>
+                            <td class="bTitle">
                                 ${ d.classboardTitle }
                                 <span><i class="fas fa-paperclip"></i></span>
                             </td>

@@ -55,7 +55,7 @@ public class UsersDao {
 			int result = 0;
 			
 			result = sqlSession.update("usersMapper.resetPwd",m);
-			System.out.println(result);
+			//System.out.println(result);
 			
 			return sqlSession.update("usersMapper.resetPwd",m);
 	}

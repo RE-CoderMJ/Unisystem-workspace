@@ -79,7 +79,9 @@
 	cursor: pointer;
 	border:none;
 }
-
+.wrap_sidebar{
+height: 952px !important;
+}
 </style>
 
 <body>
@@ -97,9 +99,17 @@
 		<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
 
 
-			<div class="sidewrap">
-				<jsp:include page="../student/smySidebar.jsp" />
+				<div class="sidewrap">
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+				</c:choose>
 			</div>
+
 
 
 			<div class="bo_content" >
@@ -123,8 +133,7 @@
 	 
 	    </div>
 	  </div>
-		</div>
-		</div>
+		 
 
  <!-- jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -291,6 +300,8 @@
 		
 	</script>
 
+
+		   	
 	<br clear="both">
 		<!-- footer.jsp-->
 		<jsp:include page="../common/footer.jsp" />

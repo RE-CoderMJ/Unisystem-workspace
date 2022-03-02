@@ -16,12 +16,12 @@
 }
 
 .bo_content {
-	margin-top: 51px;
-	width: 1100px;
+	width: 1270px;
 	float: left;
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 30px;
 	padding-bottom: 50px;
+	float:right;
 }
 
 .page_title {
@@ -151,10 +151,27 @@
 		  학생이 로그인하면 smySidebar -->
 
 
-	<div style="background-color: rgb(235, 242, 252); width: 1500px;">
-		<div class="sidewrap">
-			<jsp:include page="../student/smySidebar.jsp" />
-		</div>
+		<div style="background-color: rgb(235, 242, 252); width: 1500px; margin:auto; margin-top:30px;">
+			<div class="sidewrap">
+				<c:choose>
+					<c:when test="${loginUser.userDiv eq 1 }">
+						<jsp:include page="../student/smySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 2 }">
+						<jsp:include page="../professor/pmySidebar.jsp" />
+					</c:when>
+					<c:when test="${loginUser.userDiv eq 3 }">
+						<jsp:include page="../common/adminSidebar.jsp" />
+					</c:when>
+				</c:choose>
+			</div>
+
+			<script>
+			      $(document).ready(function(){
+			         let $len = $(".bo_content").height();
+			         $(".wrap_sidebar").css('height', $len + 50);
+			      })
+		   	</script>
 		
 		<div class="bo_content">
 			

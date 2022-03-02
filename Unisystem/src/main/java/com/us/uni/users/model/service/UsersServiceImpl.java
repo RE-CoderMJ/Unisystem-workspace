@@ -129,7 +129,7 @@ public class UsersServiceImpl implements UsersService{
 			
 			int result = uDao.updatePwd(sqlSession,m);
 			
-			System.out.println(result);
+			//System.out.println(result);
 		}
 	}
 	

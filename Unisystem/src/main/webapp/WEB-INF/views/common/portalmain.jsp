@@ -379,7 +379,7 @@ font-size:10px;
 				<h4 style="margin-bottom:20px;">수강중인 과목</h4>
 				<c:forEach var="l" items="${ list }" >
 		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
+		            	<li id='classKorName' style="padding:none;"><a href="lectureMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a>	       
 		            </ul>
 				</c:forEach>
 			</c:if>
@@ -387,7 +387,7 @@ font-size:10px;
 				<h4>진행중인 과목</h4>
 				<c:forEach var="l" items="${ list }" >
 		            <ul class="trs">
-		            	<li id='classKorName' style="padding:none;"><a href="lectureProMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a></td> 	       
+		            	<li id='classKorName' style="padding:none;"><a href="lectureProMain.stu?lno=${l.classCode}" > ${ l.classKorName}</a>      
 		            </ul>
 				</c:forEach>
 			</c:if>

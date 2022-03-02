@@ -70,19 +70,22 @@
         float: right;
         width: 200px;
         height: 40px;
-        left: 1090px;
+        left: 1053px;
         bottom: 0px;
     }
     #two_btn button{
         border: none;
         border-radius: 3px;
         padding: 3px 10px;
+        background-color: lightgray;
     }
     #two_btn button:focus{outline: none;}
     #two_btn button:first-child{margin-right: 5px;}
-   .cdel{
-   background-color:rgb(15,43,80);
-   color:white;
+    #classboardContent{
+    	width:900px;
+    	height:200px;
+    	resize:none;
+    	border:none;
     }
 </style>
 </head>
@@ -103,9 +106,11 @@
             <article id="content_header"><span>자료실 > </span>수업자료실</article>
 
             <div id="contentBox">
-					<div id="contentBox_border">
+
+                <div id="contentBox_border">
+					<form action="lectureMaterialInSertView.lec" method="post" enctype="multipart/form-data">
                     <div id="contentBox_header">
-                     ${ b.classboardTitle }
+                   <input type="text" name="classboardTitle" id="classboardTitle" placeholder="제목"/>
                         <span><i class="fas fa-paperclip"></i></span>
                     </div>
 
@@ -114,7 +119,7 @@
                         <div><i class="fas fa-user-circle"></i></div>
                         <div id="pro_name">
                             <div>${ b.korName }<span>&nbsp;교수</span></div>
-                            <div>${ b.classboardEndDateTime }<span>&nbsp;<b>조회</b>&nbsp;${ b.count }</span></div>
+                            <div> SYSDATE <span>&nbsp;<b>조회</b>&nbsp;0</span></div>
                         </div>
                     </div>
 
@@ -122,33 +127,19 @@
                         <div id="contentBox_file">
                             <i class="far fa-folder" style="float: left;"></i>
                             <div style="float: left; margin-top: 12px; margin-left: 10px;">
-                            <c:choose>
-								<c:when test="${ empty  at.originName }">
-				                    		첨부파일이 없습니다.
-				                    	</c:when>
-								<c:otherwise>
-									<a href="${at.path}" download="${at.originName}">${at.originName}</a>
-								</c:otherwise>
-							</c:choose>
+                            <input type="file" id="upfile" name="upfile"/>
                             </div>
                         </div>
                         <div id="contentBox_content">
-                           ${ b.classboardContent }
+                        	<textarea name="classboardContent" id="classboardContent"></textarea>
                         </div>
                     </div>
-                    
-                    <form id="lecForm" action="" method="post">
-					<input type="hidden" name="classboardNo" value="${ b.classboardNo }"> <input
-						type="hidden" name="filePath" value="${at.path}">
-					</form>
-				
                     <div id="two_btn">
-                    
-                        <button type="button" onclick="location.href='lectureMat.stu';" >목록</button>
-                        <c:if test="${loginUser.userDiv == 2 }">
-                        <button type="button" class="cdel" onclick="lecFormSubmit(1);" >삭제</button>
-                        </c:if>
+                        <button type="submit">자료등록</button>
+                        <button type="button" onclick="javascript:window.scrollTo(0,0);" >▲TOP</button>
                     </div>
+                    
+                    </form>
                     
                 </div>
 
@@ -157,13 +148,6 @@
         </div>
     </div>
 
-<script>
- function lecFormSubmit(num){
-	 if(num == 1){
-		 $("#lecForm").attr("action", "lecdata.del").submit();
-	 }
- }
-</script>
     <!-- footer.jsp-->
     <jsp:include page="../common/footer.jsp" />
 </body>
