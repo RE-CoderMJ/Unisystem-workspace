@@ -11,7 +11,7 @@
     #webMail-sidebar{
         background-color: white;
         width: 190px;
-        min-height:700px;
+        min-height:800px;
         float: left;
     }
     .sidebar-lines{

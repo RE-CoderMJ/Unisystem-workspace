@@ -15,8 +15,7 @@ div{
 section{
     background-color: white;
     width: 1280px;
-    height: auto;
-    min-height:700px;
+    min-height:800px;
     margin-bottom: 50px;
     margin-left: 20px;
     display: block;

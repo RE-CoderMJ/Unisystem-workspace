@@ -68,7 +68,7 @@
             		<table class="table table-bordered" id="list" style="width:900px;">
             			<thead>
             				<tr>
-            					<th>선택증명서</th>
+            					<th>선택증명서</th>`
             					<th>용도</th>
             					<th>제출처</th>
             					<th>삭제</th>
@@ -89,11 +89,9 @@
 	
 	<script>
 		function moveToPayment(){
-			if($("#empty").val() == 'e'){
-				alert("증명서 발급 신청내역이 없습니다.");
-			}else{
+			
 				location.href="myStu.cert.payment";
-			}
+			
 			
 		}
 	</script>
@@ -124,7 +122,7 @@
 					
 					if(result.length === 0){
 						value = "<tr><td colspan='4' style='text-align:center;'>증명서 발급 신청내역이 없습니다.</td></tr>";
-						$("#empty").val('e');
+						//$("#empty").val('e');
 					}else{
 						for(let i in result){
 							value += "<tr>"

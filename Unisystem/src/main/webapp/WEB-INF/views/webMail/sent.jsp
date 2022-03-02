@@ -125,10 +125,6 @@
 						
 						$(".pagination").html(piValue);
 						
-						// 사이드바와 컨텐츠영역 길이 맞춤
-						let $len = $("section").height();
-						$("#webMail-sidebar").css('height', $len + 22);
-						
 						$("#cPage").val(result.pi.currentPage);
 					}
 					

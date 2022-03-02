@@ -311,7 +311,7 @@ public class AcademicStatusController {
 		
 		String changeName = currentTime + ranNum + ext;
 		
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/webMail_upfiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/academicStatus_upfiles/");
 		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
