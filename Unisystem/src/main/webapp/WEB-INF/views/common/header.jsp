@@ -151,15 +151,7 @@
         	<div id="header-up-line">
 	            <div style="float: left;"><a href="enview" id="homepage">HOMEPAGE</a></div>
 	            
-	            <!-- 메시지 아이콘 -->
-	            <div style="float: left;" class="msg">
-	            <a href="list.msg"><img src="resources/images/msg_icon.png"></a>
-	           
-	            <div id="msgArea" style="margin-top:-28px; margin-left: 42px;">
-	            <!-- <b>(&nbsp;<span id="msgCount"></span>&nbsp;)</b> -->
-	            </div>
-	            </div>
-	           
+	          
 	           
 	            <div id="header-up-right" style="float: left;">
 	                <i class="fas fa-user"></i>
@@ -231,76 +223,7 @@
     
     <!-- 웹소켓 js -->
     <script>
-	var socket = null; //다른페이지 어디서든 소켓으로 메시지를 보낼수 있도록 전역변수처리 
-	
-	$(document).ready(function(){
-		connectWS();
-		
-		unreadMsg();
-	});
-	
-	function connectWS(){
-		//msg websocket
-		var ws = new WebSocket("ws://localhost:8009/uni/msgEcho");
-		socket = ws;
-	    ws.onopen = function () {
-	        console.log('Info: connection opened.');
-	    };
-	
-	
-	    ws.onmessage = function (event) {
-	        console.log("ReceiveMessage:", event.data+'\n');
-	       let $socketAlert =  $('div #socketAlert');
-	       $socketAlert.html(event.data);
-	       $socketAlert.css('display','block');
-	       
-	       setTimeout(function(){
-	    	   $socketAlert.css('display','none');
-	       }, 5000);
-	    };
-	
-	
-	    ws.onclose = function (event) { 
-	    	console.log('Info: connection closed.'); 
-	    	//setTimeout( function(){ connect(); }, 1000); // retry connection!!
-	    };
-	    ws.onerror = function (err) { console.log('Error',err); };
-	}
-	
-	function unreadMsg(){
-		$.ajax({
-			type: 'POST',  
-			dataType:'json',
-			url:"unread.msg",
-			data:{userNo:'${loginUser.userNo}'},
-			success:function(data){
-				
-				console.log(data);
-				
-					let msgCount=""
-					let value=""
-					
-					msgCount += data;
-					
-		            if(msgCount == 0){
-		            
-		            }else{
-		            	 value 
-			            	 += '<b>(&nbsp;<span id="msgCount">'+data+'</span>&nbsp;)</b>';
-			           		 
-		            }
-		            
-					$('#msgArea').html(value);
-		        
-		            
-		            
-					}//success
-					
-			, error:function() {
-			console.log("안읽은 메시지 갯수 ajax 통신조회실패");
-					}//error	
-			});//ajax끝
-	}
+
 	
 	
     </script>
