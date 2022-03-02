@@ -266,6 +266,7 @@
 		     , PHONE = #{phone}
 		     , ADDRESS = #{address}
 		     , NATION = #{nation}
+		     , USER_DIV = #{userDiv}
 		     , PROFILE_IMG = #{profileImg}
 	     WHERE USER_NO = #{userNo}
 	</update>
