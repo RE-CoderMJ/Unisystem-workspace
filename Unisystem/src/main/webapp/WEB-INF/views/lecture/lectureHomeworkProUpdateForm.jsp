@@ -141,7 +141,7 @@
 
         <div style="float: left;">
             <!-- sidebar 영역 -->
-            <jsp:include page="../student/sclassSidebar.jsp" />
+            <jsp:include page="../professor/pclassSidebar.jsp" />
         </div>
 
         <div id="wrap_content" style="float: left;">
@@ -154,7 +154,7 @@
 
                     <div id="contentBox_border">
                         <div id="contentBox_header">
-                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력" value="${ h.homeworkpName }">
+                            <input type="text" id="title" name="homeworkpName" placeholder="제목 입력" value="${ h.homeworkpName }" onclick="location.href='lectureProHomeworkDetailI.stu'">
                         </div>
     
                         <div id="contentBox_info">
@@ -180,10 +180,11 @@
 		                        		
 		                        		<input type="hidden" name="originName" value="${ at.originName }" />
 			                            <input type="hidden" name="changeName" value="${ at.changeName }" />
+			          
 			                    	</c:otherwise>
                         		</c:choose>
 
-			                            <input type="hidden" name="homeworkpNo" value="${ h.homeworkpNo }" />
+			                            <input type="hidden" name="hno" value="${ h.homeworkpNo }" />
 		                        	
                                 </div>      
                             </div>

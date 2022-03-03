@@ -12,7 +12,7 @@
 /*학생 강의페이지 왼쪽 메뉴바 작업*/
 .wrap_sidebar {
 	width: 180px;
-	height: auto;
+	height: 818px;
 	background-color: white;
 	border-top: 1px solid lightgray;
 	margin-bottom:30px;

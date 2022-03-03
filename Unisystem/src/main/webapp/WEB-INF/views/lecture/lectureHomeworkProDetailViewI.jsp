@@ -177,7 +177,7 @@
 
         <div style="float: left;">
             <!-- sidebar 영역 -->
-            <jsp:include page="../student/sclassSidebar.jsp" />
+            <jsp:include page="../professor/pclassSidebar.jsp" />
         </div>
 
         <div id="wrap_content" style="float: left;">
@@ -189,10 +189,8 @@
                     <div id="contentBox_border">
                     
                         <div id="contentBox_header">
-                        	과제입니다 어서들 하세요~
-                        	<c:if test="${ not empty at.originName}">
+                        	시스템분석 8번째 과제
 	                            <span><i class="fas fa-paperclip"></i></span>
-                        	</c:if>
                         </div>
     
                         <div id="contentBox_info">
@@ -210,11 +208,11 @@
                             	
 								<c:choose>
 			                    	<c:when test="${ empty at.originName}">
-			                    		<a href="resources/uploadFiles/homework_upfiles/2022022821402575160.pdf" download="Git Commit Message Rule.pdf">Git Commit Message Rule.pdf</a>
+			                    		<a href="resources/uploadFiles/homework_upfiles/2022022821402575160.pdf" download="Git Commit Message Rule.pdf">시스템분석 마지막과제입니다.hwpx</a>
 			                    	</c:when>
 			                    	<c:otherwise>
 		                        		<!-- <a href="${ at.path }" download="${ at.originName }">${ at.originName }</a> -->
-		                        		<a href="resources/uploadFiles/homework_upfiles/2022022821402575160.pdf" download="Git Commit Message Rule.pdf">Git Commit Message Rule.pdf</a>
+		                        		<a href="resources/uploadFiles/homework_upfiles/2022022821402575160.pdf" download="Git Commit Message Rule.pdf">시스템분석 마지막과제입니다.hwpx</a>
 			                    	</c:otherwise>
                         		</c:choose>
                         		
@@ -223,7 +221,7 @@
                             <div id="homeworkpEndDateTime"><!-- 마감기한 : ${ h.homeworkpEndDateTime }  --></div>
                         	<div id="contentBox_content">
                            	<!-- ${ h.homeworkpContent } -->
-                           	상단에 과제 다운로드 후 2022.03.03 18:00시까지 제출하시길 바랍니다.
+                           	상단의 마감기한까지 해오시기 바랍니다.
                         	</div>    
                         </div>
 							       
@@ -236,7 +234,7 @@
                     <div id="stuHomeworkList">
                     
 	                   	<div>과제 제출 현황</div>
-	                   	<div> 16명 / ${ classInfo.currStud }명</div>
+	                   	<div> 1명 / ${ classInfo.currStud }명</div>
 	                   	<table id="stuHomeworkList_table">
 	                   		<thead>
 	                   			<tr>
@@ -258,7 +256,7 @@
 	                   				<td>성민석</td>
 	                   				<td>제출</td>
 	                   				<td><a href="lectureHomeworkResult.stu">201800101 성민석 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800101 성민석.docx</a></td>
+	                   				<td><a href="lectureHomeworkResult.stu">201800101 성민석 과제제출입니다.docx</a></td>
 	                   				<td>미채점</td>
 	                   			</tr>
 	                   			<tr>
@@ -266,10 +264,10 @@
 	                   				<td>1학년</td>
 	                   				<td>201800102</td>
 	                   				<td>강기나</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800102 강기나 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800102 강기나.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>3</td>
@@ -279,57 +277,57 @@
 	                   				<td>미제출</td>
 	                   				<td></td>
 	                   				<td><a></a></td>
-	                   				<td>미채점</td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>4</td>
 	                   				<td>1학년</td>
 	                   				<td>201800104</td>
 	                   				<td>김송준</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800104 김송준 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800104 김송준.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>5</td>
 	                   				<td>1학년</td>
 	                   				<td>201800105</td>
 	                   				<td>김민균</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800105 김민균 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800105 김민균.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>6</td>
 	                   				<td>1학년</td>
 	                   				<td>201800106</td>
 	                   				<td>김민호</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800106 김민호 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800106 김민호.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>7</td>
 	                   				<td>1학년</td>
 	                   				<td>201800107</td>
 	                   				<td>김도희</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800107 김도희 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800107 김도희.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>8</td>
 	                   				<td>1학년</td>
 	                   				<td>201800108</td>
 	                   				<td>김승민</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800108 성민석 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800108 김승민.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>9</td>
@@ -339,17 +337,17 @@
 	                   				<td>미제출</td>
 	                   				<td></td>
 	                   				<td><a></a></td>
-	                   				<td>미채점</td>
+	                   				<td>채점</td>
 	                   			</tr>
 	                   			<tr>
 	                   				<td>10</td>
 	                   				<td>1학년</td>
 	                   				<td>201800110</td>
 	                   				<td>박민화</td>
-	                   				<td>제출</td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800110 박민화 과제제출입니다.</a></td>
-	                   				<td><a href="lectureHomeworkResult.stu">201800110 박민화.docx</a></td>
-	                   				<td>미채점</td>
+	                   				<td>미제출</td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td><a href="lectureHomeworkResult.stu"></a></td>
+	                   				<td>채점</td>
 	                   			</tr>	                   				                   			                   				                   				                   				                   				                   				                   				                   				                   				                 	              
 	                   		</tbody>
 	                   	</table>

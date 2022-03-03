@@ -124,7 +124,7 @@
                         <c:forEach var="l" items="${ list }" >
 	                        <tr class="trs">
 	                            <td class="homeworkpNo">${ l.homeworkpNo }</td>
-	                            <td><a href="lectureHomeworkDetail.stu?hno=${ l.homeworkpNo }">${ l.homeworkpName }</a></td>
+	                            <td><a href="insertHomeworkScore2.lec">${ l.homeworkpName }</a></td>
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
 	                            <td>
