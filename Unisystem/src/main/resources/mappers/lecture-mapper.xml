@@ -189,7 +189,7 @@
 		  join users on(stud_no = user_no)
 		 where user_no = #{userNo}
 		   and class_code = #{classCode}
-		   and attendance_status = 'A'	
+		   and attendance_status = '출석'	
 	</select>
 		
 	<!-- 학생 - 온라인 출석부 : 로그인한 학생 정보를 가져오는 sql문 -->
@@ -211,7 +211,7 @@
 		  join users on(stud_no = user_no)
 		 where user_no = #{userNo}
 		   and class_code = #{classCode}
-		   and attendance_status = 'B'	
+		   and attendance_status = '결석'	
 	</select>
 	
 	<select id="SelectAttStaListC" resultType="_int">
@@ -223,7 +223,7 @@
 		  join users on(stud_no = user_no)
 		 where user_no = #{userNo}
 		   and class_code = #{classCode}
-		   and attendance_status = 'C'	
+		   and attendance_status = '지각'	
 	</select>
 			
 	<!--학생 - 온라인출석부  : 현재 진행된 강의 총 개수를 구하는 sql문 -->
@@ -271,7 +271,7 @@
                  where class_code = #{classCode}
                    and user_no = #{userNo}
                  order
-                    by attendance_date desc             
+                    by attendance_no desc             
                 ) 
 	</select>
 	

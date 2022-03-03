@@ -165,7 +165,7 @@
 
         <div style="float: left;">
             <!-- sidebar 영역 -->
-            <jsp:include page="../student/sclassSidebar.jsp" />
+            <jsp:include page="../professor/pclassSidebar.jsp" />
         </div>
 
         <div id="wrap_content" style="float: left;">

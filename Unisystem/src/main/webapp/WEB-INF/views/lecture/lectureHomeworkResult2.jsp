@@ -148,7 +148,7 @@
 
         <div style="float: left;">
             <!-- sidebar 영역 -->
-            <jsp:include page="../professor/pclassSidebar.jsp" />
+            <jsp:include page="../student/sclassSidebar.jsp" />
         </div>
 
         <div id="wrap_content" style="float: left;">
@@ -184,17 +184,16 @@
                     
                     <div id="feedback_header">과제피드백</div>
                     <div id="feedback_content">
-                        <div><input type="text" style="width:960px; border:none;"></div>
+                        <div><input type="text" style="width:960px; border:none;" value="전반적으로 잘하셨습니다."></div>
                     </div>
                     
                     <div style="margin-top: 50px;">
                         <span id="homework_score_title">과제 점수</span>
-                        <span id="homework_scorestyle" style="font-size: 20px;"><span style="margin-left: 10px; color: red;"><input type="text" style="width:50px;"> </span>/ 100</span>
+                        <span id="homework_scorestyle" style="font-size: 20px;"><span style="margin-left: 10px; color: red;"><input type="text" style="width:50px;" value="90"> </span>/ 100</span>
                     </div>
 
                     <div id="two_btn">
                     	<button type="button">목록</button>
-                        <button type="button" onclick="confirmFunction()">등록</button>
                     </div>
                 </div>
                 

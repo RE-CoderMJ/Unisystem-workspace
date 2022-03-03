@@ -78,7 +78,7 @@
 
         <div style="float: left;">
             <!-- sidebar 영역 -->
-            <jsp:include page="../student/sclassSidebar.jsp" />
+            <jsp:include page="../professor/pclassSidebar.jsp" />
         </div>
 
         <div id="wrap_content" style="float: left;">
@@ -124,7 +124,7 @@
                         <c:forEach var="l" items="${ list }" >
 	                        <tr class="trs">
 	                            <td class="homeworkpNo">${ l.homeworkpNo }</td>
-	                            <td><a href="lectureProHomeworkDetailI.stu?hno=${ l.homeworkpNo }">${ l.homeworkpName }</a></td>
+	                            <td><a href="lectureProHomeworkDetailI.stu">${ l.homeworkpName }</a></td>
 	                            <td>${ l.korName }</td>
 	                            <td>${ l.homeworkpEndDateTime }</td>
 	                            <td>

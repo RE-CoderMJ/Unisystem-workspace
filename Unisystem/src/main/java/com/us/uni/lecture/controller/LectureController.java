@@ -311,7 +311,7 @@ public class LectureController {
 		
 		if(result == l.getStudsNo().size()) { // 성공
 			session.setAttribute("alertMsg", "새로운 강의일 생성 완료");
-			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&cPage=1";
+			return "redirect:lectureAttControl.stu?userNo=" + userNo +"&classCode=" + l.getClassCode() + "&cpage=1";
 		} else { // 실패
 			model.addAttribute("errorMsg", "강의 생성 실패");
 			return "common/errorPage";
@@ -557,7 +557,7 @@ public class LectureController {
 		
 		if(result * newAtt> 0) { // 수정 성공
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-			return "redirect:lectureProHomeworkDetail.stu?hno=" + h.getHomeworkpNo();
+			return "redirect:homeworkProEndList.lec";
 		}else { // 수정 실패 => 에러페이지
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "lecture/lectureHomeworkProListView";
@@ -765,7 +765,8 @@ public class LectureController {
 	
 	// 교수 - 과제관리 : 등록한 과제 상세내역 + 학생들의 해당 과제 제출 현황 리스트 조회
 	@RequestMapping("lectureProHomeworkDetailI.stu")
-	public ModelAndView selectStuHomeworkList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int hno, ModelAndView mv){
+	public String selectStuHomeworkList(@RequestParam(value="cpage", defaultValue="1") int currentPage){
+		/*
 		Homework h = new Homework();
 		h.setHomeworkpNo(hno);
 		System.out.println(h);
@@ -773,11 +774,18 @@ public class LectureController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
 		ArrayList<Homework> list = lService.selectStuHomeworkList(pi, h);
+		*/
+		//mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkProDetailViewI");
 		
-		mv.addObject("pi", pi).addObject("list", list).setViewName("lecture/lectureHomeworkProDetailViewI");
-		
-		return mv; 
+		return "lecture/lectureHomeworkProDetailViewI"; 
 	}
+	
+	/* 학생 - 과제업로드 수정페이지를 띄워주는 컨트롤러 */
+	@RequestMapping("insertHomeworkScore2.lec")
+	public String selectStuHomeworkResult() {
+		return "lecture/lectureHomeworkResult2";
+	}
+	
 	
 	
 	
